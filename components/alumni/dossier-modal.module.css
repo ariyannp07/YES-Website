@@ -1,0 +1,53 @@
+/* The in-place expansion. The wall stays behind it — that is the difference
+   between this and the standalone /alumni/[slug] takeover. */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: color-mix(in srgb, var(--bg) 93%, transparent);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.panel {
+  position: relative;
+  min-height: 100dvh;
+  padding: clamp(3.5rem, 12vh, 8rem) var(--pad) calc(var(--pad) * 2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inner {
+  width: 100%;
+  max-width: var(--measure);
+}
+
+.controls {
+  width: 100%;
+  max-width: var(--measure);
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.close {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: inherit;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.close:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}

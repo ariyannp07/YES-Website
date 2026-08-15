@@ -1,0 +1,174 @@
+@import 'tailwindcss';
+
+/* ===========================================================================
+   YES — design tokens
+   ---------------------------------------------------------------------------
+   THIS FILE IS THE ONLY PLACE `font-size` MAY BE DECLARED.
+   scripts/check-type-scale.mjs fails the build on a font-size anywhere else.
+   Build spec §4: "define exactly two working text sizes per page — display and
+   small — plus the timestamp micro-size."
+   =========================================================================== */
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+
+  --font-display: var(--font-playfair-display), Georgia, serif;
+  --font-body: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+}
+
+/* ---------------------------------------------------------------------------
+   Palette A — Night (default)
+
+   DEVIATION FROM BUILD SPEC §4. The spec pairs a near-black background with
+   Yale blue #00356B as the accent AND requires WCAG AA (§6). Those cannot both
+   hold: #00356B on #0A0A0A measures 1.62:1, far under the 4.5:1 floor. Night
+   therefore uses Yale blue at a display tint — same hue, lifted to 5.96:1.
+   Palette B (Paper) uses the canonical #00356B unchanged at 11.41:1.
+   --------------------------------------------------------------------------- */
+:root,
+[data-palette='night'] {
+  --bg: #0a0a0a;
+  --fg: #f4f1ea;
+  --accent: #5b8fd4;
+  --muted: #7a7a76;
+  --field-mark: #f4f1ea;
+}
+
+/* Palette B — Paper */
+[data-palette='paper'] {
+  --bg: #faf7f2;
+  --fg: #14140f;
+  --accent: #00356b;
+  --muted: #5f5f58;
+  --field-mark: #14140f;
+}
+
+:root {
+  /* Two working sizes, plus the timestamp micro-size. Nothing between them. */
+  --text-display: clamp(2.25rem, 5.5vw, 4rem);
+  --text-small: 0.9375rem;
+  --text-micro: 0.6875rem;
+
+  --measure: 34rem;
+  --pad: clamp(1.25rem, 4vw, 3.5rem);
+}
+
+/* The landing runs a larger display size than the interior pages. This is the
+   same token re-scoped, not a third size — each page still shows exactly
+   display + small + micro. */
+[data-scope='landing'] {
+  --text-display: clamp(1.75rem, 4.6vw, 3.5rem);
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* "No scroll. The page is the viewport." (build spec §3) */
+body:has([data-scope='landing']) {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+html {
+  background: var(--bg);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  line-height: 1.65;
+  margin: 0;
+  min-height: 100dvh;
+}
+
+/* --------------------------------------------------------------------------
+   One link style, site-wide. Text, underlined. Never a button, never a pill.
+   Build spec §1: "Links are text — underlined or bracketed, never buttons."
+   -------------------------------------------------------------------------- */
+a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+  transition: text-decoration-color 180ms ease, opacity 180ms ease;
+}
+
+a:hover {
+  text-decoration-color: transparent;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+/* Type roles. These are the only three. */
+.t-display {
+  font-family: var(--font-display);
+  font-size: var(--text-display);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  font-weight: 400;
+}
+
+.t-small {
+  font-size: var(--text-small);
+  line-height: 1.65;
+}
+
+.t-micro {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+/* Whitespace is the layout system. No cards, no boxes, no shadows, no radii. */
+.measure {
+  max-width: var(--measure);
+}
+
+/* Long-form: single column, generous line height, no images (build spec §3). */
+.prose {
+  line-height: 1.85;
+}
+
+.prose p {
+  margin: 0 0 1.55em;
+}
+
+.prose p:last-child {
+  margin-bottom: 0;
+}
+
+/* The four "Every" lines. Anaphora, set as its own block — no bullets, no rule,
+   no box. Escalation by repetition, not by decoration (canon 03 §2.5). */
+.standard p {
+  margin: 0 0 0.75em;
+}
+
+/* The one interior page rhythm: a generous top margin instead of a page header.
+   If a page feels empty, it's working. */
+.page-top {
+  padding-top: clamp(3rem, 12vh, 8rem);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}

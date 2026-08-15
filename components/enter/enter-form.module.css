@@ -1,0 +1,117 @@
+/* The form, in the document grammar: rules, not boxes. No filled rectangles,
+   no pills, no rounded containers, no drop shadows. */
+
+.form {
+  max-width: var(--measure);
+}
+
+.field {
+  display: block;
+  margin-bottom: 2.75rem;
+}
+
+.label {
+  display: block;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  font: inherit;
+  color: var(--fg);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--fg) 28%, transparent);
+  padding: 0.35rem 0;
+  border-radius: 0;
+  transition: border-color 180ms ease;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 5.5rem;
+  line-height: 1.7;
+}
+
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border-bottom-color: var(--accent);
+}
+
+.input[aria-invalid='true'],
+.textarea[aria-invalid='true'] {
+  border-bottom-color: var(--accent);
+}
+
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.75rem;
+}
+
+.choice,
+.consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  cursor: pointer;
+  color: var(--fg);
+}
+
+.consent {
+  align-items: flex-start;
+  line-height: 1.7;
+}
+
+.choice input,
+.consent input {
+  accent-color: var(--accent);
+  margin: 0.28rem 0 0;
+  flex: none;
+}
+
+.error {
+  display: block;
+  color: var(--accent);
+  margin-top: 0.6rem;
+}
+
+.notice {
+  color: var(--muted);
+  margin: 0 0 3rem;
+}
+
+/* The submit control is a text link, not a button (build spec §1 and §4). */
+.submit {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+}
+
+.submit:disabled {
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+.submit:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Honeypot: off-screen for bots, unreachable for people and screen readers. */
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}

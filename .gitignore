@@ -1,0 +1,27 @@
+# dependencies (symlinked outside Google Drive — see README)
+node_modules
+.pnp
+.pnp.js
+
+# next
+.next/
+out/
+build/
+next-env.d.ts
+
+# generated image derivatives (rebuilt from source portraits)
+public/portraits/generated/
+
+# env — never commit keys
+.env
+.env*.local
+
+# vercel
+.vercel
+
+# testing
+coverage/
+
+# macOS / Google Drive
+.DS_Store
+*.icloud

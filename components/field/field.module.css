@@ -1,0 +1,110 @@
+/* ---------------------------------------------------------------------------
+   The floating field. Zero JavaScript.
+
+   Build spec §1: "Motion is slow and ambient — think drift, not bounce.
+   Respects prefers-reduced-motion (falls back to a static scattered
+   arrangement)." Every mark is positioned from a fixed seed and animated by
+   CSS alone, so the landing ships no field logic to the browser at all.
+   --------------------------------------------------------------------------- */
+
+.field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  /* Marks are texture, not content. They must never eat a click meant for a
+     link — but they still accept their own hover, to pause. */
+  pointer-events: none;
+  z-index: 0;
+}
+
+.mark {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  pointer-events: auto;
+  will-change: transform;
+  animation: drift var(--duration) ease-in-out var(--delay) infinite;
+}
+
+.mark:hover {
+  animation-play-state: paused;
+}
+
+/* Scale lives on an inner element so it does not fight the drift transform.
+   Using scale (not font-size) keeps the page at exactly two type sizes. */
+.inner {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--text-display);
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--field-mark);
+  opacity: var(--opacity);
+  transform: scale(var(--scale));
+  transform-origin: left top;
+  user-select: none;
+  transition: opacity 400ms ease;
+}
+
+.mark:hover .inner {
+  opacity: calc(var(--opacity) + 0.22);
+}
+
+/* Glyphs are square and sized off the display token, so the field scales with
+   the page's type without introducing a size of its own. */
+.glyph {
+  display: block;
+  width: 1em;
+  height: 1em;
+}
+
+/* A real logo lockup is wider than tall; height still tracks the display size,
+   so swapping a glyph for an approved SVG changes nothing about the layout. */
+.logo {
+  display: block;
+  height: 1em;
+  width: auto;
+  max-width: 2.6em;
+  object-fit: contain;
+}
+
+@keyframes drift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(var(--dx), calc(var(--dy) * -1), 0);
+  }
+  50% {
+    transform: translate3d(calc(var(--dx) * -0.55), var(--dy), 0);
+  }
+  75% {
+    transform: translate3d(calc(var(--dx) * -1), calc(var(--dy) * -0.35), 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* The static scattered arrangement. Same seeded positions, no motion. */
+@media (prefers-reduced-motion: reduce) {
+  .mark {
+    animation: none;
+  }
+  .inner {
+    transition: none;
+  }
+}
+
+/* A sparser, static echo of the field — build spec §1 allows one on /work. */
+.echo {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.echo .mark {
+  animation: none;
+}
