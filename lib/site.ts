@@ -20,7 +20,7 @@ export const FOUNDED_LINE = 'Building since 1999'
  * builders but to proactively find and cultivate them too."
  */
 export const LANDING_LINE =
-  'The front door for entrepreneurship at Yale. Finding, cultivating, and backing the next generation of Yale builders.'
+  'The front door for entrepreneurship at Yale. Cultivating and backing the next generation of Yale builders.'
 
 export const CONTACT = {
   ariyan: 'ariyan.patel@yale.edu',

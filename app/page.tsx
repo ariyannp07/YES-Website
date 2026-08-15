@@ -31,7 +31,7 @@ export default function Landing() {
       <FloatingField />
 
       <header
-        className="relative z-10 flex justify-start"
+        className="relative z-10 flex justify-center"
         style={{ padding: 'var(--pad)' }}
       >
         <Timestamp />
@@ -40,7 +40,10 @@ export default function Landing() {
       <div className="relative z-10 flex flex-col items-center justify-center px-6 text-center">
         <SpinningMark />
 
-        <h1 className="t-display" style={{ margin: '2.5rem 0 0' }}>
+        <h1
+          className="t-display"
+          style={{ margin: '2.5rem 0 0', fontWeight: 700 }}
+        >
           {SITE_NAME}
         </h1>
 

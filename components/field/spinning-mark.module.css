@@ -80,7 +80,8 @@
   margin-left: calc(var(--d) / -2);
   margin-top: calc(var(--d) / -2);
   transform: translate3d(var(--x), var(--y), var(--z));
-  box-shadow: 0 0 6px color-mix(in srgb, var(--net) 60%, transparent);
+  box-shadow: 0 0 7px color-mix(in srgb, var(--net) 65%, transparent);
+  animation: pulse var(--tw-dur) ease-in-out var(--tw-delay) infinite;
 }
 
 .edge {
@@ -90,10 +91,32 @@
   height: 1px;
   width: var(--len);
   background: var(--net);
-  opacity: var(--o);
   transform-origin: 0 50%;
   transform: translate3d(var(--x), var(--y), var(--z)) rotateZ(var(--yaw))
     rotateY(var(--pitch));
+  animation: shimmer var(--tw-dur) ease-in-out var(--tw-delay) infinite;
+}
+
+/* Each node and edge runs its own slow opacity cycle, so the network reads as
+   alive rather than as a rigid cage bolted to the solid. */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  0%,
+  100% {
+    opacity: calc(var(--o) * 0.3);
+  }
+  50% {
+    opacity: var(--o);
+  }
 }
 
 @keyframes turn {
@@ -124,5 +147,14 @@
   .solid {
     animation: none;
     transform: rotateX(-12deg) rotateY(-34deg);
+  }
+
+  .node,
+  .edge {
+    animation: none;
+  }
+
+  .edge {
+    opacity: var(--o);
   }
 }

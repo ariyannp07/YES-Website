@@ -65,6 +65,8 @@ const DUST = buildDust()
 export function Atmosphere() {
   return (
     <div className={styles.atmosphere} aria-hidden="true">
+      <div className={styles.wash} />
+
       {DUST.map((mote, index) => (
         <span
           key={index}

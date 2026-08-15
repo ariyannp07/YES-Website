@@ -71,7 +71,7 @@ export function SpinningMark({ durationSec = 34 }: { readonly durationSec?: numb
                 style={{ '--z': `${half - index * step}px` } as CSSProperties}
               >
                 <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">
-                  <path d={SIGMA_PATH} fill={shadeAt(t)} fillOpacity={0.13} />
+                  <path d={SIGMA_PATH} fill={shadeAt(t)} fillOpacity={0.16} />
                 </svg>
               </div>
             )
@@ -91,6 +91,8 @@ export function SpinningMark({ durationSec = 34 }: { readonly durationSec?: numb
                   '--yaw': `${edge.yaw}deg`,
                   '--pitch': `${edge.pitch}deg`,
                   '--o': edge.opacity,
+                  '--tw-dur': `${edge.durationSec}s`,
+                  '--tw-delay': `${edge.delaySec}s`,
                 } as CSSProperties
               }
             />
@@ -107,6 +109,8 @@ export function SpinningMark({ durationSec = 34 }: { readonly durationSec?: numb
                   '--y': `${node.y}px`,
                   '--z': `${node.z}px`,
                   '--d': `${node.size}px`,
+                  '--tw-dur': `${node.durationSec}s`,
+                  '--tw-delay': `${node.delaySec}s`,
                 } as CSSProperties
               }
             />

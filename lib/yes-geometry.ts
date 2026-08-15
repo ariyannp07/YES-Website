@@ -21,8 +21,9 @@ import { createRandom } from '@/lib/seeded-random'
  */
 
 /** Design space is 100×100; the scene renders it at SCENE_PX. */
-export const SCENE_PX = 280
-export const DEPTH_PX = 34
+export const SCENE_PX = 248
+/** Extrusion depth. Deliberately heavy — a thin mark reads as a decal. */
+export const DEPTH_PX = 58
 
 const UNIT = SCENE_PX / 100
 
@@ -77,7 +78,13 @@ const insidePolygon = (x: number, y: number, polygon: readonly Point[]): boolean
 const insideSigma = (x: number, y: number): boolean =>
   SIGMA_POLYGONS.some((polygon) => insidePolygon(x, y, polygon))
 
-export interface Node {
+/** Independent opacity cycle, so the network reads as alive rather than rigid. */
+export interface Twinkle {
+  readonly durationSec: number
+  readonly delaySec: number
+}
+
+export interface Node extends Twinkle {
   /** Scene pixels, origin at the mark's top-left. */
   readonly x: number
   readonly y: number
@@ -85,7 +92,7 @@ export interface Node {
   readonly size: number
 }
 
-export interface Edge {
+export interface Edge extends Twinkle {
   readonly x: number
   readonly y: number
   readonly z: number
@@ -98,13 +105,13 @@ export interface Edge {
 }
 
 const NETWORK_SEED = 730451
-const NODE_COUNT = 46
-const MAX_SAMPLE_ATTEMPTS = 4000
+const NODE_COUNT = 74
+const MAX_SAMPLE_ATTEMPTS = 9000
 
 /** Nodes closer than this in 3D get an edge. Scene pixels. */
-const EDGE_DISTANCE = 62
+const EDGE_DISTANCE = 58
 /** Cap the fan-out so dense clusters do not turn into solid white patches. */
-const MAX_EDGES_PER_NODE = 4
+const MAX_EDGES_PER_NODE = 5
 
 const buildNodes = (): readonly Node[] => {
   const random = createRandom(NETWORK_SEED)
@@ -125,10 +132,13 @@ const buildNodes = (): readonly Node[] => {
     nodes.push({
       x: Number((designX * UNIT).toFixed(2)),
       y: Number((designY * UNIT).toFixed(2)),
-      // Slightly beyond the solid at both ends, so the network threads through
-      // the body and emerges rather than sitting on its faces.
-      z: Number(((depth - 0.5) * (DEPTH_PX * 1.5)).toFixed(2)),
-      size: Number((1.6 + size * 2.1).toFixed(2)),
+      // Well beyond the solid at both ends, so the network threads through the
+      // body and dances clear of it front and back rather than sitting on its
+      // faces.
+      z: Number(((depth - 0.5) * (DEPTH_PX * 2.1)).toFixed(2)),
+      size: Number((1.5 + size * 2).toFixed(2)),
+      durationSec: Number((5 + random() * 9).toFixed(1)),
+      delaySec: Number((-random() * 14).toFixed(1)),
     })
   }
 
@@ -185,7 +195,11 @@ const buildEdges = (nodes: readonly Node[]): readonly Edge[] => {
       yaw: Number(yaw.toFixed(2)),
       pitch: Number(pitch.toFixed(2)),
       // Longer spans read as structure; short ones would otherwise crowd.
-      opacity: Number((0.9 - (length / EDGE_DISTANCE) * 0.35).toFixed(2)),
+      opacity: Number((0.92 - (length / EDGE_DISTANCE) * 0.34).toFixed(2)),
+      // Derived from the endpoints rather than drawn from the RNG, so edge
+      // timing stays stable when the node count changes.
+      durationSec: Number((6 + ((pair.a * 7 + pair.b * 13) % 90) / 10).toFixed(1)),
+      delaySec: -Number((((pair.a * 11 + pair.b * 5) % 160) / 10).toFixed(1)),
     })
   }
 
