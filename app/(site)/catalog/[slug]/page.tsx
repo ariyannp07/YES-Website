@@ -28,7 +28,7 @@ export async function generateMetadata({
   const { slug } = await params
   const person = await alumnusBySlug(slug)
 
-  if (!person || person.placeholder) return { title: 'Alumni' }
+  if (!person || person.placeholder) return { title: 'Catalog' }
 
   return {
     title: person.name,
@@ -51,7 +51,7 @@ export default async function AlumnusPage({
       <Dossier person={person} />
 
       <p className="t-small" style={{ margin: '4.5rem 0 0' }}>
-        <Link href="/alumni">← Alumni</Link>
+        <Link href="/catalog">← Catalog</Link>
       </p>
     </article>
   )

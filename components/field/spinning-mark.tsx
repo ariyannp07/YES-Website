@@ -1,55 +1,46 @@
 import type { CSSProperties } from 'react'
 
-import { YesMark } from '@/components/field/yes-mark'
+import {
+  DEPTH_PX,
+  EDGES,
+  NODES,
+  SCENE_PX,
+  SIGMA_PATH,
+} from '@/lib/yes-geometry'
 
 import styles from './spinning-mark.module.css'
 
 /**
- * The floating YES mark: extruded, turning slowly, pausing on hover.
+ * The floating YES mark.
  *
- * Depth is built from silhouettes stacked on the Z axis. The slab COUNT is the
- * whole trick — too few and the object reads as a deck of cards with daylight
- * between them when it turns edge-on; packed under a pixel apart they fuse into
- * one solid with a lit side. Interior slabs are flat fills, so 44 of them cost
- * about as much as one.
+ * Two things make one object rather than two pictures of one:
  *
- * Built with CSS 3D rather than WebGL on purpose: build spec §6 caps the
- * landing at 50KB of JS, and a Three.js scene is several times that on the one
- * page the spec is strictest about. This ships zero JavaScript.
+ *   1. The body is a stack of silhouettes on the Z axis, each translucent, so
+ *      they accumulate into a solid with a dense core and glassy edges. None of
+ *      them is mirrored — an extruded solid seen from behind IS reversed, and
+ *      "correcting" the back face is what previously made the middle read as
+ *      an X.
+ *   2. The network is genuine 3D geometry, not paint on the faces. Nodes sit at
+ *      real depths inside and just beyond the body, edges are segments aimed in
+ *      space, so the white lines run continuously front to back and stay
+ *      consistent from every angle.
+ *
+ * All of it is CSS. Nothing here ships JavaScript to the browser.
  */
 
-const SLAB_COUNT = 44
-const DEPTH_PX = 30
+const SLAB_COUNT = 40
 
-/**
- * Face shading, front to back. The mark keeps its own blues in both palettes —
- * it is a logo, not a themed element — but the extrusion falls off with depth
- * so the side reads as a lit surface rather than a flat block.
- */
-const FACE_LIGHT = { r: 0x2f, g: 0x69, b: 0xbd }
-const FACE_DARK = { r: 0x07, g: 0x18, b: 0x33 }
+/** Front-to-back shading of the body. */
+const FACE_LIGHT = { r: 0x3a, g: 0x7a, b: 0xd4 }
+const FACE_DARK = { r: 0x06, g: 0x14, b: 0x2c }
 
-/** Ease the falloff so the lit edge sits near the front, as a real bevel would. */
 const shadeAt = (t: number): string => {
-  const eased = t ** 0.62
+  const eased = t ** 0.6
   const mix = (a: number, b: number) => Math.round(a + (b - a) * eased)
   return `rgb(${mix(FACE_LIGHT.r, FACE_DARK.r)} ${mix(FACE_LIGHT.g, FACE_DARK.g)} ${mix(FACE_LIGHT.b, FACE_DARK.b)})`
 }
 
-const layerStyle = (z: number, face: string, line: string): CSSProperties =>
-  ({
-    '--z': `${z}px`,
-    '--mark-face': face,
-    '--mark-line': line,
-  }) as CSSProperties
-
-export function SpinningMark({
-  size = 'clamp(8.5rem, 19vw, 14.5rem)',
-  durationSec = 32,
-}: {
-  readonly size?: string
-  readonly durationSec?: number
-}) {
+export function SpinningMark({ durationSec = 34 }: { readonly durationSec?: number }) {
   const half = DEPTH_PX / 2
   const step = DEPTH_PX / (SLAB_COUNT - 1)
 
@@ -58,43 +49,68 @@ export function SpinningMark({
       className={styles.stage}
       style={
         {
-          '--mark-size': size,
+          '--scene': `${SCENE_PX}px`,
+          '--u': 1,
           '--mark-duration': `${durationSec}s`,
+          '--net': '#ffffff',
         } as CSSProperties
       }
       aria-hidden="true"
     >
-      {/* Seats the mark in the void instead of leaving it pasted on. */}
       <div className={styles.glow} />
 
-      <div className={styles.solid}>
-        {Array.from({ length: SLAB_COUNT }, (_, index) => {
-          const t = index / (SLAB_COUNT - 1)
-          return (
+      <div className={styles.scene}>
+        <div className={styles.solid}>
+          {/* Body. Translucent slabs, front to back, no mirroring. */}
+          {Array.from({ length: SLAB_COUNT }, (_, index) => {
+            const t = index / (SLAB_COUNT - 1)
+            return (
+              <div
+                key={`slab-${index}`}
+                className={styles.slab}
+                style={{ '--z': `${half - index * step}px` } as CSSProperties}
+              >
+                <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+                  <path d={SIGMA_PATH} fill={shadeAt(t)} fillOpacity={0.13} />
+                </svg>
+              </div>
+            )
+          })}
+
+          {/* Network edges, aimed in 3D. */}
+          {EDGES.map((edge, index) => (
             <div
-              key={index}
-              className={styles.layer}
-              style={layerStyle(half - index * step, shadeAt(t), 'transparent')}
-            >
-              <YesMark variant="solid" />
-            </div>
-          )
-        })}
+              key={`edge-${index}`}
+              className={styles.edge}
+              style={
+                {
+                  '--x': `${edge.x}px`,
+                  '--y': `${edge.y}px`,
+                  '--z': `${edge.z}px`,
+                  '--len': `${edge.length}px`,
+                  '--yaw': `${edge.yaw}deg`,
+                  '--pitch': `${edge.pitch}deg`,
+                  '--o': edge.opacity,
+                } as CSSProperties
+              }
+            />
+          ))}
 
-        {/* Back face — mirrored, so the sigma reads correctly from behind. */}
-        <div
-          className={`${styles.layer} ${styles.back}`}
-          style={layerStyle(-half - 0.4, shadeAt(0.82), '#9fb6d6')}
-        >
-          <YesMark variant="detail" idPrefix="yes-back" />
-        </div>
-
-        {/* Front face — the mark itself, mesh and all. */}
-        <div
-          className={styles.layer}
-          style={layerStyle(half + 0.4, shadeAt(0), '#ffffff')}
-        >
-          <YesMark variant="detail" idPrefix="yes-front" />
+          {/* Network nodes. */}
+          {NODES.map((node, index) => (
+            <div
+              key={`node-${index}`}
+              className={styles.node}
+              style={
+                {
+                  '--x': `${node.x}px`,
+                  '--y': `${node.y}px`,
+                  '--z': `${node.z}px`,
+                  '--d': `${node.size}px`,
+                } as CSSProperties
+              }
+            />
+          ))}
         </div>
       </div>
     </div>

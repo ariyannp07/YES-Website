@@ -9,14 +9,28 @@ export const SITE_NAME = 'Yale Entrepreneurial Society'
 /** Carried over from the current site — oldest-club legitimacy in three words. */
 export const FOUNDED_LINE = 'Building since 1999'
 
+/**
+ * The one line under the wordmark.
+ *
+ * DRAFT — AWAITING OWNER APPROVAL. Build spec §3 puts nothing on the landing
+ * but the name and a link; this is an owner-requested addition and a deliberate
+ * deviation. Both halves are canon-grounded rather than written fresh:
+ * "the front door" is the brief's own phrase (THE STANDARD), and find /
+ * cultivate / back is the speech's — "not just back the next generation of Yale
+ * builders but to proactively find and cultivate them too."
+ */
+export const LANDING_LINE =
+  'The front door for entrepreneurship at Yale. Finding, cultivating, and backing the next generation of Yale builders.'
+
 export const CONTACT = {
   ariyan: 'ariyan.patel@yale.edu',
   sofia: 'sst39@yale.edu',
 } as const
 
 /**
- * The interior nav. Build spec §2 includes Alumni; §4's restatement omits it.
- * §2 governs — /alumni is the show-don't-tell centerpiece, so it is reachable.
+ * The interior nav. Build spec §2 includes the alumni page; §4's restatement
+ * omits it. §2 governs — it is the show-don't-tell centerpiece, so it is
+ * reachable. Named "Catalog" at the owners' direction rather than "Alumni".
  *
  * `hidden` pages stay routable but unlinked. /builders dark-ships until the
  * consented catalog clears BUILDERS_MIN_ENTRIES (build spec §3).
@@ -30,7 +44,7 @@ export interface NavItem {
 export const NAV: readonly NavItem[] = [
   { href: '/manifesto', label: 'Manifesto' },
   { href: '/work', label: 'Work' },
-  { href: '/alumni', label: 'Alumni' },
+  { href: '/catalog', label: 'Catalog' },
   { href: '/builders', label: 'Builders', hidden: true },
   { href: '/writing', label: 'Writing' },
   { href: '/enter', label: 'Enter' },

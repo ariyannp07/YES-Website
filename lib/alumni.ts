@@ -53,14 +53,13 @@ export type Alumnus = z.infer<typeof Alumnus>
 
 export const TBD = '[TBD — owner input]'
 
-const PLACEHOLDER_COUNT = 28
+const PLACEHOLDER_COUNT = 24
 
 /**
- * Anchor stories get the larger tiles once real people land. Until then a few
- * placeholders carry weight 2 so the gravity idea is visible in review.
+ * Every head is the same size, at the owners' direction — the spec's
+ * "hierarchy by gravity" tile weighting is not in play. `weight` stays in the
+ * schema so the idea can be switched back on without a data migration.
  */
-const HEAVY_PLACEHOLDER_INDEXES = new Set([2, 9, 17])
-
 export const placeholderAlumni = (): readonly Alumnus[] =>
   Array.from({ length: PLACEHOLDER_COUNT }, (_, index) => ({
     slug: `placeholder-${String(index + 1).padStart(2, '0')}`,
@@ -68,7 +67,7 @@ export const placeholderAlumni = (): readonly Alumnus[] =>
     classYear: TBD,
     nowLine: TBD,
     proof: { kind: 'number', value: TBD },
-    weight: HEAVY_PLACEHOLDER_INDEXES.has(index) ? 2 : 1,
+    weight: 1,
     placeholder: true,
   }))
 

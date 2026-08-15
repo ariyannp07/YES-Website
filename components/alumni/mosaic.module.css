@@ -1,8 +1,7 @@
 /* ---------------------------------------------------------------------------
-   The mosaic (build spec §3).
+   The catalog wall.
 
-   At rest: a dense edge-to-edge wall of portraits — no gutters, no names, no
-   captions. The wall of unlabeled faces IS the mystery.
+   At rest: unlabeled heads, floating, three across, held in from both edges.
    On hover / focus: full colour, plus name and class year.
    On click: the dossier.
 
@@ -10,33 +9,44 @@
    the resting state is the duotone layer and the colour layer sits beneath it.
    The duotone is baked at build time (scripts/build-portraits.mjs), not applied
    as a CSS filter over a full-colour image, so the page stays light.
+
+   DEVIATION from build spec §3, at the owners' direction. The spec calls for a
+   dense edge-to-edge mosaic with no gutters and weighted tile sizes. This is
+   the condensed form instead: every head the same size, three to a row, air on
+   both sides. The "hierarchy by gravity" tile weighting is therefore not in
+   play; `weight` is still carried in the data if it is ever wanted back.
    --------------------------------------------------------------------------- */
 
 .mosaic {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
-  grid-auto-flow: dense;
-  gap: 0;
-  /* Edge to edge: break out of the interior page padding. */
-  margin-inline: calc(var(--pad) * -1);
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.25rem, 3.5vw, 2.75rem);
+  max-width: 34rem;
+  margin-inline: auto;
 }
 
 .tile {
-  position: relative;
   display: block;
-  aspect-ratio: 1;
-  overflow: hidden;
   /* A portrait is not a text link. The one text-link style still governs every
      link that is actually text. */
   text-decoration: none;
   color: inherit;
-  --sil-bg: color-mix(in srgb, var(--fg) 7%, var(--bg));
-  --sil-fg: color-mix(in srgb, var(--fg) 26%, var(--bg));
 }
 
-.tile[data-weight='2'] {
-  grid-column: span 2;
-  grid-row: span 2;
+.frame {
+  position: relative;
+  display: block;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  --sil-bg: color-mix(in srgb, var(--fg) 8%, var(--bg));
+  --sil-fg: color-mix(in srgb, var(--fg) 30%, var(--bg));
+  transition: transform 220ms ease;
+}
+
+.tile:hover .frame,
+.tile:focus-visible .frame {
+  transform: translateY(-3px);
 }
 
 .layer {
@@ -54,7 +64,7 @@
 
 /* Colour sits beneath; the duotone on top is what fades away. */
 .colorLayer {
-  --sil-bg: color-mix(in srgb, var(--accent) 22%, var(--bg));
+  --sil-bg: color-mix(in srgb, var(--accent) 26%, var(--bg));
   --sil-fg: var(--accent);
 }
 
@@ -69,18 +79,14 @@
   opacity: 0;
 }
 
+/* Caption space is always reserved, so revealing a name shifts nothing. */
 .label {
-  position: absolute;
-  inset-inline: 0;
-  bottom: 0;
-  padding: 0.7rem 0.75rem 0.65rem;
+  display: block;
+  margin-top: 0.85rem;
+  min-height: 2.4em;
+  text-align: center;
   opacity: 0;
   transition: opacity 180ms ease;
-  background: linear-gradient(
-    to top,
-    color-mix(in srgb, var(--bg) 88%, transparent),
-    transparent
-  );
 }
 
 .tile:hover .label,
@@ -98,14 +104,26 @@
   color: var(--muted);
 }
 
-.tile:focus-visible {
+.tile:focus-visible .frame {
   outline: 2px solid var(--accent);
-  outline-offset: -2px;
+  outline-offset: 3px;
+}
+
+@media (max-width: 560px) {
+  .mosaic {
+    max-width: 22rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .frame,
   .duotoneLayer,
   .label {
     transition: none;
+  }
+
+  .tile:hover .frame,
+  .tile:focus-visible .frame {
+    transform: none;
   }
 }

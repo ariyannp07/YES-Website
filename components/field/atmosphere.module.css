@@ -1,0 +1,66 @@
+/* ---------------------------------------------------------------------------
+   Atmosphere for the front door.
+
+   Replaces the abstract glyph field. Outlined circles and triangles read as
+   clip art — they made the page look like a template, which is the opposite of
+   the intended effect. Depth here comes from light and particulate instead:
+   a vignette that closes the edges down, and a slow dust of points echoing the
+   mark's own network. Nothing here is a symbol, so nothing invites decoding.
+
+   Zero JavaScript. Positions are seeded so the server and browser agree.
+   --------------------------------------------------------------------------- */
+
+.atmosphere {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Closes the corners so the eye falls to the middle. */
+.vignette {
+  position: absolute;
+  inset: -10%;
+  background: radial-gradient(
+    ellipse 62% 58% at 50% 46%,
+    transparent 0%,
+    transparent 42%,
+    color-mix(in srgb, var(--bg) 62%, transparent) 78%,
+    var(--bg) 100%
+  );
+}
+
+.dust {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--d);
+  height: var(--d);
+  border-radius: 50%;
+  background: var(--fg);
+  opacity: var(--o);
+  animation: sift var(--duration) ease-in-out var(--delay) infinite;
+  will-change: transform;
+}
+
+@keyframes sift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  33% {
+    transform: translate3d(var(--dx), calc(var(--dy) * -1), 0);
+  }
+  66% {
+    transform: translate3d(calc(var(--dx) * -0.8), var(--dy), 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dust {
+    animation: none;
+  }
+}

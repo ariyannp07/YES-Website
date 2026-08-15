@@ -63,7 +63,7 @@ export function DossierModal({
             Close (esc)
           </button>
 
-          <Link href={`/alumni/${slug}`} scroll={false} prefetch={false}>
+          <Link href={`/catalog/${slug}`} scroll={false} prefetch={false}>
             Open as page →
           </Link>
         </div>
