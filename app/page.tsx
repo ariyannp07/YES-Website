@@ -4,22 +4,19 @@ import { Atmosphere } from '@/components/field/atmosphere'
 import { FloatingField } from '@/components/field/floating-field'
 import { SpinningMark } from '@/components/field/spinning-mark'
 import { Timestamp } from '@/components/timestamp'
-import {
-  FOUNDED_LINE,
-  LANDING_LINE,
-  LANDING_LINKS,
-  SITE_NAME,
-} from '@/lib/site'
+import { FOUNDED_LINE, LANDING_LINKS, SITE_NAME } from '@/lib/site'
 
 /**
  * The front door (build spec §3).
  *
- * The mark, the live clock, the name, one line, one link. No hero video, no
- * carousel, no "Join us!" button, no nav bar, no scroll — the page is the
- * viewport. The restraint plus the unexplained proof is the statement.
+ * The mark and one link. Nothing else in the middle — the name sits in the
+ * utility line at the top beside the clock, at the same size, weight and
+ * colour, so it reads as a masthead rather than as a headline. The restraint
+ * plus the unexplained mark is the statement; a display-size wordmark was
+ * competing with the only object on the page.
  *
- * Layered back to front: atmosphere, then approved company logos drifting
- * (empty until permissions land), then the mark and the type.
+ * Layered back to front: the background wash and dust, then approved company
+ * logos drifting (empty until permissions land), then the mark and the type.
  */
 export default function Landing() {
   return (
@@ -34,33 +31,25 @@ export default function Landing() {
         className="relative z-10 flex justify-center"
         style={{ padding: 'var(--pad)' }}
       >
-        <Timestamp />
+        <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+          <h1 className="t-micro" style={{ color: 'var(--muted)', margin: 0 }}>
+            {SITE_NAME}
+          </h1>
+          <span
+            className="t-micro"
+            style={{ color: 'var(--muted)' }}
+            aria-hidden="true"
+          >
+            ·
+          </span>
+          <Timestamp />
+        </div>
       </header>
 
       <div className="relative z-10 flex flex-col items-center justify-center px-6 text-center">
         <SpinningMark />
 
-        <h1
-          className="t-display"
-          style={{ margin: '2.5rem 0 0', fontWeight: 700 }}
-        >
-          {SITE_NAME}
-        </h1>
-
-        <p
-          className="t-small"
-          style={{
-            margin: '1.5rem auto 0',
-            maxWidth: '31rem',
-            color: 'var(--muted)',
-            lineHeight: 1.75,
-            textWrap: 'balance',
-          }}
-        >
-          {LANDING_LINE}
-        </p>
-
-        <nav className="t-small mt-10 flex gap-8">
+        <nav className="t-small mt-12 flex gap-8">
           {LANDING_LINKS.map((link) => (
             <Link key={link.href} href={link.href}>
               {link.label}

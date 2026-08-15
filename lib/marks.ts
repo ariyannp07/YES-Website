@@ -66,8 +66,8 @@ interface Rect {
  * own their corners. A mark drifting through the wordmark reads as a bug.
  */
 const RESERVED: readonly Rect[] = [
-  { x: 17, y: 20, w: 66, h: 52 }, // spinning mark + wordmark + landing link
-  { x: 0, y: 2, w: 27, h: 12 }, // live clock, top left
+  { x: 24, y: 22, w: 52, h: 56 }, // the mark and the landing link
+  { x: 20, y: 2, w: 60, h: 11 }, // masthead + live clock, top centre
   { x: 0, y: 84, w: 25, h: 13 }, // "Building since 1999", bottom left
   { x: 85, y: 87, w: 15, h: 13 }, // preview palette switcher, bottom right
 ]

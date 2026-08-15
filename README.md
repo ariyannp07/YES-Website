@@ -80,8 +80,10 @@ these, then create a view called `Alumni-Page-Feed` filtered to
 
 ## Publishing content
 
-- **Essays** — drop a markdown file in `content/writing/`. See
-  `content/writing/_FORMAT.md`.
+- **The Reservoir** — drop a markdown file in `content/reservoir/`. Essays,
+  talks, workshops and lessons share one index; anything hosted elsewhere just
+  carries a `url` and the Reservoir links out instead of re-hosting it. See
+  `content/reservoir/_FORMAT.md`.
 - **Logos on the landing field** — add an entry to
   `content/marks/approved.json`. A logo without both `approvedBy` and
   `approvedOn` is dropped from the field and reported in the build log. No logo

@@ -18,25 +18,25 @@
   z-index: 0;
 }
 
-/* Yale blue bleeding out of the middle into the background colour. Built from
-   the palette tokens rather than hard-coded, so Paper gets a blue-into-cream
-   wash instead of a blue-into-black one. */
+/* A full-width wash of Yale blue through the middle of the page, falling to the
+   background colour at both ends. Deliberately a band across the whole page
+   rather than a halo behind the mark — a radial centred on the logo reads as a
+   glow stuck to the object, which is not what a background gradient is.
+
+   Both ends land on the plain background colour so the top and bottom lines
+   keep their contrast ratios. Built from palette tokens rather than hard-coded,
+   so Paper gets blue-into-cream instead of blue-into-black. */
 .wash {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(
-      ellipse 78% 62% at 50% 42%,
-      color-mix(in srgb, var(--accent) 30%, transparent) 0%,
-      color-mix(in srgb, var(--accent) 13%, transparent) 34%,
-      transparent 72%
-    ),
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--accent) 12%, var(--bg)) 0%,
-      var(--bg) 58%,
-      color-mix(in srgb, var(--accent) 7%, var(--bg)) 100%
-    );
+  background: linear-gradient(
+    180deg,
+    var(--bg) 0%,
+    color-mix(in srgb, var(--accent) 9%, var(--bg)) 22%,
+    color-mix(in srgb, var(--accent) 22%, var(--bg)) 46%,
+    color-mix(in srgb, var(--accent) 12%, var(--bg)) 68%,
+    var(--bg) 100%
+  );
 }
 
 /* Closes the corners so the eye falls to the middle. */

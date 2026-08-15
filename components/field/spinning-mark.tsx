@@ -57,8 +57,6 @@ export function SpinningMark({ durationSec = 34 }: { readonly durationSec?: numb
       }
       aria-hidden="true"
     >
-      <div className={styles.glow} />
-
       <div className={styles.scene}>
         <div className={styles.solid}>
           {/* Body. Translucent slabs, front to back, no mirroring. */}
