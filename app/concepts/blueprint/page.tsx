@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 
 import { ConceptChrome } from '@/components/concepts/concept-chrome'
-import { BlueprintStage } from '@/components/concepts/blueprint/blueprint-stage'
-import styles from '@/components/concepts/blueprint/blueprint.module.css'
+import { BlueprintStage } from '@/components/blueprint/blueprint-stage'
+import styles from '@/components/blueprint/blueprint.module.css'
 
 export const metadata: Metadata = {
   title: 'Blueprint — YES prototype',
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export default function BlueprintConcept() {
   return (
     <>
-      <BlueprintStage />
+      <BlueprintStage title="Yale Entrepreneurial Society" note="build something →" href="/manifesto" />
 
       {/* Gives the wheel something to drive. The canvas never scrolls. */}
       <div className={styles.scroll} aria-hidden="true" />

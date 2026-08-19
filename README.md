@@ -14,13 +14,16 @@ with the Boola/AINS canon as the authority for facts and voice:
 
 | Route | What it is |
 |---|---|
-| `/` | The front door: the 3D mark, the masthead line, one link |
+| `/` | The front door: a hidden network, scanned with the cursor |
+| `/spectre` | The inner cohort — the working wall, held as one view |
+| `/spectre/apply` | Three questions, and one line back |
 | `/manifesto` | The essay |
 | `/work` | The four initiatives, then proof |
 | `/catalog` | The wall of faces, and a dossier per person |
 | `/reservoir` | Essays, talks, workshops, lessons, press |
 | `/enter` | The single intake form |
 | `/builders` | Public builder catalog — dark and unlinked until 15 consent |
+| `/concepts` | Archive of the three landing prototypes. Review only — delete before launch |
 
 ## Run it
 
@@ -123,33 +126,33 @@ then create a view called `Alumni-Page-Feed` filtered to
 
 Each is deliberate, and each is reversible.
 
-1. **The mark is WebGL, and the landing JS budget is blown.** §6 caps the
-   landing at 50KB of JS. The owners asked for a fixed light source with real
-   shadows and for the mark to be turned with the cursor. A stack of flat CSS
-   planes has no surface normals, so there is nothing for a light to fall on and
-   nothing to grab — neither is possible without real geometry. Three.js is
-   ~150KB gzipped, loaded from a dynamically-imported chunk after first paint,
-   with a static SVG of the mark in the initial HTML. LCP is unaffected; the
-   byte budget is genuinely exceeded.
-2. **Not a static export.** §6 says "Next.js (static export)" but also forbids
+1. **The front door is a scanned network, not a floating logo field.** §1
+   specifies drifting company marks over a void. The owners chose a different
+   direction after comparing three prototypes. The mark is still present —
+   roughly half the network's nodes are sampled from inside its polygons and
+   carry a higher brightness floor, so the shape emerges as a DENSITY rather
+   than as a logo. The permission gate for real company logos is untouched and
+   still governs `content/marks/approved.json`, but those marks now have no
+   surface on the landing; worth revisiting when approvals land.
+2. **No WebGL on the landing, so §6's 50KB JS budget holds again.** An earlier
+   3D mark blew it. The Signal renderer is a few kilobytes of Canvas 2D. Three.js
+   survives only in the archived Portal prototype under `/concepts`.
+3. **Not a static export.** §6 says "Next.js (static export)" but also forbids
    exposing the Airtable key client-side. A static export has no server runtime
    to hold the key. Built as a standard Vercel deployment: every page static,
-   one server route.
-3. **No ISR on `/builders`.** §6 asks for regeneration every 6h. Canon R1 says
+   two server routes.
+4. **No ISR on `/builders`.** §6 asks for regeneration every 6h. Canon R1 says
    publishing the catalog is "a human-run deploy, not a cron job." The canon
    wins; the page is built statically.
-4. **Night palette accent.** §4 pairs near-black with Yale blue `#00356B` and
+5. **Night palette accent.** §4 pairs near-black with Yale blue `#00356B` and
    also requires WCAG AA. Those are incompatible — `#00356B` on `#0A0A0A`
    measures **1.62:1**. Night uses Yale blue at a display tint (`#5B8FD4`,
    5.96:1). Paper uses the canonical `#00356B` unchanged (11.41:1).
-5. **`proof_object` is three columns**, not one. Airtable has no struct type;
+6. **`proof_object` is three columns**, not one. Airtable has no struct type;
    one column would mean parsing a blob that fails silently.
-6. **The landing field is empty.** §1 offers abstract glyphs *or* speech words
-   as placeholders. Both were built and both were cut — floating words is
-   telling, and the glyphs read as clip art. The permission gate still stands;
-   it now governs an empty list until real logos are approved.
-7. **The front door carries no display wordmark.** §3 puts the name in the
-   centre; it competed with the mark, so it moved to the masthead line.
+7. **Spectre is a new section the spec does not describe.** §2's site map has no
+   inner-cohort surface. Added at owner direction, full-bleed and outside the
+   interior shell so the wall is not framed by a nav bar.
 8. **`/catalog`, not `/alumni`; `/reservoir`, not `/writing`.** Owner-renamed,
    and the Reservoir is widened past essays to the whole public collection.
 9. **The catalog is condensed, not edge-to-edge.** §3 calls for a dense mosaic
@@ -168,6 +171,17 @@ Each is deliberate, and each is reversible.
 - **Dossier expansion** — both patterns are live. Clicking a face expands in
   place over the wall; opening `/catalog/<slug>` cold is the full-page takeover.
   "Open as page" in the modal switches between them.
+- **Spectre vs The Fellowship** — canon/01 calls the tap-only inner cohort
+  "The Fellowship", and `/work` lists it as initiative 02 with the brief's own
+  description. `/spectre` is now a second surface for what sounds like the same
+  thing. Either Spectre is the Fellowship renamed — in which case `content/work.ts`
+  and the canon should follow — or it is distinct and the difference needs
+  stating. Nothing was changed in the canon-derived copy on assumption.
+- **Spectre applications have no Airtable home of their own** — the route writes
+  to `People` with source `Website` and tags the record in `builder_profile`,
+  because Boola's `SOURCES` enum has no Spectre value and the route will not
+  invent one. Add a `Spectre` source option or a Programs link if you want them
+  separable.
 - **`/catalog` vs `/builders`** — the two names read as near-synonyms. Worth
   renaming one before launch.
 - **Landing links** — `Manifesto` alone, per §3's default. Add `Enter` in

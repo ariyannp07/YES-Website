@@ -41,9 +41,21 @@
 .note {
   font-family: Georgia, serif;
   font-style: italic;
-  color: #79a6f5;
-  margin: 1.1rem 0 0;
+  margin: 1.4rem 0 0;
   white-space: nowrap;
+}
+
+.note a {
+  color: #79a6f5;
+  text-decoration: none;
+  border-bottom: 1px solid rgb(121 166 245 / 32%);
+  padding-bottom: 0.22em;
+  transition: color 240ms ease, border-color 240ms ease;
+}
+
+.note a:hover {
+  color: #bcd4ff;
+  border-bottom-color: #bcd4ff;
 }
 
 .docref {
@@ -74,6 +86,14 @@
   gap: 0.7rem;
   color: #4f6a99;
   z-index: 20;
+}
+
+.stamp {
+  text-decoration: none;
+}
+
+.stamp:hover {
+  color: #9dbcff;
 }
 
 .stamp svg {

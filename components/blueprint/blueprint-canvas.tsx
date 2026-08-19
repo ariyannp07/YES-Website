@@ -8,7 +8,7 @@ import {
   TITLE_WORLD,
   buildFragments,
   drawFragment,
-} from '@/lib/concepts/blueprint-fragments'
+} from '@/lib/blueprint-fragments'
 
 import styles from './blueprint.module.css'
 
@@ -50,10 +50,17 @@ const CAMERA_TRAVEL = { x: 1750, y: 980 }
 export default function BlueprintCanvas({
   worldRef,
   children,
+  scrollDriven = true,
 }: {
   /** Title-block DOM, moved by the same camera as the drawing. */
   readonly worldRef: React.RefObject<HTMLDivElement | null>
   readonly children?: React.ReactNode
+  /**
+   * When false the camera holds its opening framing and only drifts and
+   * responds to the cursor — the wall stays a single held view rather than
+   * something you travel across.
+   */
+  readonly scrollDriven?: boolean
 }) {
   const hostRef = useRef<HTMLDivElement>(null)
 
@@ -112,6 +119,7 @@ export default function BlueprintCanvas({
     }
 
     const onScroll = () => {
+      if (!scrollDriven) return
       const max = document.documentElement.scrollHeight - window.innerHeight
       scrollProgress = max > 0 ? window.scrollY / max : 0
     }
@@ -253,7 +261,7 @@ export default function BlueprintCanvas({
 
     window.addEventListener('resize', resize)
     window.addEventListener('pointermove', onPointerMove)
-    window.addEventListener('scroll', onScroll, { passive: true })
+    if (scrollDriven) window.addEventListener('scroll', onScroll, { passive: true })
     resize()
     onScroll()
     frame = requestAnimationFrame(render)
@@ -263,9 +271,10 @@ export default function BlueprintCanvas({
       window.removeEventListener('resize', resize)
       window.removeEventListener('pointermove', onPointerMove)
       window.removeEventListener('scroll', onScroll)
+      // (removing a listener that was never added is a no-op)
       if (canvas.parentNode === host) host.removeChild(canvas)
     }
-  }, [worldRef])
+  }, [worldRef, scrollDriven])
 
   return (
     <div ref={hostRef} className={styles.stage}>

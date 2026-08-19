@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import { ConceptChrome } from '@/components/concepts/concept-chrome'
-import SignalCanvas from '@/components/concepts/signal/signal-canvas'
-import styles from '@/components/concepts/signal/signal.module.css'
+import SignalCanvas from '@/components/landing/signal/signal-canvas'
+import styles from '@/components/landing/signal/signal.module.css'
 
 export const metadata: Metadata = {
   title: 'Signal — YES prototype',

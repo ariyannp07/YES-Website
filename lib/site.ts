@@ -16,6 +16,15 @@ export const FOUNDED_LINE =
   'Teaching Yalies to build the future, not just study for it. Since 1999.'
 
 
+/**
+ * The line under the name on the front door.
+ *
+ * canon/01-vision-brief.md closes on "must learn not only to study that
+ * future—but to build it"; this is that argument compressed to its reframe
+ * (canon 03 §3.4, "not X but Y"). Owner-written.
+ */
+export const LANDING_LINE = 'Build the future, not study for it.'
+
 export const CONTACT = {
   ariyan: 'ariyan.patel@yale.edu',
   sofia: 'sst39@yale.edu',
@@ -38,6 +47,7 @@ export interface NavItem {
 export const NAV: readonly NavItem[] = [
   { href: '/manifesto', label: 'Manifesto' },
   { href: '/work', label: 'Work' },
+  { href: '/spectre', label: 'Spectre' },
   { href: '/catalog', label: 'Catalog' },
   { href: '/builders', label: 'Builders', hidden: true },
   { href: '/reservoir', label: 'Reservoir' },

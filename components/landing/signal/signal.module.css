@@ -89,3 +89,32 @@
     animation-delay: 0s;
   }
 }
+
+/* The site-wide timestamp signature, held above the network. */
+.masthead {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 12;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: var(--pad);
+  pointer-events: none;
+  color: #4e5f80;
+}
+
+.footnote {
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  transform: translateX(-50%);
+  z-index: 12;
+  color: #33415e;
+  pointer-events: none;
+  white-space: nowrap;
+  text-align: center;
+}

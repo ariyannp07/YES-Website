@@ -1,71 +1,48 @@
 import Link from 'next/link'
 
-import { Atmosphere } from '@/components/field/atmosphere'
-import { FloatingField } from '@/components/field/floating-field'
-import { SpinningMark } from '@/components/field/spinning-mark'
+import SignalCanvas from '@/components/landing/signal/signal-canvas'
+import styles from '@/components/landing/signal/signal.module.css'
 import { Timestamp } from '@/components/timestamp'
-import { FOUNDED_LINE, LANDING_LINKS, SITE_NAME } from '@/lib/site'
+import { LANDING_LINE, LANDING_LINKS, SITE_NAME } from '@/lib/site'
 
 /**
- * The front door (build spec §3).
+ * The front door.
  *
- * The mark and one link. Nothing else in the middle — the name sits in the
- * utility line at the top beside the clock, at the same size, weight and
- * colour, so it reads as a masthead rather than as a headline. The restraint
- * plus the unexplained mark is the statement; a display-size wordmark was
- * competing with the only object on the page.
+ * A hidden network, scanned with the cursor. The page opens on a single pulsing
+ * point; moving the mouse exposes nodes and edges around it, and over ten
+ * seconds an ambient floor rises so the field densifies on its own. Roughly half
+ * the nodes are sampled from inside the YES mark's polygons and carry a higher
+ * floor, so the shape surfaces as a DENSITY — the viewer half-recognises it
+ * without a logo ever appearing. Disciplines occasionally collide and propose
+ * something neither of them would have alone.
  *
- * Layered back to front: the background wash and dust, then approved company
- * logos drifting (empty until permissions land), then the mark and the type.
+ * There is no scroll: the whole page is the viewport (build spec §3). The
+ * timestamp keeps its place as the site-wide signature.
  */
 export default function Landing() {
   return (
-    <main
-      data-scope="landing"
-      className="relative grid min-h-dvh grid-rows-[auto_1fr_auto]"
-    >
-      <Atmosphere />
-      <FloatingField />
+    <>
+      <SignalCanvas />
 
-      <header
-        className="relative z-10 flex justify-center"
-        style={{ padding: 'var(--pad)' }}
-      >
-        <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
-          <h1 className="t-micro" style={{ color: 'var(--muted)', margin: 0 }}>
-            {SITE_NAME}
-          </h1>
-          <span
-            className="t-micro"
-            style={{ color: 'var(--muted)' }}
-            aria-hidden="true"
-          >
-            ·
-          </span>
-          <Timestamp />
-        </div>
+      {/* The name is already in the centre; the masthead keeps only the clock. */}
+      <header className={`${styles.masthead} t-micro`}>
+        <Timestamp />
       </header>
 
-      <div className="relative z-10 flex flex-col items-center justify-center px-6 text-center">
-        <SpinningMark />
-
-        <nav className="t-small mt-12 flex gap-8">
+      <div className={styles.copy}>
+        <p className={`${styles.name} t-micro`}>{SITE_NAME}</p>
+        <p className={`${styles.tagline} t-micro`}>{LANDING_LINE}</p>
+        <p className={`${styles.enter} t-micro`}>
           {LANDING_LINKS.map((link) => (
             <Link key={link.href} href={link.href}>
               {link.label}
             </Link>
           ))}
-        </nav>
+        </p>
       </div>
 
-      <footer
-        className="relative z-10 flex justify-start"
-        style={{ padding: 'var(--pad)' }}
-      >
-        <p className="t-micro" style={{ color: 'var(--muted)', margin: 0 }}>
-          {FOUNDED_LINE}
-        </p>
-      </footer>
-    </main>
+      {/* The tagline already carries the argument; this only carries the year. */}
+      <p className={`${styles.footnote} t-micro`}>Since 1999</p>
+    </>
   )
 }

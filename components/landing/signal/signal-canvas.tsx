@@ -7,7 +7,7 @@ import {
   buildSignalNetwork,
   findLabelIndex,
   type SignalNode,
-} from '@/lib/concepts/signal-model'
+} from '@/lib/signal-model'
 
 import styles from './signal.module.css'
 
