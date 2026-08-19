@@ -1,56 +1,33 @@
 /**
- * The four initiatives and the proof block.
+ * /work — the proof.
  *
- * DRAFT — AWAITING OWNER APPROVAL, but the descriptions below are taken
- * VERBATIM from canon/01-vision-brief.md → "The Four Initiatives", and the
- * proof figures verbatim from → "PROOF OF POTENTIAL". Build spec §3 requires
- * the /work copy be drawn from the brief's descriptions and §8.5 forbids
- * inventing anything. Nothing here is paraphrased.
+ * The four initiatives (Special Projects, The Fellowship, BASYES, A Permanent
+ * Home—or Homes) were removed at owner direction. The page is now the numbers
+ * and nothing else. Build spec §3 describes /work as a numbered index of the
+ * initiatives followed by a proof block; only the second half survives.
  *
- * The Residency is deliberately absent: the delivered speech says "four core
- * initiatives" and the four-initiative brief is canonical. See
- * canon/01-vision-brief.md → Appendix A, and Boola's airtable/schema.ts, which
- * seeds the same four Programs.
+ * Their descriptions are still in git — restoring them is a revert of the
+ * commit that removed them, not a rewrite. canon/01-vision-brief.md remains the
+ * source of truth for what the programmes are.
+ *
+ * Every figure below is verbatim from canon/01-vision-brief.md → "PROOF OF
+ * POTENTIAL". Nothing here is invented (build spec §8.5).
  */
 
-export interface Initiative {
-  readonly index: string
-  readonly name: string
-  readonly body: string
-}
-
-export const INITIATIVES: readonly Initiative[] = [
-  {
-    index: '01',
-    name: 'Special Projects',
-    body: 'Students learn to build before they necessarily have an idea of their own. High-agency teams will work on internally incubated concepts and scoped projects with established companies, including work being explored with Zipline around high-volume drone-delivery operations and a campus pilot with a student financial-services company.',
-  },
-  {
-    index: '02',
-    name: 'The Fellowship',
-    body: 'A tap-only, six-month cohort for 15–20 exceptional creative problem-solvers. Fellows will gain sustained exposure to founders and operators, build alongside one another, and shadow teams at leading unicorn, frontier, and deep-tech companies.',
-  },
-  {
-    index: '03',
-    name: 'BASYES',
-    body: 'Building and Scaling Yalie Startups. A focused accelerator for five to eight of Yale’s strongest founding teams, targeting a $10,000 investment per team alongside startup credits, mentorship, accountability, and direct access to investors and alumni. The program will culminate in a demo day, with curriculum development informed by the founder of Floodgate and additional operators.',
-  },
-  {
-    index: '04',
-    name: 'A Permanent Home—or Homes',
-    body: 'The San Francisco Hacker House will return as a larger residential building program. In New Haven, YES will pursue a permanent space where builders can work, host events, hold office hours, and find one another throughout the year.',
-  },
-] as const
-
-/**
- * Proof. Numbers in display type, context in small type, no animated counters
- * (build spec §3 and the §1 anti-pattern list).
- */
 export interface ProofItem {
   readonly figure: string
   readonly context: string
 }
 
+/**
+ * Numbers in display type, context in small type, no animated counters
+ * (build spec §3 and the §1 anti-pattern list).
+ *
+ * NOTE — the second line says FIVE teams. The owner-written manifesto says
+ * FOUR. Both are live, one click apart. Flagged in README under open decisions
+ * and deliberately not reconciled here: picking one would mean overruling
+ * either the canon or the owners on their own copy.
+ */
 export const PROOF: readonly ProofItem[] = [
   {
     figure: '14',
@@ -74,9 +51,6 @@ export const PROOF: readonly ProofItem[] = [
   },
 ] as const
 
-export const PROOF_CLOSE =
-  'The Hacker House did not create Yale’s talent. It showed what happens when that talent is given a home.'
-
-/** Both /work blocks ship as drafts until the owners sign off (build spec §8.4). */
+/** The context lines are agent-written, so the page still ships as a draft. */
 export const WORK_APPROVED = false
 export const WORK_DRAFT_LABEL = 'DRAFT — AWAITING OWNER APPROVAL'
