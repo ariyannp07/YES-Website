@@ -1,5 +1,6 @@
 'use client'
 
+import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import { PALETTES, PALETTE_LABELS, type Palette } from '@/lib/palette'
@@ -17,6 +18,7 @@ const STORAGE_KEY = 'yes.palette'
  */
 export function PaletteToggle({ initial }: { readonly initial: Palette }) {
   const [palette, setPalette] = useState<Palette>(initial)
+  const pathname = usePathname()
 
   useEffect(() => {
     try {
@@ -37,6 +39,10 @@ export function PaletteToggle({ initial }: { readonly initial: Palette }) {
       // Non-fatal: the palette still applies for this page view.
     }
   }, [palette])
+
+  // The landing prototypes carry their own art direction and their own review
+  // chrome; the site palette switcher does not belong on top of them.
+  if (pathname.startsWith('/concepts')) return null
 
   return (
     <div

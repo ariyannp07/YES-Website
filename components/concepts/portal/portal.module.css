@@ -1,0 +1,76 @@
+.scroll {
+  height: 360vh;
+}
+
+.stage {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #03050b;
+  color: #cddaf2;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.copy {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.4rem;
+  pointer-events: none;
+  text-align: center;
+  padding: 0 1.5rem;
+  will-change: opacity;
+}
+
+.headline {
+  font-family: Georgia, serif;
+  color: #e6edfb;
+  letter-spacing: 0.06em;
+  margin: 0;
+  /* The one place this concept goes large. Everything else stays utility-size. */
+  font-size: var(--text-display);
+}
+
+.sub {
+  color: #6d86b8;
+  letter-spacing: 0.34em;
+  text-indent: 0.34em;
+  margin: 0;
+}
+
+/* Hidden until the cursor drops toward the bottom of the page. */
+.reveal {
+  position: fixed;
+  left: 50%;
+  bottom: 3.2rem;
+  transform: translateX(-50%);
+  z-index: 12;
+  opacity: 0;
+  transition: opacity 500ms ease;
+  will-change: opacity;
+}
+
+.reveal a {
+  color: #4d8cff;
+  text-decoration: none;
+  letter-spacing: 0.26em;
+  text-indent: 0.26em;
+  border-bottom: 1px solid rgb(77 140 255 / 40%);
+  padding-bottom: 0.35em;
+}
+
+.reveal a:hover {
+  color: #a8c6ff;
+  border-bottom-color: #a8c6ff;
+}

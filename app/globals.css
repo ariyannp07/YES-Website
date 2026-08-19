@@ -66,6 +66,13 @@
   overflow: hidden;
 }
 
+/* Landing prototype: the Portal's threshold line is that page's display size.
+   Declared here rather than in the component so app/globals.css stays the one
+   place a text size is set. */
+[data-scope='portal-threshold'] {
+  --text-display: clamp(1.9rem, 4.6vw, 3.4rem);
+}
+
 /* "No scroll. The page is the viewport." (build spec §3) */
 body:has([data-scope='landing']) {
   overflow: hidden;

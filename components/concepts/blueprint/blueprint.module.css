@@ -1,0 +1,93 @@
+/* The page is tall so the wheel and trackpad drive the camera naturally; the
+   canvas itself never scrolls. */
+.scroll {
+  height: 420vh;
+}
+
+.stage {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #060a16;
+  color: #cddaf2;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  z-index: 1;
+}
+
+/* Type that belongs to the drawing. It is anchored in WORLD space and moved by
+   the same camera as the sketches, so it sits in the wall rather than on it. */
+.world {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+.title {
+  color: #dbe6fb;
+  letter-spacing: 0.34em;
+  text-indent: 0.34em;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.note {
+  font-family: Georgia, serif;
+  font-style: italic;
+  color: #79a6f5;
+  margin: 1.1rem 0 0;
+  white-space: nowrap;
+}
+
+.docref {
+  margin: 2.6rem 0 0;
+  white-space: nowrap;
+}
+
+.docref a {
+  color: #4d8cff;
+  text-decoration: none;
+  letter-spacing: 0.2em;
+  border-bottom: 1px solid rgb(77 140 255 / 40%);
+  padding-bottom: 0.3em;
+}
+
+.docref a:hover {
+  color: #a8c6ff;
+  border-bottom-color: #a8c6ff;
+}
+
+/* Sheet title block, fixed to the corner like a real drawing. */
+.stamp {
+  position: fixed;
+  left: 1.5rem;
+  bottom: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: #4f6a99;
+  z-index: 20;
+}
+
+.stamp svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+.hint {
+  position: fixed;
+  left: 50%;
+  bottom: 4.2rem;
+  transform: translateX(-50%);
+  color: #3f587f;
+  z-index: 20;
+  transition: opacity 400ms ease;
+}

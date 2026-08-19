@@ -1,0 +1,91 @@
+.root {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #05070d;
+  color: #e8edf7;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  cursor: crosshair;
+}
+
+.copy {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+  pointer-events: none;
+  text-align: center;
+  padding: 0 1.5rem;
+}
+
+/* Each line arrives only once the environment has begun to reveal itself. */
+.name,
+.tagline,
+.enter {
+  opacity: 0;
+  animation: surface 2.4s ease forwards;
+}
+
+.name {
+  animation-delay: 1.4s;
+  letter-spacing: 0.42em;
+  text-indent: 0.42em;
+  color: #cfd9ee;
+}
+
+.tagline {
+  animation-delay: 5s;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  color: #6f86b5;
+}
+
+.enter {
+  animation-delay: 8.4s;
+  margin-top: 3.5rem;
+  pointer-events: auto;
+}
+
+.enter a {
+  color: #4d8cff;
+  text-decoration: none;
+  border-bottom: 1px solid rgb(77 140 255 / 35%);
+  padding-bottom: 0.35em;
+  letter-spacing: 0.26em;
+  text-indent: 0.26em;
+  transition: border-color 240ms ease, color 240ms ease;
+}
+
+.enter a:hover {
+  color: #9dbcff;
+  border-bottom-color: #9dbcff;
+}
+
+@keyframes surface {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .name,
+  .tagline,
+  .enter {
+    animation-duration: 0.01s;
+    animation-delay: 0s;
+  }
+}
