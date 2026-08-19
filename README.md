@@ -15,15 +15,23 @@ with the Boola/AINS canon as the authority for facts and voice:
 | Route | What it is |
 |---|---|
 | `/` | The front door: a hidden network, scanned with the cursor |
+| `/manifesto` | The essay. Owner-written and approved |
 | `/spectre` | The inner cohort — the working wall, held as one view |
 | `/spectre/apply` | Three questions, and one line back |
-| `/manifesto` | The essay |
-| `/work` | The four initiatives, then proof |
 | `/catalog` | The wall of faces, and a dossier per person |
 | `/reservoir` | Essays, talks, workshops, lessons, press |
-| `/enter` | The single intake form |
-| `/builders` | Public builder catalog — dark and unlinked until 15 consent |
-| `/concepts` | Archive of the three landing prototypes. Review only — delete before launch |
+
+Nav: `YES · Manifesto · Spectre · Catalog · Reservoir`.
+
+**Live but unlinked.** These resolve for anyone holding the URL and are reached
+by link, not by tab:
+
+| Route | Reached from |
+|---|---|
+| `/work` | The end of the manifesto — "See the work →" |
+| `/enter` | The end of `/work`, and the Bazaar QR (`/enter?src=bazaar`) |
+| `/builders` | Nothing yet — dark until 15 builders consent |
+| `/concepts` | Nothing — archive of the three landing prototypes. Delete before launch |
 
 ## Run it
 

@@ -35,8 +35,10 @@ export const CONTACT = {
  * omits it. §2 governs — it is the show-don't-tell centerpiece, so it is
  * reachable. Named "Catalog" at the owners' direction rather than "Alumni".
  *
- * `hidden` pages stay routable but unlinked. /builders dark-ships until the
- * consented catalog clears BUILDERS_MIN_ENTRIES (build spec §3).
+ * `hidden` pages stay routable but unlinked — the pattern /builders already
+ * used while dark-shipping (build spec §3). Removing a tab is not the same as
+ * deleting a page: every hidden route below is still reachable by link and
+ * still resolves for anyone holding its URL.
  */
 export interface NavItem {
   readonly href: string
@@ -46,12 +48,16 @@ export interface NavItem {
 
 export const NAV: readonly NavItem[] = [
   { href: '/manifesto', label: 'Manifesto' },
-  { href: '/work', label: 'Work' },
   { href: '/spectre', label: 'Spectre' },
   { href: '/catalog', label: 'Catalog' },
-  { href: '/builders', label: 'Builders', hidden: true },
   { href: '/reservoir', label: 'Reservoir' },
-  { href: '/enter', label: 'Enter' },
+  // Unlinked, but live. See the note above `hidden` — /work is reached from the
+  // end of the manifesto and /enter from the end of /work, which makes the
+  // funnel a deliberate path rather than a tab. /enter is also the Bazaar QR's
+  // destination (?src=bazaar), so it must keep resolving whatever the nav says.
+  { href: '/work', label: 'Work', hidden: true },
+  { href: '/enter', label: 'Enter', hidden: true },
+  { href: '/builders', label: 'Builders', hidden: true },
 ] as const
 
 /** Below this many consented entries, /builders stays unlinked (build spec §3). */
