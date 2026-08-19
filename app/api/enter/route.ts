@@ -57,9 +57,11 @@ export async function POST(request: Request) {
 
   const submission = parsed.data
 
-  // Honeypot. Answer as though it succeeded — a bot learns nothing, and no
-  // record is written.
-  if (submission.company) {
+  // Honeypot. Reachable only because `confirmRef` is unvalidated: when it was
+  // constrained to `.max(0)`, zod returned 400 above and this branch was dead
+  // code that also told a bot exactly which field to omit. Answer as though it
+  // succeeded — a bot learns nothing, and no record is written.
+  if (submission.confirmRef) {
     console.warn('[enter] honeypot triggered; submission discarded.')
     return NextResponse.json({ ok: true })
   }

@@ -3,6 +3,7 @@ import Link from 'next/link'
 
 import { BlueprintStage } from '@/components/blueprint/blueprint-stage'
 import styles from '@/components/blueprint/blueprint.module.css'
+import { SIGMA_PATH } from '@/lib/yes-geometry'
 
 export const metadata: Metadata = {
   title: 'Spectre',
@@ -29,10 +30,9 @@ export default function SpectrePage() {
 
       <Link href="/" className={`${styles.stamp} t-micro`}>
         <svg viewBox="0 0 100 100" aria-hidden="true">
-          <path
-            d="M8,10 L92,10 L92,27 L8,27 Z M8,33 L44,33 L80,50 L44,67 L8,67 L44,50 Z M8,73 L92,73 L92,90 L8,90 Z"
-            fill="currentColor"
-          />
+          {/* Imported, not transcribed — the mark has one definition, so
+              replacing the placeholder geometry updates every surface. */}
+          <path d={SIGMA_PATH} fill="currentColor" />
         </svg>
         <span>YES</span>
       </Link>

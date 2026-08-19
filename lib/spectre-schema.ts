@@ -22,11 +22,20 @@ export const SpectreApplication = z.object({
     .describe('Why you.'),
 
   /**
-   * Honeypot. A real person never sees this field, so anything in it is a bot.
-   * Preferred over a CAPTCHA, which the safety rules forbid solving and which
-   * would wreck the tone of this page anyway.
+   * Honeypot. Off-screen, never announced, never filled by a person.
+   *
+   * NOT validated — deliberately. An earlier version constrained this to
+   * `.max(0)`, which meant zod rejected a filled honeypot BEFORE the trap could
+   * spring: the client dead-ended silently with an error it never rendered, and
+   * the server answered 400 naming `confirm_ref`, so one probe told a bot
+   * exactly which field to omit. Leaving it unconstrained is what makes the
+   * server's fake-success branch reachable.
+   *
+   * The name matters too. It used to be `company`, which password managers
+   * autofill from the label — so a real applicant's submission would be
+   * silently discarded as a bot. Nothing here matches an autofill heuristic.
    */
-  company: z.string().max(0).optional(),
+  confirmRef: z.string().optional(),
 })
 
 export type SpectreApplication = z.infer<typeof SpectreApplication>

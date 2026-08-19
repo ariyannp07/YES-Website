@@ -50,9 +50,21 @@
 }
 
 .enter {
-  animation-delay: 8.4s;
+  /* `opacity: 0` alone leaves the page's ONLY link in the tab order, focusable
+     and focus-ringed, for 8.4 seconds while it is invisible. `visibility`
+     removes it until it is actually painted. */
+  visibility: hidden;
+  animation:
+    surface 2.4s ease 8.4s forwards,
+    unhide 0s linear 8.4s forwards;
   margin-top: 3.5rem;
   pointer-events: auto;
+}
+
+@keyframes unhide {
+  to {
+    visibility: visible;
+  }
 }
 
 .enter a {
@@ -83,10 +95,15 @@
 
 @media (prefers-reduced-motion: reduce) {
   .name,
-  .tagline,
-  .enter {
+  .tagline {
     animation-duration: 0.01s;
     animation-delay: 0s;
+  }
+
+  .enter {
+    visibility: visible;
+    animation-duration: 0.01s, 0s;
+    animation-delay: 0s, 0s;
   }
 }
 
@@ -104,7 +121,7 @@
   gap: 0.75rem;
   padding: var(--pad);
   pointer-events: none;
-  color: #4e5f80;
+  color: #8095bb;
 }
 
 .footnote {
@@ -113,7 +130,7 @@
   bottom: 1.5rem;
   transform: translateX(-50%);
   z-index: 12;
-  color: #33415e;
+  color: #7c8bab;
   pointer-events: none;
   white-space: nowrap;
   text-align: center;

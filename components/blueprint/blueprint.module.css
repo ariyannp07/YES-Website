@@ -84,7 +84,7 @@
   display: flex;
   align-items: center;
   gap: 0.7rem;
-  color: #4f6a99;
+  color: #8aa6d6;
   z-index: 20;
 }
 
@@ -107,7 +107,7 @@
   left: 50%;
   bottom: 4.2rem;
   transform: translateX(-50%);
-  color: #3f587f;
+  color: #7e97c4;
   z-index: 20;
   transition: opacity 400ms ease;
 }

@@ -114,6 +114,9 @@ export default function BlueprintCanvas({
     }
 
     const onPointerMove = (e: PointerEvent) => {
+      // Cursor parallax slides the title and its link by up to ±27px. That is
+      // motion triggered by interaction — WCAG 2.3.3 — so it stops too.
+      if (reduceMotion) return
       aimX = (e.clientX / window.innerWidth - 0.5) * 2
       aimY = (e.clientY / window.innerHeight - 0.5) * 2
     }
@@ -247,7 +250,10 @@ export default function BlueprintCanvas({
       // Move the title-block DOM with the near layer.
       if (worldRef.current) {
         const p = LAYER_PARALLAX[2]
-        const rawX = TITLE_WORLD.x - camX * p + angleX * 27
+        // Drift is in fixed pixels but the anchor is a fraction of the width,
+        // so on a phone the note could swing off the left edge — and with
+        // scrollDriven={false} it would never come back. Keep a gutter.
+        const rawX = Math.max(TITLE_WORLD.x - camX * p + angleX * 27, 18)
         const rawY = TITLE_WORLD.y - camY * p + angleY * 16
         // Same chain as the canvas: scale about the viewport centre, not the
         // element origin, or the type drifts out of its registration marks.

@@ -299,8 +299,10 @@ export default function SignalCanvas() {
         ? 1
         : smoothstep(clamp01((elapsed - 0.8) / REVEAL_SECONDS))
 
-      // Without a pointer, the scan drifts on its own so the page is never inert.
-      if (!pointerSeen || coarsePointer) {
+      // Without a pointer the scan drifts on its own so the page is never inert
+      // — but this is the largest motion on the page, sweeping ~60% of the
+      // viewport forever, so it must not run for someone who asked for none.
+      if (!reduceMotion && (!pointerSeen || coarsePointer)) {
         const t = elapsed * 0.14
         targetX = width * (0.5 + 0.3 * Math.sin(t))
         targetY = height * (0.5 + 0.24 * Math.sin(t * 1.618 + 1.2))
@@ -347,7 +349,10 @@ export default function SignalCanvas() {
         const node = nodes[i]
         const x = nodeX(node)
         const y = nodeY(node)
-        const breathe = 1 + 0.12 * Math.sin(elapsed * 0.9 + node.seedPhase)
+        // ~150 dots oscillating ±12% forever is continuous motion too.
+        const breathe = reduceMotion
+          ? 1
+          : 1 + 0.12 * Math.sin(elapsed * 0.9 + node.seedPhase)
         const r = (0.7 + b * 1.9) * breathe
 
         context.fillStyle = rgba(0.2 + b * 0.7)
@@ -399,12 +404,29 @@ export default function SignalCanvas() {
 
     const observer = new ResizeObserver(resize)
     observer.observe(host)
+
+    // Dragging the window to a display with a different pixel ratio changes
+    // neither the CSS box nor fires a resize, so the backing store would keep
+    // the old ratio and the labels would blur until reload.
+    let dprQuery: MediaQueryList | null = null
+    const watchPixelRatio = () => {
+      dprQuery?.removeEventListener('change', onPixelRatioChange)
+      dprQuery = window.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`)
+      dprQuery.addEventListener('change', onPixelRatioChange)
+    }
+    function onPixelRatioChange() {
+      resize()
+      watchPixelRatio()
+    }
+
     resize()
+    watchPixelRatio()
     frame = requestAnimationFrame(render)
 
     return () => {
       cancelAnimationFrame(frame)
       observer.disconnect()
+      dprQuery?.removeEventListener('change', onPixelRatioChange)
       canvas.removeEventListener('pointermove', onPointerMove)
       canvas.removeEventListener('pointerdown', onClick)
       if (canvas.parentNode === host) host.removeChild(canvas)

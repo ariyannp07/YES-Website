@@ -7,6 +7,9 @@ import { PALETTES, PALETTE_LABELS, type Palette } from '@/lib/palette'
 
 const STORAGE_KEY = 'yes.palette'
 
+/** Routes that paint their own background and ignore the palette tokens. */
+const ART_DIRECTED = ['/', '/spectre', '/concepts'] as const
+
 /**
  * PREVIEW-ONLY. Build spec §8.3 asks the owners to choose the palette from
  * rendered screens, so both directions need to be reachable on one deployment.
@@ -40,9 +43,13 @@ export function PaletteToggle({ initial }: { readonly initial: Palette }) {
     }
   }, [palette])
 
-  // The landing prototypes carry their own art direction and their own review
-  // chrome; the site palette switcher does not belong on top of them.
-  if (pathname.startsWith('/concepts')) return null
+  // Art-directed pages set their own colours, so the switcher does nothing on
+  // them except sit there — and in Paper it drops to ~1:1 against their own
+  // near-black backgrounds. The prototypes moved to `/` and `/spectre`, so this
+  // list has to follow them.
+  if (ART_DIRECTED.some((route) => pathname === route || pathname.startsWith(`${route}/`))) {
+    return null
+  }
 
   return (
     <div

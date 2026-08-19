@@ -32,7 +32,7 @@ const EMPTY = {
   role: 'builder' as Role,
   building: '',
   catalogConsent: false,
-  company: '',
+  confirmRef: '',
 }
 
 export function EnterForm({ connected }: { readonly connected: boolean }) {
@@ -64,8 +64,10 @@ export function EnterForm({ connected }: { readonly connected: boolean }) {
 
     if (!parsed.success) {
       setFieldErrors(parsed.error.flatten().fieldErrors)
+      // Without this the only role="alert" never renders and a screen-reader
+      // user gets no feedback at all when the submit fails validation.
+      setMessage('Something did not go through. Check the fields below.')
       setStatus('error')
-      setMessage('')
       return
     }
 
@@ -107,7 +109,12 @@ export function EnterForm({ connected }: { readonly connected: boolean }) {
   const errorFor = (field: string) => fieldErrors[field]?.[0]
 
   return (
-    <form className={`${styles.form} t-small`} onSubmit={onSubmit} noValidate>
+    <form
+      method="post"
+      className={`${styles.form} t-small`}
+      onSubmit={onSubmit}
+      noValidate
+    >
       {connected ? null : (
         <p className={`${styles.notice} t-micro`}>
           [ Not connected — submissions open when the Airtable key is set. ]
@@ -217,19 +224,19 @@ export function EnterForm({ connected }: { readonly connected: boolean }) {
         <span>List me in the public catalog of Yale builders.</span>
       </label>
 
-      {/* Honeypot. Never shown, never announced, never filled by a person. */}
+      {/* Honeypot. Off-screen, unlabelled to autofill heuristics, never validated —
+          the server decides what a filled one means. */}
       <div className={styles.honeypot} aria-hidden="true">
-        <label>
-          Company
-          <input
-            type="text"
-            name="company"
-            tabIndex={-1}
-            autoComplete="off"
-            value={values.company}
-            onChange={(event) => update('company', event.target.value)}
-          />
-        </label>
+        <label htmlFor="confirm_ref">Leave this field empty</label>
+        <input
+          id="confirm_ref"
+          type="text"
+          name="confirm_ref"
+          tabIndex={-1}
+          autoComplete="off"
+          value={values.confirmRef}
+          onChange={(event) => update('confirmRef', event.target.value)}
+        />
       </div>
 
       {message ? (
