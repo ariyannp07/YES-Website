@@ -171,6 +171,14 @@ Each is deliberate, and each is reversible.
 - **Dossier expansion** — both patterns are live. Clicking a face expands in
   place over the wall; opening `/catalog/<slug>` cold is the full-page takeover.
   "Open as page" in the modal switches between them.
+- **Four teams or five?** The manifesto (owner-written) says *"Four teams have
+  already completed fundraising rounds totaling $17 million."* `content/work.ts`
+  and `canon/01-vision-brief.md` both say **five** teams raised more than $17
+  million combined. Both numbers are live, one page apart. Neither was changed
+  on assumption — pick one and the other follows.
+- **Manifesto is approved and live.** It is the owners' own text, so
+  `content/manifesto.ts` carries `approved: true` and the page shows no draft
+  mark. `/work` copy is still `approved: false` and still shows one.
 - **Spectre vs The Fellowship** — canon/01 calls the tap-only inner cohort
   "The Fellowship", and `/work` lists it as initiative 02 with the brief's own
   description. `/spectre` is now a second surface for what sounds like the same

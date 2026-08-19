@@ -11,14 +11,16 @@ export const metadata: Metadata = {
 /**
  * The essay (build spec §3). Single column, generous line height, no images.
  * Opinion before information.
+ *
+ * Three lines stand alone in display type — the pivot, the question, and the
+ * instruction. The owners' text is built around those beats, so the typography
+ * follows the writing rather than imposing a rhythm on it. There is no trailing
+ * signature: the piece opens by naming both co-presidents.
  */
 export default function ManifestoPage() {
   return (
     <article className="measure page-top" style={{ marginInline: 'auto' }}>
-      <DraftNotice
-        approved={MANIFESTO.approved}
-        label={MANIFESTO.draftLabel}
-      />
+      <DraftNotice approved={MANIFESTO.approved} label={MANIFESTO.draftLabel} />
 
       <div className="prose t-small">
         {MANIFESTO.blocks.map((block, index) => {
@@ -27,16 +29,20 @@ export default function ManifestoPage() {
               <p
                 key={index}
                 className="t-display"
-                style={{ margin: '2.5rem 0 2.75rem' }}
+                style={{ margin: '2.75rem 0 2.75rem' }}
               >
                 {block.text}
               </p>
             )
           }
 
-          if (block.kind === 'standard') {
+          if (block.kind === 'stack') {
             return (
-              <div key={index} className="standard" style={{ margin: '0 0 1.55em' }}>
+              <div
+                key={index}
+                className="standard"
+                style={{ margin: '0 0 1.55em' }}
+              >
                 {block.lines.map((line) => (
                   <p key={line}>{line}</p>
                 ))}
@@ -47,17 +53,6 @@ export default function ManifestoPage() {
           return <p key={index}>{block.text}</p>
         })}
       </div>
-
-      <p
-        className="t-micro"
-        style={{ color: 'var(--muted)', margin: '3.5rem 0 0' }}
-      >
-        {MANIFESTO.signature.map((line) => (
-          <span key={line} style={{ display: 'block' }}>
-            {line}
-          </span>
-        ))}
-      </p>
 
       <p className="t-small" style={{ margin: '4.5rem 0 0' }}>
         <Link href="/work">See the work →</Link>
