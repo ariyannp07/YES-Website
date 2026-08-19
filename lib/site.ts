@@ -6,8 +6,14 @@
 
 export const SITE_NAME = 'Yale Entrepreneurial Society'
 
-/** Carried over from the current site — oldest-club legitimacy in three words. */
-export const FOUNDED_LINE = 'Building since 1999'
+/**
+ * The footer line. Keeps the founding year from the current site (oldest-club
+ * legitimacy) and hangs the brief's closing argument on it — canon/01 ends
+ * "must learn not only to study that future—but to build it", which is the
+ * §3.4 "not X but Y" reframe this line runs.
+ */
+export const FOUNDED_LINE =
+  'Teaching Yalies to build the future, not just study for it. Since 1999.'
 
 
 export const CONTACT = {

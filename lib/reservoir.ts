@@ -21,7 +21,7 @@ import { z } from 'zod'
 
 const RESERVOIR_DIR = join(process.cwd(), 'content', 'reservoir')
 
-export const KINDS = ['essay', 'talk', 'workshop', 'lesson'] as const
+export const KINDS = ['essay', 'talk', 'workshop', 'lesson', 'press'] as const
 export type Kind = (typeof KINDS)[number]
 
 export const KIND_LABELS: Readonly<Record<Kind, string>> = {
@@ -29,6 +29,7 @@ export const KIND_LABELS: Readonly<Record<Kind, string>> = {
   talk: 'Talk',
   workshop: 'Workshop',
   lesson: 'Lesson',
+  press: 'Press',
 }
 
 /** Frontmatter contract. A malformed entry fails the build rather than half-rendering. */

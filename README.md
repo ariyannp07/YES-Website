@@ -10,6 +10,18 @@ with the Boola/AINS canon as the authority for facts and voice:
 - **Policy** — `Yale/YES/Boola/canon/05-human-ai-policy.md`. Its hard rails are
   enforced in code, not by convention (see *Rails*, below).
 
+## Pages
+
+| Route | What it is |
+|---|---|
+| `/` | The front door: the 3D mark, the masthead line, one link |
+| `/manifesto` | The essay |
+| `/work` | The four initiatives, then proof |
+| `/catalog` | The wall of faces, and a dossier per person |
+| `/reservoir` | Essays, talks, workshops, lessons, press |
+| `/enter` | The single intake form |
+| `/builders` | Public builder catalog — dark and unlinked until 15 consent |
+
 ## Run it
 
 ```bash
@@ -17,33 +29,27 @@ npm install
 npm run dev
 ```
 
-Then <http://localhost:3000>.
-
 ```bash
 npm run check    # typecheck + type-scale guard + adjective guard
 npm run build    # production build
 ```
 
-### node_modules lives outside Google Drive
+### A note on Google Drive
 
-This working copy sits in Google Drive, which would otherwise sync ~25k
-dependency files and race git's index. `node_modules` is a symlink to
-`~/.local/yes-website-build/node_modules`.
-
-**`npm install` destroys that symlink** — npm replaces it with a real directory.
-After any install, run:
-
-```bash
-npm run relink
-```
+This working copy lives in Google Drive, which syncs `node_modules` (~400MB)
+and, more importantly, `.git`. Moving `node_modules` outside Drive and
+symlinking it back **does not work** — Turbopack rejects a symlink that points
+outside the project root (`Symlink [project]/node_modules is invalid`). The
+options are to live with the sync, or to move the whole repo out of Drive and
+let GitHub be the sync mechanism. Push often either way.
 
 ## Environment
 
 Copy `.env.example` to `.env.local` and fill it in. `.env.local` is gitignored.
 
 The site builds and renders with **no** credentials: `/enter` accepts no
-submissions and says so, `/builders` stays dark, and `/alumni` shows placeholder
-silhouettes. Nothing is mocked and nothing pretends to be real data.
+submissions and says so, `/builders` stays dark, and `/catalog` shows
+placeholder silhouettes. Nothing is mocked and nothing pretends to be real data.
 
 ### Getting the Airtable token
 
@@ -59,8 +65,8 @@ the build-time feed readers touch it, and `lib/airtable/client.ts` imports
 
 ### Airtable schema additions
 
-The alumni page needs fields the AINS `People` table does not have yet. Add
-these, then create a view called `Alumni-Page-Feed` filtered to
+`/catalog` needs fields the AINS `People` table does not have yet. Add these,
+then create a view called `Alumni-Page-Feed` filtered to
 `alumni_page_ok = checked`:
 
 | Field | Type |
@@ -73,7 +79,7 @@ these, then create a view called `Alumni-Page-Feed` filtered to
 | `headshot` | Attachment |
 | `company_url` | URL |
 | `linkedin_url` | URL |
-| `alumni_weight` | Number — `1` standard, `2` anchor story |
+| `alumni_weight` | Number — `1` standard, `2` anchor story (unused while every head is the same size) |
 | `alumni_page_ok` | Checkbox — **the consent gate** |
 
 `/builders` reads the existing `Public-Catalog-Feed` view and needs no changes.
@@ -81,19 +87,22 @@ these, then create a view called `Alumni-Page-Feed` filtered to
 ## Publishing content
 
 - **The Reservoir** — drop a markdown file in `content/reservoir/`. Essays,
-  talks, workshops and lessons share one index; anything hosted elsewhere just
+  talks, workshops, lessons and press share one index; anything hosted elsewhere
   carries a `url` and the Reservoir links out instead of re-hosting it. See
   `content/reservoir/_FORMAT.md`.
+- **Press awaiting confirmation** — files prefixed `_PENDING-` are staged and do
+  NOT appear on the site. Each says what could not be verified and what to do.
+  Confirm, then drop the prefix.
 - **Logos on the landing field** — add an entry to
   `content/marks/approved.json`. A logo without both `approvedBy` and
   `approvedOn` is dropped from the field and reported in the build log. No logo
   ships without sign-off.
-- **The real YES mark** — the spinning sigma is traced placeholder geometry.
-  Drop the true vector at `public/marks/yes-logo.svg` and point
-  `components/field/yes-mark.tsx` at it.
-- **Alumni portraits** — `npm run build:portraits` pulls headshots from the
-  consented feed and bakes the duotone at build time. Run it before `npm run
-  build` whenever the feed changes.
+- **The real YES mark** — the sigma is placeholder geometry traced from a
+  screenshot. Replace `SIGMA_POLYGONS` in `lib/yes-geometry.ts`; the extrusion
+  and the network both re-fit whatever shape they are given.
+- **Portraits** — `npm run build:portraits` pulls headshots from the consented
+  feed and bakes the duotone at build time. Run it before `npm run build`
+  whenever the feed changes.
 - **Copy approval** — every copy module carries an `approved` flag. While it is
   `false` the page renders `[ DRAFT — AWAITING OWNER APPROVAL ]`. Flip it in the
   content file once Ariyan and Sofia sign off; it is a reviewable diff, not a
@@ -103,43 +112,64 @@ these, then create a view called `Alumni-Page-Feed` filtered to
 
 | Rail | Where it is enforced |
 |---|---|
-| No autonomous publishing (canon R1) | `/alumni`, `/alumni/[slug]` and `/builders` are `force-static`. Feeds are read at build time. No ISR, no cron, no `revalidate`. Publishing the catalog is a human redeploy. |
+| No autonomous publishing (canon R1) | `/catalog`, `/catalog/[slug]` and `/builders` are `force-static`. Feeds are read at build time. No ISR, no cron, no `revalidate`. Publishing the catalog is a human redeploy. |
 | Consent gates (canon R3) | Feeds read only the consent-filtered views, re-check the consent field per record, and select fields by explicit allowlist. Records without consent are dropped entirely, never emitted with nulls. |
 | Audit trail (canon R2) | `/api/enter` writes a `Log` row on success *and* on failure. |
 | Key never client-side | `lib/airtable/client.ts` imports `server-only`. |
 | Two type scales | `npm run check:type-scale` fails the build on any font-size outside `app/globals.css`. |
-| No adjectives on `/alumni` | `npm run check:adjectives` scans the live feed and fails on any hit. |
+| No adjectives on `/catalog` | `npm run check:adjectives` scans the live feed and fails on any hit. |
 
 ## Deviations from the build spec
 
 Each is deliberate, and each is reversible.
 
-1. **Not a static export.** §6 says "Next.js (static export)" but also forbids
+1. **The mark is WebGL, and the landing JS budget is blown.** §6 caps the
+   landing at 50KB of JS. The owners asked for a fixed light source with real
+   shadows and for the mark to be turned with the cursor. A stack of flat CSS
+   planes has no surface normals, so there is nothing for a light to fall on and
+   nothing to grab — neither is possible without real geometry. Three.js is
+   ~150KB gzipped, loaded from a dynamically-imported chunk after first paint,
+   with a static SVG of the mark in the initial HTML. LCP is unaffected; the
+   byte budget is genuinely exceeded.
+2. **Not a static export.** §6 says "Next.js (static export)" but also forbids
    exposing the Airtable key client-side. A static export has no server runtime
    to hold the key. Built as a standard Vercel deployment: every page static,
    one server route.
-2. **No ISR on `/builders`.** §6 asks for regeneration every 6h. Canon R1 says
+3. **No ISR on `/builders`.** §6 asks for regeneration every 6h. Canon R1 says
    publishing the catalog is "a human-run deploy, not a cron job." The canon
    wins; the page is built statically.
-3. **Night palette accent.** §4 pairs near-black with Yale blue `#00356B` and
+4. **Night palette accent.** §4 pairs near-black with Yale blue `#00356B` and
    also requires WCAG AA. Those are incompatible — `#00356B` on `#0A0A0A`
    measures **1.62:1**. Night uses Yale blue at a display tint (`#5B8FD4`,
    5.96:1). Paper uses the canonical `#00356B` unchanged (11.41:1).
-4. **`proof_object` is three columns**, not one. Airtable has no struct type;
+5. **`proof_object` is three columns**, not one. Airtable has no struct type;
    one column would mean parsing a blob that fails silently.
-5. **The landing floats glyphs, and now the YES mark.** §1 offers abstract
-   glyphs *or* speech words as placeholders. Words were built first and cut —
-   floating adjectives is telling, and the page's whole argument is showing.
-6. **Nav includes Alumni.** §2 lists it; §4's restatement drops it. §2 governs.
+6. **The landing field is empty.** §1 offers abstract glyphs *or* speech words
+   as placeholders. Both were built and both were cut — floating words is
+   telling, and the glyphs read as clip art. The permission gate still stands;
+   it now governs an empty list until real logos are approved.
+7. **The front door carries no display wordmark.** §3 puts the name in the
+   centre; it competed with the mark, so it moved to the masthead line.
+8. **`/catalog`, not `/alumni`; `/reservoir`, not `/writing`.** Owner-renamed,
+   and the Reservoir is widened past essays to the whole public collection.
+9. **The catalog is condensed, not edge-to-edge.** §3 calls for a dense mosaic
+   with no gutters and gravity-weighted tiles. Owner direction: every head the
+   same size, three to a row, air on both sides.
+10. **Nav includes the catalog.** §2 lists it; §4's restatement drops it.
+    §2 governs.
 
 ## Open owner decisions
 
 - **Palette** — both directions ship. Set `NEXT_PUBLIC_PALETTE` to `night` or
   `paper`. The preview switcher (bottom right) is on while
   `NEXT_PUBLIC_SHOW_PALETTE_TOGGLE=true`; turn it off for production.
+  **Paper is unfinished**: the mark's network lines are hardcoded white and
+  nearly vanish on cream, and the background wash was tuned against black.
 - **Dossier expansion** — both patterns are live. Clicking a face expands in
-  place over the wall; opening `/alumni/<slug>` cold is the full-page takeover.
+  place over the wall; opening `/catalog/<slug>` cold is the full-page takeover.
   "Open as page" in the modal switches between them.
+- **`/catalog` vs `/builders`** — the two names read as near-synonyms. Worth
+  renaming one before launch.
 - **Landing links** — `Manifesto` alone, per §3's default. Add `Enter` in
   `lib/site.ts` → `LANDING_LINKS`.
 - **Dash style** — the manifesto preserves the speech's unspaced en dash, per

@@ -1,0 +1,55 @@
+/* Frame for the mark. The WebGL scene fills it; a static SVG sits underneath
+   and shows until the scene is ready, or forever if WebGL is unavailable. */
+
+.stage {
+  position: relative;
+  width: clamp(9.5rem, 21vw, 15rem);
+  height: clamp(9.5rem, 21vw, 15rem);
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  transition: opacity 500ms ease;
+  pointer-events: none;
+}
+
+/* Once the scene has mounted, retire the placeholder. */
+.stage:has([data-ready]) .fallback {
+  opacity: 0;
+}
+
+.fallback svg {
+  width: 74%;
+  height: auto;
+  display: block;
+}
+
+/* A hint that the mark is grabbable, shown only where a cursor exists. */
+.hint {
+  position: absolute;
+  inset-inline: 0;
+  bottom: -1.75rem;
+  text-align: center;
+  color: var(--muted);
+  opacity: 0;
+  transition: opacity 300ms ease;
+  pointer-events: none;
+}
+
+.stage:hover .hint {
+  opacity: 0.75;
+}
+
+@media (hover: none) {
+  .hint {
+    display: none;
+  }
+}
