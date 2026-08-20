@@ -20,11 +20,14 @@ import styles from './blueprint.module.css'
  */
 export function BlueprintStage({
   title,
+  subtitle,
   note,
   href,
   scrollDriven = true,
 }: {
   readonly title: string
+  /** One line under the title, drawn into the wall with it. */
+  readonly subtitle?: string
   readonly note: string
   readonly href: string
   readonly scrollDriven?: boolean
@@ -35,6 +38,10 @@ export function BlueprintStage({
     <BlueprintCanvas worldRef={worldRef} scrollDriven={scrollDriven}>
       <div ref={worldRef} className={styles.world}>
         <p className={`${styles.title} t-micro`}>{title}</p>
+
+        {subtitle ? (
+          <p className={`${styles.subtitle} t-small`}>{subtitle}</p>
+        ) : null}
 
         <p className={styles.note}>
           <Link href={href}>{note}</Link>

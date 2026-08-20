@@ -38,6 +38,13 @@
   margin: 0;
 }
 
+.subtitle {
+  color: #93b0e0;
+  letter-spacing: 0.02em;
+  margin: 1rem 0 0;
+  white-space: nowrap;
+}
+
 .note {
   font-family: Georgia, serif;
   font-style: italic;

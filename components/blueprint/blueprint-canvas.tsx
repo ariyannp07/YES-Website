@@ -152,7 +152,9 @@ export default function BlueprintCanvas({
       const x = TITLE_WORLD.x - 60 - camX * p
       const y = TITLE_WORLD.y - 92 - camY * p
       const w = 620
-      const h = 330
+      // Tall enough to enclose title + subtitle + note; the marks are corner
+      // ticks, so a little slack reads as drawing, not as a loose box.
+      const h = 390
 
       if (x > width || x + w < 0 || y > height || y + h < 0) return
 

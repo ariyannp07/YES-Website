@@ -23,6 +23,7 @@ export default function SpectrePage() {
     <>
       <BlueprintStage
         title="Spectre"
+        subtitle="A community of our very best."
         note="build for the world, join us →"
         href="/spectre/apply"
         scrollDriven={false}
