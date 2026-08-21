@@ -25,3 +25,6 @@ coverage/
 # macOS / Google Drive
 .DS_Store
 *.icloud
+
+# typescript incremental build cache
+*.tsbuildinfo
