@@ -31,7 +31,6 @@ by link, not by tab:
 | `/work` | The end of the manifesto — "See the work →" |
 | `/enter` | The end of `/work`, and the Bazaar QR (`/enter?src=bazaar`) |
 | `/builders` | Nothing yet — dark until 15 builders consent |
-| `/concepts` | Nothing — archive of the three landing prototypes. Delete before launch |
 
 ## Run it
 

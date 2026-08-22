@@ -8,7 +8,7 @@ import { PALETTES, PALETTE_LABELS, type Palette } from '@/lib/palette'
 const STORAGE_KEY = 'yes.palette'
 
 /** Routes that paint their own background and ignore the palette tokens. */
-const ART_DIRECTED = ['/', '/audere', '/concepts'] as const
+const ART_DIRECTED = ['/', '/audere'] as const
 
 /**
  * PREVIEW-ONLY. Build spec §8.3 asks the owners to choose the palette from
