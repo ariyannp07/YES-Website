@@ -14,7 +14,7 @@ import styles from './blueprint.module.css'
  * as an overlay floating above it.
  *
  * `scrollDriven` is the difference between the two places this is used: the
- * landing prototype travels across the wall as you scroll, while Spectre holds
+ * landing prototype travels across the wall as you scroll, while Audere holds
  * one framing and only breathes — the drift and the cursor parallax stay, the
  * journey does not.
  */

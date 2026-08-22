@@ -48,7 +48,7 @@ export interface NavItem {
 
 export const NAV: readonly NavItem[] = [
   { href: '/manifesto', label: 'Manifesto' },
-  { href: '/spectre', label: 'Spectre' },
+  { href: '/audere', label: 'Audere' },
   { href: '/catalog', label: 'Catalog' },
   { href: '/reservoir', label: 'Reservoir' },
   // Unlinked, but live. See the note above `hidden` — /work is reached from the

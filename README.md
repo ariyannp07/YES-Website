@@ -16,12 +16,12 @@ with the Boola/AINS canon as the authority for facts and voice:
 |---|---|
 | `/` | The front door: a hidden network, scanned with the cursor |
 | `/manifesto` | The essay. Owner-written and approved |
-| `/spectre` | The inner cohort — the working wall, held as one view |
-| `/spectre/apply` | Three questions, and one line back |
+| `/audere` | The inner cohort — the working wall, held as one view |
+| `/audere/apply` | Three questions, and one line back |
 | `/catalog` | The wall of faces, and a dossier per person |
 | `/reservoir` | Essays, talks, workshops, lessons, press |
 
-Nav: `YES · Manifesto · Spectre · Catalog · Reservoir`.
+Nav: `YES · Manifesto · Audere · Catalog · Reservoir`.
 
 **Live but unlinked.** These resolve for anyone holding the URL and are reached
 by link, not by tab:
@@ -158,7 +158,7 @@ Each is deliberate, and each is reversible.
    5.96:1). Paper uses the canonical `#00356B` unchanged (11.41:1).
 6. **`proof_object` is three columns**, not one. Airtable has no struct type;
    one column would mean parsing a blob that fails silently.
-7. **Spectre is a new section the spec does not describe.** §2's site map has no
+7. **Audere is a new section the spec does not describe.** §2's site map has no
    inner-cohort surface. Added at owner direction, full-bleed and outside the
    interior shell so the wall is not framed by a nav bar.
 8. **`/catalog`, not `/alumni`; `/reservoir`, not `/writing`.** Owner-renamed,
@@ -187,16 +187,16 @@ Each is deliberate, and each is reversible.
 - **Manifesto is approved and live.** It is the owners' own text, so
   `content/manifesto.ts` carries `approved: true` and the page shows no draft
   mark. `/work` copy is still `approved: false` and still shows one.
-- **Spectre vs The Fellowship** — canon/01 calls the tap-only inner cohort
+- **Audere vs The Fellowship** — canon/01 calls the tap-only inner cohort
   "The Fellowship", and `/work` lists it as initiative 02 with the brief's own
-  description. `/spectre` is now a second surface for what sounds like the same
-  thing. Either Spectre is the Fellowship renamed — in which case `content/work.ts`
+  description. `/audere` is now a second surface for what sounds like the same
+  thing. Either Audere is the Fellowship renamed — in which case `content/work.ts`
   and the canon should follow — or it is distinct and the difference needs
   stating. Nothing was changed in the canon-derived copy on assumption.
-- **Spectre applications have no Airtable home of their own** — the route writes
+- **Audere applications have no Airtable home of their own** — the route writes
   to `People` with source `Website` and tags the record in `builder_profile`,
-  because Boola's `SOURCES` enum has no Spectre value and the route will not
-  invent one. Add a `Spectre` source option or a Programs link if you want them
+  because Boola's `SOURCES` enum has no Audere value and the route will not
+  invent one. Add a `Audere` source option or a Programs link if you want them
   separable.
 - **`/catalog` vs `/builders`** — the two names read as near-synonyms. Worth
   renaming one before launch.

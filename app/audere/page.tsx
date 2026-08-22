@@ -6,11 +6,11 @@ import styles from '@/components/blueprint/blueprint.module.css'
 import { SIGMA_PATH } from '@/lib/yes-geometry'
 
 export const metadata: Metadata = {
-  title: 'Spectre',
+  title: 'Audere',
 }
 
 /**
- * SPECTRE — the inner cohort.
+ * AUDERE — the inner cohort.
  *
  * The working wall, held as one view. The drift, the cursor parallax and the
  * fragment animations all stay; the journey across the drawing does not — this
@@ -18,14 +18,14 @@ export const metadata: Metadata = {
  *
  * The only way on is the note drawn into the wall.
  */
-export default function SpectrePage() {
+export default function AuderePage() {
   return (
     <>
       <BlueprintStage
-        title="Spectre"
+        title="Audere"
         subtitle="A community of our very best."
-        note="build for the world, join us →"
-        href="/spectre/apply"
+        note="dare to build the future, join us →"
+        href="/audere/apply"
         scrollDriven={false}
       />
 
