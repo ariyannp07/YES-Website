@@ -89,7 +89,12 @@ export const allAlumni = async (): Promise<readonly Alumnus[]> => {
   if (!alumniFeedConfigured()) return placeholderAlumni()
 
   const { fetchAlumniFeed } = await import('@/lib/airtable/alumni-feed')
-  return fetchAlumniFeed()
+  const feed = await fetchAlumniFeed()
+
+  // null means the consent-gated view has not been created yet — setup is not
+  // finished, so the wall keeps its placeholders. An empty array means the view
+  // exists and nobody has consented, and an empty wall is then the honest state.
+  return feed ?? placeholderAlumni()
 }
 
 export const alumnusBySlug = async (

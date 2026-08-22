@@ -62,6 +62,33 @@ The site builds and renders with **no** credentials: `/enter` accepts no
 submissions and says so, `/builders` stays dark, and `/catalog` shows
 placeholder silhouettes. Nothing is mocked and nothing pretends to be real data.
 
+### The base
+
+Provisioned from Boola's `airtable/schema.ts` — **`app4MTUzVjL3n0qXR`**, in
+workspace `wspwjC8qgO6ZvRffL`. Seven tables, thirteen link fields, the six
+seeded Programs, plus the ten catalog fields on `People`.
+
+### Creating the two views — REQUIRED, and not scriptable
+
+Airtable has **no create-view API**, so these are the one part of setup that has
+to be done by hand. Until they exist the site is not broken: `/catalog` keeps
+its placeholder silhouettes and `/builders` stays dark, both with a warning in
+the build log.
+
+In `app4MTUzVjL3n0qXR` → the **People** table:
+
+1. **`Alumni-Page-Feed`** — new grid view, filter `alumni_page_ok` **is checked**.
+2. **`Public-Catalog-Feed`** — new grid view, filter `public_catalog_ok` **is checked**.
+
+Names must match exactly; the feeds look them up by name. Both are consent
+gates, so filter on the checkbox and nothing else — the code re-checks the same
+field per record, but a mis-filtered view should never be the only thing
+standing between someone and publication.
+
+Five rollup/lookup fields also have to be built by hand. Recipes are in
+`Yale/YES/Boola/airtable/MANUAL-SETUP.md` §2; the site does not read them, so
+they are only needed for the AINS pipelines.
+
 ### Getting the Airtable token
 
 1. Go to <https://airtable.com/create/tokens>.

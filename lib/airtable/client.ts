@@ -57,6 +57,23 @@ const authHeaders = (config: AirtableConfig): Record<string, string> => ({
   'Content-Type': 'application/json',
 })
 
+/**
+ * A view named in the environment does not exist in the base yet.
+ *
+ * This is a SETUP state, not a failure. Airtable has no create-view API, so the
+ * two consent-gated views are made by hand — and between provisioning the base
+ * and creating them, the feeds legitimately have nothing to read. Distinguished
+ * from every other Airtable error so a half-configured base renders empty
+ * instead of failing the build, while a genuinely broken Airtable still fails
+ * loudly.
+ */
+export class MissingViewError extends Error {
+  constructor(readonly view: string) {
+    super(`Airtable view "${view}" does not exist yet.`)
+    this.name = 'MissingViewError'
+  }
+}
+
 const describeFailure = async (response: Response): Promise<string> => {
   const body = await response.text().catch(() => '')
   return `Airtable ${response.status} ${response.statusText}${body ? ` — ${body.slice(0, 400)}` : ''}`
@@ -87,7 +104,13 @@ export const listRecords = async (
       { headers: authHeaders(config) },
     )
 
-    if (!response.ok) throw new Error(await describeFailure(response))
+    if (!response.ok) {
+      const detail = await describeFailure(response)
+      if (detail.includes('VIEW_NAME_NOT_FOUND')) {
+        throw new MissingViewError(options.view)
+      }
+      throw new Error(detail)
+    }
 
     const payload = (await response.json()) as ListResponse
     collected.push(...(payload.records ?? []))

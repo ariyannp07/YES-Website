@@ -4,6 +4,7 @@ import {
   airtableConfig,
   asString,
   listRecords,
+  MissingViewError,
   type AirtableRecord,
 } from '@/lib/airtable/client'
 import { slugify, uniqueSlug } from '@/lib/slug'
@@ -61,10 +62,24 @@ export const fetchCatalogFeed = async (): Promise<readonly Builder[]> => {
   const config = airtableConfig()
   if (!config) return []
 
-  const records = await listRecords(config, config.peopleTable, {
-    view: config.catalogView,
-    fields: [...FIELDS],
-  })
+  let records: readonly AirtableRecord[]
+
+  try {
+    records = await listRecords(config, config.peopleTable, {
+      view: config.catalogView,
+      fields: [...FIELDS],
+    })
+  } catch (error: unknown) {
+    // See alumni-feed: a view that does not exist yet is a setup state, not a
+    // failure. Everything else still throws.
+    if (error instanceof MissingViewError) {
+      console.warn(
+        `[catalog-feed] ${error.message} /builders stays dark until it is created.`,
+      )
+      return []
+    }
+    throw error
+  }
 
   const taken = new Set<string>()
 

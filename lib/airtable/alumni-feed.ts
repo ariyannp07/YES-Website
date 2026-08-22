@@ -8,6 +8,7 @@ import {
   asAttachmentUrl,
   asString,
   listRecords,
+  MissingViewError,
   type AirtableRecord,
 } from '@/lib/airtable/client'
 import { PROOF_KINDS, type Alumnus, type ProofObject } from '@/lib/alumni'
@@ -127,14 +128,36 @@ const toAlumnus = (
   }
 }
 
-export const fetchAlumniFeed = async (): Promise<readonly Alumnus[]> => {
+/**
+ * Returns null — not [] — when the view does not exist yet, so the caller can
+ * tell "set up, nobody consented" (an empty wall is right) apart from "not set
+ * up yet" (placeholders are right).
+ */
+export const fetchAlumniFeed = async (): Promise<readonly Alumnus[] | null> => {
   const config = airtableConfig()
   if (!config) return []
 
-  const records = await listRecords(config, config.peopleTable, {
-    view: config.alumniView,
-    fields: [...FIELDS],
-  })
+  let records: readonly AirtableRecord[]
+
+  try {
+    records = await listRecords(config, config.peopleTable, {
+      view: config.alumniView,
+      fields: [...FIELDS],
+    })
+  } catch (error: unknown) {
+    // The view has not been made yet. Airtable has no create-view API, so this
+    // is a normal step in setting the base up — the wall shows placeholder
+    // silhouettes until the view exists. Any OTHER Airtable failure still
+    // throws, because a silently-empty catalog is worse than a red build.
+    if (error instanceof MissingViewError) {
+      console.warn(
+        `[alumni-feed] ${error.message} The catalog will render placeholders ` +
+          'until it is created. See README → "Creating the two views".',
+      )
+      return null
+    }
+    throw error
+  }
 
   const taken = new Set<string>()
 
