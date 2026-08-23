@@ -1,4 +1,4 @@
-# dependencies (symlinked outside Google Drive — see README)
+# dependencies
 node_modules
 .pnp
 .pnp.js

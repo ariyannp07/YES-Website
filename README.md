@@ -1,235 +1,186 @@
-# YES — yesyale.org
+# YES Website
 
-The Yale Entrepreneurial Society site. Built to `YES-WEBSITE-BUILD-SPEC.md` v1.0,
-with the Boola/AINS canon as the authority for facts and voice:
+The public web experience for the Yale Entrepreneurial Society (YES). It combines an
+interactive front door, a searchable directory of Yale builders, long-form publishing,
+and two paths into the community in one deliberately editorial interface.
 
-- **Facts** — `Yale/YES/Boola/canon/01-vision-brief.md`. Nothing on this site is
-  invented. Anything not in the brief is `[TBD — owner input]`.
-- **Voice** — `Yale/YES/Boola/canon/03-brand-voice.md`, including the
-  seven-question voice test in §6.
-- **Policy** — `Yale/YES/Boola/canon/05-human-ai-policy.md`. Its hard rails are
-  enforced in code, not by convention (see *Rails*, below).
+[View the live preview](https://yes-website-ashy.vercel.app)
+
+Built with Next.js 16, React 19, TypeScript, Tailwind CSS 4, Canvas 2D, and optional
+server-side integrations with Airtable and xAI.
+
+## Why this exists
+
+An entrepreneurship community needs more than an events page. People need to see who
+is building, understand the organization's point of view, find relevant peers, and
+know how to participate. This site gives each of those jobs a focused surface while
+keeping the experience visually coherent.
+
+## Product highlights
+
+- **Interactive signal field** — a deterministic Canvas 2D network reveals itself
+  around the pointer and gradually resolves into the density of the YES mark. The
+  animation responds to reduced-motion preferences.
+- **Searchable builder catalog** — instant local filtering works over the checked-in
+  directory; an optional semantic-search path handles intent-based queries and falls
+  back cleanly when it is not configured.
+- **Shareable dossiers** — catalog entries open as intercepted modal routes during
+  browsing and retain stable, server-rendered URLs for direct links.
+- **Git-backed publishing** — essays, talks, workshops, lessons, and press entries are
+  validated from Markdown at build time. External resources can appear in the same
+  reverse-chronological index without being re-hosted.
+- **Consent-aware data paths** — Airtable-backed public records are selected from
+  consent-filtered views, re-checked in code, and reduced to explicit field allowlists.
+- **Graceful local mode** — the public experience builds without third-party
+  credentials. Optional forms, live feeds, processed portraits, and semantic search
+  activate only when their server-side configuration is present.
 
 ## Pages
 
-| Route | What it is |
-|---|---|
-| `/` | The front door: a hidden network, scanned with the cursor |
-| `/manifesto` | The essay. Owner-written and approved |
-| `/audere` | The inner cohort — the working wall, held as one view |
-| `/audere/apply` | Three questions, and one line back |
-| `/catalog` | The wall of faces, and a dossier per person |
-| `/reservoir` | Essays, talks, workshops, lessons, press |
+| Route | Purpose |
+| --- | --- |
+| `/` | Interactive landing experience |
+| `/manifesto` | YES's point of view and invitation to build |
+| `/audere` | Full-viewport introduction to the Audere cohort |
+| `/audere/apply` | Audere application form |
+| `/catalog` | Searchable builder directory and dossier browser |
+| `/catalog/[slug]` | Direct, shareable builder dossier |
+| `/reservoir` | Editorial and media archive |
+| `/reservoir/[slug]` | Locally hosted Reservoir entry |
+| `/work` | Proof-point page reached from the manifesto |
+| `/enter` | General community intake form |
+| `/builders` | Consent-gated ledger that stays dark below its minimum entry count |
 
-Nav: `YES · Manifesto · Audere · Catalog · Reservoir`.
+`/work`, `/enter`, and `/builders` are live routes but are intentionally omitted from
+the primary navigation. They are reached through the site's invitation flow or by a
+direct link; `/builders` is also gated by a minimum consented-entry count.
 
-**Live but unlinked.** These resolve for anyone holding the URL and are reached
-by link, not by tab:
+## Architecture
 
-| Route | Reached from |
-|---|---|
-| `/work` | The end of the manifesto — "See the work →" |
-| `/enter` | The end of `/work`, and the Bazaar QR (`/enter?src=bazaar`) |
-| `/builders` | Nothing yet — dark until 15 builders consent |
+```mermaid
+flowchart LR
+  CSV[Curated catalog CSV] --> Import[Catalog import script]
+  Import --> JSON[Versioned builders.json]
+  MD[Reservoir Markdown] --> Build[Next.js build]
+  JSON --> Build
+  Views[Consent-filtered Airtable views] -. optional build-time feed .-> Build
+  Views -. approved headshots .-> Portraits[Portrait pipeline]
+  Portraits --> Build
+  Build --> Static[Static pages and catalog dossiers]
 
-## Run it
+  Browser --> Static
+  Browser --> Intake[Enter and Audere APIs]
+  Intake -. configured .-> State[Airtable People and Log tables]
+  Browser --> Search[Search API]
+  Search -. configured .-> XAI[xAI]
+```
+
+The application is static-first, not a static export. Content pages and dossiers are
+generated at build time; the intake and search endpoints use the Node.js runtime so
+credentials never need to reach the browser.
+
+### Notable technical decisions
+
+- **Human-triggered publishing.** Airtable feeds are read during a build, with no ISR
+  or scheduled regeneration. A public-data change therefore requires a deployment.
+- **Two catalog sources with different trust models.** The main catalog combines a
+  version-controlled directory assembled from public sources with explicitly
+  consented Airtable records. The consented record wins on a slug collision. The
+  separate `/builders` ledger uses only the consent-gated Airtable view.
+- **Validation at system boundaries.** Zod schemas validate form payloads on both the
+  client and server. Reservoir frontmatter is validated during the build, and invalid
+  entries fail rather than partially render.
+- **Progressive search.** Text filtering is local and immediate. Pressing Enter can
+  ask the server-side semantic-search endpoint for ranked slugs; a missing key or
+  provider failure leaves local results intact.
+- **Build-time image treatment.** Consented headshots can be cropped and converted to
+  color and duotone WebP files before the site build, avoiding expiring attachment
+  URLs and browser-side filters.
+- **Mechanical design constraints.** Repository scripts enforce the approved type
+  scale and scan consented dossier copy for disallowed promotional language.
+
+## Run locally
+
+### Prerequisites
+
+- Node.js 20.9 or newer (the minimum declared by the locked Next.js version)
 
 ```bash
-npm install
+git clone https://github.com/ariyannp07/YES-Website.git
+cd YES-Website
+npm ci
 npm run dev
 ```
 
+Open [http://localhost:3000](http://localhost:3000). No environment variables are
+required for the public pages or checked-in catalog.
+
+To enable integrations, copy the example file and add only the services you need:
+
 ```bash
-npm run check    # typecheck + type-scale guard + adjective guard
-npm run build    # production build
+cp .env.example .env.local
 ```
 
-### A note on Google Drive
+Never put an Airtable or xAI credential in a `NEXT_PUBLIC_` variable.
 
-This working copy lives in Google Drive, which syncs `node_modules` (~400MB)
-and, more importantly, `.git`. Moving `node_modules` outside Drive and
-symlinking it back **does not work** — Turbopack rejects a symlink that points
-outside the project root (`Symlink [project]/node_modules is invalid`). The
-options are to live with the sync, or to move the whole repo out of Drive and
-let GitHub be the sync mechanism. Push often either way.
+## Environment variables
 
-## Environment
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `NEXT_PUBLIC_PALETTE` | No | Initial palette: `night` (default) or `paper` |
+| `NEXT_PUBLIC_SHOW_PALETTE_TOGGLE` | No | Enables the review-only palette switcher |
+| `AIRTABLE_TOKEN` | No | Server-side Airtable record access |
+| `AIRTABLE_BASE_ID` | No | Airtable base used by feeds, forms, and audit logs |
+| `AIRTABLE_PEOPLE_TABLE` | No | Overrides the default `People` table name |
+| `AIRTABLE_LOG_TABLE` | No | Overrides the default `Log` table name |
+| `AIRTABLE_CATALOG_VIEW` | No | Overrides the consented builder view name |
+| `AIRTABLE_ALUMNI_VIEW` | No | Overrides the consented dossier view name |
+| `INTAKE_LOG_OWNER` | No | Human owner recorded on intake audit rows |
+| `XAI_API_KEY` | No | Enables server-side semantic catalog search |
 
-Copy `.env.example` to `.env.local` and fill it in. `.env.local` is gitignored.
+When Airtable is absent, the catalog uses its version-controlled directory, the two
+forms report that they are not connected, and `/builders` remains in its dark state.
+When xAI is absent, the catalog continues to provide local text filtering.
 
-The site builds and renders with **no** credentials: `/enter` accepts no
-submissions and says so, `/builders` stays dark, and `/catalog` shows
-placeholder silhouettes. Nothing is mocked and nothing pretends to be real data.
+## Commands
 
-### The base
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Starts the local Next.js development server |
+| `npm run build` | Creates the production build |
+| `npm run start` | Serves a completed production build |
+| `npm run typecheck` | Runs TypeScript without emitting files |
+| `npm run check:type-scale` | Rejects type sizes outside the shared scale |
+| `npm run check:adjectives` | Scans the live Airtable dossier feed when configured |
+| `npm run check` | Runs typecheck and both repository policy checks |
+| `npm run build:portraits` | Generates static WebP portrait pairs from consented headshots |
+| `npm test` | Runs Vitest (the repository does not yet include test files) |
 
-Provisioned from Boola's `airtable/schema.ts` — **`app4MTUzVjL3n0qXR`**, in
-workspace `wspwjC8qgO6ZvRffL`. Seven tables, thirteen link fields, the six
-seeded Programs, plus the ten catalog fields on `People`.
+Regenerate the checked-in catalog after editing its source CSV with:
 
-### Creating the two views — REQUIRED, and not scriptable
+```bash
+node scripts/import-catalog.mjs
+```
 
-Airtable has **no create-view API**, so these are the one part of setup that has
-to be done by hand. Until they exist the site is not broken: `/catalog` keeps
-its placeholder silhouettes and `/builders` stays dark, both with a warning in
-the build log.
+## Repository map
 
-In `app4MTUzVjL3n0qXR` → the **People** table:
+```text
+app/                    Pages, layouts, and request-time API routes
+components/             Interactive and presentational components
+content/catalog/        Version-controlled directory source and generated JSON
+content/reservoir/      Git-backed editorial entries
+content/manifesto.ts    Approved manifesto copy and rendering blocks
+lib/airtable/           Server-only Airtable reads, writes, and audit logging
+lib/                    Content loaders, schemas, search corpus, and visual models
+scripts/                Catalog import, portrait processing, and policy checks
+```
 
-1. **`Alumni-Page-Feed`** — new grid view, filter `alumni_page_ok` **is checked**.
-2. **`Public-Catalog-Feed`** — new grid view, filter `public_catalog_ok` **is checked**.
+## Content and deployment
 
-Names must match exactly; the feeds look them up by name. Both are consent
-gates, so filter on the checkbox and nothing else — the code re-checks the same
-field per record, but a mis-filtered view should never be the only thing
-standing between someone and publication.
+See [Content, data, and release operations](docs/operations.md) for the Airtable
+contract, catalog import workflow, portrait generation, Reservoir publishing, and the
+pre-deploy review checklist.
 
-Five rollup/lookup fields also have to be built by hand. Recipes are in
-`Yale/YES/Boola/airtable/MANUAL-SETUP.md` §2; the site does not read them, so
-they are only needed for the AINS pipelines.
-
-### Getting the Airtable token
-
-1. Go to <https://airtable.com/create/tokens>.
-2. Scopes: `data.records:read`, `data.records:write`, `schema.bases:read`.
-3. Grant access to the **YES-OS** base.
-4. Paste it into `.env.local` as `AIRTABLE_TOKEN`, and the base id (starts
-   `app…`) as `AIRTABLE_BASE_ID`.
-
-Never paste a token into a `NEXT_PUBLIC_` variable. Only the server route and
-the build-time feed readers touch it, and `lib/airtable/client.ts` imports
-`server-only` so a client component that tries to reach it fails the build.
-
-### Airtable schema additions
-
-`/catalog` needs fields the AINS `People` table does not have yet. Add these,
-then create a view called `Alumni-Page-Feed` filtered to
-`alumni_page_ok = checked`:
-
-| Field | Type |
-|---|---|
-| `now_line` | Single line text |
-| `proof_kind` | Single select — `number`, `headline`, `image`, `link` |
-| `proof_value` | Single line text |
-| `proof_source` | Single line text |
-| `own_words` | Long text |
-| `headshot` | Attachment |
-| `company_url` | URL |
-| `linkedin_url` | URL |
-| `alumni_weight` | Number — `1` standard, `2` anchor story (unused while every head is the same size) |
-| `alumni_page_ok` | Checkbox — **the consent gate** |
-
-`/builders` reads the existing `Public-Catalog-Feed` view and needs no changes.
-
-## Publishing content
-
-- **The Reservoir** — drop a markdown file in `content/reservoir/`. Essays,
-  talks, workshops, lessons and press share one index; anything hosted elsewhere
-  carries a `url` and the Reservoir links out instead of re-hosting it. See
-  `content/reservoir/_FORMAT.md`.
-- **Press awaiting confirmation** — files prefixed `_PENDING-` are staged and do
-  NOT appear on the site. Each says what could not be verified and what to do.
-  Confirm, then drop the prefix.
-- **Logos on the landing field** — add an entry to
-  `content/marks/approved.json`. A logo without both `approvedBy` and
-  `approvedOn` is dropped from the field and reported in the build log. No logo
-  ships without sign-off.
-- **The real YES mark** — the sigma is placeholder geometry traced from a
-  screenshot. Replace `SIGMA_POLYGONS` in `lib/yes-geometry.ts`; the extrusion
-  and the network both re-fit whatever shape they are given.
-- **Portraits** — `npm run build:portraits` pulls headshots from the consented
-  feed and bakes the duotone at build time. Run it before `npm run build`
-  whenever the feed changes.
-- **Copy approval** — every copy module carries an `approved` flag. While it is
-  `false` the page renders `[ DRAFT — AWAITING OWNER APPROVAL ]`. Flip it in the
-  content file once Ariyan and Sofia sign off; it is a reviewable diff, not a
-  deploy setting.
-
-## Rails, enforced in code
-
-| Rail | Where it is enforced |
-|---|---|
-| No autonomous publishing (canon R1) | `/catalog`, `/catalog/[slug]` and `/builders` are `force-static`. Feeds are read at build time. No ISR, no cron, no `revalidate`. Publishing the catalog is a human redeploy. |
-| Consent gates (canon R3) | Feeds read only the consent-filtered views, re-check the consent field per record, and select fields by explicit allowlist. Records without consent are dropped entirely, never emitted with nulls. |
-| Audit trail (canon R2) | `/api/enter` writes a `Log` row on success *and* on failure. |
-| Key never client-side | `lib/airtable/client.ts` imports `server-only`. |
-| Two type scales | `npm run check:type-scale` fails the build on any font-size outside `app/globals.css`. |
-| No adjectives on `/catalog` | `npm run check:adjectives` scans the live feed and fails on any hit. |
-
-## Deviations from the build spec
-
-Each is deliberate, and each is reversible.
-
-1. **The front door is a scanned network, not a floating logo field.** §1
-   specifies drifting company marks over a void. The owners chose a different
-   direction after comparing three prototypes. The mark is still present —
-   roughly half the network's nodes are sampled from inside its polygons and
-   carry a higher brightness floor, so the shape emerges as a DENSITY rather
-   than as a logo. The permission gate for real company logos is untouched and
-   still governs `content/marks/approved.json`, but those marks now have no
-   surface on the landing; worth revisiting when approvals land.
-2. **No WebGL on the landing, so §6's 50KB JS budget holds again.** An earlier
-   3D mark blew it. The Signal renderer is a few kilobytes of Canvas 2D. Three.js
-   survives only in the archived Portal prototype under `/concepts`.
-3. **Not a static export.** §6 says "Next.js (static export)" but also forbids
-   exposing the Airtable key client-side. A static export has no server runtime
-   to hold the key. Built as a standard Vercel deployment: every page static,
-   two server routes.
-4. **No ISR on `/builders`.** §6 asks for regeneration every 6h. Canon R1 says
-   publishing the catalog is "a human-run deploy, not a cron job." The canon
-   wins; the page is built statically.
-5. **Night palette accent.** §4 pairs near-black with Yale blue `#00356B` and
-   also requires WCAG AA. Those are incompatible — `#00356B` on `#0A0A0A`
-   measures **1.62:1**. Night uses Yale blue at a display tint (`#5B8FD4`,
-   5.96:1). Paper uses the canonical `#00356B` unchanged (11.41:1).
-6. **`proof_object` is three columns**, not one. Airtable has no struct type;
-   one column would mean parsing a blob that fails silently.
-7. **Audere is a new section the spec does not describe.** §2's site map has no
-   inner-cohort surface. Added at owner direction, full-bleed and outside the
-   interior shell so the wall is not framed by a nav bar.
-8. **`/catalog`, not `/alumni`; `/reservoir`, not `/writing`.** Owner-renamed,
-   and the Reservoir is widened past essays to the whole public collection.
-9. **The catalog is condensed, not edge-to-edge.** §3 calls for a dense mosaic
-   with no gutters and gravity-weighted tiles. Owner direction: every head the
-   same size, three to a row, air on both sides.
-10. **Nav includes the catalog.** §2 lists it; §4's restatement drops it.
-    §2 governs.
-
-## Open owner decisions
-
-- **Palette** — both directions ship. Set `NEXT_PUBLIC_PALETTE` to `night` or
-  `paper`. The preview switcher (bottom right) is on while
-  `NEXT_PUBLIC_SHOW_PALETTE_TOGGLE=true`; turn it off for production.
-  **Paper is unfinished**: the mark's network lines are hardcoded white and
-  nearly vanish on cream, and the background wash was tuned against black.
-- **Dossier expansion** — both patterns are live. Clicking a face expands in
-  place over the wall; opening `/catalog/<slug>` cold is the full-page takeover.
-  "Open as page" in the modal switches between them.
-- **Four teams or five?** The manifesto (owner-written) says *"Four teams have
-  already completed fundraising rounds totaling $17 million."* `content/work.ts`
-  and `canon/01-vision-brief.md` both say **five** teams raised more than $17
-  million combined. Both numbers are live, one page apart. Neither was changed
-  on assumption — pick one and the other follows.
-- **Manifesto is approved and live.** It is the owners' own text, so
-  `content/manifesto.ts` carries `approved: true` and the page shows no draft
-  mark. `/work` copy is still `approved: false` and still shows one.
-- **Audere vs The Fellowship** — canon/01 calls the tap-only inner cohort
-  "The Fellowship", and `/work` lists it as initiative 02 with the brief's own
-  description. `/audere` is now a second surface for what sounds like the same
-  thing. Either Audere is the Fellowship renamed — in which case `content/work.ts`
-  and the canon should follow — or it is distinct and the difference needs
-  stating. Nothing was changed in the canon-derived copy on assumption.
-- **Audere applications have no Airtable home of their own** — the route writes
-  to `People` with source `Website` and tags the record in `builder_profile`,
-  because Boola's `SOURCES` enum has no Audere value and the route will not
-  invent one. Add a `Audere` source option or a Programs link if you want them
-  separable.
-- **`/catalog` vs `/builders`** — the two names read as near-synonyms. Worth
-  renaming one before launch.
-- **Landing links** — `Manifesto` alone, per §3's default. Add `Enter` in
-  `lib/site.ts` → `LANDING_LINKS`.
-- **Dash style** — the manifesto preserves the speech's unspaced en dash, per
-  canon 03 §2.4. Canon §7 carries this as an open decision; it is a
-  find-and-replace in `content/manifesto.ts` if the owners want `—`.
-- **Launch date** — `[TBD — owner input]`. The spec targets live ≥3 days before
-  Bazaar so the QR has a tested destination.
+This repository is an active implementation. The preview is deployed, but copy
+approval, public-record review, integration configuration, and release checks remain
+editorial responsibilities rather than assumptions made by the code.

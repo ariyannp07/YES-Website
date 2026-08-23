@@ -1,14 +1,14 @@
 # How to add to the Reservoir
 
 The Reservoir is the public collection: essays and dispatches, the speaker
-series, workshops, and online lessons. One reverse-chronological index at
-`/reservoir`.
+series, workshops, online lessons, and press. One reverse-chronological index
+at `/reservoir`.
 
 Files starting with `_` or `.` are ignored, so this note never appears on the
 site. Everything else in this folder becomes an entry.
 
-Create a file, commit it, deploy. There is no CMS by design (build spec §6) —
-the site's content lives in Git alongside the Canon.
+Create a file, commit it, deploy. There is no CMS; the site's public content
+lives in Git and every publication is a reviewable diff.
 
 ## Two kinds of entry
 
@@ -49,17 +49,18 @@ approved: true
 |---|---|---|
 | `title` | yes | Shown on the index and as the page title. |
 | `date` | yes | `YYYY-MM-DD`. Sorts the index; a bad format fails the build. |
-| `kind` | no | `essay`, `talk`, `workshop`, or `lesson`. Defaults to `essay`. Shown beside the date. |
+| `kind` | no | `essay`, `talk`, `workshop`, `lesson`, or `press`. Defaults to `essay`. Shown beside the date. |
 | `summary` | no | One line on the index. Leave it out and the index shows the title alone. |
 | `url` | no | Set for anything hosted elsewhere. The index links out and no page is built. |
-| `approved` | no | Defaults to `false`, which renders the `DRAFT — AWAITING OWNER APPROVAL` mark. Set `true` once the copy is signed off (build spec §8.4). |
+| `approved` | no | Defaults to `false`, which renders the `DRAFT — AWAITING OWNER APPROVAL` mark. Set `true` after editorial sign-off. |
 
 ## Voice
 
-Run any draft against the seven-question voice test in
-`Yale/YES/Boola/canon/03-brand-voice.md` §6 before setting `approved: true`.
-Facts come from `canon/01-vision-brief.md` or they are marked
-`[TBD — owner input]`.
+Use the established YES voice and verify every factual statement against an
+approved source before setting `approved: true`. Mark unresolved facts clearly
+instead of filling gaps by inference.
 
-Per the human/AI policy, the Hacker House retrospective is owner-written.
-Creative direction stays human — the agent does not draft it.
+The approval flag records human editorial sign-off; it is not a substitute for
+review. Keep authorial and creative decisions with the named owner of the piece,
+and disclose or revise machine-assisted copy according to the organization's
+publishing policy.
