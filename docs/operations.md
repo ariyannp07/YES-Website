@@ -171,11 +171,19 @@ duotone WebP to `public/portraits/generated/`. That directory is ignored by Git,
 generation must run on every deploy — including when only curated portraits exist and
 no Airtable credentials are set.
 
-On a hosted build that should include portraits, run generation in the same build
-environment immediately before Next.js:
+`npm run build` now runs generation first, so a hosted build produces the derivatives
+from the committed JPEGs without any extra step. This is not optional: the derivatives
+are gitignored, so without it the deployed catalog renders monograms for everyone even
+though the portraits are in the repository.
+
+The source JPEGs are intentionally NOT checked out locally on the maintainer's machine
+(`git update-index --skip-worktree`), so a local build reports `0 pair(s)` and the local
+catalog shows monograms. That is expected; CI and Vercel clone the files normally. To
+work with them locally again:
 
 ```bash
-npm run build:portraits && npm run build
+git update-index --no-skip-worktree content/catalog/portraits/*.jpg
+git checkout -- content/catalog/portraits
 ```
 
 ## Reservoir publishing

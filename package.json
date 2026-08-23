@@ -5,7 +5,7 @@
   "description": "Yale Entrepreneurial Society — yesyale.org",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run build:portraits && next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
