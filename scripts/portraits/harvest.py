@@ -24,6 +24,11 @@ import lib_portrait as L  # noqa: E402
 
 ROOT = Path("/Users/ariyanp/Library/CloudStorage/GoogleDrive-ariyanp07@gmail.com/My Drive/Yale/YES")
 CSV = ROOT / "Website/content/catalog/source/yale_builders_catalog_116.csv"
+# Optional. The original portrait pack supplied numbered filenames
+# (001_Ariyan_Patel.jpg); the pack has since been deleted as redundant — its CSV
+# is vendored at content/catalog/source/ and its images were labelled
+# placeholders, not photographs. Without it, targets fall back to <slug>.jpg,
+# which is what stage-portraits.mjs renames them to anyway.
 MANIFEST = ROOT / "yale_builders_portrait_pack_116/portrait_manifest_116.csv"
 
 # Sub-paths worth trying on a company site — where team headshots actually live.

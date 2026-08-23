@@ -31,11 +31,14 @@ builders = json.loads(Path(
 ).read_text())["people"]
 by_name = {L.norm(p["name"]): p for p in builders}
 
+# Optional, and absent by default: the portrait pack it came from has been
+# deleted as redundant. Missing simply means targets are named <slug>.jpg.
 manifest = {}
 mpath = Path("/Users/ariyanp/Library/CloudStorage/GoogleDrive-ariyanp07@gmail.com/"
              "My Drive/Yale/YES/yale_builders_portrait_pack_116/portrait_manifest_116.csv")
-for m in csv.DictReader(mpath.open(encoding="utf-8-sig")):
-    manifest[L.norm(m["full_name"])] = (m["record_id"], m["target_filename"])
+if mpath.exists():
+    for m in csv.DictReader(mpath.open(encoding="utf-8-sig")):
+        manifest[L.norm(m["full_name"])] = (m["record_id"], m["target_filename"])
 
 existing = {}
 if SRC_CSV.exists():
