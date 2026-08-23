@@ -127,3 +127,58 @@
     transform: none;
   }
 }
+
+/* --- search ------------------------------------------------------------- */
+
+.search {
+  max-width: 34rem;
+  margin: 0 auto clamp(2.5rem, 6vh, 4rem);
+  display: block;
+}
+
+.searchInput {
+  width: 100%;
+  font: inherit;
+  color: var(--fg);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--fg) 26%, transparent);
+  padding: 0.5rem 0;
+  border-radius: 0;
+  transition: border-color 200ms ease;
+}
+
+.searchInput::placeholder {
+  color: var(--muted);
+}
+
+.searchInput:focus {
+  outline: none;
+  border-bottom-color: var(--accent);
+}
+
+.count {
+  display: block;
+  color: var(--muted);
+  margin-top: 0.85rem;
+}
+
+/* A whispered divider, not a "Featured" header — the spec bans announcing rank. */
+.rule {
+  max-width: 34rem;
+  margin: clamp(2.5rem, 7vh, 4rem) auto;
+  border: 0;
+  border-top: 1px solid color-mix(in srgb, var(--fg) 12%, transparent);
+}
+
+.empty {
+  text-align: center;
+  color: var(--muted);
+  margin: 4rem 0;
+}
+
+.flag {
+  display: block;
+  color: var(--accent);
+  margin-top: 0.35rem;
+}

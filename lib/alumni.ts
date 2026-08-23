@@ -47,6 +47,18 @@ export const Alumnus = z.object({
    */
   weight: z.union([z.literal(1), z.literal(2)]).default(1),
   placeholder: z.boolean().default(false),
+
+  // --- directory-only fields (see lib/catalog-directory.ts) ---------------
+  /** The venture itself, where the person is building. */
+  venture: z.string().optional(),
+  bio: z.string().optional(),
+  sectors: z.array(z.string()).optional(),
+  /** Precomputed lowercase haystack, so search does not rebuild it per keystroke. */
+  searchText: z.string().optional(),
+  /** Pinned to the top of the wall, in the owners' chosen order. */
+  featured: z.boolean().optional(),
+  /** The CSV flagged this row as needing a check before publication. */
+  reviewNote: z.string().optional(),
 })
 
 export type Alumnus = z.infer<typeof Alumnus>
@@ -86,15 +98,24 @@ export const alumniFeedConfigured = (): boolean =>
  * Alumni-Page-Feed view and nothing else.
  */
 export const allAlumni = async (): Promise<readonly Alumnus[]> => {
-  if (!alumniFeedConfigured()) return placeholderAlumni()
+  const { directoryPeople } = await import('@/lib/catalog-directory')
+  const directory = directoryPeople()
+
+  if (!alumniFeedConfigured()) {
+    // The directory alone is a real wall; placeholders only if it is empty too.
+    return directory.length > 0 ? directory : placeholderAlumni()
+  }
 
   const { fetchAlumniFeed } = await import('@/lib/airtable/alumni-feed')
   const feed = await fetchAlumniFeed()
 
-  // null means the consent-gated view has not been created yet — setup is not
-  // finished, so the wall keeps its placeholders. An empty array means the view
-  // exists and nobody has consented, and an empty wall is then the honest state.
-  return feed ?? placeholderAlumni()
+  // null means the consent-gated view has not been created yet. Either way the
+  // curated directory shows; consented people are merged in ahead of it, and a
+  // consented record wins on slug collision because it is the person's own.
+  const consented = feed ?? []
+  const claimed = new Set(consented.map((person) => person.slug))
+
+  return [...consented, ...directory.filter((p) => !claimed.has(p.slug))]
 }
 
 export const alumnusBySlug = async (

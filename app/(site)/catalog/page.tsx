@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import { Mosaic } from '@/components/alumni/mosaic'
+import { CatalogBrowser } from '@/components/alumni/catalog-browser'
 import { allAlumni, alumniFeedConfigured } from '@/lib/alumni'
 
 export const metadata: Metadata = {
@@ -24,7 +24,7 @@ export default async function CatalogPage() {
 
   return (
     <div className="page-top">
-      <Mosaic people={people} />
+      <CatalogBrowser people={people} />
 
       {connected ? null : (
         <p
@@ -35,8 +35,8 @@ export default async function CatalogPage() {
             textAlign: 'center',
           }}
         >
-          [ Placeholder silhouettes. Real dossiers appear only from the
-          consent-gated Alumni-Page-Feed. ]
+          [ Portraits pending. Names and ventures are from the curated
+          directory; consented dossiers merge in from Airtable. ]
         </p>
       )}
     </div>

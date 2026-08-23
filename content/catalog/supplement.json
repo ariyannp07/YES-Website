@@ -1,0 +1,139 @@
+{
+  "$comment": [
+    "Owner-supplied entries for builders absent from the CSV, plus corrections",
+    "to CSV rows. Merged by scripts/import-catalog.mjs; the CSV is never edited.",
+    "",
+    "PUBLICATION CONSTRAINTS, honoured here and not to be undone:",
+    "  · Allah-u-Abha Rodrigues — his Hacker House company is deliberately under",
+    "    wraps on his public site. The internal name is NOT recorded anywhere in",
+    "    this repo and must not be published without his permission.",
+    "  · Ari Strober — class year is unverified (B confidence). No year is shown.",
+    "  · Sina Dehghani — YC does not list him as an o11 founder; his role is",
+    "    reported as Founding Growth, and is written that way.",
+    "  · Murad Avliyakulov ’23 is deliberately ABSENT. He is a different person",
+    "    from Murad Abdukholikov ’27, and his Hacker House connection could not",
+    "    be web-confirmed."
+  ],
+  "corrections": [
+    {
+      "matchName": "Murad Abdukholikov",
+      "classYear": "Yale College ’27",
+      "nowLine": "Robotics / embedded-systems builder",
+      "sectors": ["Robotics", "Physical AI", "AgTech", "Embedded Systems"],
+      "bio": "Builds robotics and embedded systems, including an egocentric robotics-data headset, sensor-driven projects, and prior work associated with orchard/autonomous robotics.",
+      "aliases": ["Mura Abdukholikov", "Khosilmurod Abdukholikov"],
+      "extraKeywords": "Embedded C++; sensors; robotics; egocentric data collection; full-stack software; hardware-software integration; Uzbekistan; computer science"
+    }
+  ],
+  "people": [
+    {
+      "name": "Osama Radi",
+      "classYear": "Yale College ’29",
+      "school": "Yale College",
+      "nowLine": "Founder, Assure5; researcher at Yale School of Medicine",
+      "venture": "Assure5",
+      "sectors": ["Digital Health", "Healthcare", "Artificial Intelligence", "Biomedical Research"],
+      "bio": "Founded Assure5, a healthcare platform that has reached 13,000+ users across 40+ countries. Prior technical work includes ML systems for demyelinating-disease classification and heart-failure prediction.",
+      "proof": { "kind": "headline", "value": "13,000+ users across 40+ countries", "source": "Assure5" },
+      "companyUrl": "https://osamaradi.com",
+      "extraKeywords": "Machine learning; health software; biomedical classification; software engineering; research engineering; YES First-Year Liaison; Yale Hacker House; Yale Computer Society; computer science; economics"
+    },
+    {
+      "name": "Allah-u-Abha Rodrigues",
+      "classYear": "Yale College ’27",
+      "school": "Yale College",
+      "nowLine": "Software/ML builder; UNDP fellow",
+      "venture": "Under wraps",
+      "sectors": ["Software", "AI/ML", "PropTech", "Consumer FinTech", "Data", "Civic/International Development"],
+      "bio": "Full-stack and ML builder whose public projects include renter-negotiation software, personal-finance software, campus marketplace infrastructure, analytics tools and machine-learning systems. His 2026 Hacker House company remains undisclosed on his public site.",
+      "proof": { "kind": "headline", "value": "2026 Hacker House resident", "source": "Ten weeks in San Francisco" },
+      "companyUrl": "https://www.allahurodrigues.com",
+      "aliases": ["Alláh-u-Abhá Rodrigues"],
+      "extraKeywords": "Python; PyTorch; scikit-learn; TypeScript; React; Next.js; Node; PostgreSQL; Supabase; AWS; Docker; geospatial software; Tenure; MacroTrack; Unseen; Yale4Sale; FlowLens; Mozambique; statistics and data science"
+    },
+    {
+      "name": "Sofia Teifeld",
+      "classYear": "Yale College ’29",
+      "school": "Yale College",
+      "nowLine": "Co-President, Yale Entrepreneurial Society",
+      "venture": "Yale Entrepreneurial Society",
+      "sectors": ["Entrepreneurship Infrastructure", "Medical Technology", "Public/Health Research"],
+      "bio": "Leads YES alongside Ariyan Patel, and previously developed a magnetic-shielding concept intended to reduce electromagnetic interference risks for adjustable hydrocephalus shunts.",
+      "proof": { "kind": "headline", "value": "U.S. provisional patent filed", "source": "Shunt Magnetic Shielding System" },
+      "companyUrl": "https://www.yesyale.org",
+      "extraKeywords": "Ethics Politics and Economics; medical-device research; electromagnetic shielding; research design; community building; program operations; YES leadership; co-president"
+    },
+    {
+      "name": "Ari Strober",
+      "classYear": "Yale College",
+      "school": "Yale College",
+      "nowLine": "Co-Director of High School Fellows, Yale Entrepreneurial Society",
+      "venture": "YES High School Fellowship",
+      "sectors": ["Entrepreneurship Education", "Community", "Founder Programs"],
+      "bio": "Co-runs the YES High School Fellowship, guiding international high-school teams through startup formation, problem selection and pitching.",
+      "proof": { "kind": "headline", "value": "YES High School Fellowship", "source": "Co-Director" },
+      "companyUrl": "https://www.yesyale.org",
+      "aliases": ["Ari Strover"],
+      "reviewNote": "Class year unverified — no year shown. LinkedIn lists TheThirdPlace, but there is not enough public evidence to describe it or call him its founder.",
+      "extraKeywords": "Fellowship operations; founder mentorship; cohort design; program design; entrepreneurship programming; high school fellows"
+    },
+    {
+      "name": "Sina Dehghani",
+      "classYear": "Yale College ’29",
+      "school": "Yale College",
+      "nowLine": "Maverick Capital; Vice President, Yale Undergraduate Hedge Fund Association",
+      "venture": "o11 (YC W26)",
+      "sectors": ["Artificial Intelligence", "FinTech", "Capital Markets", "Enterprise Software", "Investing"],
+      "bio": "Works around AI and financial-services infrastructure. o11 is a YC W26 company building an AI-native data warehouse and automation layer for financial firms, connecting CRM, email, files and market data.",
+      "proof": { "kind": "headline", "value": "o11 — YC W26", "source": "Reported role: Founding Growth" },
+      "aliases": [],
+      "reviewNote": "YC does not list him as an o11 founder; his role is reported as Founding Growth. B+ confidence on the current title.",
+      "extraKeywords": "AI agents; financial data infrastructure; data warehouses; Microsoft 365 automation; enterprise workflows; hedge funds; investing; growth"
+    },
+    {
+      "name": "Zain Anwar",
+      "classYear": "Yale College ’29",
+      "school": "Yale College",
+      "nowLine": "Founder & Executive Director, Intersect STEM; Maverick Capital",
+      "venture": "Intersect STEM",
+      "sectors": ["STEM Education", "Social Impact", "Healthcare", "Artificial Intelligence", "Investing"],
+      "bio": "Co-founded Intersect STEM, a 501(c)(3) focused on STEM access for international, refugee and displaced students, running hands-on science workshops.",
+      "proof": { "kind": "headline", "value": "250+ refugee and international students reached", "source": "Intersect STEM" },
+      "extraKeywords": "Nonprofit building; program development; STEM education; community partnerships; investing; research; refugee education; immigrant education"
+    },
+    {
+      "name": "Yavin Fickel",
+      "classYear": "Yale College ’29",
+      "school": "Yale College",
+      "nowLine": "Researcher, van Dijk Lab at Yale; Co-Director of LAUNCH, Yale Entrepreneurial Society",
+      "venture": "Animalia Labs",
+      "sectors": ["AI for Science", "Computational Biology", "Open Data", "Research Infrastructure", "Entrepreneurship Infrastructure"],
+      "bio": "Animalia Labs is an open dataset and pipeline for estimating economic priors across species; ScholarLedger is a personal archive for essays and research. Also works in Yale’s van Dijk Lab.",
+      "proof": { "kind": "headline", "value": "Animalia Labs", "source": "Open dataset and pipeline across species" },
+      "extraKeywords": "Scientific data pipelines; open datasets; software engineering; computational research; biology; ScholarLedger; LAUNCH; computer science; economics"
+    },
+    {
+      "name": "Kashi Tuteja",
+      "classYear": "Yale College ’29",
+      "school": "Yale College",
+      "nowLine": "Co-Director of Special Projects, Yale Entrepreneurial Society",
+      "venture": "YES Special Projects",
+      "sectors": ["Artificial Intelligence", "Machine Learning", "Applied Mathematics", "Software", "Entrepreneurship Infrastructure"],
+      "bio": "Designed and built a mobile acoustic-physics tool using high-frequency sound sweeps and Fourier analysis to estimate distance, map room geometry and calculate sound-absorption properties.",
+      "proof": { "kind": "headline", "value": "Mobile acoustic-physics tool", "source": "Fourier analysis of high-frequency sound sweeps" },
+      "extraKeywords": "ML; algorithms; linear algebra; Fourier analysis; acoustic sensing; applied mathematics; signal processing; mathematics; computer science; sailing"
+    },
+    {
+      "name": "Jasmine Garry",
+      "classYear": "Yale College ’28",
+      "school": "Yale College",
+      "nowLine": "Chief of Operations, Yale Entrepreneurial Society; Talent Director, Yale Undergraduate Capital Partners",
+      "venture": "Yale Entrepreneurial Society",
+      "sectors": ["Entrepreneurship Infrastructure", "Venture Capital", "Artificial Intelligence", "Organizational Leadership"],
+      "bio": "Operates core YES infrastructure and talent processes, and is Talent Director at Yale Undergraduate Capital Partners. Co-authored a 2026 Yale Insights piece on frameworks for deploying agentic AI.",
+      "proof": { "kind": "headline", "value": "Yale Insights, 2026", "source": "Co-authored on deploying agentic AI" },
+      "companyUrl": "https://www.yesyale.org",
+      "extraKeywords": "Operations; recruiting; talent; venture ecosystem building; research; organizational strategy; YUCP; agentic AI"
+    }
+  ]
+}

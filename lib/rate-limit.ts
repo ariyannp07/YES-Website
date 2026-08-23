@@ -33,7 +33,7 @@ export interface RateLimitResult {
   readonly retryAfterSeconds: number
 }
 
-export const hit = (key: string): RateLimitResult => {
+export const hit = (key: string, max = MAX_PER_WINDOW): RateLimitResult => {
   const now = Date.now()
 
   // Bound memory: a flood of unique keys must not grow the map without limit.
@@ -48,7 +48,7 @@ export const hit = (key: string): RateLimitResult => {
 
   existing.count += 1
 
-  if (existing.count > MAX_PER_WINDOW) {
+  if (existing.count > max) {
     return {
       allowed: false,
       retryAfterSeconds: Math.max(1, Math.ceil((existing.resetAt - now) / 1000)),
