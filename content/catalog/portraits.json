@@ -35,26 +35,12 @@
       "evidence": "named-alt",
       "pageTier": "company"
     },
-    "bailey-ehrens": {
-      "name": "Bailey Ehrens",
-      "imageUrl": "https://tennieclothing.com/cdn/shop/files/SOM_Profile.jpg?v=1736954256&width=1500",
-      "sourcePage": "github.com/august-andersen/yes-catalog data/profiles.json",
-      "evidence": "named-file",
-      "pageTier": "supplied"
-    },
     "diana-salha": {
       "name": "Diana Salha",
       "imageUrl": "https://images.squarespace-cdn.com/content/v1/684bf7d88c9aa444b82082a7/aae324db-ffa1-46de-9c79-b518a78e74f8/Headshot.jpg",
       "sourcePage": "https://www.cosnetix.com/about",
       "evidence": "named-context",
       "pageTier": "company"
-    },
-    "dianna-liu": {
-      "name": "Dianna Liu",
-      "imageUrl": "https://insights.som.yale.edu/sites/default/files/styles/rectangle_xs/public/2026-01/Dianna%20Liu%20ARIX%20Technologies.jpg?h=21daf0dd&itok=pIy21VAh",
-      "sourcePage": "https://insights.som.yale.edu/insights/most-startups-fail-these-founders-thought-making-an-impact-was-worth-the-risk",
-      "evidence": "named-alt",
-      "pageTier": "source1"
     },
     "grace-gerwe": {
       "name": "Grace Gerwe",
@@ -91,13 +77,6 @@
       "evidence": "named-file",
       "pageTier": "supplied"
     },
-    "kevin-wang": {
-      "name": "Kevin Wang",
-      "imageUrl": "https://anatomi.st/kevin.jpeg",
-      "sourcePage": "https://anatomi.st/",
-      "evidence": "named-alt",
-      "pageTier": "company"
-    },
     "laurie-jimenez": {
       "name": "Laurie Jimenez",
       "imageUrl": "https://static.wixstatic.com/media/ddc29a_7eb7c079afc34925b8854d60c800a7dd~mv2.png/v1/crop/x_0,y_110,w_4047,h_3828/fill/w_277,h_262,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/headshot_laurie.png",
@@ -132,13 +111,6 @@
       "sourcePage": "github.com/august-andersen/yes-catalog data/profiles.json",
       "evidence": "named-file",
       "pageTier": "supplied"
-    },
-    "nick-callegari": {
-      "name": "Nick Callegari",
-      "imageUrl": "https://www.verustruct.com/_next/image?url=%2FTeam%2520Headshots%2FNick-Callegari-Cropped.jpeg&w=3840&q=100&dpl=dpl_AGBwE25PdZVjAYiuSmFJeZ11H1Qn",
-      "sourcePage": "https://www.verustruct.com/team",
-      "evidence": "named-alt",
-      "pageTier": "company"
     },
     "nicolas-gertler": {
       "name": "Nicolas Gertler",
@@ -223,13 +195,6 @@
       "sourcePage": "https://www.yesyale.org/team",
       "evidence": "named-file",
       "pageTier": "first-party"
-    },
-    "ziv-levi": {
-      "name": "Ziv Levi",
-      "imageUrl": "https://www.leancon.ai/wp-content/uploads/2025/11/Frame-1984078999-1.png",
-      "sourcePage": "https://www.leancon.ai/about-us/",
-      "evidence": "named-alt",
-      "pageTier": "company"
     }
   }
 }

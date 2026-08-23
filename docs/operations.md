@@ -17,6 +17,14 @@ The integration variables are server-side. Do not prefix tokens with `NEXT_PUBLI
 
 ## Version-controlled catalog
 
+The directory holds **98 builders**. Yale School of Management entries are excluded at
+import time (`EXCLUDED_SCHOOLS` in `scripts/import-catalog.mjs`) at the owners'
+direction — the source CSV still carries all 116 rows, so the decision is reversible by
+editing that one set and re-running the import. The match is on the CSV's `Yale School`
+column exactly, not a substring of the affiliation: several School of the Environment
+people hold a Master of Environmental *Management*, and a loose match would remove them
+too.
+
 The primary catalog source is:
 
 ```text
@@ -113,7 +121,7 @@ the routes before enabling the forms.
 Portraits come from two places. The consented Airtable feed is authoritative; the
 curated directory in Git fills the gap until people submit their own.
 
-### Source 1 — the curated directory (33 of 116)
+### Source 1 — the curated directory (28 of 98)
 
 `content/catalog/portraits/*.jpg`, committed. These were collected from public web
 pages, **not** submitted by their subjects, so they are deliberately kept out of
@@ -207,7 +215,7 @@ Before treating a deployment as production-ready:
 - The rate limiter is an in-memory, per-server-instance fixed window. It reduces naive
   floods but is not a distributed abuse-control system.
 - A search shows only its strong matches (at most 24, floor relative to the top score,
-  minimum of three). Browsing still shows all 116. The constants live in
+  minimum of three). Browsing still shows the whole directory. The constants live in
   `lib/catalog/search.ts`.
 - Catalog search runs entirely in the visitor's browser. Vectors are baked into
   `content/catalog/embeddings.json` by `npm run embed`; the query is embedded

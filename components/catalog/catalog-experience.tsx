@@ -43,7 +43,7 @@ const GATHER_BEAT_MS = 1500
 const REVEAL_AFTER_BURST_MS = 620
 
 // Versioned: a session stored before search gained a relevance cutoff holds a
-// full 116-slug list, which would come back as "116 matches" for a query that
+// full-directory slug list, which would come back as a match for every builder
 // should now return a handful.
 const RESTORE_KEY = 'yes:catalog:results:v2'
 const SCROLL_KEY = 'yes:catalog:scroll'

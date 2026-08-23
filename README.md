@@ -103,11 +103,11 @@ credentials never need to reach the browser.
 - **The hero is the entry; the wall is already behind it.** The scaffold gated the grid
   behind a search, so the faces cost a click and a wait. Deleting the hero to fix that
   threw away the moment the page is built around. Both hold now: the hero gets the first
-  screen, and all 116 builders are in the SAME server-rendered HTML directly beneath it —
+  screen, and every builder is in the SAME server-rendered HTML directly beneath it —
   one scroll away, nothing to load. The embedding model is fetched only when someone
   focuses the search field, so a visitor who came to browse never pays for it.
 - **Search cuts, browsing does not.** A search returns its strong matches only, capped at
-  24, using a floor relative to the best score. Showing all 116 ranked made every search
+  24, using a floor relative to the best score. Ranking the whole directory made every search
   look identical below the fold and implied a relevance the tail did not have. A floor of
   three results keeps a narrow query from returning nothing.
 - **Build-time image treatment.** Portraits from either source are cropped and converted

@@ -97,10 +97,26 @@ const get = (row, col) => (row[idx[col]] ?? '').trim()
 
 const taken = new Set()
 const people = []
+const excluded = []
+
+/**
+ * Schools whose members are not on the wall, at the owners' direction.
+ *
+ * Matched on the CSV's `Yale School` column exactly, NOT on a substring of the
+ * affiliation text: several School of the Environment people hold a Master of
+ * Environmental MANAGEMENT, and a loose match would sweep them out with the
+ * management school.
+ */
+const EXCLUDED_SCHOOLS = new Set(['Yale School of Management'])
 
 for (const row of body) {
   const name = get(row, 'Full Name')
   if (!name) continue
+
+  if (EXCLUDED_SCHOOLS.has(get(row, 'Yale School'))) {
+    excluded.push(name)
+    continue
+  }
 
   let slug = slugify(get(row, 'Display Name') || name)
   let n = 2
@@ -194,6 +210,13 @@ people.sort((a, b) => {
 })
 
 writeFileSync(OUT, `${JSON.stringify({ people }, null, 2)}\n`)
+
+if (excluded.length > 0) {
+  console.log(
+    `import-catalog — excluded ${excluded.length} from ${[...EXCLUDED_SCHOOLS].join(', ')}: ` +
+      excluded.join(', '),
+  )
+}
 
 const missing = FEATURED.filter((n) => !people.some((p) => p.name === n))
 const flagged = people.filter((p) => p.reviewNote)

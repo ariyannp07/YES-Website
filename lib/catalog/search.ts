@@ -3,7 +3,7 @@ import type { Alumnus } from '@/lib/alumni'
 /**
  * Ranking for the catalog. Ported from the yes-catalog scaffold.
  *
- * The scaffold ranked all 116 and showed all 116, on the principle that a wall
+ * The scaffold ranked every builder and showed every builder, on the principle that a wall
  * which goes blank reads as "nobody here". In practice that made every search
  * look identical below the fold: the tail is just the directory in a shuffled
  * order, and scrolling it implies a relevance that isn't there.

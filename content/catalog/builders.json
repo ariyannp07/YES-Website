@@ -854,71 +854,6 @@
       "featured": false
     },
     {
-      "slug": "babs-williams",
-      "name": "Babs Williams",
-      "classYear": "Yale School of Management ’20",
-      "school": "Yale School of Management",
-      "nowLine": "Founder / co-founder (Startup Yale 2026), PathConnect",
-      "venture": "PathConnect",
-      "bio": "Babs Williams is a Yale School of Management ’20 Founder / co-founder (Startup Yale 2026) associated with PathConnect. Civic-integration platform helping immigrants and new residents navigate mentorship, housing, financial literacy, services and employment through verified local partners.",
-      "sectors": [
-        "Civic Technology",
-        "Immigration",
-        "Workforce",
-        "Community Services"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "Audience Choice, 2026 New Haven Civic Innovation Prize",
-        "source": "https://startup.yale.edu/people/"
-      },
-      "searchText": "babs williams founder / co-founder (startup yale 2026) pathconnect pathconnect yale school of management ’20 yale school of management babs williams is a yale school of management ’20 founder / co-founder (startup yale 2026) associated with pathconnect. civic-integration platform helping immigrants and new residents navigate mentorship, housing, financial literacy, services and employment through verified local partners. civic technology; immigration; workforce; community services service navigation; case-management workflows; civic data civic technology; immigration; workforce; community services; service navigation; case-management workflows; civic data; immigrant integration; fragmented services; housing and employment navigation; founder / builder; fintech builder; civic / legal builder; pathconnect; yale school of management; yale builder; yale founder; yale 2020",
-      "featured": false
-    },
-    {
-      "slug": "bailey-ehrens",
-      "name": "Bailey Ehrens",
-      "classYear": "Yale School of Management ’26",
-      "school": "Yale School of Management",
-      "nowLine": "Founder / venture lead (Tsai CITY), Tennie",
-      "venture": "Tennie",
-      "bio": "Bailey Ehrens is a Yale School of Management ’26 Founder / venture lead (Tsai CITY) associated with Tennie. Professional clothing platform using personalized quizzes and curated shopping to help women find workwear.",
-      "sectors": [
-        "Consumer",
-        "Fashion Technology",
-        "E-commerce"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "Tennie",
-        "source": "Professional clothing platform using personalized quizzes and curated shopping to help women find workwear."
-      },
-      "searchText": "bailey ehrens founder / venture lead (tsai city) tennie tennie yale school of management ’26 yale school of management bailey ehrens is a yale school of management ’26 founder / venture lead (tsai city) associated with tennie. professional clothing platform using personalized quizzes and curated shopping to help women find workwear. consumer; fashion technology; e-commerce personalization; e-commerce; recommendation workflows consumer; fashion technology; e-commerce; personalization; recommendation workflows; professional wardrobe discovery; shopping personalization; women’s workwear; founder / builder; creative / consumer builder; tennie; yale school of management; yale builder; yale founder; yale 2026",
-      "featured": false
-    },
-    {
-      "slug": "bhavya-chauhan",
-      "name": "Bhavya Chauhan",
-      "classYear": "Yale School of Management ’26",
-      "school": "Yale School of Management",
-      "nowLine": "Founder / co-founder (Startup Yale 2026), Havn",
-      "venture": "Havn",
-      "bio": "Bhavya Chauhan is a Yale School of Management ’26 Founder / co-founder (Startup Yale 2026) associated with Havn. EHR-embedded platform matching patients and caregivers to pharma- and advocacy-sponsored support programs with AI-assisted enrollment.",
-      "sectors": [
-        "Digital Health",
-        "Healthcare Navigation",
-        "Artificial Intelligence",
-        "Pharma Services"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "Audience Choice, 2026 Manolo Sanchez Prize",
-        "source": "https://startup.yale.edu/people/"
-      },
-      "searchText": "bhavya chauhan founder / co-founder (startup yale 2026) havn havn yale school of management ’26 yale school of management bhavya chauhan is a yale school of management ’26 founder / co-founder (startup yale 2026) associated with havn. ehr-embedded platform matching patients and caregivers to pharma- and advocacy-sponsored support programs with ai-assisted enrollment. digital health; healthcare navigation; artificial intelligence; pharma services ehr integration; matching systems; ai enrollment; healthcare data digital health; healthcare navigation; artificial intelligence; pharma services; ehr integration; matching systems; ai enrollment; healthcare data; patient support discovery; financial assistance; care navigation; founder / builder; ai builder; hardware / systems builder; health / bio builder; havn; yale school of management; yale builder; yale founder; yale 2026",
-      "featured": false
-    },
-    {
       "slug": "brenton-duhan",
       "name": "Brenton Duhan",
       "classYear": "Yale School of Architecture ’26",
@@ -1011,28 +946,6 @@
       "featured": false
     },
     {
-      "slug": "chloe-yu",
-      "name": "Chloe Yu",
-      "classYear": "Yale School of Management ’28",
-      "school": "Yale School of Management",
-      "nowLine": "Founder / venture lead (Tsai CITY Accelerator), BridgePath Technologies",
-      "venture": "BridgePath Technologies",
-      "bio": "Chloe Yu is a Yale School of Management ’28 Founder / venture lead (Tsai CITY Accelerator) associated with BridgePath Technologies. AI-powered platform matching students and young professionals with near-peer mentors to expand access to guidance and opportunity.",
-      "sectors": [
-        "Education Technology",
-        "Future of Work",
-        "Artificial Intelligence"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "BridgePath Technologies",
-        "source": "AI-powered platform matching students and young professionals with near-peer mentors to expand access to guidance and opportunity."
-      },
-      "companyUrl": "https://www.mybridgepath.com",
-      "searchText": "chloe yu founder / venture lead (tsai city accelerator) bridgepath technologies bridgepath technologies yale school of management ’28 yale school of management chloe yu is a yale school of management ’28 founder / venture lead (tsai city accelerator) associated with bridgepath technologies. ai-powered platform matching students and young professionals with near-peer mentors to expand access to guidance and opportunity. education technology; future of work; artificial intelligence ai matching; marketplace/network software; mentorship systems education technology; future of work; artificial intelligence; ai matching; marketplace/network software; mentorship systems; access to mentorship; early-career guidance; opportunity navigation; founder / builder; ai builder; bridgepath technologies; yale school of management; yale builder; yale founder; yale 2028",
-      "featured": false
-    },
-    {
       "slug": "chris-johnson",
       "name": "Chris Johnson",
       "classYear": "Yale School of Public Health ’26",
@@ -1077,29 +990,6 @@
       "featured": false
     },
     {
-      "slug": "christopher-huang",
-      "name": "Christopher Huang",
-      "classYear": "Yale School of Management ’26",
-      "school": "Yale School of Management",
-      "nowLine": "Founder / co-founder (Startup Yale 2026), Rise Media",
-      "venture": "Rise Media",
-      "bio": "Christopher Huang is a Yale School of Management ’26 Founder / co-founder (Startup Yale 2026) associated with Rise Media. Creator-intelligence platform helping brands run data-driven short-form influencer campaigns using content-performance data.",
-      "sectors": [
-        "Creator Economy",
-        "Marketing Technology",
-        "B2B Software",
-        "Consumer Internet"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "Rise Media",
-        "source": "Creator-intelligence platform helping brands run data-driven short-form influencer campaigns using content-performance data."
-      },
-      "searchText": "christopher huang founder / co-founder (startup yale 2026) rise media rise media yale school of management ’26 yale school of management christopher huang is a yale school of management ’26 founder / co-founder (startup yale 2026) associated with rise media. creator-intelligence platform helping brands run data-driven short-form influencer campaigns using content-performance data. creator economy; marketing technology; b2b software; consumer internet creator analytics; campaign data; social-media intelligence creator economy; marketing technology; b2b software; consumer internet; creator analytics; campaign data; social-media intelligence; influencer campaign performance; creator discovery; brand roi; founder / builder; creative / consumer builder; rise media; yale school of management; yale builder; yale founder; yale 2026",
-      "reviewNote": "Verify current venture name",
-      "featured": false
-    },
-    {
       "slug": "daphne-wu",
       "name": "Daphne Wu",
       "classYear": "Yale College ’26",
@@ -1141,30 +1031,6 @@
       },
       "companyUrl": "https://www.cosnetix.com",
       "searchText": "diana salha founder / co-founder (startup yale 2026) cosnetix cosnetix yale school of public health ’27 yale school of public health diana salha is a yale school of public health ’27 founder / co-founder (startup yale 2026) associated with cosnetix. personalized skincare compatibility platform using genetics, microbiome and skin-trait information to predict product response. consumer health; beauty technology; biotechnology; personalization genetics; microbiome; personalization; consumer health data consumer health; beauty technology; biotechnology; personalization; genetics; microbiome; consumer health data; skincare compatibility; individual response variation; beauty personalization; founder / builder; health / bio builder; cosnetix; yale school of public health; yale builder; yale founder; yale 2027",
-      "featured": false
-    },
-    {
-      "slug": "dianna-liu",
-      "name": "Dianna Liu",
-      "classYear": "Yale School of Management ’18",
-      "school": "Yale School of Management",
-      "nowLine": "Founder & President, ARIX Technologies",
-      "venture": "ARIX Technologies",
-      "bio": "Dianna Liu is a Yale School of Management ’18 Founder & President associated with ARIX Technologies. Industrial robotics and data analytics for inspection and integrity management of pipes and other critical assets.",
-      "sectors": [
-        "Industrial Robotics",
-        "Energy",
-        "Infrastructure",
-        "Inspection Technology",
-        "B2B Hardware"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "Current ARIX team page reports 25+ team members and 20+ clients; Yale traces the company to CEID founders.",
-        "source": "https://insights.som.yale.edu/insights/most-startups-fail-these-founders-thought-making-an-impact-was-worth-the-risk"
-      },
-      "companyUrl": "https://www.arix-tech.com",
-      "searchText": "dianna liu founder & president arix technologies arix technologies yale school of management ’18 yale school of management dianna liu is a yale school of management ’18 founder & president associated with arix technologies. industrial robotics and data analytics for inspection and integrity management of pipes and other critical assets. industrial robotics; energy; infrastructure; inspection technology; b2b hardware pipe-crawling robots; nondestructive testing; inspection data; robotics; asset analytics industrial robotics; energy; infrastructure; inspection technology; b2b hardware; pipe-crawling robots; nondestructive testing; inspection data; robotics; asset analytics; pipe corrosion; worker safety; industrial inspection cost; predictive maintenance; founder / builder; hardware / systems builder; robotics builder; arix technologies; yale school of management; yale builder; yale founder; yale 2018; prior yes chat seed",
       "featured": false
     },
     {
@@ -1394,28 +1260,6 @@
       "featured": false
     },
     {
-      "slug": "hanwool-jung",
-      "name": "Hanwool Jung",
-      "classYear": "Yale School of Management ’26",
-      "school": "Yale School of Management",
-      "nowLine": "Founder / venture lead (Tsai CITY Accelerator), Comitia",
-      "venture": "Comitia",
-      "bio": "Hanwool Jung is a Yale School of Management ’26 Founder / venture lead (Tsai CITY Accelerator) associated with Comitia. AI-powered comics platform that lets people create and share comics without drawing experience.",
-      "sectors": [
-        "Artificial Intelligence",
-        "Creator Tools",
-        "Media",
-        "Consumer Software"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "Comitia",
-        "source": "AI-powered comics platform that lets people create and share comics without drawing experience."
-      },
-      "searchText": "hanwool jung founder / venture lead (tsai city accelerator) comitia comitia yale school of management ’26 yale school of management hanwool jung is a yale school of management ’26 founder / venture lead (tsai city accelerator) associated with comitia. ai-powered comics platform that lets people create and share comics without drawing experience. artificial intelligence; creator tools; media; consumer software generative ai; creative tools; visual storytelling artificial intelligence; creator tools; media; consumer software; generative ai; creative tools; visual storytelling; creative expression; comic creation; creator tooling; founder / builder; ai builder; creative / consumer builder; comitia; yale school of management; yale builder; yale founder; yale 2026",
-      "featured": false
-    },
-    {
       "slug": "hirad-moradi-lakeh",
       "name": "Hirad Moradi-Lakeh",
       "classYear": "Yale School of Music ’27",
@@ -1620,49 +1464,6 @@
       "featured": false
     },
     {
-      "slug": "kal-leung",
-      "name": "Kal Leung",
-      "classYear": "Yale School of Management ’27",
-      "school": "Yale School of Management",
-      "nowLine": "Founder / co-founder (Startup Yale 2026), C:HET",
-      "venture": "C:HET",
-      "bio": "Kal Leung is a Yale School of Management ’27 Founder / co-founder (Startup Yale 2026) associated with C:HET. Investing-first credit-card concept that routes value from everyday spending into low-cost ETF investments.",
-      "sectors": [
-        "FinTech",
-        "Consumer Finance",
-        "Investing"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "C:HET",
-        "source": "Investing-first credit-card concept that routes value from everyday spending into low-cost ETF investments."
-      },
-      "companyUrl": "https://chetcard.com",
-      "searchText": "kal leung founder / co-founder (startup yale 2026) c:het c:het yale school of management ’27 yale school of management kal leung is a yale school of management ’27 founder / co-founder (startup yale 2026) associated with c:het. investing-first credit-card concept that routes value from everyday spending into low-cost etf investments. fintech; consumer finance; investing payments; portfolio automation; consumer finance software fintech; consumer finance; investing; payments; portfolio automation; consumer finance software; low household investing; wealth building; payment rewards; founder / builder; fintech builder; c:het; yale school of management; yale builder; yale founder; yale 2027",
-      "featured": false
-    },
-    {
-      "slug": "karina-gupta",
-      "name": "Karina Gupta",
-      "classYear": "Yale School of Management ’26",
-      "school": "Yale School of Management",
-      "nowLine": "Founder / co-founder (Startup Yale 2026), KarinaJ Denim",
-      "venture": "KarinaJ Denim",
-      "bio": "Karina Gupta is a Yale School of Management ’26 Founder / co-founder (Startup Yale 2026) associated with KarinaJ Denim. Adaptive women’s slip-on jeans with expandable waistbands designed to accommodate daily body changes while retaining a premium look.",
-      "sectors": [
-        "Consumer",
-        "Fashion",
-        "Adaptive Apparel"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "KarinaJ Denim",
-        "source": "Adaptive women’s slip-on jeans with expandable waistbands designed to accommodate daily body changes while retaining a premium look."
-      },
-      "searchText": "karina gupta founder / co-founder (startup yale 2026) karinaj denim karinaj denim yale school of management ’26 yale school of management karina gupta is a yale school of management ’26 founder / co-founder (startup yale 2026) associated with karinaj denim. adaptive women’s slip-on jeans with expandable waistbands designed to accommodate daily body changes while retaining a premium look. consumer; fashion; adaptive apparel apparel design; adaptive garment construction consumer; fashion; adaptive apparel; apparel design; adaptive garment construction; clothing comfort; body changes; founder / builder; creative / consumer builder; karinaj denim; yale school of management; yale builder; yale founder; yale 2026",
-      "featured": false
-    },
-    {
       "slug": "keith-pemberton",
       "name": "Keith Pemberton",
       "classYear": "Yale College ’27",
@@ -1704,28 +1505,6 @@
         "source": "Student-focused moving and storage logistics service."
       },
       "searchText": "kennedy smith founder / co-founder (startup yale 2026) summerstore summerstore yale college ’26 yale college kennedy smith is a yale college ’26 founder / co-founder (startup yale 2026) associated with summerstore. student-focused moving and storage logistics service. logistics; consumer services; campus technology logistics operations; marketplace/service software logistics; consumer services; campus technology; logistics operations; marketplace/service software; student moving; summer storage; campus logistics; founder / builder; summerstore; yale college; yale builder; yale founder; yale 2026",
-      "featured": false
-    },
-    {
-      "slug": "kevin-wang",
-      "name": "Kevin Wang",
-      "classYear": "Yale School of Management ’27",
-      "school": "Yale School of Management",
-      "nowLine": "Founder / venture lead (Tsai CITY), Anatomist Security",
-      "venture": "Anatomist Security",
-      "bio": "Kevin Wang is a Yale School of Management ’27 Founder / venture lead (Tsai CITY) associated with Anatomist Security. Security-audit and vulnerability-research company for blockchain ecosystems, including compiler and consensus-protocol security.",
-      "sectors": [
-        "Cybersecurity",
-        "Blockchain",
-        "Developer Infrastructure"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "Anatomist Security",
-        "source": "Security-audit and vulnerability-research company for blockchain ecosystems, including compiler and consensus-protocol security."
-      },
-      "companyUrl": "https://anatomi.st",
-      "searchText": "kevin wang founder / venture lead (tsai city) anatomist security anatomist security yale school of management ’27 yale school of management kevin wang is a yale school of management ’27 founder / venture lead (tsai city) associated with anatomist security. security-audit and vulnerability-research company for blockchain ecosystems, including compiler and consensus-protocol security. cybersecurity; blockchain; developer infrastructure security auditing; vulnerability research; compilers; consensus protocols cybersecurity; blockchain; developer infrastructure; security auditing; vulnerability research; compilers; consensus protocols; smart-contract/blockchain security; compiler vulnerabilities; consensus flaws; founder / builder; security builder; research / knowledge builder; anatomist security; yale school of management; yale builder; yale founder; yale 2027",
       "featured": false
     },
     {
@@ -2048,29 +1827,6 @@
       "featured": false
     },
     {
-      "slug": "nick-callegari",
-      "name": "Nick Callegari",
-      "classYear": "Yale School of Management ’25",
-      "school": "Yale School of Management",
-      "nowLine": "Founder & CEO, Verustruct",
-      "venture": "Verustruct",
-      "bio": "Nick Callegari is a Yale School of Management ’25 Founder & CEO associated with Verustruct. Gantry-less construction 3D-printing technology designed to create affordable, sustainable housing more efficiently.",
-      "sectors": [
-        "Construction Technology",
-        "Advanced Manufacturing",
-        "Climate Technology",
-        "Housing"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "$2.44M oversubscribed pre-seed; Callegari was named to a 2026 Forbes 30 Under 30 list in Yale SOM coverage.",
-        "source": "https://som.yale.edu/story/2025/sustainable-construction-startup-closes-oversubscribed-24-million-pre-seed-fundraising"
-      },
-      "companyUrl": "https://www.verustruct.com",
-      "searchText": "nick callegari founder & ceo verustruct verustruct yale school of management ’25 yale school of management nick callegari is a yale school of management ’25 founder & ceo associated with verustruct. gantry-less construction 3d-printing technology designed to create affordable, sustainable housing more efficiently. construction technology; advanced manufacturing; climate technology; housing construction 3d printing; mechanical design; additive manufacturing; sustainable materials construction technology; advanced manufacturing; climate technology; housing; construction 3d printing; mechanical design; additive manufacturing; sustainable materials; housing affordability; construction productivity; sustainable building; homelessness; founder / builder; hardware / systems builder; climate builder; verustruct; yale school of management; yale builder; yale founder; yale 2025; prior yes chat seed; $2.44m; pre-seed",
-      "featured": false
-    },
-    {
       "slug": "paul-gross",
       "name": "Paul Gross",
       "classYear": "Yale College ’20",
@@ -2138,28 +1894,6 @@
         "source": "Enhanced-rock-weathering approach using locally sourced basalt fines to immobilize heavy metals in contaminated brownfield soils."
       },
       "searchText": "quinn zacharias founder / co-founder (startup yale 2026) barefoote metals barefoote metals yale school of the environment ’26 yale school of the environment quinn zacharias is a yale school of the environment ’26 founder / co-founder (startup yale 2026) associated with barefoote metals. enhanced-rock-weathering approach using locally sourced basalt fines to immobilize heavy metals in contaminated brownfield soils. climate technology; environmental remediation; materials; real estate enhanced rock weathering; geochemistry; soil remediation; verification climate technology; environmental remediation; materials; real estate; enhanced rock weathering; geochemistry; soil remediation; verification; brownfield contamination; heavy metals; land reuse; founder / builder; climate builder; barefoote metals; yale school of the environment; yale builder; yale founder; yale 2026",
-      "featured": false
-    },
-    {
-      "slug": "rachel-lee",
-      "name": "Rachel Lee",
-      "classYear": "Yale School of Management ’27",
-      "school": "Yale School of Management",
-      "nowLine": "Founder / venture lead (Tsai CITY), PRISM Bags",
-      "venture": "PRISM Bags",
-      "bio": "Rachel Lee is a Yale School of Management ’27 Founder / venture lead (Tsai CITY) associated with PRISM Bags. Functional bags and backpacks using innovative vegan/recycled materials for professional women and modern lifestyles.",
-      "sectors": [
-        "Consumer",
-        "Fashion",
-        "Sustainable Materials"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "PRISM Bags",
-        "source": "Functional bags and backpacks using innovative vegan/recycled materials for professional women and modern lifestyles."
-      },
-      "companyUrl": "https://www.prismbags.com",
-      "searchText": "rachel lee founder / venture lead (tsai city) prism bags prism bags yale school of management ’27 yale school of management rachel lee is a yale school of management ’27 founder / venture lead (tsai city) associated with prism bags. functional bags and backpacks using innovative vegan/recycled materials for professional women and modern lifestyles. consumer; fashion; sustainable materials bag design; consumer product development; recycled/vegan materials consumer; fashion; sustainable materials; bag design; consumer product development; recycled/vegan materials; functional work bags; women-focused product design; founder / builder; climate builder; creative / consumer builder; prism bags; yale school of management; yale builder; yale founder; yale 2027",
       "featured": false
     },
     {
@@ -2254,28 +1988,6 @@
       "featured": false
     },
     {
-      "slug": "sadiq-shamji",
-      "name": "Sadiq Shamji",
-      "classYear": "Yale School of Management ’26",
-      "school": "Yale School of Management",
-      "nowLine": "Founder / co-founder (Startup Yale 2026), Kijani Carbon",
-      "venture": "Kijani Carbon",
-      "bio": "Sadiq Shamji is a Yale School of Management ’26 Founder / co-founder (Startup Yale 2026) associated with Kijani Carbon. Converts sugarcane waste into biochar, carbon credits and fertilizer through an East African circular-carbon model.",
-      "sectors": [
-        "Climate Technology",
-        "Carbon Removal",
-        "AgTech",
-        "Circular Economy"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "Kijani Carbon",
-        "source": "Converts sugarcane waste into biochar, carbon credits and fertilizer through an East African circular-carbon model."
-      },
-      "searchText": "sadiq shamji founder / co-founder (startup yale 2026) kijani carbon kijani carbon yale school of management ’26 yale school of management sadiq shamji is a yale school of management ’26 founder / co-founder (startup yale 2026) associated with kijani carbon. converts sugarcane waste into biochar, carbon credits and fertilizer through an east african circular-carbon model. climate technology; carbon removal; agtech; circular economy biochar; carbon credits; biomass conversion; soil amendment climate technology; carbon removal; agtech; circular economy; biochar; carbon credits; biomass conversion; soil amendment; agricultural waste; soil fertility; rural value creation; founder / builder; climate builder; kijani carbon; yale school of management; yale builder; yale founder; yale 2026",
-      "featured": false
-    },
-    {
       "slug": "sam-hendel",
       "name": "Sam Hendel",
       "classYear": "Yale College ’03",
@@ -2346,28 +2058,6 @@
       "featured": false
     },
     {
-      "slug": "shivansh-chaturvedi",
-      "name": "Shivansh Chaturvedi",
-      "classYear": "Yale School of Management ’26",
-      "school": "Yale School of Management",
-      "nowLine": "Founder / co-founder (Startup Yale 2026), Apical",
-      "venture": "Apical",
-      "bio": "Shivansh Chaturvedi is a Yale School of Management ’26 Founder / co-founder (Startup Yale 2026) associated with Apical. Physics-informed machine-learning system that improves solar-power forecasts by correcting cloud-driven sunlight errors.",
-      "sectors": [
-        "Climate Technology",
-        "Solar Energy",
-        "Grid Software",
-        "Artificial Intelligence"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "2nd place, 2026 Planetary Solutions Prize",
-        "source": "https://startup.yale.edu/people/"
-      },
-      "searchText": "shivansh chaturvedi founder / co-founder (startup yale 2026) apical apical yale school of management ’26 yale school of management shivansh chaturvedi is a yale school of management ’26 founder / co-founder (startup yale 2026) associated with apical. physics-informed machine-learning system that improves solar-power forecasts by correcting cloud-driven sunlight errors. climate technology; solar energy; grid software; artificial intelligence physics-informed ml; solar forecasting; energy analytics climate technology; solar energy; grid software; artificial intelligence; physics-informed ml; solar forecasting; energy analytics; solar forecast error; grid curtailment; renewable integration; founder / builder; ai builder; climate builder; apical; yale school of management; yale builder; yale founder; yale 2026",
-      "featured": false
-    },
-    {
       "slug": "shubh-jain",
       "name": "Shubh Jain",
       "classYear": "Yale School of the Environment ’25",
@@ -2411,29 +2101,6 @@
       },
       "companyUrl": "https://www.spurtest.com/",
       "searchText": "sneha sivakumar co-founder & ceo spur spur yale college ’24 yale college sneha sivakumar is a yale college ’24 co-founder & ceo associated with spur. ai qa engineer that lets teams create and run end-to-end web tests in natural language using multimodal browser agents. developer tools; artificial intelligence; b2b software; software testing web agents; multimodal ai; browser automation; end-to-end testing; natural-language interfaces developer tools; artificial intelligence; b2b software; software testing; web agents; multimodal ai; browser automation; end-to-end testing; natural-language interfaces; software testing cost; test maintenance; engineering productivity; founder / builder; ai builder; developer infrastructure builder; spur; yale college; yale builder; yale founder; yale 2024; prior yes chat seed; $4.5m",
-      "featured": false
-    },
-    {
-      "slug": "sophia-yang",
-      "name": "Sophia Yang",
-      "classYear": "Yale School of Management ’27",
-      "school": "Yale School of Management",
-      "nowLine": "Founder / co-founder (Startup Yale 2026), PARTEE",
-      "venture": "PARTEE",
-      "bio": "Sophia Yang is a Yale School of Management ’27 Founder / co-founder (Startup Yale 2026) associated with PARTEE. Firmware security for robots and physical-AI devices using hardware-isolated, real-time secure containers and orchestration.",
-      "sectors": [
-        "Cybersecurity",
-        "Robotics",
-        "Physical AI",
-        "Developer Infrastructure"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "Audience Choice, 2026 Miller Prize",
-        "source": "https://startup.yale.edu/people/"
-      },
-      "companyUrl": "https://partee.systems",
-      "searchText": "sophia yang founder / co-founder (startup yale 2026) partee partee yale school of management ’27 yale school of management sophia yang is a yale school of management ’27 founder / co-founder (startup yale 2026) associated with partee. firmware security for robots and physical-ai devices using hardware-isolated, real-time secure containers and orchestration. cybersecurity; robotics; physical ai; developer infrastructure firmware security; hardware isolation; real-time containers; robotics systems cybersecurity; robotics; physical ai; developer infrastructure; firmware security; hardware isolation; real-time containers; robotics systems; robot cybersecurity; firmware compromise; physical-ai software isolation; founder / builder; hardware / systems builder; robotics builder; security builder; partee; yale school of management; yale builder; yale founder; yale 2027; prior yes chat seed",
       "featured": false
     },
     {
@@ -2481,29 +2148,6 @@
       "featured": false
     },
     {
-      "slug": "vini-amit-rupchandani",
-      "name": "Vini Amit Rupchandani",
-      "classYear": "Yale School of Management ’28",
-      "school": "Yale School of Management",
-      "nowLine": "Founder / venture lead (Tsai CITY), Irada",
-      "venture": "Irada",
-      "bio": "Vini Amit Rupchandani is a Yale School of Management ’28 Founder / venture lead (Tsai CITY) associated with Irada. Card game designed to help people form meaningful friendships and discover purpose through structured conversation.",
-      "sectors": [
-        "Consumer",
-        "Games",
-        "Social Connection",
-        "Wellness"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "Irada",
-        "source": "Card game designed to help people form meaningful friendships and discover purpose through structured conversation."
-      },
-      "companyUrl": "https://playirada.com",
-      "searchText": "vini amit rupchandani founder / venture lead (tsai city) irada irada yale school of management ’28 yale school of management vini amit rupchandani is a yale school of management ’28 founder / venture lead (tsai city) associated with irada. card game designed to help people form meaningful friendships and discover purpose through structured conversation. consumer; games; social connection; wellness game design; conversation design; consumer products consumer; games; social connection; wellness; game design; conversation design; consumer products; loneliness; friendship formation; purpose discovery; founder / builder; irada; yale school of management; yale builder; yale founder; yale 2028",
-      "featured": false
-    },
-    {
       "slug": "yeabsera-agonfer",
       "name": "Yeabsera Agonfer",
       "classYear": "Yale Divinity School ’27",
@@ -2522,27 +2166,6 @@
         "source": "Shelf-stable lactose-free clarified butter infused with aromatic spices."
       },
       "searchText": "yeabsera agonfer founder / venture lead (tsai city) chacha butter chacha butter yale divinity school ’27 yale divinity school yeabsera agonfer is a yale divinity school ’27 founder / venture lead (tsai city) associated with chacha butter. shelf-stable lactose-free clarified butter infused with aromatic spices. consumer packaged goods; food; consumer food product development; shelf-stable formulation; cpg consumer packaged goods; food; consumer; food product development; shelf-stable formulation; cpg; convenient cooking; lactose-free food; culturally rooted cpg; founder / builder; chacha butter; yale divinity school; yale builder; yale founder; yale 2027",
-      "featured": false
-    },
-    {
-      "slug": "yemajha-caraballo",
-      "name": "Yemajha Caraballo",
-      "classYear": "Yale School of Management ’26",
-      "school": "Yale School of Management",
-      "nowLine": "Founder / co-founder (Startup Yale 2026), Pulse",
-      "venture": "Pulse",
-      "bio": "Yemajha Caraballo is a Yale School of Management ’26 Founder / co-founder (Startup Yale 2026) associated with Pulse. Healthcare platform matching underserved patients to culturally competent providers using identity-aware matching, care-style compatibility and community reviews.",
-      "sectors": [
-        "Digital Health",
-        "Healthcare Navigation",
-        "Consumer Health"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "Pulse",
-        "source": "Healthcare platform matching underserved patients to culturally competent providers using identity-aware matching, care-style compatibility and community reviews."
-      },
-      "searchText": "yemajha caraballo founder / co-founder (startup yale 2026) pulse pulse yale school of management ’26 yale school of management yemajha caraballo is a yale school of management ’26 founder / co-founder (startup yale 2026) associated with pulse. healthcare platform matching underserved patients to culturally competent providers using identity-aware matching, care-style compatibility and community reviews. digital health; healthcare navigation; consumer health matching systems; reputation/reviews; healthcare marketplaces digital health; healthcare navigation; consumer health; matching systems; reputation/reviews; healthcare marketplaces; provider fit; cultural competency; healthcare trust; patient navigation; founder / builder; health / bio builder; pulse; yale school of management; yale builder; yale founder; yale 2026",
       "featured": false
     },
     {
@@ -2610,29 +2233,6 @@
       },
       "linkedinUrl": "https://www.linkedin.com/in/zaid-fattah-b44a42204",
       "searchText": "zaid fattah founder & ceo redwood redwood yale college ’25 yale college zaid fattah is a yale college ’25 founder & ceo associated with redwood. fintech ai startup serving banks. financial technology; artificial intelligence; b2b software; banking ai for financial services; banking software; enterprise ai financial technology; artificial intelligence; b2b software; banking; ai for financial services; banking software; enterprise ai; banking workflows; financial-services automation; ai adoption in banks; founder / builder; ai builder; fintech builder; redwood; yale college; yale builder; yale founder; yale 2025; prior yes chat seed; pre-seed",
-      "featured": false
-    },
-    {
-      "slug": "ziv-levi",
-      "name": "Ziv Levi",
-      "classYear": "Yale School of Management ’24",
-      "school": "Yale School of Management",
-      "nowLine": "Founder & CEO, LeanCon",
-      "venture": "LeanCon",
-      "bio": "Ziv Levi is a Yale School of Management ’24 Founder & CEO associated with LeanCon. AI-powered preconstruction engineering platform that automates project planning, cost/scope/logistics analysis and scheduling for construction teams.",
-      "sectors": [
-        "Construction Technology",
-        "Artificial Intelligence",
-        "Real Estate Technology",
-        "B2B Software"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "Yale SOM reported the platform on more than $650M of development projects and a $6M seed round.",
-        "source": "https://som.yale.edu/story/2026/som-alum-raises-6-million-ai-construction-startup"
-      },
-      "companyUrl": "https://www.leancon.ai",
-      "searchText": "ziv levi founder & ceo leancon leancon yale school of management ’24 yale school of management ziv levi is a yale school of management ’24 founder & ceo associated with leancon. ai-powered preconstruction engineering platform that automates project planning, cost/scope/logistics analysis and scheduling for construction teams. construction technology; artificial intelligence; real estate technology; b2b software ai planning; construction data; project modeling; preconstruction software construction technology; artificial intelligence; real estate technology; b2b software; ai planning; construction data; project modeling; preconstruction software; slow and expensive preconstruction; bid planning; construction scheduling; cost estimation; founder / builder; ai builder; leancon; yale school of management; yale builder; yale founder; yale 2024; prior yes chat seed; $650m; $6m; seed",
       "featured": false
     }
   ]
