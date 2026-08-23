@@ -26,6 +26,27 @@
       "featured": true
     },
     {
+      "slug": "sofia-teifeld",
+      "name": "Sofia Teifeld",
+      "classYear": "Yale College ’29",
+      "school": "Yale College",
+      "nowLine": "Co-President, Yale Entrepreneurial Society, Yale Entrepreneurial Society",
+      "venture": "Yale Entrepreneurial Society",
+      "bio": "Sofia Teifeld is a Yale ’29 EP&E student and Co-President of the Yale Entrepreneurial Society.",
+      "sectors": [
+        "Entrepreneurship Infrastructure",
+        "Medical Technology",
+        "Research"
+      ],
+      "proof": {
+        "kind": "headline",
+        "value": "Yale Entrepreneurial Society",
+        "source": "Leads YES and previously developed a magnetic-shielding concept for adjustable hydrocephalus shunts."
+      },
+      "searchText": "sofia teifeld co-president, yale entrepreneurial society yale entrepreneurial society yale entrepreneurial society yale college ’29 yale college sofia teifeld is a yale ’29 ep&e student and co-president of the yale entrepreneurial society. entrepreneurship infrastructure; medical technology; research sofia teifeld; yale 2029; yes; yale entrepreneurial society; medtech; community builder",
+      "featured": true
+    },
+    {
       "slug": "oliver-hime",
       "name": "Oliver Hime",
       "classYear": "Yale College ’28",
@@ -311,27 +332,6 @@
       "linkedinUrl": "https://www.linkedin.com/in/khosilmurod",
       "searchText": "murad abdukholikov robotics / embedded-systems builder; yale cs student yale / independent robotics projects robotics projects yale college ’27 yale college murad abdukholikov is a yale college ’27 computer-science student from rural uzbekistan building in robotics, embedded systems and physical ai. robotics; physical ai; agtech; developer infrastructure; embedded systems embedded c++; sensors; robotics; egocentric data collection; full-stack software; computer architecture murad abdukholikov; khosilmurod abdukholikov; yale 2027; uzbekistan; robotics; physical ai; embedded systems; c++; sensors; egocentric data; hardware; agtech; orchard robotics; computer systems mura abdukholikov khosilmurod abdukholikov",
       "reviewNote": "Verify venture name",
-      "featured": true
-    },
-    {
-      "slug": "sofia-teifeld",
-      "name": "Sofia Teifeld",
-      "classYear": "Yale College ’29",
-      "school": "Yale College",
-      "nowLine": "Co-President, Yale Entrepreneurial Society, Yale Entrepreneurial Society",
-      "venture": "Yale Entrepreneurial Society",
-      "bio": "Sofia Teifeld is a Yale ’29 EP&E student and Co-President of the Yale Entrepreneurial Society.",
-      "sectors": [
-        "Entrepreneurship Infrastructure",
-        "Medical Technology",
-        "Research"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "Yale Entrepreneurial Society",
-        "source": "Leads YES and previously developed a magnetic-shielding concept for adjustable hydrocephalus shunts."
-      },
-      "searchText": "sofia teifeld co-president, yale entrepreneurial society yale entrepreneurial society yale entrepreneurial society yale college ’29 yale college sofia teifeld is a yale ’29 ep&e student and co-president of the yale entrepreneurial society. entrepreneurship infrastructure; medical technology; research sofia teifeld; yale 2029; yes; yale entrepreneurial society; medtech; community builder",
       "featured": true
     },
     {

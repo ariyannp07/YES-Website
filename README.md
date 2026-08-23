@@ -100,10 +100,12 @@ credentials never need to reach the browser.
   per-search cost and a privacy surface at once, in exchange for a lazily-fetched model.
   `lib/catalog/embed-text.ts` is shared by the bake and the browser, because a drift
   between the two turns cosine scores into noise without failing anything.
-- **The wall is the landing state.** All 116 builders are in the server-rendered HTML on
-  first paint, so the catalog is complete before any JavaScript runs. The embedding model
-  is fetched only when someone focuses the search field — a visitor who came to browse
-  never pays for it.
+- **The hero is the entry; the wall is already behind it.** The scaffold gated the grid
+  behind a search, so the faces cost a click and a wait. Deleting the hero to fix that
+  threw away the moment the page is built around. Both hold now: the hero gets the first
+  screen, and all 116 builders are in the SAME server-rendered HTML directly beneath it —
+  one scroll away, nothing to load. The embedding model is fetched only when someone
+  focuses the search field, so a visitor who came to browse never pays for it.
 - **Search cuts, browsing does not.** A search returns its strong matches only, capped at
   24, using a floor relative to the best score. Showing all 116 ranked made every search
   look identical below the fold and implied a relevance the tail did not have. A floor of

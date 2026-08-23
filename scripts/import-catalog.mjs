@@ -28,7 +28,10 @@ const OUT = new URL('../content/catalog/builders.json', import.meta.url)
  * there but is in neither the pack nor the directory, and is not in this 25.
  */
 const FEATURED = [
+  // Ariyan and Sofia are the co-presidents and sit together at the head of the
+  // wall, at their direction. The rest keep FEATURED_25.txt's order.
   "Ariyan Patel",
+  "Sofia Teifeld",
   "Oliver Hime",
   "Leïa Ryan",
   "James Masson",
@@ -41,7 +44,6 @@ const FEATURED = [
   "Osama Radi",
   "Allah-u-Abha Rodrigues",
   "Murad Abdukholikov",
-  "Sofia Teifeld",
   "Nicolas Gertler",
   "Amelie Liu",
   "Seth Goldin",

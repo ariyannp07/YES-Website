@@ -58,10 +58,12 @@ interface CatalogExperienceProps {
 /**
  * The catalog. Ported from the yes-catalog scaffold at the owners' direction.
  *
- * THE WALL IS THE LANDING STATE. The scaffold opened on a hero and revealed the
- * grid only after a search, which meant arriving at a catalog and being shown
- * no catalog. Here every builder is in the server-rendered HTML on first paint,
- * so the page is complete before any JavaScript runs; search then narrows it.
+ * THE HERO IS THE ENTRY; THE WALL IS ALREADY BEHIND IT. The scaffold gated the
+ * grid behind a search, so arriving at a catalog showed no catalog and the
+ * faces cost a click and a wait. Removing the hero to fix that threw away the
+ * moment the page is built around, which was worse. Both now hold: the hero
+ * gets the first screen, and every builder is in the SAME server-rendered HTML
+ * directly beneath it — one scroll away, nothing to load, nothing to click.
  *
  * Search runs entirely in the browser — see lib/catalog/embedder.ts — so there
  * is no API key, no server route, and no record of what anyone searched for.
@@ -72,8 +74,17 @@ export function CatalogExperience({ people, vectors }: CatalogExperienceProps) {
   const [matches, setMatches] = useState<readonly Ranked[] | null>(null)
 
   const stage = useRef<ThreeStageHandle>(null)
+  const gridRef = useRef<HTMLDivElement>(null)
   const seq = useRef(0)
   const restored = useRef(false)
+
+  const scrollToGrid = useCallback(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    gridRef.current?.scrollIntoView({
+      behavior: reduce ? 'auto' : 'smooth',
+      block: 'start',
+    })
+  }, [])
 
   /** Everyone, in the owners' order. The resting state of the page. */
   const everyone = useMemo(
@@ -228,17 +239,31 @@ export function CatalogExperience({ people, vectors }: CatalogExperienceProps) {
         </div>
       ) : (
         <div className={`${styles.layer} ${styles.resultsShell}`}>
-          <header className={styles.resultsHeader}>
-            <SearchField
-              key={query}
-              variant="top"
-              initial={query}
-              onSubmit={runSearch}
-              onFirstFocus={warmModel}
-            />
-          </header>
+          {searching ? (
+            <header className={styles.resultsHeader}>
+              <SearchField
+                key={query}
+                variant="top"
+                initial={query}
+                onSubmit={runSearch}
+                onFirstFocus={warmModel}
+              />
+            </header>
+          ) : (
+            <section className={styles.hero}>
+              <h1 className={styles.heroTitle}>Yale builders</h1>
+              <p className={styles.heroLede}>
+                {people.length} people who chose to build. Ask for what you are
+                looking for — a problem, a sector, a name.
+              </p>
+              <SearchField onSubmit={runSearch} onFirstFocus={warmModel} />
+              <button type="button" className={styles.submit} onClick={scrollToGrid}>
+                or see all {people.length} &darr;
+              </button>
+            </section>
+          )}
 
-          <div className={styles.resultsBody}>
+          <div ref={gridRef} className={styles.resultsBody}>
             <p className={styles.summary}>
               {searching ? (
                 <>
