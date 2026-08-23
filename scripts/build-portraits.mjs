@@ -18,10 +18,12 @@
  *   npm run build:portraits && npm run build
  */
 
-import { mkdir, writeFile } from 'node:fs/promises'
+import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 import sharp from 'sharp'
+
+const LOCAL_DIR = join(process.cwd(), 'content', 'catalog', 'portraits')
 
 const OUT_DIR = join(process.cwd(), 'public', 'portraits', 'generated')
 const SIZE = 640
@@ -45,10 +47,74 @@ const slugify = (value) =>
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
 
+/**
+ * Write the duotone + colour pair for one person.
+ *
+ * Shared by both sources so a portrait looks identical whether it came from the
+ * consented Airtable feed or from the curated directory in git.
+ */
+const writePair = async (slug, source) => {
+  const base = sharp(source).resize(SIZE, SIZE, { fit: 'cover', position: 'attention' })
+
+  const color = await base.clone().webp({ quality: QUALITY }).toBuffer()
+  await writeFile(join(OUT_DIR, `${slug}-color.webp`), color)
+
+  // Duotone: flatten to luminance, then remap it between the two endpoint
+  // colours. Baked here so the browser never filters a full-colour image at
+  // paint time.
+  const duotone = await base
+    .clone()
+    .greyscale()
+    .linear(1.06, -8)
+    .tint(HIGHLIGHT)
+    .composite([
+      {
+        input: {
+          create: {
+            width: SIZE,
+            height: SIZE,
+            channels: 4,
+            background: { ...SHADOW, alpha: 0.55 },
+          },
+        },
+        blend: 'multiply',
+      },
+    ])
+    .webp({ quality: QUALITY })
+    .toBuffer()
+
+  await writeFile(join(OUT_DIR, `${slug}-duotone.webp`), duotone)
+}
+
+await mkdir(OUT_DIR, { recursive: true })
+
+/**
+ * Source 1 — the curated directory in git (content/catalog/portraits).
+ *
+ * These were collected from public pages rather than submitted by their
+ * subjects, so they are NOT consent-gated data and deliberately do not travel
+ * through Airtable. Provenance for every one is in that folder's SOURCES.csv.
+ */
+let localWritten = 0
+try {
+  const files = (await readdir(LOCAL_DIR)).filter((f) => f.endsWith('.jpg'))
+  for (const file of files) {
+    try {
+      await writePair(file.replace(/\.jpg$/, ''), await readFile(join(LOCAL_DIR, file)))
+      localWritten += 1
+    } catch (error) {
+      console.error(`build:portraits — ${file}: ${error.message}`)
+    }
+  }
+} catch {
+  // No local portraits yet; the mosaic falls back to monograms.
+}
+console.log(`build:portraits — ${localWritten} pair(s) from the curated directory.`)
+
 if (!token || !baseId) {
   console.log(
-    'build:portraits SKIPPED — AIRTABLE_TOKEN / AIRTABLE_BASE_ID not set.\n' +
-      'The mosaic renders placeholder silhouettes until the feed is connected.',
+    'build:portraits — AIRTABLE_TOKEN / AIRTABLE_BASE_ID not set, so the ' +
+      'consented feed was skipped. Curated portraits above are still built.',
   )
   process.exit(0)
 }
@@ -69,7 +135,6 @@ if (!response.ok) {
 }
 
 const { records = [] } = await response.json()
-await mkdir(OUT_DIR, { recursive: true })
 
 let written = 0
 let skipped = 0
@@ -96,41 +161,9 @@ for (const record of records) {
     const image = await fetch(url)
     if (!image.ok) throw new Error(`${image.status} ${image.statusText}`)
 
-    const source = Buffer.from(await image.arrayBuffer())
-
-    const base = sharp(source).resize(SIZE, SIZE, {
-      fit: 'cover',
-      position: 'attention',
-    })
-
-    const color = await base.clone().webp({ quality: QUALITY }).toBuffer()
-    await writeFile(join(OUT_DIR, `${slug}-color.webp`), color)
-
-    // Duotone: flatten to luminance, then remap that luminance between the two
-    // endpoint colours. Baked in here so the browser never filters a full
-    // colour image at paint time.
-    const duotone = await base
-      .clone()
-      .greyscale()
-      .linear(1.06, -8)
-      .tint(HIGHLIGHT)
-      .composite([
-        {
-          input: {
-            create: {
-              width: SIZE,
-              height: SIZE,
-              channels: 4,
-              background: { ...SHADOW, alpha: 0.55 },
-            },
-          },
-          blend: 'multiply',
-        },
-      ])
-      .webp({ quality: QUALITY })
-      .toBuffer()
-
-    await writeFile(join(OUT_DIR, `${slug}-duotone.webp`), duotone)
+    // A consented headshot is the person's own, so it overwrites anything the
+    // curated directory collected for them.
+    await writePair(slug, Buffer.from(await image.arrayBuffer()))
     written += 1
   } catch (error) {
     console.error(`build:portraits — ${name}: ${error.message}`)

@@ -1,0 +1,235 @@
+{
+  "portraits": {
+    "amelie-liu": {
+      "name": "Amelie Liu",
+      "imageUrl": "https://www.yesyale.org/_next/image?url=%2Fimages%2Fteam%2Famelie-liu.jpg&w=3840&q=75",
+      "sourcePage": "https://www.yesyale.org/team",
+      "evidence": "named-alt",
+      "pageTier": "source1"
+    },
+    "anushka-nijhawan": {
+      "name": "Anushka Nijhawan",
+      "imageUrl": "https://bookface-images.s3.us-west-2.amazonaws.com/avatars/9d242d62abeffc70cc41a23e1cb30e103c74ef52.jpg",
+      "sourcePage": "https://www.ycombinator.com/companies/spur",
+      "evidence": "named-alt",
+      "pageTier": "source1"
+    },
+    "april-koh": {
+      "name": "April Koh",
+      "imageUrl": "https://cdn.prod.website-files.com/64270b7f9c43395c1287361d/64270b7f9c43393b6e873b26_SH23-BlogPost-KarishmaLeadershipPodcast.avif",
+      "sourcePage": "https://www.springhealth.com/about-us",
+      "evidence": "named-context",
+      "pageTier": "company"
+    },
+    "arinze-agu": {
+      "name": "Arinze Agu",
+      "imageUrl": "https://framerusercontent.com/images/trILe8LoTK8AvwY6acHbD80g7aM.jpeg?width=295&height=295",
+      "sourcePage": "https://myeezz.com/about",
+      "evidence": "named-context",
+      "pageTier": "company"
+    },
+    "ariyan-patel": {
+      "name": "Ariyan Patel",
+      "imageUrl": "https://www.pathlightproj.com/_next/image?url=%2Fteam%2Fariyan-patel.jpeg&w=3840&q=75",
+      "sourcePage": "https://www.pathlightproj.com/about",
+      "evidence": "named-alt",
+      "pageTier": "company"
+    },
+    "bailey-ehrens": {
+      "name": "Bailey Ehrens",
+      "imageUrl": "https://tennieclothing.com/cdn/shop/files/SOM_Profile.jpg?v=1736954256&width=1500",
+      "sourcePage": "github.com/august-andersen/yes-catalog data/profiles.json",
+      "evidence": "named-file",
+      "pageTier": "supplied"
+    },
+    "diana-salha": {
+      "name": "Diana Salha",
+      "imageUrl": "https://images.squarespace-cdn.com/content/v1/684bf7d88c9aa444b82082a7/aae324db-ffa1-46de-9c79-b518a78e74f8/Headshot.jpg",
+      "sourcePage": "https://www.cosnetix.com/about",
+      "evidence": "named-context",
+      "pageTier": "company"
+    },
+    "dianna-liu": {
+      "name": "Dianna Liu",
+      "imageUrl": "https://insights.som.yale.edu/sites/default/files/styles/rectangle_xs/public/2026-01/Dianna%20Liu%20ARIX%20Technologies.jpg?h=21daf0dd&itok=pIy21VAh",
+      "sourcePage": "https://insights.som.yale.edu/insights/most-startups-fail-these-founders-thought-making-an-impact-was-worth-the-risk",
+      "evidence": "named-alt",
+      "pageTier": "source1"
+    },
+    "grace-gerwe": {
+      "name": "Grace Gerwe",
+      "imageUrl": "https://gracegerwe.com/assets/IMG_5856.jpeg",
+      "sourcePage": "https://gracegerwe.com/",
+      "evidence": "named-context",
+      "pageTier": "personal"
+    },
+    "jimmy-carter": {
+      "name": "Jimmy Carter",
+      "imageUrl": "https://news.yale.edu/sites/default/files/styles/horizontal_topper_image/public/2025-05/Jimmy_Carter-YN.jpg?h=1bacf8c7&itok=OvTn018g",
+      "sourcePage": "https://news.yale.edu/2025/05/15/jimmy-carters-big-dreams-stretch-cinema-silicon-valley-yale",
+      "evidence": "named-alt",
+      "pageTier": "source2"
+    },
+    "jinali-mody": {
+      "name": "Jinali Mody",
+      "imageUrl": "https://cbey.yale.edu/sites/default/files/styles/person_profile/public/2023-02/Jinali%20Mody.png?h=ff49a679&itok=JWmPsjcT",
+      "sourcePage": "https://cbey.yale.edu/our-community/jinali-mody",
+      "evidence": "named-alt",
+      "pageTier": "source2"
+    },
+    "kashi-tuteja": {
+      "name": "Kashi Tuteja",
+      "imageUrl": "https://www.yesyale.org/images/team/kashi-tuteja.jpg",
+      "sourcePage": "https://www.yesyale.org/team",
+      "evidence": "named-file",
+      "pageTier": "first-party"
+    },
+    "keith-pemberton": {
+      "name": "Keith Pemberton",
+      "imageUrl": "https://macmillan.yale.edu/sites/default/files/styles/portrait_360/public/2024-09/Keith%20Pemberton.jpg?h=05e6acb3&itok=PfU1IDaR",
+      "sourcePage": "github.com/august-andersen/yes-catalog data/profiles.json",
+      "evidence": "named-file",
+      "pageTier": "supplied"
+    },
+    "kevin-wang": {
+      "name": "Kevin Wang",
+      "imageUrl": "https://anatomi.st/kevin.jpeg",
+      "sourcePage": "https://anatomi.st/",
+      "evidence": "named-alt",
+      "pageTier": "company"
+    },
+    "laurie-jimenez": {
+      "name": "Laurie Jimenez",
+      "imageUrl": "https://static.wixstatic.com/media/ddc29a_7eb7c079afc34925b8854d60c800a7dd~mv2.png/v1/crop/x_0,y_110,w_4047,h_3828/fill/w_277,h_262,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/headshot_laurie.png",
+      "sourcePage": "https://www.getfulcrumcare.com/",
+      "evidence": "named-context",
+      "pageTier": "company"
+    },
+    "leia-ryan": {
+      "name": "Leïa Ryan",
+      "imageUrl": "https://www.yesyale.org/images/team/leia-ryan.jpg",
+      "sourcePage": "https://www.yesyale.org/team",
+      "evidence": "named-file",
+      "pageTier": "first-party"
+    },
+    "madhav-lavakare": {
+      "name": "Madhav Lavakare",
+      "imageUrl": "https://www.yalescientific.org/wp-content/uploads/Salmon_1-500x333.jpg",
+      "sourcePage": "https://www.yalescientific.org/2024/05/undergraduate-profile-madhav-lavakare-yc-25/",
+      "evidence": "profile-sole-image",
+      "pageTier": "source2"
+    },
+    "maya-caine": {
+      "name": "Maya Caine",
+      "imageUrl": "https://framerusercontent.com/images/2o9YjIvqzEeSRQt9ktYu3JZg4.png?width=4500&height=5625",
+      "sourcePage": "https://helixcommons.com/",
+      "evidence": "named-context",
+      "pageTier": "company"
+    },
+    "miles-lasater": {
+      "name": "Miles Lasater",
+      "imageUrl": "https://mileslasater.com/assets/images/image01.jpg?v=706f7a46",
+      "sourcePage": "github.com/august-andersen/yes-catalog data/profiles.json",
+      "evidence": "named-file",
+      "pageTier": "supplied"
+    },
+    "nick-callegari": {
+      "name": "Nick Callegari",
+      "imageUrl": "https://www.verustruct.com/_next/image?url=%2FTeam%2520Headshots%2FNick-Callegari-Cropped.jpeg&w=3840&q=100&dpl=dpl_AGBwE25PdZVjAYiuSmFJeZ11H1Qn",
+      "sourcePage": "https://www.verustruct.com/team",
+      "evidence": "named-alt",
+      "pageTier": "company"
+    },
+    "nicolas-gertler": {
+      "name": "Nicolas Gertler",
+      "imageUrl": "https://dec.yale.edu/sites/default/files/styles/max_width_320/public/2024-04/Nicolas%20Gertler%202.jpg?itok=kVUzChAX",
+      "sourcePage": "https://dec.yale.edu/nicolas-gertler",
+      "evidence": "profile-sole-image",
+      "pageTier": "source1"
+    },
+    "paul-gross": {
+      "name": "Paul Gross",
+      "imageUrl": "https://remoracarbon.com/wp-content/uploads/2025/04/IMG_3355-e1745775535700-1024x1024.jpeg",
+      "sourcePage": "https://remoracarbon.com/about/",
+      "evidence": "named-context",
+      "pageTier": "company"
+    },
+    "petter-wehlin": {
+      "name": "Petter Wehlin",
+      "imageUrl": "https://www.arix-tech.com/hubfs/2026-redesign/team/petter-wehlin.jpg",
+      "sourcePage": "https://www.arix-tech.com/about/team",
+      "evidence": "named-alt",
+      "pageTier": "company"
+    },
+    "ron-pile": {
+      "name": "Ron Pile",
+      "imageUrl": "https://assistivemath.com/.netlify/images?url=%2Fmedia%2Fteam%2Falloyce_headhsot.jpg",
+      "sourcePage": "https://assistivemath.com/about",
+      "evidence": "named-context",
+      "pageTier": "company"
+    },
+    "sacha-levy": {
+      "name": "Sacha Lévy",
+      "imageUrl": "https://cdn.prod.website-files.com/679ce8faa835bf53624cc174/679ce8faa835bf53624cc19b_Frame%201597883291.jpg",
+      "sourcePage": "https://www.theseus.us/about",
+      "evidence": "named-context",
+      "pageTier": "company"
+    },
+    "sam-hendel": {
+      "name": "Sam Hendel",
+      "imageUrl": "https://schwarzman.yale.edu/sites/default/files/styles/3_2_320/public/2025-09/Sam%20Hendel%20Web.webp?h=3387d114&itok=a7oH5UMJ",
+      "sourcePage": "https://schwarzman.yale.edu/news/sam-hendel-joins-yale-schwarzman-center-advisory-board",
+      "evidence": "named-file",
+      "pageTier": "source1"
+    },
+    "sean-glass": {
+      "name": "Sean Glass",
+      "imageUrl": "https://assets.swoogo.com/uploads/medium/6982046-69fb8e30358a5.png",
+      "sourcePage": "https://yaleventures.swoogo.com/yaleinnovation2026/speaker/2313433/sean-glass",
+      "evidence": "named-alt",
+      "pageTier": "source1"
+    },
+    "shubh-jain": {
+      "name": "Shubh Jain",
+      "imageUrl": "https://environment.yale.edu/sites/default/files/styles/4x5z1_xxxsmall/public/2024-10/Shubh-Jain-spotlight.jpg?h=22a7e701&itok=WioomJN9",
+      "sourcePage": "https://environment.yale.edu/spotlight/bekenstein-climate-leader-shubh-jain-mem",
+      "evidence": "named-file",
+      "pageTier": "source1"
+    },
+    "sneha-sivakumar": {
+      "name": "Sneha Sivakumar",
+      "imageUrl": "https://bookface-images.s3.us-west-2.amazonaws.com/avatars/80c64e0d9f5d6fd339920417c26232270a2460f3.jpg",
+      "sourcePage": "https://www.ycombinator.com/companies/spur",
+      "evidence": "named-alt",
+      "pageTier": "source1"
+    },
+    "sofia-teifeld": {
+      "name": "Sofia Teifeld",
+      "imageUrl": "https://www.yesyale.org/_next/image?url=%2Fimages%2Fteam%2Fsofia-teifeld.jpg&w=3840&q=75",
+      "sourcePage": "https://www.yesyale.org/team",
+      "evidence": "named-alt",
+      "pageTier": "source1"
+    },
+    "teo-dimov": {
+      "name": "Teo Dimov",
+      "imageUrl": "https://cdn.sanity.io/images/jhve05or/production/c9e45948878f5740dc38d66a5daac2202a13dcae-400x400.png",
+      "sourcePage": "github.com/august-andersen/yes-catalog data/profiles.json",
+      "evidence": "named-file",
+      "pageTier": "supplied"
+    },
+    "yavin-fickel": {
+      "name": "Yavin Fickel",
+      "imageUrl": "https://www.yesyale.org/images/team/yavin-fickel.jpg",
+      "sourcePage": "https://www.yesyale.org/team",
+      "evidence": "named-file",
+      "pageTier": "first-party"
+    },
+    "ziv-levi": {
+      "name": "Ziv Levi",
+      "imageUrl": "https://www.leancon.ai/wp-content/uploads/2025/11/Frame-1984078999-1.png",
+      "sourcePage": "https://www.leancon.ai/about-us/",
+      "evidence": "named-alt",
+      "pageTier": "company"
+    }
+  }
+}

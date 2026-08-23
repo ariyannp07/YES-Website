@@ -73,6 +73,89 @@
   --text-display: clamp(1.9rem, 4.6vw, 3.4rem);
 }
 
+/* ---------------------------------------------------------------------------
+   The catalog — its own scope.
+
+   Ported from the yes-catalog scaffold at the owners' direction. Two things
+   about it depart from the rest of the site, both deliberate and both confined
+   to this scope so nothing else inherits them:
+
+   1. A RICHER TYPE SCALE. Build spec §4 allows display + small + micro. A dense
+      card grid genuinely needs more steps than that — a name, a role line, a
+      body clamp, a chip, a rank marker. They are declared HERE, as tokens,
+      rather than as literal sizes in markup, so scripts/check-type-scale.mjs
+      still holds: one file defines the scale, and a component may only
+      reference it. Three or more mid-range sizes on the SAME element is still
+      the thing being prevented.
+
+   2. DARK-COMMITTED. The scaffold's design is built on a deep Yale-blue field;
+      it has no light reading. The Paper palette therefore does not repaint the
+      catalog, it keeps these values.
+   --------------------------------------------------------------------------- */
+[data-scope='catalog'] {
+  --cat-night: #030910;
+  --cat-surface: #081627;
+  --cat-yale: #00356b;
+  --cat-azure: #286dc0;
+  --cat-sky: #6db1ff;
+  --cat-ice: #9fc2e8;
+  --cat-frost: #eaf2fb;
+  --cat-gold: #d8b36a;
+
+  --text-hero: clamp(2rem, 5vw, 3.4rem);
+  --text-card-name: 1.35rem;
+  --text-card-role: 0.845rem;
+  --text-card-body: 0.8125rem;
+  --text-ui: 0.75rem;
+  --text-rank: 0.625rem;
+  --text-chip: 0.6rem;
+  --text-monogram: 3.5rem;
+
+  background: var(--cat-night);
+  color: var(--cat-frost);
+}
+
+/* The field the cards sit on: a soft Yale-blue bloom over near-black, with the
+   edges falling away so the grid reads as lit from the centre. */
+.cat-vignette {
+  background:
+    radial-gradient(ellipse 90% 65% at 50% 38%, rgba(40, 109, 192, 0.14), transparent 60%),
+    radial-gradient(ellipse 120% 90% at 50% 110%, rgba(0, 53, 107, 0.35), transparent 55%),
+    radial-gradient(ellipse 140% 120% at 50% 50%, transparent 55%, rgba(2, 6, 12, 0.85) 100%);
+}
+
+/* The live query shimmers while the model thinks. Motion-sensitive users get a
+   flat colour instead — see the reduced-motion block at the end of this file. */
+.cat-shimmer {
+  background: linear-gradient(
+    100deg,
+    var(--cat-ice) 20%,
+    #ffffff 40%,
+    var(--cat-sky) 50%,
+    #ffffff 60%,
+    var(--cat-ice) 80%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: cat-shimmer 2.6s linear infinite;
+}
+
+@keyframes cat-shimmer {
+  0% { background-position: 120% 0; }
+  100% { background-position: -120% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cat-shimmer {
+    animation: none;
+    background: none;
+    -webkit-text-fill-color: var(--cat-ice);
+    color: var(--cat-ice);
+  }
+}
+
 /* "No scroll. The page is the viewport." (build spec §3) */
 body:has([data-scope='landing']) {
   overflow: hidden;

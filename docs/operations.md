@@ -110,15 +110,58 @@ the routes before enabling the forms.
 
 ## Portrait pipeline
 
-Airtable attachment URLs expire, so the browser never hot-links them. Generate the
-static image pairs while the Airtable environment variables are available:
+Portraits come from two places. The consented Airtable feed is authoritative; the
+curated directory in Git fills the gap until people submit their own.
+
+### Source 1 — the curated directory (33 of 116)
+
+`content/catalog/portraits/*.jpg`, committed. These were collected from public web
+pages, **not** submitted by their subjects, so they are deliberately kept out of
+Airtable: those checkboxes mean "this person opted in", and nobody here has.
+
+Every portrait's source page and image URL is recorded in
+`content/catalog/portraits/SOURCES.csv`. Honouring a removal request is deleting one
+JPEG, dropping its row from `portraits.json`, and re-running the bake.
+
+The remaining 83 builders render a monogram — initials in the display serif over a
+gradient keyed to the name. That is the normal state, not a missing asset.
+
+To collect more:
+
+```bash
+python3 scripts/portraits/harvest.py            # provenance-gated collection
+python3 scripts/portraits/contact_sheet.py      # REVIEW THE FACES BEFORE STAGING
+node scripts/stage-portraits.mjs <harvest-dir>  # copy in + record provenance
+npm run build:portraits
+```
+
+The harvester accepts an image only when the hosting page demonstrably names the
+person **and** the image shows one dominant face. Both gates exist because both
+failed in testing: image search returned Amazon listings and fan art for real
+queries; matching an image to the nearest name on a news article attached a
+journalist's byline photo to a builder; and a correctly-named Yale News image turned
+out to be a four-way composite of award winners. Do not relax them, and do not skip
+the contact sheet — a wrong face under a real name is worse than no face.
+
+Most of the roster are current undergraduates whose photographs are on LinkedIn
+(which answers scripts with HTTP 999) rather than the open web. The ceiling is the
+web's. The real fix is asking people for a headshot.
+
+### Source 2 — the consented Airtable feed
+
+Airtable attachment URLs expire, so the browser never hot-links them. A consented
+headshot overwrites whatever the curated directory collected for that person.
+Generate the static image pairs while the Airtable environment variables are
+available:
 
 ```bash
 npm run build:portraits
 ```
 
-For each consented record with a headshot, the script writes a cropped color WebP and
-a duotone WebP to `public/portraits/generated/`. That directory is ignored by Git.
+For each portrait from either source, the script writes a cropped color WebP and a
+duotone WebP to `public/portraits/generated/`. That directory is ignored by Git, so
+generation must run on every deploy — including when only curated portraits exist and
+no Airtable credentials are set.
 
 On a hosted build that should include portraits, run generation in the same build
 environment immediately before Next.js:
@@ -163,8 +206,14 @@ Before treating a deployment as production-ready:
 
 - The rate limiter is an in-memory, per-server-instance fixed window. It reduces naive
   floods but is not a distributed abuse-control system.
-- Semantic search sends a compact form of the checked-in public directory to xAI from
-  the server. Do not put non-public data in the catalog corpus.
+- Catalog search runs entirely in the visitor's browser. Vectors are baked into
+  `content/catalog/embeddings.json` by `npm run embed`; the query is embedded
+  client-side with `all-MiniLM-L6-v2`, so nothing about a search leaves the machine.
+  Re-run `npm run embed` after editing `builders.json` or
+  `lib/catalog/embed-text.ts`, or rankings will reflect the previous corpus.
+- The first search fetches a ~22MB model from the HuggingFace CDN. It is lazy and the
+  field stays usable while it loads, but a visitor who blocks that CDN silently gets
+  keyword ranking instead of semantic ranking.
 - Vitest is configured, but no automated test files are currently committed. The
   enforced baseline is TypeScript plus the type-scale and language policy checks.
 - The application expects an existing Airtable schema; this repository does not

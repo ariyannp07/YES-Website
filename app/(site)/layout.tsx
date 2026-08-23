@@ -14,10 +14,22 @@ export default function SiteLayout({
 }: Readonly<{ children: React.ReactNode; dossier: React.ReactNode }>) {
   return (
     <div className="flex min-h-dvh flex-col">
-      <SiteNav />
+      {/* The catalog paints a fixed particle field behind its content; without
+          a stacking context of its own the nav would disappear underneath it. */}
+      <div style={{ position: 'relative', zIndex: 30 }}>
+        <SiteNav />
+      </div>
+      {/* A flex column so a page that wants the full remaining height can ask
+          for it with flex: 1 — a percentage height cannot resolve here, because
+          flex-1 leaves <main> stretched but without a definite height. Ordinary
+          pages are unaffected: a single block child still lays out identically. */}
       <main
         className="flex-1"
-        style={{ padding: '0 var(--pad) calc(var(--pad) * 2)' }}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          padding: '0 var(--pad) calc(var(--pad) * 2)',
+        }}
       >
         {children}
       </main>

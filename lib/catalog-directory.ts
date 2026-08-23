@@ -1,4 +1,5 @@
 import directory from '@/content/catalog/builders.json'
+import portraitManifest from '@/content/catalog/portraits.json'
 import type { Alumnus } from '@/lib/alumni'
 
 /**
@@ -31,6 +32,24 @@ interface DirectoryPerson {
 
 const PROOF_KINDS = new Set(['number', 'headline', 'image', 'link'])
 
+/**
+ * Portraits collected from public pages, keyed by slug.
+ *
+ * The manifest is the gate: a slug absent from it renders a monogram rather
+ * than a broken image, so the wall degrades to initials one person at a time
+ * instead of all at once. Every entry records the page it came from — see
+ * content/catalog/portraits/SOURCES.csv — because these were gathered rather
+ * than submitted, and anyone who asks to be removed should be removable in the
+ * time it takes to delete a file.
+ *
+ * The derivatives themselves are built by scripts/build-portraits.mjs into
+ * public/portraits/generated/, which is gitignored and rebuilt on every deploy.
+ */
+const portraits = portraitManifest.portraits as Record<string, unknown>
+
+const hasPortrait = (slug: string): boolean =>
+  Object.prototype.hasOwnProperty.call(portraits, slug)
+
 const toAlumnus = (person: DirectoryPerson): Alumnus => ({
   slug: person.slug,
   name: person.name,
@@ -46,6 +65,12 @@ const toAlumnus = (person: DirectoryPerson): Alumnus => ({
   },
   // Never ghost-written, so the directory never fills this in.
   ownWords: undefined,
+  portraitColor: hasPortrait(person.slug)
+    ? `/portraits/generated/${person.slug}-color.webp`
+    : undefined,
+  portraitDuotone: hasPortrait(person.slug)
+    ? `/portraits/generated/${person.slug}-duotone.webp`
+    : undefined,
   companyUrl: person.companyUrl,
   linkedinUrl: person.linkedinUrl,
   weight: 1,

@@ -1,44 +1,35 @@
 import type { Metadata } from 'next'
 
-import { CatalogBrowser } from '@/components/alumni/catalog-browser'
-import { allAlumni, alumniFeedConfigured } from '@/lib/alumni'
+import { CatalogExperience } from '@/components/catalog/catalog-experience'
+import embeddings from '@/content/catalog/embeddings.json'
+import { allAlumni } from '@/lib/alumni'
 
 export const metadata: Metadata = {
   title: 'Catalog',
 }
 
 /**
- * The catalog wall (build spec §3, the alumni page). No page header beyond the
- * nav, no names at rest, no captions, no cohort groupings. The wall of
- * unlabeled faces IS the mystery.
+ * The catalog.
  *
  * `force-static` guarantees the consent-gated feed is read at BUILD time only,
  * so a newly consented person appears when a human deploys — never on a timer.
  * Canon 05-human-ai-policy R1.
+ *
+ * The interactive surface is a client component, but the DATA is resolved here
+ * on the server and shipped as props: the wall is a fixed set of 116 people
+ * known at build time, so there is nothing to fetch at runtime and no loading
+ * state to design. Search runs in the browser against vectors baked by
+ * `npm run embed`.
  */
 export const dynamic = 'force-static'
 
 export default async function CatalogPage() {
   const people = await allAlumni()
-  const connected = alumniFeedConfigured()
 
   return (
-    <div className="page-top">
-      <CatalogBrowser people={people} />
-
-      {connected ? null : (
-        <p
-          className="t-micro"
-          style={{
-            color: 'var(--muted)',
-            marginTop: '4rem',
-            textAlign: 'center',
-          }}
-        >
-          [ Portraits pending. Names and ventures are from the curated
-          directory; consented dossiers merge in from Airtable. ]
-        </p>
-      )}
-    </div>
+    <CatalogExperience
+      people={people}
+      vectors={embeddings.vectors as Record<string, number[]>}
+    />
   )
 }

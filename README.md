@@ -21,9 +21,11 @@ keeping the experience visually coherent.
 - **Interactive signal field** — a deterministic Canvas 2D network reveals itself
   around the pointer and gradually resolves into the density of the YES mark. The
   animation responds to reduced-motion preferences.
-- **Searchable builder catalog** — instant local filtering works over the checked-in
-  directory; an optional semantic-search path handles intent-based queries and falls
-  back cleanly when it is not configured.
+- **Searchable builder catalog** — a WebGL particle field resolves into a ranked grid.
+  Semantic search runs entirely in the browser against vectors baked at build time, so
+  intent-based queries like "helping blind people navigate" rank the right builders
+  with no API key, no server round-trip, and no record of the query. Keyword ranking
+  covers the case where the model cannot be fetched.
 - **Shareable dossiers** — catalog entries open as intercepted modal routes during
   browsing and retain stable, server-rendered URLs for direct links.
 - **Git-backed publishing** — essays, talks, workshops, lessons, and press entries are
@@ -31,9 +33,12 @@ keeping the experience visually coherent.
   reverse-chronological index without being re-hosted.
 - **Consent-aware data paths** — Airtable-backed public records are selected from
   consent-filtered views, re-checked in code, and reduced to explicit field allowlists.
+- **Portraits with provenance** — the directory's portraits were collected from public
+  pages rather than submitted, so each records the page it came from and can be removed
+  by deleting one file. Builders without one render a monogram rather than a stand-in.
 - **Graceful local mode** — the public experience builds without third-party
-  credentials. Optional forms, live feeds, processed portraits, and semantic search
-  activate only when their server-side configuration is present.
+  credentials. Optional forms, live feeds, and processed portraits activate only when
+  their configuration is present; search needs none of it.
 
 ## Pages
 
@@ -90,11 +95,16 @@ credentials never need to reach the browser.
 - **Validation at system boundaries.** Zod schemas validate form payloads on both the
   client and server. Reservoir frontmatter is validated during the build, and invalid
   entries fail rather than partially render.
-- **Progressive search.** Text filtering is local and immediate. Pressing Enter can
-  ask the server-side semantic-search endpoint for ranked slugs; a missing key or
-  provider failure leaves local results intact.
-- **Build-time image treatment.** Consented headshots can be cropped and converted to
-  color and duotone WebP files before the site build, avoiding expiring attachment
+- **Search without a server.** Builder vectors are baked at build time and the query is
+  embedded client-side, both with `all-MiniLM-L6-v2`. This removes an API dependency, a
+  per-search cost and a privacy surface at once, in exchange for a lazily-fetched model.
+  `lib/catalog/embed-text.ts` is shared by the bake and the browser, because a drift
+  between the two turns cosine scores into noise without failing anything.
+- **Ranking never filters.** Search reorders all 116 builders and never returns an empty
+  wall — a catalog that goes blank on an unlucky word reads as "nobody here", which is
+  both false and the opposite of the page's purpose.
+- **Build-time image treatment.** Portraits from either source are cropped and converted
+  to color and duotone WebP files before the site build, avoiding expiring attachment
   URLs and browser-side filters.
 - **Mechanical design constraints.** Repository scripts enforce the approved type
   scale and scan consented dossier copy for disallowed promotional language.
@@ -153,7 +163,8 @@ When xAI is absent, the catalog continues to provide local text filtering.
 | `npm run check:type-scale` | Rejects type sizes outside the shared scale |
 | `npm run check:adjectives` | Scans the live Airtable dossier feed when configured |
 | `npm run check` | Runs typecheck and both repository policy checks |
-| `npm run build:portraits` | Generates static WebP portrait pairs from consented headshots |
+| `npm run build:portraits` | Generates static WebP portrait pairs from both portrait sources |
+| `npm run embed` | Re-bakes catalog search vectors after the directory changes |
 | `npm test` | Runs Vitest (the repository does not yet include test files) |
 
 Regenerate the checked-in catalog after editing its source CSV with:
