@@ -39,8 +39,8 @@
   aspect-ratio: 1;
   border-radius: 50%;
   overflow: hidden;
-  --sil-bg: color-mix(in srgb, var(--fg) 8%, var(--bg));
-  --sil-fg: color-mix(in srgb, var(--fg) 30%, var(--bg));
+  --sil-bg: color-mix(in srgb, var(--fg) 7%, var(--bg));
+  --sil-fg: color-mix(in srgb, var(--fg) 42%, var(--bg));
   transition: transform 220ms ease;
 }
 

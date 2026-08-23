@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { Silhouette } from '@/components/alumni/silhouette'
+import { Monogram } from '@/components/alumni/monogram'
 import type { Alumnus } from '@/lib/alumni'
 
 import styles from './mosaic.module.css'
@@ -30,7 +30,7 @@ export function Mosaic({ people }: { readonly people: readonly Alumnus[] }) {
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={person.portraitColor} alt="" loading="lazy" />
               ) : (
-                <Silhouette seed={`${person.slug}-color`} />
+                <Monogram name={person.name} />
               )}
             </span>
 
@@ -39,7 +39,7 @@ export function Mosaic({ people }: { readonly people: readonly Alumnus[] }) {
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={person.portraitDuotone} alt="" loading="lazy" />
               ) : (
-                <Silhouette seed={person.slug} />
+                <Monogram name={person.name} />
               )}
             </span>
           </span>

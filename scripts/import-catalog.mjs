@@ -17,19 +17,42 @@
 import { readFileSync, writeFileSync } from 'node:fs'
 import supplement from '../content/catalog/supplement.json' with { type: 'json' }
 
-const SOURCE = process.argv[2] ?? '/Users/ariyanp/Downloads/yale-builders_catalogv1.csv'
+const SOURCE =
+  process.argv[2] ??
+  new URL('../content/catalog/source/yale_builders_catalog_116.csv', import.meta.url)
 const OUT = new URL('../content/catalog/builders.json', import.meta.url)
 
-/** Owner-chosen order for the top of the wall. */
+/**
+ * Owner-chosen order for the top of the wall, from FEATURED_25.txt in the
+ * portrait pack. This supersedes the earlier eight-name list; 'Rhea' appeared
+ * there but is in neither the pack nor the directory, and is not in this 25.
+ */
 const FEATURED = [
-  'Ariyan Patel',
-  'Nicolas Gertler',
-  'Sofia Teifeld',
-  'Leïa Ryan',
-  'Oliver Hime',
-  'Lucas Santos',
-  'Freeman Irabaruta',
-  'Rhea',
+  "Ariyan Patel",
+  "Oliver Hime",
+  "Leïa Ryan",
+  "James Masson",
+  "Riya Bhargava",
+  "Bruno Bruno",
+  "Freeman Irabaruta",
+  "Lucas Santos",
+  "Joshua Gao",
+  "Paul Douglass",
+  "Osama Radi",
+  "Allah-u-Abha Rodrigues",
+  "Murad Abdukholikov",
+  "Sofia Teifeld",
+  "Nicolas Gertler",
+  "Amelie Liu",
+  "Seth Goldin",
+  "Grace Gerwe",
+  "Teo Dimov",
+  "Ari Strober",
+  "Sina Dehghani",
+  "Zain Anwar",
+  "Yavin Fickel",
+  "Kashi Tuteja",
+  "Jasmine Garry",
 ]
 
 /** Names the owners supplied a correction for; the CSV row is amended, not replaced. */

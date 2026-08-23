@@ -26,49 +26,26 @@
       "featured": true
     },
     {
-      "slug": "nicolas-gertler",
-      "name": "Nicolas Gertler",
-      "classYear": "Yale College ’27",
+      "slug": "oliver-hime",
+      "name": "Oliver Hime",
+      "classYear": "Yale College ’28",
       "school": "Yale College",
-      "nowLine": "Co-founder; AI builder, Density / Mylon",
-      "venture": "Density / Mylon",
-      "bio": "Nicolas Gertler is a Yale College ’27 Co-founder; AI builder associated with Density / Mylon. AI-native legal and research systems; Density is described publicly as an AI legal-services startup, while Mylon has built AI agents for research and related knowledge workflows.",
+      "nowLine": "Co-founder, UnitZero",
+      "venture": "UnitZero",
+      "bio": "Oliver Hime is a Yale College ’28 Co-founder associated with UnitZero. Robotics company using proprietary robotic arms to collect large-scale robotics training data in East Africa at a fraction of traditional data-collection cost.",
       "sectors": [
-        "Artificial Intelligence",
-        "Legal Technology",
-        "Research Tools",
-        "GovTech"
+        "Robotics",
+        "Physical AI",
+        "Data Infrastructure",
+        "Emerging Markets"
       ],
       "proof": {
         "kind": "headline",
-        "value": "Gertler also built Floridi Bot, used internationally, and MANTRA for human-rights investigation workflows.",
-        "source": "https://dec.yale.edu/nicolas-gertler"
+        "value": "Slavin profile describes UnitZero collecting robotics data at scale in East Africa.",
+        "source": "https://www.slavinfoundation.org/fellows.html"
       },
-      "companyUrl": "https://www.nicolasgertler.com/",
-      "linkedinUrl": "https://www.linkedin.com/in/nicolas-gertler",
-      "searchText": "nicolas gertler co-founder; ai builder density / mylon density / mylon yale college ’27 yale college nicolas gertler is a yale college ’27 co-founder; ai builder associated with density / mylon. ai-native legal and research systems; density is described publicly as an ai legal-services startup, while mylon has built ai agents for research and related knowledge workflows. artificial intelligence; legal technology; research tools; govtech ai agents; agent interoperability; knowledge assistants; legal ai; research tooling artificial intelligence; legal technology; research tools; govtech; ai agents; agent interoperability; knowledge assistants; legal ai; research tooling; land-use/legal workflows; research productivity; knowledge work; founder / builder; ai builder; civic / legal builder; research / knowledge builder; density / mylon; yale college; yale builder; yale founder; yale 2027; yale hacker house; san francisco founder ecosystem; prior yes chat seed",
-      "featured": true
-    },
-    {
-      "slug": "sofia-teifeld",
-      "name": "Sofia Teifeld",
-      "classYear": "Yale College ’29",
-      "school": "Yale College",
-      "nowLine": "Co-President, Yale Entrepreneurial Society",
-      "venture": "Yale Entrepreneurial Society",
-      "bio": "Leads YES alongside Ariyan Patel, and previously developed a magnetic-shielding concept intended to reduce electromagnetic interference risks for adjustable hydrocephalus shunts.",
-      "sectors": [
-        "Entrepreneurship Infrastructure",
-        "Medical Technology",
-        "Public/Health Research"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "U.S. provisional patent filed",
-        "source": "Shunt Magnetic Shielding System"
-      },
-      "companyUrl": "https://www.yesyale.org",
-      "searchText": "sofia teifeld co-president, yale entrepreneurial society yale entrepreneurial society yale college ’29 yale college leads yes alongside ariyan patel, and previously developed a magnetic-shielding concept intended to reduce electromagnetic interference risks for adjustable hydrocephalus shunts. entrepreneurship infrastructure medical technology public/health research ethics politics and economics; medical-device research; electromagnetic shielding; research design; community building; program operations; yes leadership; co-president",
+      "linkedinUrl": "https://www.linkedin.com/in/oliverhime",
+      "searchText": "oliver hime co-founder unitzero unitzero yale college ’28 yale college oliver hime is a yale college ’28 co-founder associated with unitzero. robotics company using proprietary robotic arms to collect large-scale robotics training data in east africa at a fraction of traditional data-collection cost. robotics; physical ai; data infrastructure; emerging markets robotic arms; embodied ai data; robotics datasets; data infrastructure robotics; physical ai; data infrastructure; emerging markets; robotic arms; embodied ai data; robotics datasets; robotics training data; physical-ai data scarcity; embodied intelligence; cost-efficient data collection; founder / builder; hardware / systems builder; robotics builder; unitzero; yale college; yale builder; yale founder; yale 2028; yale hacker house; san francisco founder ecosystem; prior yes chat seed",
       "featured": true
     },
     {
@@ -97,26 +74,98 @@
       "featured": true
     },
     {
-      "slug": "oliver-hime",
-      "name": "Oliver Hime",
-      "classYear": "Yale College ’28",
+      "slug": "james-masson",
+      "name": "James Masson",
+      "classYear": "Former Yale College student",
+      "school": "Former Yale College student",
+      "nowLine": "Founder, Nade",
+      "venture": "Nade",
+      "bio": "James Masson is a Former Yale College student Founder associated with Nade. AI space-technology startup operating at the intersection of aerospace and artificial intelligence.",
+      "sectors": [
+        "Aerospace",
+        "Space Technology",
+        "Artificial Intelligence"
+      ],
+      "proof": {
+        "kind": "headline",
+        "value": "$3.2M financing reported by Gazetteer SF; founder left Yale to work full-time.",
+        "source": "https://sf.gazetteer.co/yalies-raised-17-million-this-summer-in-nob-hill-hacker-house"
+      },
+      "searchText": "james masson founder nade nade former yale college student former yale college student james masson is a former yale college student founder associated with nade. ai space-technology startup operating at the intersection of aerospace and artificial intelligence. aerospace; space technology; artificial intelligence ai software; aerospace software; space systems aerospace; space technology; artificial intelligence; ai software; aerospace software; space systems; space and aerospace software; technical infrastructure; ai for space systems; founder / builder; ai builder; nade; former yale college student; yale builder; yale founder; yale hacker house; san francisco founder ecosystem; prior yes chat seed; $3.2m",
+      "reviewNote": "Verify expected class year if needed",
+      "featured": true
+    },
+    {
+      "slug": "riya-bhargava",
+      "name": "Riya Bhargava",
+      "classYear": "Yale College ’26",
       "school": "Yale College",
-      "nowLine": "Co-founder, UnitZero",
-      "venture": "UnitZero",
-      "bio": "Oliver Hime is a Yale College ’28 Co-founder associated with UnitZero. Robotics company using proprietary robotic arms to collect large-scale robotics training data in East Africa at a fraction of traditional data-collection cost.",
+      "nowLine": "Co-founder, Cortex",
+      "venture": "Cortex",
+      "bio": "Riya Bhargava is a Yale College ’26 Co-founder associated with Cortex. AI operating system and intelligent knowledge layer for modern biology labs, designed to unify fragmented lab data and support automated scientific reasoning.",
+      "sectors": [
+        "Artificial Intelligence",
+        "Biotechnology",
+        "Life Sciences",
+        "Lab Software",
+        "AI for Science"
+      ],
+      "proof": {
+        "kind": "headline",
+        "value": "$1.1M financing reported in July 2026.",
+        "source": "https://sf.gazetteer.co/yalies-raised-17-million-this-summer-in-nob-hill-hacker-house"
+      },
+      "linkedinUrl": "https://www.linkedin.com/in/riya-bhargava-a24b79222",
+      "searchText": "riya bhargava co-founder cortex cortex yale college ’26 yale college riya bhargava is a yale college ’26 co-founder associated with cortex. ai operating system and intelligent knowledge layer for modern biology labs, designed to unify fragmented lab data and support automated scientific reasoning. artificial intelligence; biotechnology; life sciences; lab software; ai for science scientific ai; knowledge systems; lab data integration; research software artificial intelligence; biotechnology; life sciences; lab software; ai for science; scientific ai; knowledge systems; lab data integration; research software; fragmented laboratory knowledge; biology r&d workflows; scientific reasoning; research productivity; founder / builder; ai builder; health / bio builder; research / knowledge builder; cortex; yale college; yale builder; yale founder; yale 2026; yale hacker house; san francisco founder ecosystem; prior yes chat seed; $1.1m",
+      "featured": true
+    },
+    {
+      "slug": "bruno-bruno",
+      "name": "Bruno Bruno",
+      "classYear": "Yale College ’27",
+      "school": "Yale College",
+      "nowLine": "Founder, Kesho, Kesho",
+      "venture": "Kesho",
+      "bio": "Bruno Bruno is a Yale College ’27 founder building Kesho, a prediction market focused on Africa.",
+      "sectors": [
+        "FinTech",
+        "Prediction Markets",
+        "Consumer Finance",
+        "Emerging Markets",
+        "Africa"
+      ],
+      "proof": {
+        "kind": "headline",
+        "value": "Public profile identifies him as the builder of Kesho; prior YES context identifies him as a Yale Hacker House participant.",
+        "source": "https://www.linkedin.com/in/brunobbruno"
+      },
+      "linkedinUrl": "https://www.linkedin.com/in/brunobbruno",
+      "searchText": "bruno bruno founder, kesho kesho kesho yale college ’27 yale college bruno bruno is a yale college ’27 founder building kesho, a prediction market focused on africa. fintech; prediction markets; consumer finance; emerging markets; africa prediction-market platform; market design; trading/exchange software; consumer fintech bruno bruno; yale 2027; kesho; prediction markets; fintech; africa; emerging markets; trading; exchange; market design; quant finance; yale hacker house",
+      "featured": true
+    },
+    {
+      "slug": "freeman-irabaruta",
+      "name": "Freeman Irabaruta",
+      "classYear": "Yale College ’26",
+      "school": "Yale College",
+      "nowLine": "Co-founder, Neotix Robotics; robotics / systems builder, Neotix Robotics",
+      "venture": "Neotix Robotics",
+      "bio": "Freeman (Noryve) Irabaruta is a Yale College ’26 computer science and energy-studies builder from Burundi and co-founder of Neotix Robotics.",
       "sectors": [
         "Robotics",
         "Physical AI",
         "Data Infrastructure",
-        "Emerging Markets"
+        "Artificial Intelligence",
+        "Developer Infrastructure"
       ],
       "proof": {
         "kind": "headline",
-        "value": "Slavin profile describes UnitZero collecting robotics data at scale in East Africa.",
-        "source": "https://www.slavinfoundation.org/fellows.html"
+        "value": "Tsai CITY selected Neotix for its 2025 Summer Fellowship cohort.",
+        "source": "https://city.yale.edu/stories/2025/4/22/new-season-new-solutions-celebrating-tsai-citys-2025-summer-fellowship-cohort"
       },
-      "linkedinUrl": "https://www.linkedin.com/in/oliverhime",
-      "searchText": "oliver hime co-founder unitzero unitzero yale college ’28 yale college oliver hime is a yale college ’28 co-founder associated with unitzero. robotics company using proprietary robotic arms to collect large-scale robotics training data in east africa at a fraction of traditional data-collection cost. robotics; physical ai; data infrastructure; emerging markets robotic arms; embodied ai data; robotics datasets; data infrastructure robotics; physical ai; data infrastructure; emerging markets; robotic arms; embodied ai data; robotics datasets; robotics training data; physical-ai data scarcity; embodied intelligence; cost-efficient data collection; founder / builder; hardware / systems builder; robotics builder; unitzero; yale college; yale builder; yale founder; yale 2028; yale hacker house; san francisco founder ecosystem; prior yes chat seed",
+      "companyUrl": "https://noryvef.com/",
+      "linkedinUrl": "https://www.linkedin.com/in/freeman-irabaruta-7213981a0",
+      "searchText": "freeman irabaruta co-founder, neotix robotics; robotics / systems builder neotix robotics neotix robotics yale college ’26 yale college freeman (noryve) irabaruta is a yale college ’26 computer science and energy-studies builder from burundi and co-founder of neotix robotics. robotics; physical ai; data infrastructure; artificial intelligence; developer infrastructure robotics teleoperation; robot training data; systems software; ai infrastructure; compute systems freeman irabaruta; noryve freeman irabaruta; yale 2026; neotix robotics; robotics; physical ai; embodied ai; teleoperation; robot training data; ai infrastructure; systems engineering; computer systems; rwanda; burundi; nvidia",
       "featured": true
     },
     {
@@ -143,28 +192,399 @@
       "featured": true
     },
     {
-      "slug": "freeman-irabaruta",
-      "name": "Freeman Irabaruta",
+      "slug": "joshua-gao",
+      "name": "Joshua Gao",
       "classYear": "Yale College ’26",
       "school": "Yale College",
-      "nowLine": "Co-founder, Neotix Robotics; robotics / systems builder, Neotix Robotics",
-      "venture": "Neotix Robotics",
-      "bio": "Freeman (Noryve) Irabaruta is a Yale College ’26 computer science and energy-studies builder from Burundi and co-founder of Neotix Robotics.",
+      "nowLine": "Founder / co-founder (Startup Yale 2026), Vault Kinetics",
+      "venture": "Vault Kinetics",
+      "bio": "Joshua Gao is a Yale College ’26 Founder / co-founder (Startup Yale 2026) associated with Vault Kinetics. Force-sensitive flooring, biomechanics analytics and AI-powered algorithms that turn ground-contact force data into actionable intelligence for athletes and movement analysis.",
       "sectors": [
-        "Robotics",
-        "Physical AI",
-        "Data Infrastructure",
-        "Artificial Intelligence",
-        "Developer Infrastructure"
+        "Sports Technology",
+        "Digital Health",
+        "Sensors",
+        "Hardware",
+        "Artificial Intelligence"
       ],
       "proof": {
         "kind": "headline",
-        "value": "Tsai CITY selected Neotix for its 2025 Summer Fellowship cohort.",
-        "source": "https://city.yale.edu/stories/2025/4/22/new-season-new-solutions-celebrating-tsai-citys-2025-summer-fellowship-cohort"
+        "value": "Yale reports first sales, $30K funding, a Yale technology license and accelerator/grant support.",
+        "source": "https://startup.yale.edu/people/"
       },
-      "companyUrl": "https://noryvef.com/",
-      "linkedinUrl": "https://www.linkedin.com/in/freeman-irabaruta-7213981a0",
-      "searchText": "freeman irabaruta co-founder, neotix robotics; robotics / systems builder neotix robotics neotix robotics yale college ’26 yale college freeman (noryve) irabaruta is a yale college ’26 computer science and energy-studies builder from burundi and co-founder of neotix robotics. robotics; physical ai; data infrastructure; artificial intelligence; developer infrastructure robotics teleoperation; robot training data; systems software; ai infrastructure; compute systems freeman irabaruta; noryve freeman irabaruta; yale 2026; neotix robotics; robotics; physical ai; embodied ai; teleoperation; robot training data; ai infrastructure; systems engineering; computer systems; rwanda; burundi; nvidia",
+      "companyUrl": "https://www.vaultkinetics.com",
+      "searchText": "joshua gao founder / co-founder (startup yale 2026) vault kinetics vault kinetics yale college ’26 yale college joshua gao is a yale college ’26 founder / co-founder (startup yale 2026) associated with vault kinetics. force-sensitive flooring, biomechanics analytics and ai-powered algorithms that turn ground-contact force data into actionable intelligence for athletes and movement analysis. sports technology; digital health; sensors; hardware; artificial intelligence force sensing; embedded sensors; biomechanics; movement analytics; ai algorithms sports technology; digital health; sensors; hardware; artificial intelligence; force sensing; embedded sensors; biomechanics; movement analytics; ai algorithms; sports performance; injury prevention; movement measurement; wearable-free biomechanics; founder / builder; ai builder; hardware / systems builder; health / bio builder; vault kinetics; yale college; yale builder; yale founder; yale 2026; prior yes chat seed; $30k; funding",
+      "featured": true
+    },
+    {
+      "slug": "paul-douglass",
+      "name": "Paul Douglass",
+      "classYear": "Yale College ’26",
+      "school": "Yale College",
+      "nowLine": "Founder / co-founder (Startup Yale 2026), Vault Kinetics",
+      "venture": "Vault Kinetics",
+      "bio": "Paul Douglass is a Yale College ’26 Founder / co-founder (Startup Yale 2026) associated with Vault Kinetics. Force-sensitive flooring, biomechanics analytics and AI-powered algorithms that turn ground-contact force data into actionable intelligence for athletes and movement analysis.",
+      "sectors": [
+        "Sports Technology",
+        "Digital Health",
+        "Sensors",
+        "Hardware",
+        "Artificial Intelligence"
+      ],
+      "proof": {
+        "kind": "headline",
+        "value": "Yale reports first sales, $30K funding, a Yale technology license and accelerator/grant support.",
+        "source": "https://startup.yale.edu/people/"
+      },
+      "companyUrl": "https://www.vaultkinetics.com",
+      "searchText": "paul douglass founder / co-founder (startup yale 2026) vault kinetics vault kinetics yale college ’26 yale college paul douglass is a yale college ’26 founder / co-founder (startup yale 2026) associated with vault kinetics. force-sensitive flooring, biomechanics analytics and ai-powered algorithms that turn ground-contact force data into actionable intelligence for athletes and movement analysis. sports technology; digital health; sensors; hardware; artificial intelligence force sensing; embedded sensors; biomechanics; movement analytics; ai algorithms sports technology; digital health; sensors; hardware; artificial intelligence; force sensing; embedded sensors; biomechanics; movement analytics; ai algorithms; sports performance; injury prevention; movement measurement; wearable-free biomechanics; founder / builder; ai builder; hardware / systems builder; health / bio builder; vault kinetics; yale college; yale builder; yale founder; yale 2026; $30k; funding",
+      "featured": true
+    },
+    {
+      "slug": "osama-radi",
+      "name": "Osama Radi",
+      "classYear": "Yale College ’29",
+      "school": "Yale College",
+      "nowLine": "Founder, Assure5; Yale School of Medicine researcher, Assure5 / Yale",
+      "venture": "Assure5",
+      "bio": "Osama Radi is a Yale ’29 CS/economics founder working across healthcare software, AI/ML and biomedical research.",
+      "sectors": [
+        "Digital Health",
+        "Healthcare",
+        "Artificial Intelligence",
+        "Biomedical Research"
+      ],
+      "proof": {
+        "kind": "headline",
+        "value": "Assure5",
+        "source": "Founded Assure5 and builds ML systems for medical classification and prediction."
+      },
+      "companyUrl": "https://osamaradi.com/",
+      "searchText": "osama radi founder, assure5; yale school of medicine researcher assure5 / yale assure5 yale college ’29 yale college osama radi is a yale ’29 cs/economics founder working across healthcare software, ai/ml and biomedical research. digital health; healthcare; artificial intelligence; biomedical research machine learning; health software; biomedical classification; software engineering osama radi; yale 2029; assure5; healthcare ai; digital health; machine learning; yes; hacker house",
+      "featured": true
+    },
+    {
+      "slug": "allah-u-abha-rodrigues",
+      "name": "Allah-u-Abha Rodrigues",
+      "classYear": "Yale College ’27",
+      "school": "Yale College",
+      "nowLine": "Software / ML builder; founder",
+      "venture": "Current startup (publicly under wraps)",
+      "bio": "Allah-u-Abha Rodrigues is a Yale ’27 CS + statistics/data-science engineer from Mozambique who builds full-stack products and ML systems.",
+      "sectors": [
+        "Software",
+        "Artificial Intelligence",
+        "Data",
+        "Consumer",
+        "PropTech",
+        "FinTech"
+      ],
+      "proof": {
+        "kind": "headline",
+        "value": "Current startup (publicly under wraps)",
+        "source": "Builds full-stack and ML products; current Hacker House startup is not publicly disclosed."
+      },
+      "companyUrl": "https://www.allahurodrigues.com/",
+      "searchText": "allah-u-abha rodrigues software / ml builder; founder current startup (publicly under wraps) yale college ’27 yale college allah-u-abha rodrigues is a yale ’27 cs + statistics/data-science engineer from mozambique who builds full-stack products and ml systems. software; artificial intelligence; data; consumer; proptech; fintech python; pytorch; scikit-learn; typescript; react; next.js; postgresql; aws; docker allah-u-abha rodrigues; alláh-u-abhá rodrigues; yale 2027; full stack; machine learning; hacker house; mozambique alláh-u-abhá rodrigues allah-u-abha",
+      "featured": true
+    },
+    {
+      "slug": "murad-abdukholikov",
+      "name": "Murad Abdukholikov",
+      "classYear": "Yale College ’27",
+      "school": "Yale College",
+      "nowLine": "Robotics / embedded-systems builder; Yale CS student, Yale / independent robotics projects",
+      "venture": "Robotics Projects",
+      "bio": "Murad Abdukholikov is a Yale College ’27 computer-science student from rural Uzbekistan building in robotics, embedded systems and physical AI.",
+      "sectors": [
+        "Robotics",
+        "Physical AI",
+        "AgTech",
+        "Developer Infrastructure",
+        "Embedded Systems"
+      ],
+      "proof": {
+        "kind": "headline",
+        "value": "Public personal site documents multiple shipped technical projects, including a POS system sold to a local jewelry chain at age 15.",
+        "source": "https://www.khosilmurod.com/"
+      },
+      "companyUrl": "https://www.khosilmurod.com/",
+      "linkedinUrl": "https://www.linkedin.com/in/khosilmurod",
+      "searchText": "murad abdukholikov robotics / embedded-systems builder; yale cs student yale / independent robotics projects robotics projects yale college ’27 yale college murad abdukholikov is a yale college ’27 computer-science student from rural uzbekistan building in robotics, embedded systems and physical ai. robotics; physical ai; agtech; developer infrastructure; embedded systems embedded c++; sensors; robotics; egocentric data collection; full-stack software; computer architecture murad abdukholikov; khosilmurod abdukholikov; yale 2027; uzbekistan; robotics; physical ai; embedded systems; c++; sensors; egocentric data; hardware; agtech; orchard robotics; computer systems mura abdukholikov khosilmurod abdukholikov",
+      "reviewNote": "Verify venture name",
+      "featured": true
+    },
+    {
+      "slug": "sofia-teifeld",
+      "name": "Sofia Teifeld",
+      "classYear": "Yale College ’29",
+      "school": "Yale College",
+      "nowLine": "Co-President, Yale Entrepreneurial Society, Yale Entrepreneurial Society",
+      "venture": "Yale Entrepreneurial Society",
+      "bio": "Sofia Teifeld is a Yale ’29 EP&E student and Co-President of the Yale Entrepreneurial Society.",
+      "sectors": [
+        "Entrepreneurship Infrastructure",
+        "Medical Technology",
+        "Research"
+      ],
+      "proof": {
+        "kind": "headline",
+        "value": "Yale Entrepreneurial Society",
+        "source": "Leads YES and previously developed a magnetic-shielding concept for adjustable hydrocephalus shunts."
+      },
+      "searchText": "sofia teifeld co-president, yale entrepreneurial society yale entrepreneurial society yale entrepreneurial society yale college ’29 yale college sofia teifeld is a yale ’29 ep&e student and co-president of the yale entrepreneurial society. entrepreneurship infrastructure; medical technology; research sofia teifeld; yale 2029; yes; yale entrepreneurial society; medtech; community builder",
+      "featured": true
+    },
+    {
+      "slug": "nicolas-gertler",
+      "name": "Nicolas Gertler",
+      "classYear": "Yale College ’27",
+      "school": "Yale College",
+      "nowLine": "Co-founder; AI builder, Density / Mylon",
+      "venture": "Density / Mylon",
+      "bio": "Nicolas Gertler is a Yale College ’27 Co-founder; AI builder associated with Density / Mylon. AI-native legal and research systems; Density is described publicly as an AI legal-services startup, while Mylon has built AI agents for research and related knowledge workflows.",
+      "sectors": [
+        "Artificial Intelligence",
+        "Legal Technology",
+        "Research Tools",
+        "GovTech"
+      ],
+      "proof": {
+        "kind": "headline",
+        "value": "Gertler also built Floridi Bot, used internationally, and MANTRA for human-rights investigation workflows.",
+        "source": "https://dec.yale.edu/nicolas-gertler"
+      },
+      "companyUrl": "https://www.nicolasgertler.com/",
+      "linkedinUrl": "https://www.linkedin.com/in/nicolas-gertler",
+      "searchText": "nicolas gertler co-founder; ai builder density / mylon density / mylon yale college ’27 yale college nicolas gertler is a yale college ’27 co-founder; ai builder associated with density / mylon. ai-native legal and research systems; density is described publicly as an ai legal-services startup, while mylon has built ai agents for research and related knowledge workflows. artificial intelligence; legal technology; research tools; govtech ai agents; agent interoperability; knowledge assistants; legal ai; research tooling artificial intelligence; legal technology; research tools; govtech; ai agents; agent interoperability; knowledge assistants; legal ai; research tooling; land-use/legal workflows; research productivity; knowledge work; founder / builder; ai builder; civic / legal builder; research / knowledge builder; density / mylon; yale college; yale builder; yale founder; yale 2027; yale hacker house; san francisco founder ecosystem; prior yes chat seed",
+      "featured": true
+    },
+    {
+      "slug": "amelie-liu",
+      "name": "Amelie Liu",
+      "classYear": "Yale College ’27",
+      "school": "Yale College",
+      "nowLine": "Director, INSPIRE Speaker Series at Yale Entrepreneurial Society, Yale Entrepreneurial Society",
+      "venture": "YES INSPIRE Series",
+      "bio": "Amelie Liu is a Yale College ’27 entrepreneurship-community builder and Director of the Yale Entrepreneurial Society’s INSPIRE speaker series.",
+      "sectors": [
+        "Entrepreneurship Infrastructure",
+        "Community Building",
+        "Events",
+        "Founder Education"
+      ],
+      "proof": {
+        "kind": "headline",
+        "value": "Current YES team page lists Liu as Director of the Inspire Series.",
+        "source": "https://www.yesyale.org/team"
+      },
+      "linkedinUrl": "https://www.linkedin.com/in/amelie-liu-8339451b5",
+      "searchText": "amelie liu director, inspire speaker series at yale entrepreneurial society yale entrepreneurial society yes inspire series yale college ’27 yale college amelie liu is a yale college ’27 entrepreneurship-community builder and director of the yale entrepreneurial society’s inspire speaker series. entrepreneurship infrastructure; community building; events; founder education community/program operations; founder programming; event production amelie liu; yale 2027; yale entrepreneurial society; yes; inspire; founder speaker series; community builder; program builder; events; tsai city; yale alternative investments",
+      "featured": true
+    },
+    {
+      "slug": "seth-goldin",
+      "name": "Seth Goldin",
+      "classYear": "Yale College ’26",
+      "school": "Yale College",
+      "nowLine": "Student builder; former founding CTO at Context; co-founder of Hillhouse & LAUNCH, Yale / Hillhouse Fellowship / LAUNCH",
+      "venture": "Context / Hillhouse / Launch",
+      "bio": "Seth Goldin is a Yale College ’26 Former founding CTO; co-founder / ecosystem builder associated with Hillhouse / Launch / prior Context. AI office-suite and founder-community work; public fellowship bio says Goldin was founding CTO at Context and co-founded Launch and Hillhouse Fellowship.",
+      "sectors": [
+        "Artificial Intelligence",
+        "Productivity",
+        "Entrepreneurship Infrastructure",
+        "Community Building"
+      ],
+      "proof": {
+        "kind": "headline",
+        "value": "Slavin profile identifies Goldin as former founding CTO at venture-backed Context and a co-founder of Launch and Hillhouse Fellowship.",
+        "source": "https://goldin.io/work"
+      },
+      "companyUrl": "https://goldin.io/",
+      "linkedinUrl": "https://www.linkedin.com/in/sethgoldin",
+      "searchText": "seth goldin student builder; former founding cto at context; co-founder of hillhouse & launch yale / hillhouse fellowship / launch context / hillhouse / launch yale college ’26 yale college seth goldin is a yale college ’26 former founding cto; co-founder / ecosystem builder associated with hillhouse / launch / prior context. ai office-suite and founder-community work; public fellowship bio says goldin was founding cto at context and co-founded launch and hillhouse fellowship. artificial intelligence; productivity; entrepreneurship infrastructure; community building ai office software; product engineering; founder programs; startup community seth goldin; yale 2026; computer science; global affairs; context; friday; compendium; catalyst; hillhouse fellowship; launch; yale entrepreneurial society; yes president; ai; ai agents; productivity; software engineering; entrepreneurship infrastructure; semiconductors; ai policy; emerging technology",
+      "featured": true
+    },
+    {
+      "slug": "grace-gerwe",
+      "name": "Grace Gerwe",
+      "classYear": "Yale College ’25",
+      "school": "Yale College",
+      "nowLine": "Lead, Vessel team at Science, Science",
+      "venture": "Vessel",
+      "bio": "Grace Gerwe ’25 is a former Yale Entrepreneurial Society president who now leads Vessel at Science, building life-support systems for critical care.",
+      "sectors": [
+        "HealthTech",
+        "Medical Technology",
+        "Critical Care",
+        "Neurotechnology",
+        "Entrepreneurship Infrastructure"
+      ],
+      "proof": {
+        "kind": "headline",
+        "value": "Public profile says Gerwe leads Vessel at Science; Yale/Tsai CITY identify her as a LAUNCH creator and former YES president.",
+        "source": "https://gracegerwe.com/"
+      },
+      "companyUrl": "https://gracegerwe.com/",
+      "linkedinUrl": "https://www.linkedin.com/in/gracegerwe",
+      "searchText": "grace gerwe lead, vessel team at science science vessel yale college ’25 yale college grace gerwe ’25 is a former yale entrepreneurial society president who now leads vessel at science, building life-support systems for critical care. healthtech; medical technology; critical care; neurotechnology; entrepreneurship infrastructure life-support systems; critical-care technology; bci research; biomedical systems grace gerwe; yale 2025; yale entrepreneurial society; former yes president; vessel; science; critical care; life support; healthtech; medtech; bci; neurotechnology; launch; dorm room fund; .406 ventures",
+      "featured": true
+    },
+    {
+      "slug": "teo-dimov",
+      "name": "Teo Dimov",
+      "classYear": "Yale College ’26",
+      "school": "Yale College",
+      "nowLine": "Co-founder / ecosystem builder, Launch / prior startup",
+      "venture": "Launch / prior venture-backed wearables",
+      "bio": "Teo Dimov is a Yale College ’26 Co-founder / ecosystem builder associated with Launch / prior startup. Entrepreneurship community-building plus prior venture-backed wearable technology; public fellowship bio says Dimov co-founded Launch and previously co-founded a venture-backed wearables company in Berlin.",
+      "sectors": [
+        "Entrepreneurship Infrastructure",
+        "Wearables",
+        "Community Building"
+      ],
+      "proof": {
+        "kind": "headline",
+        "value": "Slavin profile identifies Dimov as a former YES president, Launch co-founder and prior wearables co-founder.",
+        "source": "https://www.slavinfoundation.org/fellows.html"
+      },
+      "searchText": "teo dimov co-founder / ecosystem builder launch / prior startup launch / prior venture-backed wearables yale college ’26 yale college teo dimov is a yale college ’26 co-founder / ecosystem builder associated with launch / prior startup. entrepreneurship community-building plus prior venture-backed wearable technology; public fellowship bio says dimov co-founded launch and previously co-founded a venture-backed wearables company in berlin. entrepreneurship infrastructure; wearables; community building startup community design; wearable technology; founder programs entrepreneurship infrastructure; wearables; community building; startup community design; wearable technology; founder programs; founder formation; entrepreneurship community; wearable products; founder / builder; hardware / systems builder; launch / prior venture-backed wearables; yale college; yale builder; yale founder; yale 2026",
+      "featured": true
+    },
+    {
+      "slug": "ari-strober",
+      "name": "Ari Strober",
+      "classYear": "Yale College",
+      "school": "Yale College",
+      "nowLine": "Co-Director of High School Fellows, Yale Entrepreneurial Society, Yale Entrepreneurial Society",
+      "venture": "YES High School Fellowship",
+      "bio": "Ari Strober is a Yale student focused on entrepreneurship education and founder-community infrastructure.",
+      "sectors": [
+        "Entrepreneurship Education",
+        "Community",
+        "Founder Programs"
+      ],
+      "proof": {
+        "kind": "headline",
+        "value": "YES High School Fellowship",
+        "source": "Co-runs YES’s High School Fellowship, helping student teams through startup formation and pitching."
+      },
+      "searchText": "ari strober co-director of high school fellows, yale entrepreneurial society yale entrepreneurial society yes high school fellowship yale college yale college ari strober is a yale student focused on entrepreneurship education and founder-community infrastructure. entrepreneurship education; community; founder programs ari strober; ari strover; yale; yes; high school fellowship; community builder; program builder ari strover",
+      "reviewNote": "Verify class year",
+      "featured": true
+    },
+    {
+      "slug": "sina-dehghani",
+      "name": "Sina Dehghani",
+      "classYear": "Yale College ’29",
+      "school": "Yale College",
+      "nowLine": "Startup / investing operator, Maverick Capital / o11",
+      "venture": "o11",
+      "bio": "Sina Dehghani is a Yale ’29 startup/investing operator working at the intersection of AI, financial services and enterprise software.",
+      "sectors": [
+        "Artificial Intelligence",
+        "FinTech",
+        "Capital Markets",
+        "Enterprise Software",
+        "Investing"
+      ],
+      "proof": {
+        "kind": "headline",
+        "value": "o11",
+        "source": "Works around AI and financial-services infrastructure, including growth work at o11 and investing exposure through Maverick Capital."
+      },
+      "searchText": "sina dehghani startup / investing operator maverick capital / o11 o11 yale college ’29 yale college sina dehghani is a yale ’29 startup/investing operator working at the intersection of ai, financial services and enterprise software. artificial intelligence; fintech; capital markets; enterprise software; investing sina dehghani; yale 2029; fintech; ai; maverick capital; o11; growth; investing",
+      "featured": true
+    },
+    {
+      "slug": "zain-anwar",
+      "name": "Zain Anwar",
+      "classYear": "Yale College ’29",
+      "school": "Yale College",
+      "nowLine": "Founder / investor, Intersect STEM / Maverick Capital",
+      "venture": "Intersect STEM",
+      "bio": "Zain Anwar is a Yale ’29 founder/investor interested in healthcare, AI and social-impact entrepreneurship.",
+      "sectors": [
+        "STEM Education",
+        "Social Impact",
+        "Healthcare",
+        "Artificial Intelligence",
+        "Investing"
+      ],
+      "proof": {
+        "kind": "headline",
+        "value": "Intersect STEM",
+        "source": "Co-founded Intersect STEM, expanding STEM access for refugee, immigrant and international students."
+      },
+      "searchText": "zain anwar founder / investor intersect stem / maverick capital intersect stem yale college ’29 yale college zain anwar is a yale ’29 founder/investor interested in healthcare, ai and social-impact entrepreneurship. stem education; social impact; healthcare; artificial intelligence; investing zain anwar; yale 2029; intersect stem; social impact; stem education; investing; healthcare; ai",
+      "featured": true
+    },
+    {
+      "slug": "yavin-fickel",
+      "name": "Yavin Fickel",
+      "classYear": "Yale College ’29",
+      "school": "Yale College",
+      "nowLine": "Researcher, van Dijk Lab; Co-Director of LAUNCH, Yale / LAUNCH",
+      "venture": "Animalia Labs",
+      "bio": "Yavin Fickel is a Yale ’29 CS/economics research and software builder working across computational biology, open data and scientific infrastructure.",
+      "sectors": [
+        "AI for Science",
+        "Computational Biology",
+        "Open Data",
+        "Research Infrastructure",
+        "Entrepreneurship Infrastructure"
+      ],
+      "proof": {
+        "kind": "headline",
+        "value": "Animalia Labs",
+        "source": "Builds Animalia Labs and ScholarLedger, conducts research in Yale’s van Dijk Lab, and co-directs YES’s LAUNCH program."
+      },
+      "searchText": "yavin fickel researcher, van dijk lab; co-director of launch yale / launch animalia labs yale college ’29 yale college yavin fickel is a yale ’29 cs/economics research and software builder working across computational biology, open data and scientific infrastructure. ai for science; computational biology; open data; research infrastructure; entrepreneurship infrastructure yavin fickel; yale 2029; animalia labs; scholarledger; launch; computational biology; open data",
+      "featured": true
+    },
+    {
+      "slug": "kashi-tuteja",
+      "name": "Kashi Tuteja",
+      "classYear": "Yale College ’29",
+      "school": "Yale College",
+      "nowLine": "Co-Director of Special Projects, Yale Entrepreneurial Society, Yale Entrepreneurial Society",
+      "venture": "YES Special Projects",
+      "bio": "Kashi Tuteja is a Yale ’29 Math/CS technical builder interested in AI, ML, signal processing and applied mathematics.",
+      "sectors": [
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Applied Mathematics",
+        "Software",
+        "Entrepreneurship Infrastructure"
+      ],
+      "proof": {
+        "kind": "headline",
+        "value": "YES Special Projects",
+        "source": "Built a mobile acoustic-physics tool using high-frequency sound sweeps and Fourier analysis; also leads special projects at YES."
+      },
+      "searchText": "kashi tuteja co-director of special projects, yale entrepreneurial society yale entrepreneurial society yes special projects yale college ’29 yale college kashi tuteja is a yale ’29 math/cs technical builder interested in ai, ml, signal processing and applied mathematics. artificial intelligence; machine learning; applied mathematics; software; entrepreneurship infrastructure ml; algorithms; linear algebra; fourier analysis; acoustic sensing kashi tuteja; yale 2029; math; computer science; ai; machine learning; signal processing; acoustics; yes",
+      "featured": true
+    },
+    {
+      "slug": "jasmine-garry",
+      "name": "Jasmine Garry",
+      "classYear": "Yale College ’28",
+      "school": "Yale College",
+      "nowLine": "Chief of Operations, Yale Entrepreneurial Society; Talent Director, Yale Undergraduate Capital Partners, Yale Entrepreneurial Society / Yale Undergraduate Capital Partners",
+      "venture": "YES Operations",
+      "bio": "Jasmine Garry is a Yale ’28 operations and entrepreneurship-ecosystem builder working across YES, student venture capital and AI/organizational research.",
+      "sectors": [
+        "Entrepreneurship Infrastructure",
+        "Venture Capital",
+        "Artificial Intelligence",
+        "Organizational Leadership"
+      ],
+      "proof": {
+        "kind": "headline",
+        "value": "YES Operations",
+        "source": "Operates core YES infrastructure and talent processes while also working in student venture capital and AI/organizational research."
+      },
+      "searchText": "jasmine garry chief of operations, yale entrepreneurial society; talent director, yale undergraduate capital partners yale entrepreneurial society / yale undergraduate capital partners yes operations yale college ’28 yale college jasmine garry is a yale ’28 operations and entrepreneurship-ecosystem builder working across yes, student venture capital and ai/organizational research. entrepreneurship infrastructure; venture capital; artificial intelligence; organizational leadership jasmine garry; yale 2028; yes; operations; talent; venture capital; ai; organizational strategy; yucp",
       "featured": true
     },
     {
@@ -254,54 +674,6 @@
         "source": "https://news.yale.edu/2025/12/03/startup-yale-celebrates-decade-transforming-innovation-impact"
       },
       "searchText": "alexia akbay founder & ceo symbrosia symbrosia yale school of public health ’19 yale school of public health alexia akbay is a yale school of public health ’19 founder & ceo associated with symbrosia. seaweed aquaculture and feed-additive platform designed to reduce methane emissions from livestock. climate technology; agtech; biotechnology; ocean technology; food systems seaweed aquaculture; feed additives; biological systems; climate mitigation climate technology; agtech; biotechnology; ocean technology; food systems; seaweed aquaculture; feed additives; biological systems; climate mitigation; livestock methane; agricultural emissions; sustainable aquaculture; founder / builder; climate builder; health / bio builder; symbrosia; yale school of public health; yale builder; yale founder; yale 2019; prior yes chat seed; $17m; funding",
-      "featured": false
-    },
-    {
-      "slug": "allah-u-abha-rodrigues",
-      "name": "Allah-u-Abha Rodrigues",
-      "classYear": "Yale College ’27",
-      "school": "Yale College",
-      "nowLine": "Software/ML builder; UNDP fellow",
-      "venture": "Under wraps",
-      "bio": "Full-stack and ML builder whose public projects include renter-negotiation software, personal-finance software, campus marketplace infrastructure, analytics tools and machine-learning systems. His 2026 Hacker House company remains undisclosed on his public site.",
-      "sectors": [
-        "Software",
-        "AI/ML",
-        "PropTech",
-        "Consumer FinTech",
-        "Data",
-        "Civic/International Development"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "2026 Hacker House resident",
-        "source": "Ten weeks in San Francisco"
-      },
-      "companyUrl": "https://www.allahurodrigues.com",
-      "searchText": "allah-u-abha rodrigues software/ml builder; undp fellow under wraps yale college ’27 yale college full-stack and ml builder whose public projects include renter-negotiation software, personal-finance software, campus marketplace infrastructure, analytics tools and machine-learning systems. his 2026 hacker house company remains undisclosed on his public site. software ai/ml proptech consumer fintech data civic/international development alláh-u-abhá rodrigues python; pytorch; scikit-learn; typescript; react; next.js; node; postgresql; supabase; aws; docker; geospatial software; tenure; macrotrack; unseen; yale4sale; flowlens; mozambique; statistics and data science",
-      "featured": false
-    },
-    {
-      "slug": "amelie-liu",
-      "name": "Amelie Liu",
-      "classYear": "Yale College ’27",
-      "school": "Yale College",
-      "nowLine": "Director, INSPIRE Speaker Series at Yale Entrepreneurial Society, Yale Entrepreneurial Society",
-      "venture": "YES INSPIRE Series",
-      "bio": "Amelie Liu is a Yale College ’27 entrepreneurship-community builder and Director of the Yale Entrepreneurial Society’s INSPIRE speaker series.",
-      "sectors": [
-        "Entrepreneurship Infrastructure",
-        "Community Building",
-        "Events",
-        "Founder Education"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "Current YES team page lists Liu as Director of the Inspire Series.",
-        "source": "https://www.yesyale.org/team"
-      },
-      "linkedinUrl": "https://www.linkedin.com/in/amelie-liu-8339451b5",
-      "searchText": "amelie liu director, inspire speaker series at yale entrepreneurial society yale entrepreneurial society yes inspire series yale college ’27 yale college amelie liu is a yale college ’27 entrepreneurship-community builder and director of the yale entrepreneurial society’s inspire speaker series. entrepreneurship infrastructure; community building; events; founder education community/program operations; founder programming; event production amelie liu; yale 2027; yale entrepreneurial society; yes; inspire; founder speaker series; community builder; program builder; events; tsai city; yale alternative investments",
       "featured": false
     },
     {
@@ -460,29 +832,6 @@
       "featured": false
     },
     {
-      "slug": "ari-strober",
-      "name": "Ari Strober",
-      "classYear": "Yale College",
-      "school": "Yale College",
-      "nowLine": "Co-Director of High School Fellows, Yale Entrepreneurial Society",
-      "venture": "YES High School Fellowship",
-      "bio": "Co-runs the YES High School Fellowship, guiding international high-school teams through startup formation, problem selection and pitching.",
-      "sectors": [
-        "Entrepreneurship Education",
-        "Community",
-        "Founder Programs"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "YES High School Fellowship",
-        "source": "Co-Director"
-      },
-      "companyUrl": "https://www.yesyale.org",
-      "searchText": "ari strober co-director of high school fellows, yale entrepreneurial society yes high school fellowship yale college yale college co-runs the yes high school fellowship, guiding international high-school teams through startup formation, problem selection and pitching. entrepreneurship education community founder programs ari strover fellowship operations; founder mentorship; cohort design; program design; entrepreneurship programming; high school fellows",
-      "reviewNote": "Class year unverified — no year shown. LinkedIn lists TheThirdPlace, but there is not enough public evidence to describe it or call him its founder.",
-      "featured": false
-    },
-    {
       "slug": "arinze-agu",
       "name": "Arinze Agu",
       "classYear": "Yale School of Public Health ’25",
@@ -590,30 +939,6 @@
       },
       "companyUrl": "https://studiobdu.com",
       "searchText": "brenton duhan founder / co-founder (startup yale 2026) studio b-du studio b-du yale school of architecture ’26 yale school of architecture brenton duhan is a yale school of architecture ’26 founder / co-founder (startup yale 2026) associated with studio b-du. accessible craft and ceramics education supported by purpose-built tools, templates and learning experiences. creative industries; education; design; consumer craft tooling; educational design; physical products creative industries; education; design; consumer; craft tooling; educational design; physical products; access to craft education; ceramics learning; creative skill development; founder / builder; creative / consumer builder; studio b-du; yale school of architecture; yale builder; yale founder; yale 2026",
-      "featured": false
-    },
-    {
-      "slug": "bruno-bruno",
-      "name": "Bruno Bruno",
-      "classYear": "Yale College ’27",
-      "school": "Yale College",
-      "nowLine": "Founder, Kesho, Kesho",
-      "venture": "Kesho",
-      "bio": "Bruno Bruno is a Yale College ’27 founder building Kesho, a prediction market focused on Africa.",
-      "sectors": [
-        "FinTech",
-        "Prediction Markets",
-        "Consumer Finance",
-        "Emerging Markets",
-        "Africa"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "Public profile identifies him as the builder of Kesho; prior YES context identifies him as a Yale Hacker House participant.",
-        "source": "https://www.linkedin.com/in/brunobbruno"
-      },
-      "linkedinUrl": "https://www.linkedin.com/in/brunobbruno",
-      "searchText": "bruno bruno founder, kesho kesho kesho yale college ’27 yale college bruno bruno is a yale college ’27 founder building kesho, a prediction market focused on africa. fintech; prediction markets; consumer finance; emerging markets; africa prediction-market platform; market design; trading/exchange software; consumer fintech bruno bruno; yale 2027; kesho; prediction markets; fintech; africa; emerging markets; trading; exchange; market design; quant finance; yale hacker house",
       "featured": false
     },
     {
@@ -1069,31 +1394,6 @@
       "featured": false
     },
     {
-      "slug": "grace-gerwe",
-      "name": "Grace Gerwe",
-      "classYear": "Yale College ’25",
-      "school": "Yale College",
-      "nowLine": "Lead, Vessel team at Science, Science",
-      "venture": "Vessel",
-      "bio": "Grace Gerwe ’25 is a former Yale Entrepreneurial Society president who now leads Vessel at Science, building life-support systems for critical care.",
-      "sectors": [
-        "HealthTech",
-        "Medical Technology",
-        "Critical Care",
-        "Neurotechnology",
-        "Entrepreneurship Infrastructure"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "Public profile says Gerwe leads Vessel at Science; Yale/Tsai CITY identify her as a LAUNCH creator and former YES president.",
-        "source": "https://gracegerwe.com/"
-      },
-      "companyUrl": "https://gracegerwe.com/",
-      "linkedinUrl": "https://www.linkedin.com/in/gracegerwe",
-      "searchText": "grace gerwe lead, vessel team at science science vessel yale college ’25 yale college grace gerwe ’25 is a former yale entrepreneurial society president who now leads vessel at science, building life-support systems for critical care. healthtech; medical technology; critical care; neurotechnology; entrepreneurship infrastructure life-support systems; critical-care technology; bci research; biomedical systems grace gerwe; yale 2025; yale entrepreneurial society; former yes president; vessel; science; critical care; life support; healthtech; medtech; bci; neurotechnology; launch; dorm room fund; .406 ventures",
-      "featured": false
-    },
-    {
       "slug": "hanwool-jung",
       "name": "Hanwool Jung",
       "classYear": "Yale School of Management ’26",
@@ -1139,28 +1439,6 @@
       "featured": false
     },
     {
-      "slug": "james-masson",
-      "name": "James Masson",
-      "classYear": "Former Yale College student",
-      "school": "Former Yale College student",
-      "nowLine": "Founder, Nade",
-      "venture": "Nade",
-      "bio": "James Masson is a Former Yale College student Founder associated with Nade. AI space-technology startup operating at the intersection of aerospace and artificial intelligence.",
-      "sectors": [
-        "Aerospace",
-        "Space Technology",
-        "Artificial Intelligence"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "$3.2M financing reported by Gazetteer SF; founder left Yale to work full-time.",
-        "source": "https://sf.gazetteer.co/yalies-raised-17-million-this-summer-in-nob-hill-hacker-house"
-      },
-      "searchText": "james masson founder nade nade former yale college student former yale college student james masson is a former yale college student founder associated with nade. ai space-technology startup operating at the intersection of aerospace and artificial intelligence. aerospace; space technology; artificial intelligence ai software; aerospace software; space systems aerospace; space technology; artificial intelligence; ai software; aerospace software; space systems; space and aerospace software; technical infrastructure; ai for space systems; founder / builder; ai builder; nade; former yale college student; yale builder; yale founder; yale hacker house; san francisco founder ecosystem; prior yes chat seed; $3.2m",
-      "reviewNote": "Verify expected class year if needed",
-      "featured": false
-    },
-    {
       "slug": "james-steele",
       "name": "James Steele",
       "classYear": "Yale College ’26",
@@ -1180,29 +1458,6 @@
         "source": "https://startup.yale.edu/people/"
       },
       "searchText": "james steele founder / co-founder (startup yale 2026) spark spark yale college ’26 yale college james steele is a yale college ’26 founder / co-founder (startup yale 2026) associated with spark. computing system in which a core smartphone provides compute for low-cost zero-compute laptop, tablet and desktop shells. consumer hardware; computing; mobile; hardware-software systems modular computing; smartphone compute; peripheral hardware; operating systems consumer hardware; computing; mobile; hardware-software systems; modular computing; smartphone compute; peripheral hardware; operating systems; device affordability; e-waste; multi-device compute redundancy; founder / builder; hardware / systems builder; spark; yale college; yale builder; yale founder; yale 2026",
-      "featured": false
-    },
-    {
-      "slug": "jasmine-garry",
-      "name": "Jasmine Garry",
-      "classYear": "Yale College ’28",
-      "school": "Yale College",
-      "nowLine": "Chief of Operations, Yale Entrepreneurial Society; Talent Director, Yale Undergraduate Capital Partners",
-      "venture": "Yale Entrepreneurial Society",
-      "bio": "Operates core YES infrastructure and talent processes, and is Talent Director at Yale Undergraduate Capital Partners. Co-authored a 2026 Yale Insights piece on frameworks for deploying agentic AI.",
-      "sectors": [
-        "Entrepreneurship Infrastructure",
-        "Venture Capital",
-        "Artificial Intelligence",
-        "Organizational Leadership"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "Yale Insights, 2026",
-        "source": "Co-authored on deploying agentic AI"
-      },
-      "companyUrl": "https://www.yesyale.org",
-      "searchText": "jasmine garry chief of operations, yale entrepreneurial society; talent director, yale undergraduate capital partners yale entrepreneurial society yale college ’28 yale college operates core yes infrastructure and talent processes, and is talent director at yale undergraduate capital partners. co-authored a 2026 yale insights piece on frameworks for deploying agentic ai. entrepreneurship infrastructure venture capital artificial intelligence organizational leadership operations; recruiting; talent; venture ecosystem building; research; organizational strategy; yucp; agentic ai",
       "featured": false
     },
     {
@@ -1341,30 +1596,6 @@
       "featured": false
     },
     {
-      "slug": "joshua-gao",
-      "name": "Joshua Gao",
-      "classYear": "Yale College ’26",
-      "school": "Yale College",
-      "nowLine": "Founder / co-founder (Startup Yale 2026), Vault Kinetics",
-      "venture": "Vault Kinetics",
-      "bio": "Joshua Gao is a Yale College ’26 Founder / co-founder (Startup Yale 2026) associated with Vault Kinetics. Force-sensitive flooring, biomechanics analytics and AI-powered algorithms that turn ground-contact force data into actionable intelligence for athletes and movement analysis.",
-      "sectors": [
-        "Sports Technology",
-        "Digital Health",
-        "Sensors",
-        "Hardware",
-        "Artificial Intelligence"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "Yale reports first sales, $30K funding, a Yale technology license and accelerator/grant support.",
-        "source": "https://startup.yale.edu/people/"
-      },
-      "companyUrl": "https://www.vaultkinetics.com",
-      "searchText": "joshua gao founder / co-founder (startup yale 2026) vault kinetics vault kinetics yale college ’26 yale college joshua gao is a yale college ’26 founder / co-founder (startup yale 2026) associated with vault kinetics. force-sensitive flooring, biomechanics analytics and ai-powered algorithms that turn ground-contact force data into actionable intelligence for athletes and movement analysis. sports technology; digital health; sensors; hardware; artificial intelligence force sensing; embedded sensors; biomechanics; movement analytics; ai algorithms sports technology; digital health; sensors; hardware; artificial intelligence; force sensing; embedded sensors; biomechanics; movement analytics; ai algorithms; sports performance; injury prevention; movement measurement; wearable-free biomechanics; founder / builder; ai builder; hardware / systems builder; health / bio builder; vault kinetics; yale college; yale builder; yale founder; yale 2026; prior yes chat seed; $30k; funding",
-      "featured": false
-    },
-    {
       "slug": "justin-pan",
       "name": "Justin Pan",
       "classYear": "Yale College ’27",
@@ -1429,29 +1660,6 @@
         "source": "Adaptive women’s slip-on jeans with expandable waistbands designed to accommodate daily body changes while retaining a premium look."
       },
       "searchText": "karina gupta founder / co-founder (startup yale 2026) karinaj denim karinaj denim yale school of management ’26 yale school of management karina gupta is a yale school of management ’26 founder / co-founder (startup yale 2026) associated with karinaj denim. adaptive women’s slip-on jeans with expandable waistbands designed to accommodate daily body changes while retaining a premium look. consumer; fashion; adaptive apparel apparel design; adaptive garment construction consumer; fashion; adaptive apparel; apparel design; adaptive garment construction; clothing comfort; body changes; founder / builder; creative / consumer builder; karinaj denim; yale school of management; yale builder; yale founder; yale 2026",
-      "featured": false
-    },
-    {
-      "slug": "kashi-tuteja",
-      "name": "Kashi Tuteja",
-      "classYear": "Yale College ’29",
-      "school": "Yale College",
-      "nowLine": "Co-Director of Special Projects, Yale Entrepreneurial Society",
-      "venture": "YES Special Projects",
-      "bio": "Designed and built a mobile acoustic-physics tool using high-frequency sound sweeps and Fourier analysis to estimate distance, map room geometry and calculate sound-absorption properties.",
-      "sectors": [
-        "Artificial Intelligence",
-        "Machine Learning",
-        "Applied Mathematics",
-        "Software",
-        "Entrepreneurship Infrastructure"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "Mobile acoustic-physics tool",
-        "source": "Fourier analysis of high-frequency sound sweeps"
-      },
-      "searchText": "kashi tuteja co-director of special projects, yale entrepreneurial society yes special projects yale college ’29 yale college designed and built a mobile acoustic-physics tool using high-frequency sound sweeps and fourier analysis to estimate distance, map room geometry and calculate sound-absorption properties. artificial intelligence machine learning applied mathematics software entrepreneurship infrastructure ml; algorithms; linear algebra; fourier analysis; acoustic sensing; applied mathematics; signal processing; mathematics; computer science; sailing",
       "featured": false
     },
     {
@@ -1817,31 +2025,6 @@
       "featured": false
     },
     {
-      "slug": "murad-abdukholikov",
-      "name": "Murad Abdukholikov",
-      "classYear": "Yale College ’27",
-      "school": "Yale College",
-      "nowLine": "Robotics / embedded-systems builder",
-      "venture": "Robotics Projects",
-      "bio": "Builds robotics and embedded systems, including an egocentric robotics-data headset, sensor-driven projects, and prior work associated with orchard/autonomous robotics.",
-      "sectors": [
-        "Robotics",
-        "Physical AI",
-        "AgTech",
-        "Embedded Systems"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "Public personal site documents multiple shipped technical projects, including a POS system sold to a local jewelry chain at age 15.",
-        "source": "https://www.khosilmurod.com/"
-      },
-      "companyUrl": "https://www.khosilmurod.com/",
-      "linkedinUrl": "https://www.linkedin.com/in/khosilmurod",
-      "searchText": "murad abdukholikov robotics / embedded-systems builder; yale cs student yale / independent robotics projects robotics projects yale college ’27 yale college murad abdukholikov is a yale college ’27 computer-science student from rural uzbekistan building in robotics, embedded systems and physical ai. robotics; physical ai; agtech; developer infrastructure; embedded systems embedded c++; sensors; robotics; egocentric data collection; full-stack software; computer architecture murad abdukholikov; khosilmurod abdukholikov; yale 2027; uzbekistan; robotics; physical ai; embedded systems; c++; sensors; egocentric data; hardware; agtech; orchard robotics; computer systems mura abdukholikov khosilmurod abdukholikov embedded c++; sensors; robotics; egocentric data collection; full-stack software; hardware-software integration; uzbekistan; computer science builds robotics and embedded systems, including an egocentric robotics-data headset, sensor-driven projects, and prior work associated with orchard/autonomous robotics.",
-      "reviewNote": "Verify venture name",
-      "featured": false
-    },
-    {
       "slug": "neal-soni",
       "name": "Neal Soni",
       "classYear": "Yale College ’22",
@@ -1885,53 +2068,6 @@
       },
       "companyUrl": "https://www.verustruct.com",
       "searchText": "nick callegari founder & ceo verustruct verustruct yale school of management ’25 yale school of management nick callegari is a yale school of management ’25 founder & ceo associated with verustruct. gantry-less construction 3d-printing technology designed to create affordable, sustainable housing more efficiently. construction technology; advanced manufacturing; climate technology; housing construction 3d printing; mechanical design; additive manufacturing; sustainable materials construction technology; advanced manufacturing; climate technology; housing; construction 3d printing; mechanical design; additive manufacturing; sustainable materials; housing affordability; construction productivity; sustainable building; homelessness; founder / builder; hardware / systems builder; climate builder; verustruct; yale school of management; yale builder; yale founder; yale 2025; prior yes chat seed; $2.44m; pre-seed",
-      "featured": false
-    },
-    {
-      "slug": "osama-radi",
-      "name": "Osama Radi",
-      "classYear": "Yale College ’29",
-      "school": "Yale College",
-      "nowLine": "Founder, Assure5; researcher at Yale School of Medicine",
-      "venture": "Assure5",
-      "bio": "Founded Assure5, a healthcare platform that has reached 13,000+ users across 40+ countries. Prior technical work includes ML systems for demyelinating-disease classification and heart-failure prediction.",
-      "sectors": [
-        "Digital Health",
-        "Healthcare",
-        "Artificial Intelligence",
-        "Biomedical Research"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "13,000+ users across 40+ countries",
-        "source": "Assure5"
-      },
-      "companyUrl": "https://osamaradi.com",
-      "searchText": "osama radi founder, assure5; researcher at yale school of medicine assure5 yale college ’29 yale college founded assure5, a healthcare platform that has reached 13,000+ users across 40+ countries. prior technical work includes ml systems for demyelinating-disease classification and heart-failure prediction. digital health healthcare artificial intelligence biomedical research machine learning; health software; biomedical classification; software engineering; research engineering; yes first-year liaison; yale hacker house; yale computer society; computer science; economics",
-      "featured": false
-    },
-    {
-      "slug": "paul-douglass",
-      "name": "Paul Douglass",
-      "classYear": "Yale College ’26",
-      "school": "Yale College",
-      "nowLine": "Founder / co-founder (Startup Yale 2026), Vault Kinetics",
-      "venture": "Vault Kinetics",
-      "bio": "Paul Douglass is a Yale College ’26 Founder / co-founder (Startup Yale 2026) associated with Vault Kinetics. Force-sensitive flooring, biomechanics analytics and AI-powered algorithms that turn ground-contact force data into actionable intelligence for athletes and movement analysis.",
-      "sectors": [
-        "Sports Technology",
-        "Digital Health",
-        "Sensors",
-        "Hardware",
-        "Artificial Intelligence"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "Yale reports first sales, $30K funding, a Yale technology license and accelerator/grant support.",
-        "source": "https://startup.yale.edu/people/"
-      },
-      "companyUrl": "https://www.vaultkinetics.com",
-      "searchText": "paul douglass founder / co-founder (startup yale 2026) vault kinetics vault kinetics yale college ’26 yale college paul douglass is a yale college ’26 founder / co-founder (startup yale 2026) associated with vault kinetics. force-sensitive flooring, biomechanics analytics and ai-powered algorithms that turn ground-contact force data into actionable intelligence for athletes and movement analysis. sports technology; digital health; sensors; hardware; artificial intelligence force sensing; embedded sensors; biomechanics; movement analytics; ai algorithms sports technology; digital health; sensors; hardware; artificial intelligence; force sensing; embedded sensors; biomechanics; movement analytics; ai algorithms; sports performance; injury prevention; movement measurement; wearable-free biomechanics; founder / builder; ai builder; hardware / systems builder; health / bio builder; vault kinetics; yale college; yale builder; yale founder; yale 2026; $30k; funding",
       "featured": false
     },
     {
@@ -2072,30 +2208,6 @@
       "featured": false
     },
     {
-      "slug": "riya-bhargava",
-      "name": "Riya Bhargava",
-      "classYear": "Yale College ’26",
-      "school": "Yale College",
-      "nowLine": "Co-founder, Cortex",
-      "venture": "Cortex",
-      "bio": "Riya Bhargava is a Yale College ’26 Co-founder associated with Cortex. AI operating system and intelligent knowledge layer for modern biology labs, designed to unify fragmented lab data and support automated scientific reasoning.",
-      "sectors": [
-        "Artificial Intelligence",
-        "Biotechnology",
-        "Life Sciences",
-        "Lab Software",
-        "AI for Science"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "$1.1M financing reported in July 2026.",
-        "source": "https://sf.gazetteer.co/yalies-raised-17-million-this-summer-in-nob-hill-hacker-house"
-      },
-      "linkedinUrl": "https://www.linkedin.com/in/riya-bhargava-a24b79222",
-      "searchText": "riya bhargava co-founder cortex cortex yale college ’26 yale college riya bhargava is a yale college ’26 co-founder associated with cortex. ai operating system and intelligent knowledge layer for modern biology labs, designed to unify fragmented lab data and support automated scientific reasoning. artificial intelligence; biotechnology; life sciences; lab software; ai for science scientific ai; knowledge systems; lab data integration; research software artificial intelligence; biotechnology; life sciences; lab software; ai for science; scientific ai; knowledge systems; lab data integration; research software; fragmented laboratory knowledge; biology r&d workflows; scientific reasoning; research productivity; founder / builder; ai builder; health / bio builder; research / knowledge builder; cortex; yale college; yale builder; yale founder; yale 2026; yale hacker house; san francisco founder ecosystem; prior yes chat seed; $1.1m",
-      "featured": false
-    },
-    {
       "slug": "ron-pile",
       "name": "Ron Pile",
       "classYear": "Yale College ’27",
@@ -2212,30 +2324,6 @@
       "featured": false
     },
     {
-      "slug": "seth-goldin",
-      "name": "Seth Goldin",
-      "classYear": "Yale College ’26",
-      "school": "Yale College",
-      "nowLine": "Student builder; former founding CTO at Context; co-founder of Hillhouse & LAUNCH, Yale / Hillhouse Fellowship / LAUNCH",
-      "venture": "Context / Hillhouse / Launch",
-      "bio": "Seth Goldin is a Yale College ’26 Former founding CTO; co-founder / ecosystem builder associated with Hillhouse / Launch / prior Context. AI office-suite and founder-community work; public fellowship bio says Goldin was founding CTO at Context and co-founded Launch and Hillhouse Fellowship.",
-      "sectors": [
-        "Artificial Intelligence",
-        "Productivity",
-        "Entrepreneurship Infrastructure",
-        "Community Building"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "Slavin profile identifies Goldin as former founding CTO at venture-backed Context and a co-founder of Launch and Hillhouse Fellowship.",
-        "source": "https://goldin.io/work"
-      },
-      "companyUrl": "https://goldin.io/",
-      "linkedinUrl": "https://www.linkedin.com/in/sethgoldin",
-      "searchText": "seth goldin student builder; former founding cto at context; co-founder of hillhouse & launch yale / hillhouse fellowship / launch context / hillhouse / launch yale college ’26 yale college seth goldin is a yale college ’26 former founding cto; co-founder / ecosystem builder associated with hillhouse / launch / prior context. ai office-suite and founder-community work; public fellowship bio says goldin was founding cto at context and co-founded launch and hillhouse fellowship. artificial intelligence; productivity; entrepreneurship infrastructure; community building ai office software; product engineering; founder programs; startup community seth goldin; yale 2026; computer science; global affairs; context; friday; compendium; catalyst; hillhouse fellowship; launch; yale entrepreneurial society; yes president; ai; ai agents; productivity; software engineering; entrepreneurship infrastructure; semiconductors; ai policy; emerging technology",
-      "featured": false
-    },
-    {
       "slug": "shaunak-pandey",
       "name": "Shaunak Pandey",
       "classYear": "Yale College ’28",
@@ -2300,30 +2388,6 @@
         "source": "https://environment.yale.edu/spotlight/bekenstein-climate-leader-shubh-jain-mem"
       },
       "searchText": "shubh jain co-founder windloop windloop yale school of the environment ’25 yale school of the environment shubh jain is a yale school of the environment ’25 co-founder associated with windloop. recycling system for end-of-life wind-turbine blades, including on-site shredding and downstream material recovery. climate technology; renewable energy; recycling; circular economy; advanced materials composite recycling; materials recovery; wind-energy infrastructure; industrial processing climate technology; renewable energy; recycling; circular economy; advanced materials; composite recycling; materials recovery; wind-energy infrastructure; industrial processing; wind-blade landfill waste; renewable-energy circularity; composite material recovery; founder / builder; climate builder; windloop; yale school of the environment; yale builder; yale founder; yale 2025; prior yes chat seed",
-      "featured": false
-    },
-    {
-      "slug": "sina-dehghani",
-      "name": "Sina Dehghani",
-      "classYear": "Yale College ’29",
-      "school": "Yale College",
-      "nowLine": "Maverick Capital; Vice President, Yale Undergraduate Hedge Fund Association",
-      "venture": "o11 (YC W26)",
-      "bio": "Works around AI and financial-services infrastructure. o11 is a YC W26 company building an AI-native data warehouse and automation layer for financial firms, connecting CRM, email, files and market data.",
-      "sectors": [
-        "Artificial Intelligence",
-        "FinTech",
-        "Capital Markets",
-        "Enterprise Software",
-        "Investing"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "o11 — YC W26",
-        "source": "Reported role: Founding Growth"
-      },
-      "searchText": "sina dehghani maverick capital; vice president, yale undergraduate hedge fund association o11 (yc w26) yale college ’29 yale college works around ai and financial-services infrastructure. o11 is a yc w26 company building an ai-native data warehouse and automation layer for financial firms, connecting crm, email, files and market data. artificial intelligence fintech capital markets enterprise software investing ai agents; financial data infrastructure; data warehouses; microsoft 365 automation; enterprise workflows; hedge funds; investing; growth",
-      "reviewNote": "YC does not list him as an o11 founder; his role is reported as Founding Growth. B+ confidence on the current title.",
       "featured": false
     },
     {
@@ -2417,27 +2481,6 @@
       "featured": false
     },
     {
-      "slug": "teo-dimov",
-      "name": "Teo Dimov",
-      "classYear": "Yale College ’26",
-      "school": "Yale College",
-      "nowLine": "Co-founder / ecosystem builder, Launch / prior startup",
-      "venture": "Launch / prior venture-backed wearables",
-      "bio": "Teo Dimov is a Yale College ’26 Co-founder / ecosystem builder associated with Launch / prior startup. Entrepreneurship community-building plus prior venture-backed wearable technology; public fellowship bio says Dimov co-founded Launch and previously co-founded a venture-backed wearables company in Berlin.",
-      "sectors": [
-        "Entrepreneurship Infrastructure",
-        "Wearables",
-        "Community Building"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "Slavin profile identifies Dimov as a former YES president, Launch co-founder and prior wearables co-founder.",
-        "source": "https://www.slavinfoundation.org/fellows.html"
-      },
-      "searchText": "teo dimov co-founder / ecosystem builder launch / prior startup launch / prior venture-backed wearables yale college ’26 yale college teo dimov is a yale college ’26 co-founder / ecosystem builder associated with launch / prior startup. entrepreneurship community-building plus prior venture-backed wearable technology; public fellowship bio says dimov co-founded launch and previously co-founded a venture-backed wearables company in berlin. entrepreneurship infrastructure; wearables; community building startup community design; wearable technology; founder programs entrepreneurship infrastructure; wearables; community building; startup community design; wearable technology; founder programs; founder formation; entrepreneurship community; wearable products; founder / builder; hardware / systems builder; launch / prior venture-backed wearables; yale college; yale builder; yale founder; yale 2026",
-      "featured": false
-    },
-    {
       "slug": "vini-amit-rupchandani",
       "name": "Vini Amit Rupchandani",
       "classYear": "Yale School of Management ’28",
@@ -2458,29 +2501,6 @@
       },
       "companyUrl": "https://playirada.com",
       "searchText": "vini amit rupchandani founder / venture lead (tsai city) irada irada yale school of management ’28 yale school of management vini amit rupchandani is a yale school of management ’28 founder / venture lead (tsai city) associated with irada. card game designed to help people form meaningful friendships and discover purpose through structured conversation. consumer; games; social connection; wellness game design; conversation design; consumer products consumer; games; social connection; wellness; game design; conversation design; consumer products; loneliness; friendship formation; purpose discovery; founder / builder; irada; yale school of management; yale builder; yale founder; yale 2028",
-      "featured": false
-    },
-    {
-      "slug": "yavin-fickel",
-      "name": "Yavin Fickel",
-      "classYear": "Yale College ’29",
-      "school": "Yale College",
-      "nowLine": "Researcher, van Dijk Lab at Yale; Co-Director of LAUNCH, Yale Entrepreneurial Society",
-      "venture": "Animalia Labs",
-      "bio": "Animalia Labs is an open dataset and pipeline for estimating economic priors across species; ScholarLedger is a personal archive for essays and research. Also works in Yale’s van Dijk Lab.",
-      "sectors": [
-        "AI for Science",
-        "Computational Biology",
-        "Open Data",
-        "Research Infrastructure",
-        "Entrepreneurship Infrastructure"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "Animalia Labs",
-        "source": "Open dataset and pipeline across species"
-      },
-      "searchText": "yavin fickel researcher, van dijk lab at yale; co-director of launch, yale entrepreneurial society animalia labs yale college ’29 yale college animalia labs is an open dataset and pipeline for estimating economic priors across species; scholarledger is a personal archive for essays and research. also works in yale’s van dijk lab. ai for science computational biology open data research infrastructure entrepreneurship infrastructure scientific data pipelines; open datasets; software engineering; computational research; biology; scholarledger; launch; computer science; economics",
       "featured": false
     },
     {
@@ -2590,29 +2610,6 @@
       },
       "linkedinUrl": "https://www.linkedin.com/in/zaid-fattah-b44a42204",
       "searchText": "zaid fattah founder & ceo redwood redwood yale college ’25 yale college zaid fattah is a yale college ’25 founder & ceo associated with redwood. fintech ai startup serving banks. financial technology; artificial intelligence; b2b software; banking ai for financial services; banking software; enterprise ai financial technology; artificial intelligence; b2b software; banking; ai for financial services; banking software; enterprise ai; banking workflows; financial-services automation; ai adoption in banks; founder / builder; ai builder; fintech builder; redwood; yale college; yale builder; yale founder; yale 2025; prior yes chat seed; pre-seed",
-      "featured": false
-    },
-    {
-      "slug": "zain-anwar",
-      "name": "Zain Anwar",
-      "classYear": "Yale College ’29",
-      "school": "Yale College",
-      "nowLine": "Founder & Executive Director, Intersect STEM; Maverick Capital",
-      "venture": "Intersect STEM",
-      "bio": "Co-founded Intersect STEM, a 501(c)(3) focused on STEM access for international, refugee and displaced students, running hands-on science workshops.",
-      "sectors": [
-        "STEM Education",
-        "Social Impact",
-        "Healthcare",
-        "Artificial Intelligence",
-        "Investing"
-      ],
-      "proof": {
-        "kind": "headline",
-        "value": "250+ refugee and international students reached",
-        "source": "Intersect STEM"
-      },
-      "searchText": "zain anwar founder & executive director, intersect stem; maverick capital intersect stem yale college ’29 yale college co-founded intersect stem, a 501(c)(3) focused on stem access for international, refugee and displaced students, running hands-on science workshops. stem education social impact healthcare artificial intelligence investing nonprofit building; program development; stem education; community partnerships; investing; research; refugee education; immigrant education",
       "featured": false
     },
     {
