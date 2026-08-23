@@ -206,6 +206,9 @@ Before treating a deployment as production-ready:
 
 - The rate limiter is an in-memory, per-server-instance fixed window. It reduces naive
   floods but is not a distributed abuse-control system.
+- A search shows only its strong matches (at most 24, floor relative to the top score,
+  minimum of three). Browsing still shows all 116. The constants live in
+  `lib/catalog/search.ts`.
 - Catalog search runs entirely in the visitor's browser. Vectors are baked into
   `content/catalog/embeddings.json` by `npm run embed`; the query is embedded
   client-side with `all-MiniLM-L6-v2`, so nothing about a search leaves the machine.

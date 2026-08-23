@@ -1,11 +1,17 @@
 'use client'
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import gsap from 'gsap'
 
 import type { Alumnus } from '@/lib/alumni'
 import { embedQuery, getEmbedder } from '@/lib/catalog/embedder'
-import { rankBySimilarity, rankLexical, type Ranked } from '@/lib/catalog/search'
+import {
+  MAX_RESULTS,
+  rankBySimilarity,
+  rankLexical,
+  topMatches,
+  type Ranked,
+} from '@/lib/catalog/search'
 
 import { ResultsGrid } from './results-grid'
 import { SearchField } from './search-field'
@@ -13,22 +19,35 @@ import { SearchingOverlay } from './searching-overlay'
 import ThreeStage, { type ThreeStageHandle } from './three-stage'
 import styles from './catalog.module.css'
 
-type Phase = 'hero' | 'searching' | 'results'
+type Phase = 'browsing' | 'searching'
 
 /**
- * How long the gather animation is allowed to hold the stage before results
- * appear. The scaffold used a random 2–5s that could not be skipped; that is a
- * long time to make someone wait for a flourish, and randomness means the same
- * search feels broken on one run and fine on the next. A single deterministic
- * beat is enough to read as intentional, and reduced motion removes it entirely.
+ * How long the gather animation holds the stage before results appear. The
+ * scaffold used a random 2–5s that could not be skipped; that is a long time to
+ * wait for a flourish, and randomness makes the same search feel broken on one
+ * run and fine on the next. One deterministic beat reads as intentional, and
+ * reduced motion removes it.
  */
 const GATHER_BEAT_MS = 1500
 
-const RESTORE_KEY = 'yes:catalog:results'
+/**
+ * How long after the burst starts the grid appears. Matches the point in the
+ * stage's burst where the field has cleared.
+ *
+ * The reveal is scheduled HERE rather than fired from the animation's own
+ * timeline. Routing it through the timeline made showing results conditional on
+ * the animation running — and when that callback was dropped, the page sat on
+ * the searching overlay forever with the answer already computed. The stage
+ * animates; the app decides when to show results.
+ */
+const REVEAL_AFTER_BURST_MS = 620
+
+// Versioned: a session stored before search gained a relevance cutoff holds a
+// full 116-slug list, which would come back as "116 matches" for a query that
+// should now return a handful.
+const RESTORE_KEY = 'yes:catalog:results:v2'
 const SCROLL_KEY = 'yes:catalog:scroll'
 
-// useLayoutEffect on the client so the hero never flashes for a frame when
-// returning from a dossier; the plain effect keeps the server render quiet.
 const useClientLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect
 
 interface CatalogExperienceProps {
@@ -39,30 +58,40 @@ interface CatalogExperienceProps {
 /**
  * The catalog. Ported from the yes-catalog scaffold at the owners' direction.
  *
- * Three phases over one fixed particle field: a hero that asks, a gather while
- * the query is embedded, and the grid. Search runs entirely in the browser —
- * see lib/catalog/embedder.ts for why — so there is no API key, no server route
- * and nothing recorded about what anyone searched for.
+ * THE WALL IS THE LANDING STATE. The scaffold opened on a hero and revealed the
+ * grid only after a search, which meant arriving at a catalog and being shown
+ * no catalog. Here every builder is in the server-rendered HTML on first paint,
+ * so the page is complete before any JavaScript runs; search then narrows it.
+ *
+ * Search runs entirely in the browser — see lib/catalog/embedder.ts — so there
+ * is no API key, no server route, and no record of what anyone searched for.
  */
 export function CatalogExperience({ people, vectors }: CatalogExperienceProps) {
-  const [phase, setPhase] = useState<Phase>('hero')
+  const [phase, setPhase] = useState<Phase>('browsing')
   const [query, setQuery] = useState('')
-  const [results, setResults] = useState<readonly Ranked[] | null>(null)
+  const [matches, setMatches] = useState<readonly Ranked[] | null>(null)
 
   const stage = useRef<ThreeStageHandle>(null)
-  const resultsRef = useRef<HTMLDivElement>(null)
   const seq = useRef(0)
   const restored = useRef(false)
 
-  const browseOrder = useCallback(
+  /** Everyone, in the owners' order. The resting state of the page. */
+  const everyone = useMemo(
     (): readonly Ranked[] => people.map((person) => ({ person, score: 0 })),
     [people],
   )
 
-  // Warm the model in the background so the first search does not pay for the
-  // download. Failure is fine — search falls back to lexical ranking.
-  useEffect(() => {
-    getEmbedder().catch(() => {})
+  const shown = matches ?? everyone
+  const searching = query.length > 0 && matches !== null
+
+  // The model is NOT warmed on mount. It is ~22MB, and downloading it for
+  // every visitor who only came to look at the wall is exactly the kind of cost
+  // that makes a page feel slow for no benefit. First focus of the field is the
+  // earliest honest signal that someone intends to search.
+  const warmModel = useCallback(() => {
+    getEmbedder().catch(() => {
+      // Offline or CDN blocked — search falls back to lexical ranking.
+    })
   }, [])
 
   // Put the grid back when returning from a dossier.
@@ -71,6 +100,7 @@ export function CatalogExperience({ people, vectors }: CatalogExperienceProps) {
       const saved = sessionStorage.getItem(RESTORE_KEY)
       if (!saved) return
       const { q, slugs } = JSON.parse(saved) as { q: string; slugs: string[] }
+      if (!q) return
       const bySlug = new Map(people.map((person) => [person.slug, person]))
       const list = slugs
         .map((slug) => bySlug.get(slug))
@@ -79,8 +109,7 @@ export function CatalogExperience({ people, vectors }: CatalogExperienceProps) {
       if (list.length === 0) return
       restored.current = true
       setQuery(q)
-      setResults(list)
-      setPhase('results')
+      setMatches(list)
       requestAnimationFrame(() => stage.current?.setDim(true))
     } catch {
       // Fresh session, or storage unavailable.
@@ -88,14 +117,13 @@ export function CatalogExperience({ people, vectors }: CatalogExperienceProps) {
   }, [people])
 
   useEffect(() => {
-    if (phase !== 'results' || !resultsRef.current) return
+    if (phase !== 'browsing') return
     if (restored.current) {
       const y = Number(sessionStorage.getItem(SCROLL_KEY) ?? 0)
       requestAnimationFrame(() => window.scrollTo(0, y))
       return
     }
-    window.scrollTo(0, 0)
-  }, [phase, query])
+  }, [phase])
 
   const remember = useCallback((q: string, list: readonly Ranked[]) => {
     try {
@@ -108,28 +136,19 @@ export function CatalogExperience({ people, vectors }: CatalogExperienceProps) {
     }
   }, [])
 
-  const backToHero = useCallback(() => {
+  const showEveryone = useCallback(() => {
     seq.current += 1
-    setPhase('hero')
-    setResults(null)
+    restored.current = false
     setQuery('')
+    setMatches(null)
+    setPhase('browsing')
     try {
       sessionStorage.removeItem(RESTORE_KEY)
     } catch {
       // Non-fatal.
     }
-    stage.current?.reset()
+    window.scrollTo(0, 0)
   }, [])
-
-  const browseAll = useCallback(() => {
-    const list = browseOrder()
-    restored.current = false
-    setQuery('')
-    setResults(list)
-    setPhase('results')
-    remember('', list)
-    requestAnimationFrame(() => stage.current?.setDim(true))
-  }, [browseOrder, remember])
 
   const runSearch = useCallback(
     (q: string) => {
@@ -153,7 +172,7 @@ export function CatalogExperience({ people, vectors }: CatalogExperienceProps) {
 
       const settle = () => {
         if (!beatDone || !ranked || seq.current !== mine) return
-        const final = ranked
+        const final = topMatches(ranked)
         if (!reduce) {
           gsap.to('[data-search-overlay]', {
             opacity: 0,
@@ -162,12 +181,17 @@ export function CatalogExperience({ people, vectors }: CatalogExperienceProps) {
             ease: 'power2.in',
           })
         }
-        stage.current?.resolve(() => {
+        const reveal = () => {
           if (seq.current !== mine) return
-          setResults(final)
-          setPhase('results')
+          setMatches(final)
+          setPhase('browsing')
           remember(q, final)
-        })
+          window.scrollTo(0, 0)
+        }
+
+        // Play the burst for its own sake; the callback is deliberately empty.
+        stage.current?.resolve(() => {})
+        window.setTimeout(reveal, reduce ? 0 : REVEAL_AFTER_BURST_MS)
       }
 
       if (!reduce) {
@@ -183,7 +207,7 @@ export function CatalogExperience({ people, vectors }: CatalogExperienceProps) {
           settle()
         })
         .catch(() => {
-          // Offline, or the model CDN is unreachable. Still ranks everyone.
+          // Offline, or the model CDN is unreachable.
           ranked = rankLexical(q, people)
           settle()
         })
@@ -198,46 +222,50 @@ export function CatalogExperience({ people, vectors }: CatalogExperienceProps) {
       </div>
       <div className={`${styles.vignetteLayer} cat-vignette`} />
 
-      {phase === 'hero' ? (
-        <div className={styles.layer}>
-          <div className={styles.hero}>
-            <h1 className={styles.heroTitle}>Yale builders</h1>
-            <p className={styles.heroLede}>
-              {people.length} people who chose to build. Ask for what you are
-              looking for — a problem, a sector, a name.
-            </p>
-            <SearchField onSubmit={runSearch} autoFocus />
-            <button type="button" className={styles.submit} onClick={browseAll}>
-              or see all {people.length}
-            </button>
-          </div>
-        </div>
-      ) : null}
-
       {phase === 'searching' ? (
         <div className={styles.layer}>
           <SearchingOverlay query={query} />
         </div>
-      ) : null}
-
-      {phase === 'results' && results ? (
-        <div ref={resultsRef} className={`${styles.layer} ${styles.resultsShell}`}>
+      ) : (
+        <div className={`${styles.layer} ${styles.resultsShell}`}>
           <header className={styles.resultsHeader}>
-            <button type="button" className={styles.back} onClick={backToHero}>
-              <span aria-hidden="true">&larr;</span> Back
-            </button>
-            <SearchField key={query} variant="top" initial={query} onSubmit={runSearch} />
+            <SearchField
+              key={query}
+              variant="top"
+              initial={query}
+              onSubmit={runSearch}
+              onFirstFocus={warmModel}
+            />
           </header>
 
           <div className={styles.resultsBody}>
+            <p className={styles.summary}>
+              {searching ? (
+                <>
+                  <span>
+                    {shown.length === MAX_RESULTS ? 'Closest ' : ''}
+                    {shown.length} {shown.length === 1 ? 'match' : 'matches'} for
+                    &ldquo;{query}&rdquo;
+                  </span>{' '}
+                  <button type="button" className={styles.reset} onClick={showEveryone}>
+                    Show all {people.length}
+                  </button>
+                </>
+              ) : (
+                <span>
+                  {people.length} builders. Search for a problem, a sector, or a name.
+                </span>
+              )}
+            </p>
+
             <ResultsGrid
-              results={results}
+              results={shown}
               animateKey={query}
-              animate={!restored.current}
+              animate={searching && !restored.current}
             />
           </div>
         </div>
-      ) : null}
+      )}
     </div>
   )
 }

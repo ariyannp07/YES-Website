@@ -3,11 +3,13 @@ import type { Alumnus } from '@/lib/alumni'
 /**
  * Ranking for the catalog. Ported from the yes-catalog scaffold.
  *
- * The governing rule, kept from the original: ranking NEVER filters and never
- * returns an empty list. A wall of 116 builders that goes blank because someone
- * typed an unlucky word reads as "nobody here", which is both false and the
- * opposite of what the page is for. Everything is always ranked; the best
- * matches simply rise.
+ * The scaffold ranked all 116 and showed all 116, on the principle that a wall
+ * which goes blank reads as "nobody here". In practice that made every search
+ * look identical below the fold: the tail is just the directory in a shuffled
+ * order, and scrolling it implies a relevance that isn't there.
+ *
+ * So searching now CUTS — see `topMatches`. Browsing still shows everyone,
+ * which is the honest way to keep the full wall reachable.
  */
 
 /** Vectors are L2-normalized at bake time, so cosine is just the dot product. */
@@ -75,4 +77,42 @@ export const filterLocally = (
     const hay = person.searchText ?? person.name.toLowerCase()
     return terms.every((term) => hay.includes(term))
   })
+}
+
+
+/** Never show more than this many matches for a search. */
+export const MAX_RESULTS = 24
+
+/**
+ * A match must score at least this fraction of the best match to be shown.
+ * Relative rather than absolute because cosine scores for this model sit in a
+ * narrow band — a good match is ~0.3, not ~0.9 — so a fixed cutoff would either
+ * pass everything or nothing depending on the query.
+ */
+const RELATIVE_FLOOR = 0.55
+
+/** Below this, a result is noise regardless of how weak the field is. */
+const ABSOLUTE_FLOOR = 0.1
+
+/**
+ * Always show at least this many, so a narrow query returns the closest things
+ * rather than an empty page — the one part of the scaffold's rule worth keeping.
+ */
+const MIN_RESULTS = 3
+
+/**
+ * Cut a ranked list down to the results actually worth showing.
+ *
+ * Takes the ranking as given; the ordering decision belongs upstream.
+ */
+export const topMatches = (ranked: readonly Ranked[]): readonly Ranked[] => {
+  if (ranked.length === 0) return ranked
+
+  const best = ranked[0].score
+  const floor = Math.max(best * RELATIVE_FLOOR, ABSOLUTE_FLOOR)
+
+  const strong = ranked.filter((result) => result.score >= floor)
+  const kept = strong.length >= MIN_RESULTS ? strong : ranked.slice(0, MIN_RESULTS)
+
+  return kept.slice(0, MAX_RESULTS)
 }

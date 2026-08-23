@@ -9,6 +9,8 @@ interface SearchFieldProps {
   readonly variant?: 'hero' | 'top'
   readonly onSubmit: (query: string) => void
   readonly autoFocus?: boolean
+  /** Fired on first focus — the caller uses it to warm the embedding model. */
+  readonly onFirstFocus?: () => void
 }
 
 /**
@@ -21,9 +23,11 @@ export function SearchField({
   variant = 'hero',
   onSubmit,
   autoFocus = false,
+  onFirstFocus,
 }: SearchFieldProps) {
   const [value, setValue] = useState(initial)
   const inputRef = useRef<HTMLInputElement>(null)
+  const warmed = useRef(false)
 
   useEffect(() => {
     // preventScroll: focusing the field would otherwise scroll it into view,
@@ -46,6 +50,11 @@ export function SearchField({
         className={styles.input}
         value={value}
         onChange={(event) => setValue(event.target.value)}
+        onFocus={() => {
+          if (warmed.current) return
+          warmed.current = true
+          onFirstFocus?.()
+        }}
         placeholder="What are you looking for?"
         aria-label="Search the catalog of Yale builders"
         autoComplete="off"

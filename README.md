@@ -100,9 +100,14 @@ credentials never need to reach the browser.
   per-search cost and a privacy surface at once, in exchange for a lazily-fetched model.
   `lib/catalog/embed-text.ts` is shared by the bake and the browser, because a drift
   between the two turns cosine scores into noise without failing anything.
-- **Ranking never filters.** Search reorders all 116 builders and never returns an empty
-  wall — a catalog that goes blank on an unlucky word reads as "nobody here", which is
-  both false and the opposite of the page's purpose.
+- **The wall is the landing state.** All 116 builders are in the server-rendered HTML on
+  first paint, so the catalog is complete before any JavaScript runs. The embedding model
+  is fetched only when someone focuses the search field — a visitor who came to browse
+  never pays for it.
+- **Search cuts, browsing does not.** A search returns its strong matches only, capped at
+  24, using a floor relative to the best score. Showing all 116 ranked made every search
+  look identical below the fold and implied a relevance the tail did not have. A floor of
+  three results keeps a narrow query from returning nothing.
 - **Build-time image treatment.** Portraits from either source are cropped and converted
   to color and duotone WebP files before the site build, avoiding expiring attachment
   URLs and browser-side filters.

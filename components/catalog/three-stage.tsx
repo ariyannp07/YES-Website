@@ -355,7 +355,13 @@ const ThreeStage = forwardRef<ThreeStageHandle>(function ThreeStage(_props, ref)
 
     resolve(onReveal: () => void) {
       const s = S.current;
-      if (!s) return;
+      // The reveal must never depend on the animation being available. If WebGL
+      // failed, or the effect has not run yet, returning here would drop the
+      // callback and leave the page on the searching overlay forever.
+      if (!s) {
+        onReveal();
+        return;
+      }
       if (s.reduce) {
         // No burst. Hand the results over at once.
         s.searching = false;

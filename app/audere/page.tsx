@@ -3,6 +3,7 @@ import Link from 'next/link'
 
 import { BlueprintStage } from '@/components/blueprint/blueprint-stage'
 import styles from '@/components/blueprint/blueprint.module.css'
+import { SiteNav } from '@/components/site-nav'
 import { SIGMA_PATH } from '@/lib/yes-geometry'
 
 export const metadata: Metadata = {
@@ -21,6 +22,12 @@ export const metadata: Metadata = {
 export default function AuderePage() {
   return (
     <>
+      {/* Floated over the wall rather than above it: the page stays full-bleed,
+          but every other section is one click away. */}
+      <div className={styles.overlayNav}>
+        <SiteNav />
+      </div>
+
       <BlueprintStage
         title="Audere"
         subtitle="A community of our very best."
