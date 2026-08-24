@@ -130,8 +130,22 @@ const response = await fetch(
 )
 
 if (!response.ok) {
-  console.error(`build:portraits FAILED to read Airtable: ${response.status} ${response.statusText}`)
-  process.exit(1)
+  // NOT fatal, and this is load-bearing: since generation was chained into
+  // `npm run build`, exiting non-zero here took the whole deployment down.
+  // Production failed for ten hours on a 422 — the consent-gated view does not
+  // exist yet — even though the curated portraits above had already been
+  // written successfully.
+  //
+  // The feed is optional by design: the site is documented to build and render
+  // with no credentials at all. A view that has not been created is a known
+  // setup state, not a build error. Anyone who consented is simply not on the
+  // wall until the view exists, which is the safe direction to fail.
+  console.warn(
+    `build:portraits — could not read the consented feed (${response.status} ` +
+      `${response.statusText}). Curated portraits above were still written. ` +
+      `If this is 422/404, the "${view}" view does not exist yet — see README.`,
+  )
+  process.exit(0)
 }
 
 const { records = [] } = await response.json()
