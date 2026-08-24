@@ -37,6 +37,7 @@ interface CityViewProps {
 
 export function CityView({ progress, open }: CityViewProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const wrapRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -59,6 +60,15 @@ export function CityView({ progress, open }: CityViewProps) {
       const p = progress.current ?? 0
       const w = canvas.width
       const h = canvas.height
+
+      // Opacity is driven by the SAME clock as the dive, not by a CSS
+      // transition on the click. Tied to the click it arrived within 900ms
+      // while the globe was still 2.1s from gone, so the middle of the descent
+      // showed both at half strength and read as a jumble rather than a fall.
+      if (wrapRef.current) {
+        const rise = Math.min(1, Math.max(0, (p - 0.52) / 0.34))
+        wrapRef.current.style.opacity = String(rise * rise * (3 - 2 * rise))
+      }
 
       ctx.clearRect(0, 0, w, h)
       if (p <= 0.001) {
@@ -154,7 +164,12 @@ export function CityView({ progress, open }: CityViewProps) {
   }, [progress])
 
   return (
-    <div className={styles.city} data-open={open ? 'true' : 'false'} aria-hidden={!open}>
+    <div
+      ref={wrapRef}
+      className={styles.city}
+      data-open={open ? 'true' : 'false'}
+      aria-hidden={!open}
+    >
       <canvas ref={canvasRef} className={styles.cityCanvas} />
       <div className={styles.cityLabel}>
         <p className={styles.cityAddress}>52 Trumbull St</p>

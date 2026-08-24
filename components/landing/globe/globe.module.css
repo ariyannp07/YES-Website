@@ -249,16 +249,16 @@
   pointer-events: none;
 }
 
+/* Opacity is set per-frame by CityView from the descent clock — deliberately
+   no transition here, or the two would fight each other. */
 .city {
   position: absolute;
   inset: 0;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 900ms ease;
 }
 
 .city[data-open='true'] {
-  opacity: 1;
   pointer-events: auto;
 }
 

@@ -941,8 +941,9 @@ export default function GlobeCanvas({
         if (diveMark) {
           globe.quaternion.slerp(faceTarget, Math.min(1, 0.06 + easeDive * 0.12))
         }
-        // Hand over to the street: the globe is gone before the plate lands.
-        host.style.opacity = String(Math.max(0, 1 - Math.max(0, (p - 0.42) / 0.34)))
+        // Hand over cleanly: the globe is fully gone by 0.58, and the street
+        // only begins to rise at 0.52, so the two barely overlap.
+        host.style.opacity = String(Math.max(0, 1 - Math.max(0, (p - 0.26) / 0.32)))
       }
       divePrev.current = p
 
