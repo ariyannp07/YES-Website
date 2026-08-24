@@ -1,38 +1,59 @@
 import Link from 'next/link'
 
-import SignalCanvas from '@/components/landing/signal/signal-canvas'
-import styles from '@/components/landing/signal/signal.module.css'
+import GlobeCanvas from '@/components/landing/globe/globe-canvas'
+import { TypedLine } from '@/components/landing/globe/typed-line'
+import styles from '@/components/landing/globe/globe.module.css'
 import { Timestamp } from '@/components/timestamp'
 import { LANDING_LINE, LANDING_LINKS, SITE_NAME } from '@/lib/site'
+import { TIMING, typingDuration } from '@/lib/landing/timing'
 
 /**
  * The front door.
  *
- * A hidden network, scanned with the cursor. The page opens on a single pulsing
- * point; moving the mouse exposes nodes and edges around it, and over ten
- * seconds an ambient floor rises so the field densifies on its own. Roughly half
- * the nodes are sampled from inside the YES mark's polygons and carry a higher
- * floor, so the shape surfaces as a DENSITY — the viewer half-recognises it
- * without a logo ever appearing. Disciplines occasionally collide and propose
- * something neither of them would have alone.
+ * Darkness, then a network Earth assembling itself region by region, then a
+ * white ignition from New Haven, and only then the words — the organisation,
+ * the thesis, the way in. The argument is made by the picture before it is made
+ * in type: a global network whose origin point is here.
  *
- * There is no scroll: the whole page is the viewport (build spec §3). The
- * timestamp keeps its place as the site-wide signature.
+ * There is no scroll; the page is the viewport (build spec §3). The globe can
+ * be spun on any axis, so the last state is the visitor's, not ours.
+ *
+ * All pacing lives in lib/landing/timing.ts. The copy is server-rendered in
+ * full and merely revealed by the client, so the page says what it says with
+ * JavaScript off and reads correctly to a screen reader from the first frame.
  */
+
+const TITLE_DONE = TIMING.title.at + typingDuration(SITE_NAME, TIMING.title.cps)
+const MOTTO_AT = Math.max(TIMING.motto.at, TITLE_DONE + 0.25)
+
 export default function Landing() {
   return (
-    <>
-      <SignalCanvas />
+    <div data-scope="landing" className={styles.stage}>
+      <GlobeCanvas />
 
-      {/* The name is already in the centre; the masthead keeps only the clock. */}
       <header className={`${styles.masthead} t-micro`}>
         <Timestamp />
       </header>
 
       <div className={styles.copy}>
-        <p className={`${styles.name} t-micro`}>{SITE_NAME}</p>
-        <p className={`${styles.tagline} t-micro`}>{LANDING_LINE}</p>
-        <p className={`${styles.enter} t-micro`}>
+        <h1
+          className={`${styles.title} ${styles.beat}`}
+          style={{ animationDelay: `${TIMING.title.at}s` }}
+        >
+          <TypedLine text={SITE_NAME} at={TIMING.title.at} cps={TIMING.title.cps} />
+        </h1>
+
+        <p
+          className={`${styles.motto} ${styles.beat}`}
+          style={{ animationDelay: `${MOTTO_AT}s` }}
+        >
+          <TypedLine text={LANDING_LINE} at={MOTTO_AT} cps={TIMING.motto.cps} />
+        </p>
+
+        <p
+          className={`${styles.enter} ${styles.beat} t-micro`}
+          style={{ animationDelay: `${TIMING.link.at}s` }}
+        >
           {LANDING_LINKS.map((link) => (
             <Link key={link.href} href={link.href}>
               {link.label}
@@ -41,8 +62,7 @@ export default function Landing() {
         </p>
       </div>
 
-      {/* The tagline already carries the argument; this only carries the year. */}
       <p className={`${styles.footnote} t-micro`}>Since 1999</p>
-    </>
+    </div>
   )
 }

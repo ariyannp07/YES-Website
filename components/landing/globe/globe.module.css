@@ -1,0 +1,180 @@
+/* The front door. Every font-size references a token declared in
+   app/globals.css under the landing sentinel — the type-scale rail allows
+   sizes in that file only. */
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 120% 90% at 50% 42%, #071426 0%, #03080f 55%, #01030699 100%),
+    #010306;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  /* The globe is grabbable; the copy below sits above it and is not. */
+  cursor: grab;
+  touch-action: none;
+}
+
+.canvas:active {
+  cursor: grabbing;
+}
+
+.masthead {
+  position: absolute;
+  top: var(--pad);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  color: var(--landing-dim);
+  pointer-events: none;
+}
+
+/* The copy sits low so the globe owns the optical centre. */
+.copy {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(2.5rem, 9vh, 5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.15rem;
+  padding: 0 var(--pad);
+  text-align: center;
+  pointer-events: none;
+}
+
+.title,
+.motto,
+.enter {
+  /* Each line is a typed span; the ghost copy underneath holds the width. */
+  position: relative;
+  display: inline-block;
+}
+
+/* Descendant, not child: TypedLine wraps its two spans in an element of its
+   own, so a child combinator matches nothing and BOTH copies render — the
+   typed line and the ghost that only exists to hold the width.
+
+   text-align: left is the point of this rule. The ghost is centred and holds
+   the finished line's width; the typed copy is laid over it, anchored to that
+   line's LEFT edge. Without it the growing text stays centre-aligned and the
+   line appears to expand outward from the middle in both directions, which is
+   not typing — it is a reveal. */
+.title span[aria-hidden],
+.motto span[aria-hidden] {
+  position: absolute;
+  inset: 0;
+  display: block;
+  text-align: left;
+  white-space: pre;
+}
+
+.title span[data-ghost],
+.motto span[data-ghost] {
+  visibility: hidden;
+}
+
+.title {
+  font-family: var(--font-mono);
+  font-size: var(--text-landing-title);
+  letter-spacing: 0.42em;
+  /* The tracking is applied to the right of each glyph, which pushes the line
+     off-centre by one space; half of it back keeps the optical centre true. */
+  text-indent: 0.42em;
+  text-transform: uppercase;
+  color: var(--landing-fg);
+  line-height: 1.5;
+}
+
+.motto {
+  font-family: var(--font-mono);
+  font-size: var(--text-landing-motto);
+  letter-spacing: 0.2em;
+  text-indent: 0.2em;
+  text-transform: uppercase;
+  color: var(--landing-mid);
+  line-height: 1.6;
+}
+
+.enter {
+  margin-top: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-landing-link);
+  letter-spacing: 0.28em;
+  text-indent: 0.28em;
+  text-transform: uppercase;
+  pointer-events: auto;
+}
+
+.enter a {
+  color: var(--landing-accent);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--landing-accent) 35%, transparent);
+  padding-bottom: 0.35em;
+  transition: color 240ms ease, border-color 240ms ease;
+}
+
+.enter a:hover,
+.enter a:focus-visible {
+  color: #ffffff;
+  border-color: color-mix(in srgb, #ffffff 70%, transparent);
+}
+
+/* The caret: a thin rule, not a blinking block. */
+.copy i[data-caret] {
+  display: inline-block;
+  width: 0.06em;
+  height: 1em;
+  margin-left: 0.12em;
+  vertical-align: -0.12em;
+  background: currentColor;
+  opacity: 0.75;
+  animation: landing-caret 1s steps(2, end) infinite;
+}
+
+@keyframes landing-caret {
+  50% { opacity: 0; }
+}
+
+.footnote {
+  position: absolute;
+  bottom: var(--pad);
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: var(--landing-dim);
+  pointer-events: none;
+}
+
+/* Everything the reveal animates fades in; these are the wrappers, not the
+   typed characters, so a line can be present but still empty. */
+.beat {
+  opacity: 0;
+  animation: landing-beat 900ms ease forwards;
+}
+
+@keyframes landing-beat {
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .beat {
+    animation: none;
+    opacity: 1;
+  }
+
+  .copy i[data-caret] {
+    animation: none;
+  }
+
+  .canvas {
+    cursor: default;
+  }
+}

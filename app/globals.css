@@ -259,6 +259,22 @@ a:focus-visible {
   --text-display: clamp(1.75rem, 4.6vw, 3.5rem);
   height: 100dvh;
   overflow: hidden;
+
+  /* The globe front door.
+
+     Three sizes, all monospace and widely tracked: the organisation, the
+     thesis, the way in. The scale is tight on purpose — at this tracking the
+     difference between the name and the motto is carried by colour and
+     spacing more than by size, which is what keeps it feeling engraved
+     rather than shouted. */
+  --text-landing-title: clamp(0.82rem, 2.1vw, 1.32rem);
+  --text-landing-motto: clamp(0.66rem, 1.25vw, 0.84rem);
+  --text-landing-link: clamp(0.62rem, 1vw, 0.72rem);
+
+  --landing-fg: #eaf2fb;
+  --landing-mid: #9fc2e8;
+  --landing-accent: #7fb3e8;
+  --landing-dim: #3f5f86;
 }
 
 /* Archived prototype: the Portal's threshold line is that page's display size. */
