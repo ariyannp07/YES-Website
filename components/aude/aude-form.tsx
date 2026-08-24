@@ -3,12 +3,12 @@
 import Link from 'next/link'
 import { useState } from 'react'
 
-import { CONFIRMATION, AudereApplication } from '@/lib/audere-schema'
+import { CONFIRMATION, AudeApplication } from '@/lib/aude-schema'
 
-import styles from './audere-form.module.css'
+import styles from './aude-form.module.css'
 
 /**
- * AUDERE — the application.
+ * AUDE — the application.
  *
  * Three questions. No programme description, no deadline, no reassurance about
  * what happens next: the page assumes you already know why you are here, which
@@ -51,7 +51,7 @@ function Field({
   )
 }
 
-export function AudereForm({ connected }: { readonly connected: boolean }) {
+export function AudeForm({ connected }: { readonly connected: boolean }) {
   const [values, setValues] = useState(EMPTY)
   const [status, setStatus] = useState<Status>('idle')
   const [message, setMessage] = useState('')
@@ -67,7 +67,7 @@ export function AudereForm({ connected }: { readonly connected: boolean }) {
     setFieldErrors({})
     setMessage('')
 
-    const parsed = AudereApplication.safeParse(values)
+    const parsed = AudeApplication.safeParse(values)
     if (!parsed.success) {
       setFieldErrors(parsed.error.flatten().fieldErrors)
       // Without this the only role="alert" never renders, and a screen-reader
@@ -78,7 +78,7 @@ export function AudereForm({ connected }: { readonly connected: boolean }) {
     }
 
     try {
-      const response = await fetch('/api/audere', {
+      const response = await fetch('/api/aude', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(parsed.data),
@@ -121,7 +121,7 @@ export function AudereForm({ connected }: { readonly connected: boolean }) {
   return (
     <div className={styles.root}>
       <div className={styles.inner}>
-        <p className={`${styles.eyebrow} t-micro`}>Audere</p>
+        <p className={`${styles.eyebrow} t-micro`}>Aude</p>
 
         {/* method="post" matters even though onSubmit handles the happy path:
             without it a no-JS submit defaults to GET and puts the applicant's
@@ -210,7 +210,7 @@ export function AudereForm({ connected }: { readonly connected: boolean }) {
         </form>
 
         <p className={`${styles.back} t-micro`}>
-          <Link href="/audere">← Back</Link>
+          <Link href="/aude">← Back</Link>
         </p>
       </div>
     </div>

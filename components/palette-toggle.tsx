@@ -8,7 +8,7 @@ import { PALETTES, PALETTE_LABELS, type Palette } from '@/lib/palette'
 const STORAGE_KEY = 'yes.palette'
 
 /** Routes that paint their own background and ignore the palette tokens. */
-const ART_DIRECTED = ['/', '/audere'] as const
+const ART_DIRECTED = ['/', '/aude'] as const
 
 /**
  * PREVIEW-ONLY. Build spec §8.3 asks the owners to choose the palette from
@@ -45,7 +45,7 @@ export function PaletteToggle({ initial }: { readonly initial: Palette }) {
 
   // Art-directed pages set their own colours, so the switcher does nothing on
   // them except sit there — and in Paper it drops to ~1:1 against their own
-  // near-black backgrounds. The prototypes moved to `/` and `/audere`, so this
+  // near-black backgrounds. The prototypes moved to `/` and `/aude`, so this
   // list has to follow them.
   if (ART_DIRECTED.some((route) => pathname === route || pathname.startsWith(`${route}/`))) {
     return null

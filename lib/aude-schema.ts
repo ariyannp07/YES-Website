@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 /**
- * AUDERE — the application.
+ * AUDE — the application.
  *
  * Three questions and nothing else. One schema, imported by both the browser
  * form and the server route, so the client cannot accept something the server
@@ -11,7 +11,7 @@ import { z } from 'zod'
  * can never set `public_catalog_ok` — which stays exactly what Boola's schema
  * says it is, a flag set only from a person's own checkbox.
  */
-export const AudereApplication = z.object({
+export const AudeApplication = z.object({
   name: z.string().trim().min(1, 'Required.').max(120),
   email: z.email('That address does not look right.').max(200),
   why: z
@@ -38,7 +38,7 @@ export const AudereApplication = z.object({
   confirmRef: z.string().optional(),
 })
 
-export type AudereApplication = z.infer<typeof AudereApplication>
+export type AudeApplication = z.infer<typeof AudeApplication>
 
 /** The confirmation. Deliberately not a receipt. */
 export const CONFIRMATION = 'You may hear from us soon.'

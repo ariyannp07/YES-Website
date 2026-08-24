@@ -46,8 +46,8 @@ keeping the experience visually coherent.
 | --- | --- |
 | `/` | Interactive landing experience |
 | `/manifesto` | YES's point of view and invitation to build |
-| `/audere` | Full-viewport introduction to the Audere cohort |
-| `/audere/apply` | Audere application form |
+| `/aude` | Full-viewport introduction to the Aude cohort |
+| `/aude/apply` | Aude application form |
 | `/catalog` | Searchable builder directory and dossier browser |
 | `/catalog/[slug]` | Direct, shareable builder dossier |
 | `/reservoir` | Editorial and media archive |
@@ -74,7 +74,7 @@ flowchart LR
   Build --> Static[Static pages and catalog dossiers]
 
   Browser --> Static
-  Browser --> Intake[Enter and Audere APIs]
+  Browser --> Intake[Enter and Aude APIs]
   Intake -. configured .-> State[Airtable People and Log tables]
   Browser --> Search[Search API]
   Search -. configured .-> XAI[xAI]

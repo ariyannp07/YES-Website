@@ -7,11 +7,11 @@ import { SiteNav } from '@/components/site-nav'
 import { SIGMA_PATH } from '@/lib/yes-geometry'
 
 export const metadata: Metadata = {
-  title: 'Audere',
+  title: 'Aude',
 }
 
 /**
- * AUDERE — the inner cohort.
+ * AUDE — the inner cohort.
  *
  * The working wall, held as one view. The drift, the cursor parallax and the
  * fragment animations all stay; the journey across the drawing does not — this
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
  *
  * The only way on is the note drawn into the wall.
  */
-export default function AuderePage() {
+export default function AudePage() {
   return (
     <>
       {/* Floated over the wall rather than above it: the page stays full-bleed,
@@ -29,10 +29,10 @@ export default function AuderePage() {
       </div>
 
       <BlueprintStage
-        title="Audere"
+        title="Aude"
         subtitle="A community of our very best."
         note="dare to build the future, join us →"
-        href="/audere/apply"
+        href="/aude/apply"
         scrollDriven={false}
       />
 

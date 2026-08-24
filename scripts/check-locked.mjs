@@ -27,7 +27,7 @@ const BASE = process.env.LOCK_BASE ?? 'landing-lock-base'
  * lib/signal-model.ts is used only by the signal canvas, and components/landing
  * is landing-only by construction. Deliberately ABSENT, because other pages
  * depend on them: lib/site.ts (the nav and /builders), components/timestamp.tsx
- * (the nav), lib/yes-geometry.ts (/audere and the mark), app/layout.tsx.
+ * (the nav), lib/yes-geometry.ts (/aude and the mark), app/layout.tsx.
  */
 const ALLOW = [
   /^app\/page\.tsx$/,

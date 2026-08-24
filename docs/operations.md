@@ -99,8 +99,8 @@ The Airtable-backed catalog path reads only this allowlist:
 
 ### Intake and audit fields
 
-`/api/enter` and `/api/audere` write to `People`. The general form may set
-`public_catalog_ok` only from the submitter's checkbox; the Audere form does not ask
+`/api/enter` and `/api/aude` write to `People`. The general form may set
+`public_catalog_ok` only from the submitter's checkbox; the Aude form does not ask
 for catalog consent and always writes it as false.
 
 Successful and failed intake attempts also try to append a row to `Log` with:
