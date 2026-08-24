@@ -57,22 +57,6 @@
   --pad: clamp(1.25rem, 4vw, 3.5rem);
 }
 
-/* The landing runs a larger display size than the interior pages. This is the
-   same token re-scoped, not a third size — each page still shows exactly
-   display + small + micro. */
-[data-scope='landing'] {
-  --text-display: clamp(1.75rem, 4.6vw, 3.5rem);
-  height: 100dvh;
-  overflow: hidden;
-}
-
-/* Landing prototype: the Portal's threshold line is that page's display size.
-   Declared here rather than in the component so app/globals.css stays the one
-   place a text size is set. */
-[data-scope='portal-threshold'] {
-  --text-display: clamp(1.9rem, 4.6vw, 3.4rem);
-}
-
 /* ---------------------------------------------------------------------------
    The catalog — its own scope.
 
@@ -154,11 +138,6 @@
     -webkit-text-fill-color: var(--cat-ice);
     color: var(--cat-ice);
   }
-}
-
-/* "No scroll. The page is the viewport." (build spec §3) */
-body:has([data-scope='landing']) {
-  overflow: hidden;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -261,4 +240,33 @@ a:focus-visible {
 ::selection {
   background: var(--accent);
   color: var(--bg);
+}
+
+/* ===========================================================================
+   LANDING SCOPE — the only part of this file the landing prototype may change.
+
+   scripts/check-locked.mjs freezes every byte ABOVE this marker against the
+   lock baseline. The rest of the site reads its tokens from up there, so a
+   change above this line would reach pages the prototype is not allowed to
+   touch; a change below it can only reach the front door.
+
+   Font sizes still have to be declared in THIS file (check-type-scale), which
+   is exactly why the landing needs a region here rather than its own file.
+   =========================================================================== */
+
+/* The landing runs its own display size. Same token re-scoped, not a new one. */
+[data-scope='landing'] {
+  --text-display: clamp(1.75rem, 4.6vw, 3.5rem);
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* Archived prototype: the Portal's threshold line is that page's display size. */
+[data-scope='portal-threshold'] {
+  --text-display: clamp(1.9rem, 4.6vw, 3.4rem);
+}
+
+/* "No scroll. The page is the viewport." (build spec §3) */
+body:has([data-scope='landing']) {
+  overflow: hidden;
 }
