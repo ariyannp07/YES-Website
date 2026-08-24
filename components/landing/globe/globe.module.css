@@ -85,9 +85,23 @@
   visibility: hidden;
 }
 
+/* Every line carries a ring of shadow. The copy sits over the densest part of
+   the globe — the eastern seaboard — and at this weight a single soft glow was
+   not enough to separate it from the city light underneath. */
+.copy .title,
+.copy .motto,
+.copy .enter {
+  text-shadow:
+    0 0 2px rgba(2, 6, 12, 0.98),
+    0 1px 4px rgba(2, 6, 12, 0.95),
+    0 0 18px rgba(2, 6, 12, 0.9),
+    0 0 34px rgba(2, 6, 12, 0.75);
+}
+
 .title {
   font-family: var(--font-mono);
   font-size: var(--text-landing-title);
+  font-weight: 600;
   letter-spacing: 0.42em;
   /* The tracking is applied to the right of each glyph, which pushes the line
      off-centre by one space; half of it back keeps the optical centre true. */
@@ -100,6 +114,7 @@
 .motto {
   font-family: var(--font-mono);
   font-size: var(--text-landing-motto);
+  font-weight: 500;
   letter-spacing: 0.2em;
   text-indent: 0.2em;
   text-transform: uppercase;
@@ -111,6 +126,7 @@
   margin-top: 0.6rem;
   font-family: var(--font-mono);
   font-size: var(--text-landing-link);
+  font-weight: 600;
   letter-spacing: 0.28em;
   text-indent: 0.28em;
   text-transform: uppercase;
@@ -183,6 +199,30 @@
   }
 }
 
+/* On a phone the title is 28 characters; at 0.42em tracking and the new size
+   it would run off the side. Tightening the tracking is what buys the extra
+   size — the line still reads as widely spaced, just not as a banner. */
+@media (max-width: 40rem) {
+  .title {
+    letter-spacing: 0.2em;
+    text-indent: 0.2em;
+  }
+
+  .motto {
+    letter-spacing: 0.12em;
+    text-indent: 0.12em;
+  }
+
+  .enter {
+    letter-spacing: 0.2em;
+    text-indent: 0.2em;
+  }
+
+  .copy {
+    gap: 1.1rem;
+  }
+}
+
 /* ————— place markers —————
    Positioned by the canvas each frame from a projected 3D point. The transform
    is written directly, so these must not carry a transition on transform or
@@ -209,19 +249,21 @@
   margin: -0.75em 0 0 1.15em;
   font-family: var(--font-mono);
   font-size: var(--text-landing-marker);
-  font-weight: 600;
-  letter-spacing: 0.16em;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   white-space: nowrap;
   color: var(--landing-gold);
   /* Sat on top of city light at the same brightness and was unreadable. A
      ring of shadow carves it out of whatever is behind it, which a single
      soft glow could not do. */
+  /* Sits directly on city light, so it needs a heavier ring than the copy. */
   text-shadow:
     0 0 2px rgba(2, 6, 12, 1),
     0 1px 3px rgba(2, 6, 12, 1),
-    0 0 14px rgba(2, 6, 12, 0.95),
-    0 0 26px rgba(2, 6, 12, 0.8);
+    0 0 10px rgba(2, 6, 12, 1),
+    0 0 20px rgba(2, 6, 12, 0.98),
+    0 0 34px rgba(2, 6, 12, 0.9);
   pointer-events: none;
   opacity: 0;
   transition: opacity 260ms ease;
@@ -311,6 +353,7 @@
   cursor: pointer;
   font-family: var(--font-mono);
   font-size: var(--text-landing-link);
+  font-weight: 600;
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--landing-accent);

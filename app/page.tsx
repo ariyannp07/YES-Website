@@ -34,7 +34,7 @@ export default function Landing() {
         <Timestamp />
       </header>
 
-      <div className={styles.copy}>
+      <div className={styles.copy} data-landing-copy="">
         <h1
           className={`${styles.title} ${styles.beat}`}
           style={{ animationDelay: `${TIMING.title.at}s` }}

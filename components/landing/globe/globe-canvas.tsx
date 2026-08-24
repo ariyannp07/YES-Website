@@ -820,6 +820,21 @@ export default function GlobeCanvas({
     host.addEventListener('pointermove', onMove)
     host.addEventListener('pointerleave', onLeave)
 
+    /**
+     * The copy block's box, so a marker label never lands on top of it.
+     *
+     * On a phone the globe fills the frame and the copy is centred, so this
+     * collides constantly — "SF · HOME" was drawn straight through "YALE
+     * ENTREPRENEURIAL SOCIETY" and both became unreadable. Cached and
+     * refreshed on resize rather than measured per frame, which would force
+     * layout sixty times a second.
+     */
+    let copyBox: DOMRect | null = null
+    const measureCopy = () => {
+      const el = host.parentElement?.querySelector('[data-landing-copy]')
+      copyBox = el ? el.getBoundingClientRect() : null
+    }
+
     const onResize = () => {
       const w = host.clientWidth
       const h = host.clientHeight
@@ -829,6 +844,7 @@ export default function GlobeCanvas({
       // Keep the globe filling a similar share of a narrow viewport.
       camera.position.z = w < 640 ? 5.2 : 4.1
       camera.updateProjectionMatrix()
+      measureCopy()
     }
     onResize()
     window.addEventListener('resize', onResize)
@@ -886,6 +902,7 @@ export default function GlobeCanvas({
 
     const projected = new THREE.Vector3()
     const worldPoint = new THREE.Vector3()
+
 
     // Orientation that brings the dive target to face the camera.
     const diveMark = marks.find((m) => m.id === diveTarget) ?? null
@@ -995,9 +1012,37 @@ export default function GlobeCanvas({
           entry.el.textContent = entry.mark.label.slice(0, next)
           entry.shown = next
         }
-        entry.el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`
+        // Keep the label on screen without throwing it across the continent.
+        //
+        // On a phone "New Haven · Home" is wider than the margin it had and the
+        // word HOME was clipped by the viewport. Flipping it fully to the left
+        // of the dot fixed the clipping but landed it over the brightest part
+        // of North America, where it was unreadable. Clamping slides it just
+        // far enough to fit while it stays beside its own dot.
+        const labelWidth = entry.el.offsetWidth || 0
+        const maxLeft = host.clientWidth - labelWidth - 10
+        const lx = Math.max(8, Math.min(x, maxLeft))
+        entry.el.style.transform = `translate(${lx.toFixed(1)}px, ${y.toFixed(1)}px)`
+
         // Fade with the limb so a label never floats off the planet's edge.
-        entry.el.style.opacity = String(THREE.MathUtils.clamp((facing - 0.12) * 4, 0, 1))
+        let alpha = THREE.MathUtils.clamp((facing - 0.12) * 4, 0, 1)
+
+        // Yield to the copy. The ember stays — it is drawn in the scene — so
+        // the place is still marked, it just stops shouting over the name.
+        if (copyBox) {
+          const box = entry.el.getBoundingClientRect()
+          const hostBox = host.getBoundingClientRect()
+          const overlaps =
+            box.right > copyBox.left - 12 &&
+            box.left < copyBox.right + 12 &&
+            box.bottom > copyBox.top - 8 &&
+            box.top < copyBox.bottom + 8 &&
+            box.width > 0
+          if (overlaps) alpha = 0
+          void hostBox
+        }
+
+        entry.el.style.opacity = String(alpha)
       }
 
       // Easter egg: the asterism responds only to a pointer near it.

@@ -267,10 +267,14 @@ a:focus-visible {
      difference between the name and the motto is carried by colour and
      spacing more than by size, which is what keeps it feeling engraved
      rather than shouted. */
-  --text-landing-title: clamp(0.6rem, 1.05vw, 0.92rem);
-  --text-landing-motto: clamp(0.52rem, 0.72vw, 0.64rem);
-  --text-landing-link: clamp(0.5rem, 0.66vw, 0.6rem);
-  --text-landing-marker: clamp(0.56rem, 0.72vw, 0.7rem);
+  /* The vw term collapses on a phone — 1.05vw of a 390px screen is 4px, so
+     every line bottomed out on its rem floor at about 9.6px and the whole
+     composition became unreadable at exactly the size most people see it.
+     The floors now carry mobile and the vw term only adds on wider screens. */
+  --text-landing-title: clamp(0.82rem, 1.5vw, 1.18rem);
+  --text-landing-motto: clamp(0.7rem, 1vw, 0.86rem);
+  --text-landing-link: clamp(0.68rem, 0.9vw, 0.8rem);
+  --text-landing-marker: clamp(0.76rem, 0.95vw, 0.9rem);
 
   --landing-fg: #eaf2fb;
   --landing-mid: #9fc2e8;
