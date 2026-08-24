@@ -764,6 +764,16 @@ export default function GlobeCanvas({
     const xAxis = new THREE.Vector3(1, 0, 0)
 
     const onDown = (event: PointerEvent) => {
+      // A press that starts on a marker belongs to the marker, not to the drag.
+      //
+      // This is why clicking the marker did nothing: setPointerCapture on the
+      // host retargets every subsequent pointer event — including the one the
+      // browser derives `click` from — to the canvas, so the marker's own
+      // listener never fired. Calling .click() in the console worked, which is
+      // exactly what made it look fine in testing.
+      const target = event.target as HTMLElement | null
+      if (target?.dataset?.clickable === 'true') return
+
       drag.active = true
       drag.x = event.clientX
       drag.y = event.clientY
@@ -837,7 +847,27 @@ export default function GlobeCanvas({
         el.dataset.clickable = 'true'
         el.setAttribute('role', 'button')
         el.setAttribute('tabindex', '0')
-        el.addEventListener('click', () => clickRef.current?.(mark.id))
+        el.setAttribute('title', 'Open New Haven')
+        // Both `click` and `pointerup`, guarded against firing twice.
+        //
+        // `click` alone was silently swallowed: the canvas captured the pointer
+        // on pointerdown, which retargets the events the browser derives the
+        // click from. `pointerup` alone is not enough either — plenty of
+        // environments (and every automation harness I tested against) deliver
+        // mouse events without synthesising pointer ones. Taking both, with a
+        // short guard, is the only version that fires exactly once everywhere.
+        let lastFired = 0
+        const open = (event: Event) => {
+          event.stopPropagation()
+          const now = Date.now()
+          if (now - lastFired < 400) return
+          lastFired = now
+          clickRef.current?.(mark.id)
+        }
+        el.addEventListener('pointerdown', (event) => event.stopPropagation())
+        el.addEventListener('mousedown', (event) => event.stopPropagation())
+        el.addEventListener('pointerup', open)
+        el.addEventListener('click', open)
         el.addEventListener('keydown', (event) => {
           if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault()

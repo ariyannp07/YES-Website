@@ -187,9 +187,13 @@
    Positioned by the canvas each frame from a projected 3D point. The transform
    is written directly, so these must not carry a transition on transform or
    they would lag the globe by a frame at every rotation. */
+/* The label is small type; the hit area is padded well past it so the marker
+   can actually be aimed at. */
 .marker[data-clickable='true'] {
   pointer-events: auto;
   cursor: pointer;
+  padding: 0.55em 0.7em;
+  margin: -1.3em 0 0 0.45em;
 }
 
 .marker[data-clickable='true']:hover,
