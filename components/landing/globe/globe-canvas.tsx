@@ -27,6 +27,8 @@ import styles from './globe.module.css'
 const RADIUS = 1
 /** Nudged out so links sit just above the haze rather than z-fighting it. */
 const LINK_RADIUS = 1.001
+/** Just under the nodes, so city light always sits on top of the outline. */
+const COAST_RADIUS = 0.999
 
 const COLORS = {
   deep: new THREE.Color('#0a1a33'),
@@ -37,6 +39,7 @@ const COLORS = {
   node: new THREE.Color('#9fc4e4'),
   hub: new THREE.Color('#e6f1ff'),
   gold: new THREE.Color('#ff9d2e'),
+  coast: new THREE.Color('#6e97c4'),
   ember: new THREE.Color('#0a1420'),
 }
 
@@ -167,10 +170,26 @@ const HAZE_FRAG = /* glsl */ `
 interface GlobeCanvasProps {
   /** Skips the reveal and renders the settled state. */
   readonly reduced?: boolean
+  /** 0..1 descent progress, shared with the city plate so they fall together. */
+  readonly dive?: React.RefObject<number>
+  /** Which marker the descent targets. */
+  readonly diveTarget?: string
+  readonly onMarkerClick?: (id: string) => void
 }
 
-export default function GlobeCanvas({ reduced = false }: GlobeCanvasProps) {
+export default function GlobeCanvas({
+  reduced = false,
+  dive,
+  diveTarget,
+  onMarkerClick,
+}: GlobeCanvasProps) {
   const hostRef = useRef<HTMLDivElement>(null)
+  // Held in a ref so the scene is built once; re-running the effect on every
+  // render would tear down and rebuild ~5000 points and restart the reveal.
+  const clickRef = useRef(onMarkerClick)
+  clickRef.current = onMarkerClick
+  /** Last frame's descent value, so the dolly resets exactly once on the way out. */
+  const divePrev = useRef(0)
 
   useEffect(() => {
     const host = hostRef.current
@@ -312,6 +331,65 @@ export default function GlobeCanvas({ reduced = false }: GlobeCanvasProps) {
     const linkLines = new THREE.LineSegments(linkGeo, linkMat)
     linkLines.renderOrder = 2
     globe.add(linkLines)
+
+    // ————— coastlines —————
+    // Drawn under the city light, at very low alpha. This is what gives each
+    // landmass an EDGE: without it the dots described extent but not shape, and
+    // Europe, Asia and Africa read as a single continent.
+    const coastArr = model.coast
+    const coastPos = new Float32Array(coastArr.length * 6)
+    const coastStart = new Float32Array(coastArr.length * 2)
+    coastArr.forEach((seg, i) => {
+      coastPos.set(
+        [
+          seg.ax * COAST_RADIUS, seg.ay * COAST_RADIUS, seg.az * COAST_RADIUS,
+          seg.bx * COAST_RADIUS, seg.by * COAST_RADIUS, seg.bz * COAST_RADIUS,
+        ],
+        i * 6,
+      )
+      // Coast arrives just before its region's cities, so the shape is there
+      // for the lights to land on.
+      const at = TIMING.regions.at + seg.order * TIMING.regions.stagger - 0.15
+      coastStart[i * 2] = at
+      coastStart[i * 2 + 1] = at
+    })
+
+    const coastGeo = new THREE.BufferGeometry()
+    coastGeo.setAttribute('position', new THREE.BufferAttribute(coastPos, 3))
+    coastGeo.setAttribute('aStart', new THREE.BufferAttribute(coastStart, 1))
+    coastGeo.setAttribute(
+      'aLong',
+      new THREE.BufferAttribute(new Float32Array(coastArr.length * 2), 1),
+    )
+
+    const coastMat = new THREE.ShaderMaterial({
+      uniforms: {
+        ...shared,
+        uFade: { value: 0.8 },
+        uLine: { value: COLORS.coast },
+      },
+      vertexShader: LINK_VERT,
+      fragmentShader: /* glsl */ `
+        uniform vec3 uLine;
+        varying float vAlpha;
+        varying float vLong;
+        void main() {
+          // Near the floor of visibility, but not below it: a coastline that
+          // reads as a drawn border would make the globe a map rather than a
+          // constellation, while one too faint to see does not separate Europe
+          // from Asia — which was the whole reason for adding it.
+          float alpha = vAlpha * 0.46;
+          if (alpha < 0.004) discard;
+          gl_FragColor = vec4(uLine, alpha);
+        }
+      `,
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    })
+    const coastLines = new THREE.LineSegments(coastGeo, coastMat)
+    coastLines.renderOrder = 2
+    globe.add(coastLines)
 
     // ————— the sphere itself, implied —————
     const hazeMat = new THREE.ShaderMaterial({
@@ -601,25 +679,39 @@ export default function GlobeCanvas({ reduced = false }: GlobeCanvasProps) {
     const egg = [...asterism.stars, asterism.polaris]
     const eggPos = new Float32Array(egg.length * 3)
     const eggMag = new Float32Array(egg.length)
+    const eggPole = new Float32Array(egg.length)
     egg.forEach((star, i) => {
       eggPos.set([star.x, star.y, star.z], i * 3)
       eggMag[i] = star.mag
+      // Polaris is boosted beyond its real magnitude. Astronomically it is only
+      // the 48th brightest star and Alioth outshines it — but the whole point
+      // of the egg is the north star, so it is the one that has to read.
+      eggPole[i] = star.name === 'Polaris' ? 1 : 0
     })
     const eggGeo = new THREE.BufferGeometry()
     eggGeo.setAttribute('position', new THREE.BufferAttribute(eggPos, 3))
     eggGeo.setAttribute('aMag', new THREE.BufferAttribute(eggMag, 1))
+    eggGeo.setAttribute('aPole', new THREE.BufferAttribute(eggPole, 1))
     const eggMat = new THREE.ShaderMaterial({
       uniforms: { uOpacity: { value: 0 }, uHover: { value: 0 } },
       vertexShader: /* glsl */ `
         attribute float aMag;
+        attribute float aPole;
         uniform float uHover;
         varying float vBright;
+        varying float vPole;
         void main() {
           vec4 mv = modelViewMatrix * vec4(position, 1.0);
           // Brighter star = lower magnitude, so invert it.
           float b = clamp((3.6 - aMag) / 2.0, 0.15, 1.0);
           vBright = b;
-          gl_PointSize = (0.09 + b * 0.13) * (1.0 + uHover * 0.5) * (110.0 / max(0.001, -mv.z));
+          vPole = aPole;
+          // These sat at 0.5-1.3 device pixels — the same sub-pixel mistake the
+          // main field had, which is why the asterism was invisible even when
+          // correctly placed. Sized to sit clearly ABOVE the surrounding field
+          // so the shape is findable without being announced.
+          float size = 0.62 + b * 0.85 + aPole * 0.55;
+          gl_PointSize = size * (1.0 + uHover * 0.45) * (110.0 / max(0.001, -mv.z));
           gl_Position = projectionMatrix * mv;
         }
       `,
@@ -627,12 +719,16 @@ export default function GlobeCanvas({ reduced = false }: GlobeCanvasProps) {
         uniform float uOpacity;
         uniform float uHover;
         varying float vBright;
+        varying float vPole;
         void main() {
           float d = length(gl_PointCoord - vec2(0.5));
           float core = smoothstep(0.5, 0.05, d);
-          float a = core * (0.4 + vBright * 0.6) * uOpacity * (0.75 + uHover * 0.45);
+          float halo = smoothstep(0.5, 0.2, d) * 0.5 * vPole;
+          float a = (core + halo) * (0.62 + vBright * 0.38) * (1.0 + vPole * 0.35)
+                    * uOpacity * (0.8 + uHover * 0.4);
           if (a < 0.004) discard;
-          gl_FragColor = vec4(vec3(0.88, 0.93, 1.0), a);
+          // Polaris runs a touch cooler-white than the rest of the asterism.
+          gl_FragColor = vec4(mix(vec3(0.86, 0.92, 1.0), vec3(1.0), vPole), a);
         }
       `,
       transparent: true,
@@ -736,6 +832,19 @@ export default function GlobeCanvas({ reduced = false }: GlobeCanvasProps) {
       el.className = styles.marker
       el.dataset.markerId = mark.id
       el.textContent = ''
+      if (mark.id === diveTarget) {
+        // Only the dive target is interactive, and it says so.
+        el.dataset.clickable = 'true'
+        el.setAttribute('role', 'button')
+        el.setAttribute('tabindex', '0')
+        el.addEventListener('click', () => clickRef.current?.(mark.id))
+        el.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault()
+            clickRef.current?.(mark.id)
+          }
+        })
+      }
       host.appendChild(el)
       return { mark, el, shown: -1 }
     })
@@ -747,6 +856,13 @@ export default function GlobeCanvas({ reduced = false }: GlobeCanvasProps) {
 
     const projected = new THREE.Vector3()
     const worldPoint = new THREE.Vector3()
+
+    // Orientation that brings the dive target to face the camera.
+    const diveMark = marks.find((m) => m.id === diveTarget) ?? null
+    const faceTarget = new THREE.Quaternion()
+    if (diveMark) {
+      faceTarget.setFromUnitVectors(diveMark.world.clone().normalize(), new THREE.Vector3(0, 0, 1))
+    }
 
     /** Projects a globe-local point to CSS pixels, with a facing test. */
     const project = (local: THREE.Vector3) => {
@@ -797,7 +913,8 @@ export default function GlobeCanvas({ reduced = false }: GlobeCanvasProps) {
       // star-free circle out of the sky a second before the planet appears.
       core.visible = coreMat.opacity > 0.001
 
-      if (!reduceMotion && !drag.active) {
+      // The globe stops turning once the descent begins.
+      if (!reduceMotion && !drag.active && (dive?.current ?? 0) < 0.002) {
         // The globe holds still through the reveal. Drifting during it moved
         // both homes toward the limb before they ignited, and a planet that
         // stops turning while something happens on it reads as deliberate.
@@ -811,6 +928,23 @@ export default function GlobeCanvas({ reduced = false }: GlobeCanvasProps) {
         globe.rotateOnWorldAxis(yAxis, drag.vx + dt * 0.018 * settled)
         globe.rotateOnWorldAxis(xAxis, drag.vy)
       }
+
+      // ————— the descent —————
+      // The camera falls toward the marker while the globe turns it square to
+      // the viewer, which is what makes it read as going DOWN to a place rather
+      // than zooming at a picture.
+      const p = dive?.current ?? 0
+      if (p > 0.0005 || divePrev.current > 0.0005) {
+        const easeDive = p * p * (3 - 2 * p)
+        camera.position.z = 4.1 - easeDive * 3.02
+        camera.updateProjectionMatrix()
+        if (diveMark) {
+          globe.quaternion.slerp(faceTarget, Math.min(1, 0.06 + easeDive * 0.12))
+        }
+        // Hand over to the street: the globe is gone before the plate lands.
+        host.style.opacity = String(Math.max(0, 1 - Math.max(0, (p - 0.42) / 0.34)))
+      }
+      divePrev.current = p
 
       globe.updateMatrixWorld()
 
@@ -884,6 +1018,8 @@ export default function GlobeCanvas({ reduced = false }: GlobeCanvasProps) {
       eggLineMat.dispose()
       nodeGeo.dispose()
       linkGeo.dispose()
+      coastGeo.dispose()
+      coastMat.dispose()
       flashGeo.dispose()
       flashMat.dispose()
       haloGeo.dispose()

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import GlobeCanvas from '@/components/landing/globe/globe-canvas'
+import { LandingStage } from '@/components/landing/globe/landing-stage'
 import { TypedLine } from '@/components/landing/globe/typed-line'
 import styles from '@/components/landing/globe/globe.module.css'
 import { Timestamp } from '@/components/timestamp'
@@ -29,8 +29,7 @@ const MOTTO_AT = Math.max(TIMING.motto.at, TITLE_DONE + 0.25)
 export default function Landing() {
   return (
     <div data-scope="landing" className={styles.stage}>
-      <GlobeCanvas />
-
+      <LandingStage>
       <header className={`${styles.masthead} t-micro`}>
         <Timestamp />
       </header>
@@ -63,6 +62,7 @@ export default function Landing() {
       </div>
 
       <p className={`${styles.footnote} t-micro`}>Since 1999</p>
+      </LandingStage>
     </div>
   )
 }

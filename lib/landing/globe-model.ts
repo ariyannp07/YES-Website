@@ -32,9 +32,21 @@ export interface GlobeEdge {
   readonly long: boolean
 }
 
+/** One resampled step of coastline, as two points on the unit sphere. */
+export interface CoastSegment {
+  readonly ax: number
+  readonly ay: number
+  readonly az: number
+  readonly bx: number
+  readonly by: number
+  readonly bz: number
+  readonly order: number
+}
+
 export interface GlobeModel {
   readonly nodes: readonly GlobeNode[]
   readonly edges: readonly GlobeEdge[]
+  readonly coast: readonly CoastSegment[]
   readonly origin: number
   /** Highest reveal order present — how many waves the sequence has. */
   readonly waves: number
@@ -56,7 +68,12 @@ let cached: GlobeModel | null = null
 export const buildGlobe = (): GlobeModel => {
   if (cached) return cached
 
-  const raw = data as { nodes: number[][]; edges: number[][]; origin: number }
+  const raw = data as {
+    nodes: number[][]
+    edges: number[][]
+    coast: number[][]
+    origin: number
+  }
 
   const nodes: GlobeNode[] = raw.nodes.map(([lon, lat, weight, order]) => {
     const [x, y, z] = toVector(lon, lat)
@@ -70,9 +87,16 @@ export const buildGlobe = (): GlobeModel => {
     long: long === 1,
   }))
 
+  const coast: CoastSegment[] = (raw.coast ?? []).map(([lon1, lat1, lon2, lat2, order]) => {
+    const [ax, ay, az] = toVector(lon1, lat1)
+    const [bx, by, bz] = toVector(lon2, lat2)
+    return { ax, ay, az, bx, by, bz, order }
+  })
+
   cached = {
     nodes,
     edges,
+    coast,
     origin: raw.origin,
     waves: nodes.reduce((max, node) => Math.max(max, node.order), 0),
   }

@@ -187,6 +187,17 @@
    Positioned by the canvas each frame from a projected 3D point. The transform
    is written directly, so these must not carry a transition on transform or
    they would lag the globe by a frame at every rotation. */
+.marker[data-clickable='true'] {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.marker[data-clickable='true']:hover,
+.marker[data-clickable='true']:focus-visible {
+  color: #ffffff;
+  outline: none;
+}
+
 .marker {
   position: absolute;
   top: 0;
@@ -226,4 +237,91 @@
   pointer-events: none;
   opacity: 0;
   transition: opacity 320ms ease;
+}
+
+/* ————— the descent ————— */
+.copyWrap {
+  transition: opacity 700ms ease;
+}
+
+.copyWrap[data-dived='true'] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.city {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 900ms ease;
+}
+
+.city[data-open='true'] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cityCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.cityLabel {
+  position: absolute;
+  left: 50%;
+  top: calc(50% + 2.6rem);
+  transform: translateX(-50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.cityAddress {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-landing-marker);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--landing-gold);
+  text-shadow: 0 0 3px rgba(2, 6, 12, 1), 0 0 16px rgba(2, 6, 12, 0.9);
+}
+
+.cityPlace {
+  margin: 0.5em 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-landing-marker);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--landing-mid) 80%, transparent);
+}
+
+.cityClose {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(2rem, 7vh, 4rem);
+  transform: translateX(-50%);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: var(--text-landing-link);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--landing-accent);
+  border-bottom: 1px solid color-mix(in srgb, var(--landing-accent) 35%, transparent);
+  padding-bottom: 0.35em;
+}
+
+.cityClose:hover,
+.cityClose:focus-visible {
+  color: #ffffff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .city,
+  .copyWrap {
+    transition: none;
+  }
 }
