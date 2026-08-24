@@ -52,7 +52,7 @@ keeping the experience visually coherent.
 | `/catalog/[slug]` | Direct, shareable builder dossier |
 | `/reservoir` | Editorial and media archive |
 | `/reservoir/[slug]` | Locally hosted Reservoir entry |
-| `/work` | Proof-point page reached from the manifesto |
+| `/work` | Proof-point page. No longer linked from anywhere — reachable only by URL |
 | `/enter` | General community intake form |
 | `/builders` | Consent-gated ledger that stays dark below its minimum entry count |
 

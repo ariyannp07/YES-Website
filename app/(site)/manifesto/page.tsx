@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 
 import { DraftNotice } from '@/components/draft-notice'
 import { MANIFESTO } from '@/content/manifesto'
@@ -53,10 +52,6 @@ export default function ManifestoPage() {
           return <p key={index}>{block.text}</p>
         })}
       </div>
-
-      <p className="t-small" style={{ margin: '4.5rem 0 0' }}>
-        <Link href="/work">See the work →</Link>
-      </p>
     </article>
   )
 }

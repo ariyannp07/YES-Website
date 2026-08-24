@@ -51,10 +51,16 @@ export const NAV: readonly NavItem[] = [
   { href: '/aude', label: 'Aude' },
   { href: '/catalog', label: 'Catalog' },
   { href: '/reservoir', label: 'Reservoir' },
-  // Unlinked, but live. See the note above `hidden` — /work is reached from the
-  // end of the manifesto and /enter from the end of /work, which makes the
-  // funnel a deliberate path rather than a tab. /enter is also the Bazaar QR's
-  // destination (?src=bazaar), so it must keep resolving whatever the nav says.
+  // Unlinked, but live. See the note above `hidden`.
+  //
+  // /work no longer has an entry point at all: the "See the work" link at the
+  // end of the manifesto was removed at the owners' direction, and nothing
+  // else pointed at it. The route still resolves for anyone holding the URL,
+  // which is the whole point of `hidden`, but it is now orphaned rather than
+  // the second step of a funnel — worth knowing before assuming anyone reaches
+  // it. /enter, which was reached from the end of /work, is in the same
+  // position; it is still the Bazaar QR's destination (?src=bazaar), so it
+  // must keep resolving whatever the nav says.
   { href: '/work', label: 'Work', hidden: true },
   { href: '/enter', label: 'Enter', hidden: true },
   { href: '/builders', label: 'Builders', hidden: true },
