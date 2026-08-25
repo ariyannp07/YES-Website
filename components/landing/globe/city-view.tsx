@@ -224,7 +224,7 @@ export function CityView({ progress, open }: CityViewProps) {
     >
       <canvas ref={canvasRef} className={styles.cityCanvas} />
       <div className={styles.cityLabel}>
-        <p className={styles.cityAddress}>52 Trumbull St</p>
+        <p className={styles.cityAddress}>54 Trumbull St</p>
         <p className={styles.cityPlace}>New Haven, Connecticut</p>
       </div>
     </div>

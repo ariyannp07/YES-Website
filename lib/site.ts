@@ -22,8 +22,12 @@ export const FOUNDED_LINE =
  * canon/01-vision-brief.md closes on "must learn not only to study that
  * future—but to build it"; this is that argument compressed to its reframe
  * (canon 03 §3.4, "not X but Y"). Owner-written.
+ *
+ * "don't just study for it" rather than "not study for it": the earlier
+ * wording read as an argument against studying, which is not the claim. The
+ * point is that studying is insufficient, not that it is wrong.
  */
-export const LANDING_LINE = 'Build the future, not study for it.'
+export const LANDING_LINE = 'Build the future, don’t just study for it.'
 
 export const CONTACT = {
   ariyan: 'ariyan.patel@yale.edu',
