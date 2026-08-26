@@ -175,7 +175,9 @@ export function CityView({ progress, open }: CityViewProps) {
         // In world units, because the context is scaled: 9 rendered at about
         // four CSS pixels, which is not a label.
         const size = 22 / scale
-        ctx.font = `500 ${size}px ui-monospace, SFMono-Regular, Menlo, monospace`
+        // Canvas takes a resolved family, not a CSS variable, so the site's
+        // typeface has to be repeated here rather than referenced.
+        ctx.font = `500 ${size}px 'Times New Roman', Times, 'Liberation Serif', 'Nimbus Roman', Tinos, serif`
         for (const [name, lx, ly, angle] of city.labels as [string, number, number, number][]) {
           let a = angle
           // Keep text upright rather than upside-down on west-running streets.

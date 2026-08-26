@@ -15,9 +15,19 @@
   --color-accent: var(--accent);
   --color-muted: var(--muted);
 
-  --font-display: var(--font-playfair-display), Georgia, serif;
-  --font-body: var(--font-inter), system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+  /* Times New Roman everywhere, at the owners' direction.
+     
+     All three roles resolve to the same family now, so the distinction between
+     them is carried by size, weight, tracking and case rather than by typeface.
+     The names are kept because every component references them; collapsing the
+     tokens would mean touching forty-odd rules to say the same thing.
+
+     Times New Roman ships on Windows and macOS but not on Linux or Android.
+     Liberation Serif, Nimbus Roman and Tinos are metric-compatible stand-ins,
+     so the layout holds rather than reflowing on those platforms. */
+  --font-display: 'Times New Roman', Times, 'Liberation Serif', 'Nimbus Roman', Tinos, serif;
+  --font-body: 'Times New Roman', Times, 'Liberation Serif', 'Nimbus Roman', Tinos, serif;
+  --font-mono: 'Times New Roman', Times, 'Liberation Serif', 'Nimbus Roman', Tinos, serif;
 }
 
 /* ---------------------------------------------------------------------------
@@ -201,6 +211,9 @@ a:focus-visible {
 
 .t-micro {
   font-family: var(--font-mono);
+  /* The timestamp reruns every second. Times is proportional, so without
+     tabular figures the line would visibly twitch as digits change width. */
+  font-variant-numeric: tabular-nums;
   font-size: var(--text-micro);
   letter-spacing: 0.06em;
   text-transform: uppercase;

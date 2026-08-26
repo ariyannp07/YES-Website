@@ -46,7 +46,7 @@
 }
 
 .note {
-  font-family: Georgia, serif;
+  font-family: var(--font-display);
   font-style: italic;
   margin: 1.4rem 0 0;
   white-space: nowrap;

@@ -1,31 +1,18 @@
 import type { Metadata } from 'next'
-import { Inter, JetBrains_Mono, Playfair_Display } from 'next/font/google'
 
 import { PaletteToggle } from '@/components/palette-toggle'
 import { paletteToggleEnabled, resolvePalette } from '@/lib/palette'
 
 import './globals.css'
 
-const display = Playfair_Display({
-  subsets: ['latin'],
-  // Variable font — the whole 400–900 range is available to the display token.
-  weight: ['400', '500', '600', '700'],
-  style: ['normal', 'italic'],
-  variable: '--font-playfair-display',
-  display: 'swap',
-})
-
-const body = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-})
-
-const mono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-jetbrains-mono',
-  display: 'swap',
-})
+/*
+ * No webfonts.
+ *
+ * Every type token now resolves to Times New Roman, which is installed rather
+ * than downloaded — so Playfair Display, Inter and JetBrains Mono are gone
+ * along with their requests. Leaving next/font in place would have shipped
+ * three families that nothing references.
+ */
 
 /**
  * Build spec §3: the page title is `YES`. Not
@@ -44,11 +31,7 @@ export default function RootLayout({
   const palette = resolvePalette(process.env.NEXT_PUBLIC_PALETTE)
 
   return (
-    <html
-      lang="en"
-      data-palette={palette}
-      className={`${display.variable} ${body.variable} ${mono.variable}`}
-    >
+    <html lang="en" data-palette={palette}>
       <body>
         {children}
         {paletteToggleEnabled() ? <PaletteToggle initial={palette} /> : null}

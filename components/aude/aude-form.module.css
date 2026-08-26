@@ -104,7 +104,7 @@
 }
 
 .done {
-  font-family: Georgia, serif;
+  font-family: var(--font-display);
   font-style: italic;
   color: #cddcf8;
   margin: 0;

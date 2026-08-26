@@ -48,7 +48,7 @@ export function Monogram({ name }: { readonly name: string }) {
         textAnchor="middle"
         dominantBaseline="central"
         fill="var(--sil-fg)"
-        fontFamily="var(--font-display), Georgia, serif"
+        fontFamily="var(--font-display)"
         fontSize="34"
         letterSpacing="1"
       >

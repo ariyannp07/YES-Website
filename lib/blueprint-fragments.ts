@@ -320,7 +320,7 @@ export const drawFragment = (
 
     case 'code': {
       const count = 4 + Math.floor(random() * 3)
-      ctx.font = '11px ui-monospace, monospace'
+      ctx.font = `11px 'Times New Roman', Times, 'Liberation Serif', 'Nimbus Roman', Tinos, serif`
       for (let i = 0; i < count; i += 1) {
         const line = CODE_LINES[Math.floor(random() * CODE_LINES.length)]
         // The animating fragment rewrites one line, character by character.
@@ -356,13 +356,13 @@ export const drawFragment = (
     }
 
     case 'equation': {
-      ctx.font = 'italic 20px Georgia, serif'
+      ctx.font = `italic 20px 'Times New Roman', Times, 'Liberation Serif', 'Nimbus Roman', Tinos, serif`
       ctx.fillText(EQUATIONS[Math.floor(random() * EQUATIONS.length)], 0, h * 0.5)
       break
     }
 
     case 'annotation': {
-      ctx.font = 'italic 15px Georgia, serif'
+      ctx.font = `italic 15px 'Times New Roman', Times, 'Liberation Serif', 'Nimbus Roman', Tinos, serif`
       const note = NOTES[Math.floor(random() * NOTES.length)]
       ctx.fillText(note, 0, 14)
       arrow(ctx, 4, 22, w * 0.55, h * 0.75)
@@ -377,7 +377,7 @@ export const drawFragment = (
       ctx.moveTo(w * 0.8, 0)
       ctx.lineTo(0, h * 0.62)
       ctx.stroke()
-      ctx.font = 'italic 13px Georgia, serif'
+      ctx.font = `italic 13px 'Times New Roman', Times, 'Liberation Serif', 'Nimbus Roman', Tinos, serif`
       ctx.fillText('no', w * 0.84, h * 0.34)
       break
     }
@@ -448,7 +448,7 @@ export const drawFragment = (
       ctx.stroke()
       arrow(ctx, 0, y, w * 0.42, y)
       arrow(ctx, w, y, w * 0.58, y)
-      ctx.font = '10px ui-monospace, monospace'
+      ctx.font = `10px 'Times New Roman', Times, 'Liberation Serif', 'Nimbus Roman', Tinos, serif`
       ctx.fillText(`${Math.round(w)}.0`, w * 0.44, y - 6)
       break
     }
