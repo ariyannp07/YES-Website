@@ -98,6 +98,8 @@ const get = (row, col) => (row[idx[col]] ?? '').trim()
 const taken = new Set()
 const people = []
 const excluded = []
+/** Which corrections actually landed — see the unmatched warning below. */
+const applied = new Set()
 
 /**
  * Schools whose members are not on the wall, at the owners' direction.
@@ -138,6 +140,7 @@ for (const row of body) {
 
   const sectors = splitList(get(row, 'Sectors'))
   const fix = CORRECTIONS.get(name) ?? {}
+  if (CORRECTIONS.has(name)) applied.add(name)
 
   people.push({
     slug,
@@ -215,6 +218,19 @@ if (excluded.length > 0) {
   console.log(
     `import-catalog — excluded ${excluded.length} from ${[...EXCLUDED_SCHOOLS].join(', ')}: ` +
       excluded.join(', '),
+  )
+}
+
+// A correction keys on the CSV's `Full Name`, which is not always the
+// `Display Name` the site shows. Keyed on the wrong one it matches nothing and
+// the entry silently keeps its old copy — which is exactly what happened to
+// Mateo Sanchez Lopez-Negrete, whose display name carries a nickname. Say so.
+const unmatched = [...CORRECTIONS.keys()].filter((n) => !applied.has(n))
+if (unmatched.length > 0) {
+  console.warn(
+    `import-catalog — WARNING: ${unmatched.length} correction(s) matched nobody ` +
+      `and were ignored: ${unmatched.join(', ')}. matchName must equal the CSV's ` +
+      `Full Name column, not the Display Name.`,
   )
 }
 

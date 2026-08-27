@@ -30,6 +30,18 @@ export function Dossier({ person }: { readonly person: Alumnus }) {
 
       <ProofBlock person={person} />
 
+      {/* The directory's description of the work. Third person and written
+          about them, which is why it is set as plain prose and NOT folded into
+          `ownWords` — those are quoted, and quoting a third-person paragraph
+          would present it as something the person said. Without this the copy
+          existed only as a three-line clamp on the catalog card and appeared in
+          full nowhere on the site. */}
+      {person.bio ? (
+        <p className="t-small" style={{ margin: '3.5rem 0 0', lineHeight: 1.8 }}>
+          {person.bio}
+        </p>
+      ) : null}
+
       {person.ownWords ? (
         <p
           className="t-small"

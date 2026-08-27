@@ -12,7 +12,8 @@
     "Aliases never render. They exist so a spelling the owners actually used",
     "still finds the right person.",
     "",
-    "Jeremy Rodrigues' entry is owner-supplied copy, not scraped. Note the two Rodrigues in this catalog are different people: the 'publicly under wraps' constraint above belongs to Allah-u-Abha Rodrigues (Yale College ’27), not to Jeremy (Yale Law ’26), whose venture name Gideon the owners have released."
+    "Jeremy Rodrigues' entry is owner-supplied copy, not scraped. Note the two Rodrigues in this catalog are different people: the 'publicly under wraps' constraint above belongs to Allah-u-Abha Rodrigues (Yale College ’27), not to Jeremy (Yale Law ’26), whose venture name Gideon the owners have released.",
+    "Matei Coldea's bio was supplied in the first person and rewritten to third for the catalog; facts and figures are unchanged, only the pronouns."
   ],
   "corrections": [
     {
@@ -45,6 +46,28 @@
         "Gideon"
       ],
       "extraKeywords": "gideon; prison grievance; grievances; incarcerated; corrections; connecticut department of correction; ai voice agent; access to justice; legal aid; public interest technology; schwarzman scholar; air force reserve captain; pokemon international champion; yale law school"
+    },
+    {
+      "matchName": "Mateo Sanchez Lopez-Negrete",
+      "nowLine": "Building infrastructure for robot learning — Verlet Robotics",
+      "venture": "Verlet Robotics",
+      "bio": "Early engineer at plasma.to, and annotation at Mercor. As an undergraduate researcher at the Apollo Lab he published a fine-tuning technique to CoRL that increased VLA out-of-distribution task completion by 50%. He is building infrastructure for robot learning, at a 1.5M ARR run rate.",
+      "aliases": [
+        "Mateo Lopez Sanchez",
+        "Mateo “Teo” Sanchez Lopez-Negrete",
+        "Teo Sanchez"
+      ],
+      "extraKeywords": "verlet robotics; robot learning; teleoperation; umi; egocentric data; motion retargeting; mano hand pose; apollo lab; corl; vla; vision language action; world models; east africa; embedded systems; plasma.to; mercor; fine tuning; out of distribution; arr"
+    },
+    {
+      "matchName": "Matei Coldea",
+      "nowLine": "Founder, Verlet Robotics",
+      "venture": "Verlet Robotics",
+      "bio": "Matei Coldea is a Yale junior studying Computer Science and Electrical Engineering. Over the past four years he has worked on robotics and embedded systems: at Accenture as an intern, then at Lenovo, where he built CSI-based wireless sensing systems combined with AI. He founded Verlet Robotics, where he built an advanced robotics lab from the ground up in East Africa, a region with no existing infrastructure for robotics or AI research, and where the team now collects teleoperation, UMI, and egocentric data at scale. On top of that he built the full data processing pipeline: motion retargeting, annotation tooling with reusable primitives like MANO hand-pose correction, and the operational software that keeps the whole thing running. With the Apollo Lab at Yale he has co-authored several papers spanning robot sensing, batch sampling methods, and most recently a CoRL 2026 paper on segmenting what a robot attends to using its attention matrices and task objective, aimed at improving VLAs and world models. He is also one of the main contributors to the MathWorks-sponsored Neuron project, where he built advanced visualization and approximation methods for neuron analysis.",
+      "aliases": [
+        "Matei Coldea"
+      ],
+      "extraKeywords": "verlet robotics; robot learning; teleoperation; umi; egocentric data; motion retargeting; mano hand pose; apollo lab; corl; vla; vision language action; world models; east africa; embedded systems; accenture; lenovo; csi wireless sensing; mathworks; neuron project"
     }
   ],
   "people": []
