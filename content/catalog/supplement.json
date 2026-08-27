@@ -10,7 +10,9 @@
     "Murad Avliyakulov is absent from that CSV too, as instructed.",
     "",
     "Aliases never render. They exist so a spelling the owners actually used",
-    "still finds the right person."
+    "still finds the right person.",
+    "",
+    "Jeremy Rodrigues' entry is owner-supplied copy, not scraped. Note the two Rodrigues in this catalog are different people: the 'publicly under wraps' constraint above belongs to Allah-u-Abha Rodrigues (Yale College ’27), not to Jeremy (Yale Law ’26), whose venture name Gideon the owners have released."
   ],
   "corrections": [
     {
@@ -32,6 +34,17 @@
         "Mura Abdukholikov",
         "Khosilmurod Abdukholikov"
       ]
+    },
+    {
+      "matchName": "Jeremy Rodrigues",
+      "nowLine": "Founder, Gideon",
+      "venture": "Gideon",
+      "bio": "Jeremy Rodrigues (Yale Law ’26, Schwarzman ’23) is a founder, Air Force Reserve Captain, and Pokémon International Champion. Legal AI incumbents are competing over the sliver of legal claims that ever reach a lawyer; he’s building Gideon for the ~100% that never will — starting in prisons, where the gap is most extreme. Gideon is an AI voice agent that turns a phone call into a correctly filed grievance — one that reaches independent oversight and preserves a legal claim that would otherwise be quietly waived. It launches in September 2026 across every Connecticut state prison, serving over 10,000 people.",
+      "aliases": [
+        "Jeremy Rodrigues",
+        "Gideon"
+      ],
+      "extraKeywords": "gideon; prison grievance; grievances; incarcerated; corrections; connecticut department of correction; ai voice agent; access to justice; legal aid; public interest technology; schwarzman scholar; air force reserve captain; pokemon international champion; yale law school"
     }
   ],
   "people": []
