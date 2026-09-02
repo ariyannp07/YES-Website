@@ -1,13 +1,13 @@
 # YES Website
 
-The public web experience for the Yale Entrepreneurial Society (YES). It combines an
-interactive front door, a searchable directory of Yale builders, long-form publishing,
-and two paths into the community in one deliberately editorial interface.
+The public web experience for the Yale Entrepreneurial Society (YES). It combines a
+scrollable interactive-globe launch, a portrait-first directory of Yale builders, The
+YES Thesis, public writing and reporting, and a direct way into the community.
 
-[View the live preview](https://yes-website-ashy.vercel.app)
+[View the live site](https://yesyale.org)
 
-Built with Next.js 16, React 19, TypeScript, Tailwind CSS 4, Canvas 2D, and optional
-server-side integrations with Airtable and xAI.
+Built with Next.js 16, React 19, TypeScript, Tailwind CSS 4, SVG, and optional
+server-side integrations with Airtable.
 
 ## Why this exists
 
@@ -18,11 +18,12 @@ keeping the experience visually coherent.
 
 ## Product highlights
 
-- **Interactive signal field** — a deterministic Canvas 2D network reveals itself
-  around the pointer and gradually resolves into the density of the YES mark. The
-  animation responds to reduced-motion preferences.
-- **Searchable builder catalog** — a WebGL particle field resolves into a ranked grid.
-  Semantic search runs entirely in the browser against vectors baked at build time, so
+- **Evidence-led launch** — the Wall Street Journal story about the Yale Hacker House
+  opens the experience as a newspaper clipping beside a rotatable 3D light-field globe.
+  New Haven and San Francisco are labeled and the reveal settles in under a second.
+- **Portrait-first builder directory** — profiles with available images lead the wall,
+  followed by deliberate monogram profiles. Semantic search runs entirely in the
+  browser against vectors baked at build time, so
   intent-based queries like "helping blind people navigate" rank the right builders
   with no API key, no server round-trip, and no record of the query. Keyword ranking
   covers the case where the model cannot be fetched.
@@ -36,29 +37,29 @@ keeping the experience visually coherent.
 - **Portraits with provenance** — the directory's portraits were collected from public
   pages rather than submitted, so each records the page it came from and can be removed
   by deleting one file. Builders without one render a monogram rather than a stand-in.
+- **Honest program states** — Common Room replaces Aude and is visibly marked pending;
+  the site does not imply that applications or cohort dates exist before they do.
 - **Graceful local mode** — the public experience builds without third-party
-  credentials. Optional forms, live feeds, and processed portraits activate only when
-  their configuration is present; search needs none of it.
+  credentials. Optional forms, feeds, and processed portraits activate only when their
+  configuration is present; search needs none of it.
 
 ## Pages
 
 | Route | Purpose |
 | --- | --- |
-| `/` | Interactive landing experience |
-| `/manifesto` | YES's point of view and invitation to build |
-| `/aude` | Full-viewport introduction to the Aude cohort |
-| `/aude/apply` | Aude application form |
-| `/catalog` | Searchable builder directory and dossier browser |
+| `/` | 3D globe launch, WSJ hook, people preview, and complete Press section |
+| `/thesis` | The YES Thesis and invitation to build |
+| `/common-room` | Pending program status and the open path into YES |
+| `/catalog` | Portrait-first builder directory and dossier browser |
 | `/catalog/[slug]` | Direct, shareable builder dossier |
-| `/reservoir` | Editorial and media archive |
 | `/reservoir/[slug]` | Locally hosted Reservoir entry |
 | `/work` | Proof-point page. No longer linked from anywhere — reachable only by URL |
 | `/enter` | General community intake form |
 | `/builders` | Consent-gated ledger that stays dark below its minimum entry count |
 
-`/work`, `/enter`, and `/builders` are live routes but are intentionally omitted from
-the primary navigation. They are reached through the site's invitation flow or by a
-direct link; `/builders` is also gated by a minimum consented-entry count.
+`/manifesto`, `/aude`, and `/aude/apply` permanently redirect to the renamed public
+routes. `/reservoir` redirects to the homepage Press section. `/work` and `/builders` remain
+unlinked legacy routes; `/builders` is also gated by a minimum consented-entry count.
 
 ## Architecture
 
@@ -74,10 +75,9 @@ flowchart LR
   Build --> Static[Static pages and catalog dossiers]
 
   Browser --> Static
-  Browser --> Intake[Enter and Aude APIs]
+  Browser --> Intake[Join API]
   Intake -. configured .-> State[Airtable People and Log tables]
-  Browser --> Search[Search API]
-  Search -. configured .-> XAI[xAI]
+  Browser --> Search[In-browser semantic search]
 ```
 
 The application is static-first, not a static export. Content pages and dossiers are
@@ -100,12 +100,9 @@ credentials never need to reach the browser.
   per-search cost and a privacy surface at once, in exchange for a lazily-fetched model.
   `lib/catalog/embed-text.ts` is shared by the bake and the browser, because a drift
   between the two turns cosine scores into noise without failing anything.
-- **The hero is the entry; the wall is already behind it.** The scaffold gated the grid
-  behind a search, so the faces cost a click and a wait. Deleting the hero to fix that
-  threw away the moment the page is built around. Both hold now: the hero gets the first
-  screen, and every builder is in the SAME server-rendered HTML directly beneath it —
-  one scroll away, nothing to load. The embedding model is fetched only when someone
-  focuses the search field, so a visitor who came to browse never pays for it.
+- **The wall comes first.** Every builder is server-rendered beneath a short page
+  introduction. Available portraits appear first, the grid filters immediately while
+  typing, and the embedding model is fetched only when someone focuses the search.
 - **Search cuts, browsing does not.** A search returns its strong matches only, capped at
   24, using a floor relative to the best score. Ranking the whole directory made every search
   look identical below the fold and implied a relevance the tail did not have. A floor of
@@ -187,7 +184,7 @@ app/                    Pages, layouts, and request-time API routes
 components/             Interactive and presentational components
 content/catalog/        Version-controlled directory source and generated JSON
 content/reservoir/      Git-backed editorial entries
-content/manifesto.ts    Approved manifesto copy and rendering blocks
+content/manifesto.ts    Approved Thesis copy and rendering blocks (legacy filename)
 lib/airtable/           Server-only Airtable reads, writes, and audit logging
 lib/                    Content loaders, schemas, search corpus, and visual models
 scripts/                Catalog import, portrait processing, and policy checks

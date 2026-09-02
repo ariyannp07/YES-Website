@@ -99,9 +99,9 @@ The Airtable-backed catalog path reads only this allowlist:
 
 ### Intake and audit fields
 
-`/api/enter` and `/api/aude` write to `People`. The general form may set
-`public_catalog_ok` only from the submitter's checkbox; the Aude form does not ask
-for catalog consent and always writes it as false.
+`/api/enter` writes to `People`. The general form may set `public_catalog_ok` only from
+the submitter's checkbox. `/api/aude` is retained as a legacy endpoint but has no
+public application route while Common Room is pending.
 
 Successful and failed intake attempts also try to append a row to `Log` with:
 
@@ -131,7 +131,7 @@ Every portrait's source page and image URL is recorded in
 `content/catalog/portraits/SOURCES.csv`. Honouring a removal request is deleting one
 JPEG, dropping its row from `portraits.json`, and re-running the bake.
 
-The remaining 83 builders render a monogram — initials in the display serif over a
+The remaining 70 builders render a monogram — initials in the display serif over a
 gradient keyed to the name. That is the normal state, not a missing asset.
 
 To collect more:
@@ -204,18 +204,17 @@ defaults to false, which leaves a visible draft notice on locally hosted content
 Before treating a deployment as production-ready:
 
 1. Resolve every catalog publication-review note and inspect the generated JSON diff.
-2. Reconcile the team-count claim: the manifesto currently says four teams completed
-   rounds totaling $17 million, while the landing and work content say five teams and
-   more than $17 million. Verify the source rather than choosing a number by inference.
+2. Reconcile the legacy team-count claim: the Thesis says four teams completed rounds
+   totaling $17 million, while the unlinked work page says five teams raised more than
+   $17 million. Verify the source rather than choosing a number by inference.
 3. Confirm every public claim, link, name, and affiliation with an approved source.
 4. Confirm `approved` flags reflect human editorial sign-off; do not use the flag to
    bypass review.
 5. Generate portraits if the Airtable feed changed.
 6. Run `npm run check` and `npm run build` in the deployment environment.
-7. Exercise the landing, catalog search, direct dossier URLs, Reservoir, and both forms
+7. Exercise the launch, People search, direct dossier URLs, Press, and Join form
    with keyboard navigation and reduced motion enabled.
-8. Set `NEXT_PUBLIC_SHOW_PALETTE_TOGGLE=false` unless the deployment is explicitly a
-   palette review. Visually approve the selected palette at mobile and desktop sizes.
+8. Visually approve the selected palette at mobile and desktop sizes.
 9. Verify that `/builders` should be discoverable before adding it to navigation.
 
 ## Current limitations
