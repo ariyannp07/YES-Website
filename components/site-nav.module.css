@@ -70,6 +70,53 @@
   text-transform: uppercase;
 }
 
+.name {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.42em;
+  white-space: nowrap;
+  transition: gap 520ms var(--ease-out);
+}
+
+.word {
+  display: inline-flex;
+  min-width: 0;
+}
+
+.initial,
+.remainder {
+  display: inline-block;
+}
+
+.remainder {
+  overflow: hidden;
+  opacity: 1;
+  white-space: nowrap;
+  transition: max-width 520ms var(--ease-out), opacity 140ms ease-out;
+  will-change: max-width, opacity;
+}
+
+.word:nth-child(1) .remainder {
+  max-width: 2.45em;
+}
+
+.word:nth-child(2) .remainder {
+  max-width: 10.15em;
+}
+
+.word:nth-child(3) .remainder {
+  max-width: 4.75em;
+}
+
+.condensedName {
+  gap: 0;
+}
+
+.condensedName .word .remainder {
+  max-width: 0;
+  opacity: 0;
+}
+
 .nav {
   display: flex;
   align-items: center;
@@ -170,6 +217,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .header,
+  .name,
+  .remainder,
   .nav a::after,
   .join {
     transition: none;

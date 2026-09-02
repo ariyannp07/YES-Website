@@ -38,7 +38,25 @@ export function SiteNav() {
           <svg viewBox="0 0 100 100" aria-hidden="true">
             <path d={SIGMA_PATH} fill="currentColor" />
           </svg>
-          <span className={styles.name}>Yale Entrepreneurial Society</span>
+          <span
+            className={`${styles.name} ${
+              isHome && hasScrolled ? styles.condensedName : ''
+            }`}
+            aria-label="Yale Entrepreneurial Society"
+          >
+            <span className={styles.word} aria-hidden="true">
+              <span className={styles.initial}>Y</span>
+              <span className={styles.remainder}>ale</span>
+            </span>
+            <span className={styles.word} aria-hidden="true">
+              <span className={styles.initial}>E</span>
+              <span className={styles.remainder}>ntrepreneurial</span>
+            </span>
+            <span className={styles.word} aria-hidden="true">
+              <span className={styles.initial}>S</span>
+              <span className={styles.remainder}>ociety</span>
+            </span>
+          </span>
           <span className={styles.shortName}>YES</span>
         </Link>
 
