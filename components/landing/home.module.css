@@ -41,16 +41,6 @@
   align-self: center;
 }
 
-.launchStatement p {
-  margin: 0 0 1.1rem;
-  color: var(--blue-bright);
-  font-size: var(--text-micro);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  opacity: 0;
-  animation: launch-in 300ms var(--ease-out) 40ms forwards;
-}
-
 .launch h1 {
   max-width: 13ch;
   margin: 0;
@@ -550,7 +540,6 @@
     grid-column: 1;
   }
 
-  .launchStatement p,
   .launchCharacter {
     opacity: 1;
     animation: none;
@@ -559,10 +548,6 @@
   .launchStatement {
     grid-row: 2;
     align-self: start;
-  }
-
-  .launchStatement p {
-    margin-bottom: 0.65rem;
   }
 
   .launch h1 {
@@ -678,7 +663,6 @@
     animation: none;
   }
 
-  .launchStatement p,
   .launchCharacter {
     opacity: 1;
     animation: none;
