@@ -34,16 +34,7 @@ export const CONTACT = {
   sofia: 'sst39@yale.edu',
 } as const
 
-/**
- * The interior nav. Build spec §2 includes the alumni page; §4's restatement
- * omits it. §2 governs — it is the show-don't-tell centerpiece, so it is
- * reachable. Named "Catalog" at the owners' direction rather than "Alumni".
- *
- * `hidden` pages stay routable but unlinked — the pattern /builders already
- * used while dark-shipping (build spec §3). Removing a tab is not the same as
- * deleting a page: every hidden route below is still reachable by link and
- * still resolves for anyone holding its URL.
- */
+/** The public structure. Hidden routes remain reachable but are not promoted. */
 export interface NavItem {
   readonly href: string
   readonly label: string
@@ -51,32 +42,20 @@ export interface NavItem {
 }
 
 export const NAV: readonly NavItem[] = [
-  { href: '/manifesto', label: 'Manifesto' },
-  { href: '/aude', label: 'Aude' },
-  { href: '/catalog', label: 'Catalog' },
-  { href: '/reservoir', label: 'Reservoir' },
-  // Unlinked, but live. See the note above `hidden`.
-  //
-  // /work no longer has an entry point at all: the "See the work" link at the
-  // end of the manifesto was removed at the owners' direction, and nothing
-  // else pointed at it. The route still resolves for anyone holding the URL,
-  // which is the whole point of `hidden`, but it is now orphaned rather than
-  // the second step of a funnel — worth knowing before assuming anyone reaches
-  // it. /enter, which was reached from the end of /work, is in the same
-  // position; it is still the Bazaar QR's destination (?src=bazaar), so it
-  // must keep resolving whatever the nav says.
+  { href: '/thesis', label: 'Thesis' },
+  { href: '/catalog', label: 'People' },
+  { href: '/common-room', label: 'Common Room' },
+  { href: '/#press', label: 'Press' },
+  // Unlinked legacy and consent-gated surfaces.
   { href: '/work', label: 'Work', hidden: true },
-  { href: '/enter', label: 'Enter', hidden: true },
+  { href: '/enter', label: 'Join YES', hidden: true },
   { href: '/builders', label: 'Builders', hidden: true },
 ] as const
 
 /** Below this many consented entries, /builders stays unlinked (build spec §3). */
 export const BUILDERS_MIN_ENTRIES = 15
 
-/**
- * Landing links. Build spec §3 default: `Manifesto` alone. Adding `Enter` here
- * is the owners' call and needs no other change.
- */
+/** Minimal fallback links consumed by archived landing prototypes. */
 export const LANDING_LINKS: readonly NavItem[] = [
-  { href: '/manifesto', label: 'Manifesto' },
+  { href: '/thesis', label: 'Thesis' },
 ] as const

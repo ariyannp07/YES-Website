@@ -1,307 +1,325 @@
 @import 'tailwindcss';
 
-/* ===========================================================================
-   YES — design tokens
-   ---------------------------------------------------------------------------
-   THIS FILE IS THE ONLY PLACE `font-size` MAY BE DECLARED.
-   scripts/check-type-scale.mjs fails the build on a font-size anywhere else.
-   Build spec §4: "define exactly two working text sizes per page — display and
-   small — plus the timestamp micro-size."
-   =========================================================================== */
-
-@theme inline {
-  --color-bg: var(--bg);
-  --color-fg: var(--fg);
-  --color-accent: var(--accent);
-  --color-muted: var(--muted);
-
-  /* Times New Roman everywhere, at the owners' direction.
-     
-     All three roles resolve to the same family now, so the distinction between
-     them is carried by size, weight, tracking and case rather than by typeface.
-     The names are kept because every component references them; collapsing the
-     tokens would mean touching forty-odd rules to say the same thing.
-
-     Times New Roman ships on Windows and macOS but not on Linux or Android.
-     Liberation Serif, Nimbus Roman and Tinos are metric-compatible stand-ins,
-     so the layout holds rather than reflowing on those platforms. */
-  --font-display: 'Times New Roman', Times, 'Liberation Serif', 'Nimbus Roman', Tinos, serif;
-  --font-body: 'Times New Roman', Times, 'Liberation Serif', 'Nimbus Roman', Tinos, serif;
-  --font-mono: 'Times New Roman', Times, 'Liberation Serif', 'Nimbus Roman', Tinos, serif;
-}
-
-/* ---------------------------------------------------------------------------
-   Palette A — Night (default)
-
-   DEVIATION FROM BUILD SPEC §4. The spec pairs a near-black background with
-   Yale blue #00356B as the accent AND requires WCAG AA (§6). Those cannot both
-   hold: #00356B on #0A0A0A measures 1.62:1, far under the 4.5:1 floor. Night
-   therefore uses Yale blue at a display tint — same hue, lifted to 5.96:1.
-   Palette B (Paper) uses the canonical #00356B unchanged at 11.41:1.
-   --------------------------------------------------------------------------- */
-:root,
-[data-palette='night'] {
-  --bg: #0a0a0a;
-  --fg: #f4f1ea;
-  --accent: #5b8fd4;
-  --muted: #7a7a76;
-  --field-mark: #f4f1ea;
-}
-
-/* Palette B — Paper */
-[data-palette='paper'] {
-  --bg: #faf7f2;
-  --fg: #14140f;
-  --accent: #00356b;
-  --muted: #5f5f58;
-  --field-mark: #14140f;
-}
-
 :root {
-  /* Two working sizes, plus the timestamp micro-size. Nothing between them. */
-  --text-display: clamp(2.25rem, 5.5vw, 4rem);
+  --blue: #00356b;
+  --blue-deep: #001f3f;
+  --blue-bright: #7da8cf;
+  --signal: #d1b97e;
+  --night: #02070d;
+  --night-raised: #06111e;
+  --ink: #f0f3f5;
+  --muted: #90a2b2;
+  --soft: #102438;
+  --line: #22364a;
+  --surface: #081522;
+  --bg: var(--night);
+  --fg: var(--ink);
+  --accent: var(--blue-bright);
+  --white: #ffffff;
+  --error: #a32121;
+  --field-mark: var(--blue);
+
+  --landing-fg: #f4f7fa;
+  --landing-mid: #9eb5c9;
+  --landing-dim: #62798e;
+  --landing-accent: #d1b97e;
+  --landing-gold: #d8bd7c;
+
+  --font-display: var(--font-archivo), Arial, sans-serif;
+  --font-body: var(--font-archivo), Arial, sans-serif;
+  --font-mono: var(--font-archivo), Arial, sans-serif;
+
+  --text-hero: clamp(3.1rem, 8vw, 6rem);
+  --text-launch: clamp(3rem, 5.1vw, 5.15rem);
+  --text-impact: clamp(2.05rem, 5.6vw, 5.25rem);
+  --text-paper-title: clamp(1.35rem, 2.2vw, 2.05rem);
+  --text-paper-claim: clamp(1.15rem, 1.8vw, 1.55rem);
+  --text-display: clamp(2.85rem, 6vw, 5.5rem);
+  --text-section: clamp(2.15rem, 4.5vw, 4rem);
+  --text-title: clamp(1.55rem, 2.7vw, 2.5rem);
+  --text-lead: clamp(1.15rem, 1.9vw, 1.55rem);
+  --text-body: 1rem;
+  --text-thesis-emphasis: clamp(1.05rem, 1.3vw, 1.2rem);
   --text-small: 0.9375rem;
-  --text-micro: 0.6875rem;
+  --text-label: 0.875rem;
+  --text-micro: 0.75rem;
 
-  --measure: 34rem;
-  --pad: clamp(1.25rem, 4vw, 3.5rem);
+  --text-card-name: 1.25rem;
+  --text-card-role: 0.875rem;
+  --text-card-body: 0.875rem;
+  --text-ui: 0.8125rem;
+  --text-rank: 0.6875rem;
+  --text-chip: 0.6875rem;
+  --text-monogram: 3.25rem;
+  --text-landing-marker: 0.6875rem;
+  --text-landing-link: 0.75rem;
+  --text-landing-motto: 0.875rem;
+  --text-landing-title: 1.25rem;
+
+  --site-width: 96rem;
+  --content-width: 76rem;
+  --measure: 44rem;
+  --gutter: clamp(1.25rem, 4vw, 4.5rem);
+  --pad: var(--gutter);
+  --nav-height: 4.75rem;
+  --section-space: clamp(5.5rem, 10vw, 10rem);
+
+  --radius-sm: 0.35rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+
+  --duration-fast: 180ms;
+  --duration-medium: 360ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --z-sticky: 30;
+  --z-backdrop: 40;
+  --z-modal: 50;
 }
 
-/* ---------------------------------------------------------------------------
-   The catalog — its own scope.
-
-   Ported from the yes-catalog scaffold at the owners' direction. Two things
-   about it depart from the rest of the site, both deliberate and both confined
-   to this scope so nothing else inherits them:
-
-   1. A RICHER TYPE SCALE. Build spec §4 allows display + small + micro. A dense
-      card grid genuinely needs more steps than that — a name, a role line, a
-      body clamp, a chip, a rank marker. They are declared HERE, as tokens,
-      rather than as literal sizes in markup, so scripts/check-type-scale.mjs
-      still holds: one file defines the scale, and a component may only
-      reference it. Three or more mid-range sizes on the SAME element is still
-      the thing being prevented.
-
-   2. DARK-COMMITTED. The scaffold's design is built on a deep Yale-blue field;
-      it has no light reading. The Paper palette therefore does not repaint the
-      catalog, it keeps these values.
-   --------------------------------------------------------------------------- */
-[data-scope='catalog'] {
-  --cat-night: #030910;
-  --cat-surface: #081627;
-  --cat-yale: #00356b;
-  --cat-azure: #286dc0;
-  --cat-sky: #6db1ff;
-  --cat-ice: #9fc2e8;
-  --cat-frost: #eaf2fb;
-  --cat-gold: #d8b36a;
-
-  --text-hero: clamp(2rem, 5vw, 3.4rem);
-  --text-card-name: 1.35rem;
-  --text-card-role: 0.845rem;
-  --text-card-body: 0.8125rem;
-  --text-ui: 0.75rem;
-  --text-rank: 0.625rem;
-  --text-chip: 0.6rem;
-  --text-monogram: 3.5rem;
-
-  background: var(--cat-night);
-  color: var(--cat-frost);
-}
-
-/* The field the cards sit on: a soft Yale-blue bloom over near-black, with the
-   edges falling away so the grid reads as lit from the centre. */
-.cat-vignette {
-  background:
-    radial-gradient(ellipse 90% 65% at 50% 38%, rgba(40, 109, 192, 0.14), transparent 60%),
-    radial-gradient(ellipse 120% 90% at 50% 110%, rgba(0, 53, 107, 0.35), transparent 55%),
-    radial-gradient(ellipse 140% 120% at 50% 50%, transparent 55%, rgba(2, 6, 12, 0.85) 100%);
-}
-
-/* The live query shimmers while the model thinks. Motion-sensitive users get a
-   flat colour instead — see the reduced-motion block at the end of this file. */
-.cat-shimmer {
-  background: linear-gradient(
-    100deg,
-    var(--cat-ice) 20%,
-    #ffffff 40%,
-    var(--cat-sky) 50%,
-    #ffffff 60%,
-    var(--cat-ice) 80%
-  );
-  background-size: 220% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: cat-shimmer 2.6s linear infinite;
-}
-
-@keyframes cat-shimmer {
-  0% { background-position: 120% 0; }
-  100% { background-position: -120% 0; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .cat-shimmer {
-    animation: none;
-    background: none;
-    -webkit-text-fill-color: var(--cat-ice);
-    color: var(--cat-ice);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
-  }
+* {
+  box-sizing: border-box;
 }
 
 html {
-  background: var(--bg);
   color: var(--fg);
+  background: var(--bg);
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-height) + 1rem);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
 body {
-  background: var(--bg);
-  color: var(--fg);
-  font-family: var(--font-body);
-  font-size: var(--text-small);
-  line-height: 1.65;
-  margin: 0;
   min-height: 100dvh;
+  margin: 0;
+  color: var(--fg);
+  background: var(--bg);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.6;
 }
 
-/* --------------------------------------------------------------------------
-   One link style, site-wide. Text, underlined. Never a button, never a pill.
-   Build spec §1: "Links are text — underlined or bracketed, never buttons."
-   -------------------------------------------------------------------------- */
+body:has([data-thesis-page]) {
+  height: 100dvh;
+  overflow: hidden;
+}
+
+body:has([data-thesis-page]) .site-shell {
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+}
+
+body:has([data-thesis-page]) [data-site-footer] {
+  display: none;
+}
+
+body:has([data-thesis-page]) .site-main {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-group(thesis-paper) {
+  animation-duration: 560ms;
+  animation-timing-function: var(--ease-out);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
 a {
   color: var(--accent);
-  text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.25em;
-  transition: text-decoration-color 180ms ease, opacity 180ms ease;
+  text-underline-offset: 0.22em;
 }
 
 a:hover {
   text-decoration-color: transparent;
 }
 
-a:focus-visible {
-  outline: 2px solid var(--accent);
+:focus-visible {
+  outline: 3px solid var(--signal);
   outline-offset: 3px;
-  border-radius: 1px;
 }
 
-/* Type roles. These are the only three. */
-.t-display {
-  font-family: var(--font-display);
-  font-size: var(--text-display);
-  line-height: 1.02;
-  letter-spacing: -0.015em;
-  font-weight: 400;
+::selection {
+  color: var(--white);
+  background: var(--blue-bright);
 }
 
-.t-small {
-  font-size: var(--text-small);
-  line-height: 1.65;
+.site-shell {
+  display: flex;
+  min-height: 100dvh;
+  flex-direction: column;
 }
 
-.t-micro {
-  font-family: var(--font-mono);
-  /* The timestamp reruns every second. Times is proportional, so without
-     tabular figures the line would visibly twitch as digits change width. */
-  font-variant-numeric: tabular-nums;
-  font-size: var(--text-micro);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  line-height: 1.4;
+.site-main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
 }
 
-/* Whitespace is the layout system. No cards, no boxes, no shadows, no radii. */
+.site-container {
+  width: min(100%, var(--site-width));
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+}
+
+.content-container {
+  width: min(100%, var(--content-width));
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+}
+
 .measure {
   max-width: var(--measure);
 }
 
-/* Long-form: single column, generous line height, no images (build spec §3). */
+.page-top {
+  width: min(100%, var(--content-width));
+  margin-inline: auto;
+  padding: clamp(4.5rem, 9vw, 8rem) var(--gutter) var(--section-space);
+}
+
+.t-display {
+  font-family: var(--font-display);
+  font-size: var(--text-display);
+  font-weight: 720;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.t-small {
+  font-size: var(--text-small);
+  line-height: 1.7;
+}
+
+.t-micro {
+  font-size: var(--text-micro);
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+}
+
 .prose {
-  line-height: 1.85;
+  max-width: 70ch;
+  font-size: var(--text-body);
+  line-height: 1.82;
+  text-wrap: pretty;
 }
 
 .prose p {
-  margin: 0 0 1.55em;
+  margin: 0 0 1.5em;
 }
 
 .prose p:last-child {
   margin-bottom: 0;
 }
 
-/* The four "Every" lines. Anaphora, set as its own block — no bullets, no rule,
-   no box. Escalation by repetition, not by decoration (canon 03 §2.5). */
 .standard p {
   margin: 0 0 0.75em;
 }
 
-/* The one interior page rhythm: a generous top margin instead of a page header.
-   If a page feels empty, it's working. */
-.page-top {
-  padding-top: clamp(3rem, 12vh, 8rem);
+.button-primary,
+.button-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  min-height: 3.25rem;
+  padding: 0.85rem 1rem;
+  font-size: var(--text-label);
+  font-weight: 740;
+  text-decoration: none;
+  transition: background var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
 }
 
-::selection {
-  background: var(--accent);
-  color: var(--bg);
+.button-primary {
+  color: var(--night);
+  background: var(--signal);
 }
 
-/* ===========================================================================
-   LANDING SCOPE — the only part of this file the landing prototype may change.
-
-   scripts/check-locked.mjs freezes every byte ABOVE this marker against the
-   lock baseline. The rest of the site reads its tokens from up there, so a
-   change above this line would reach pages the prototype is not allowed to
-   touch; a change below it can only reach the front door.
-
-   Font sizes still have to be declared in THIS file (check-type-scale), which
-   is exactly why the landing needs a region here rather than its own file.
-   =========================================================================== */
-
-/* The landing runs its own display size. Same token re-scoped, not a new one. */
-[data-scope='landing'] {
-  --text-display: clamp(1.75rem, 4.6vw, 3.5rem);
-  height: 100dvh;
-  overflow: hidden;
-
-  /* The globe front door.
-
-     Three sizes, all monospace and widely tracked: the organisation, the
-     thesis, the way in. The scale is tight on purpose — at this tracking the
-     difference between the name and the motto is carried by colour and
-     spacing more than by size, which is what keeps it feeling engraved
-     rather than shouted. */
-  /* The vw term collapses on a phone — 1.05vw of a 390px screen is 4px, so
-     every line bottomed out on its rem floor at about 9.6px and the whole
-     composition became unreadable at exactly the size most people see it.
-     The floors now carry mobile and the vw term only adds on wider screens. */
-  --text-landing-title: clamp(0.82rem, 1.5vw, 1.18rem);
-  --text-landing-motto: clamp(0.7rem, 1vw, 0.86rem);
-  --text-landing-link: clamp(0.68rem, 0.9vw, 0.8rem);
-  --text-landing-marker: clamp(0.76rem, 0.95vw, 0.9rem);
-
-  --landing-fg: #eaf2fb;
-  --landing-mid: #9fc2e8;
-  --landing-accent: #7fb3e8;
-  --landing-dim: #3f5f86;
-  --landing-gold: #ffb257;
+.button-primary:hover {
+  color: var(--white);
+  background: var(--blue);
+  transform: translateY(-2px);
 }
 
-/* Archived prototype: the Portal's threshold line is that page's display size. */
-[data-scope='portal-threshold'] {
-  --text-display: clamp(1.9rem, 4.6vw, 3.4rem);
+.button-secondary {
+  color: var(--ink);
+  border: 1px solid var(--ink);
 }
 
-/* "No scroll. The page is the viewport." (build spec §3) */
-body:has([data-scope='landing']) {
-  overflow: hidden;
+.button-secondary:hover {
+  color: var(--night);
+  background: var(--ink);
+  transform: translateY(-2px);
+}
+
+.status-pending {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: fit-content;
+  padding: 0.45rem 0.65rem;
+  color: var(--night);
+  background: var(--signal);
+  font-size: var(--text-micro);
+  font-weight: 760;
+}
+
+.status-pending::before {
+  content: '';
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+@media (max-width: 48rem) {
+  :root {
+    --nav-height: 7.7rem;
+  }
+
+  .page-top {
+    padding-top: 4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  ::view-transition-group(thesis-paper) {
+    animation-duration: 1ms;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

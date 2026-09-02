@@ -5,26 +5,28 @@ import embeddings from '@/content/catalog/embeddings.json'
 import { allAlumni } from '@/lib/alumni'
 
 export const metadata: Metadata = {
-  title: 'Catalog',
+  title: 'People',
 }
 
 /**
- * The catalog.
+ * The People directory.
  *
  * `force-static` guarantees the consent-gated feed is read at BUILD time only,
  * so a newly consented person appears when a human deploys — never on a timer.
  * Canon 05-human-ai-policy R1.
  *
- * The interactive surface is a client component, but the DATA is resolved here
- * on the server and shipped as props: the wall is a fixed set of 116 people
- * known at build time, so there is nothing to fetch at runtime and no loading
- * state to design. Search runs in the browser against vectors baked by
- * `npm run embed`.
+ * The data is resolved here on the server and shipped as props. Profiles with
+ * available portraits lead the initial browse order; semantic search still runs
+ * in the browser against vectors baked by `npm run embed`.
  */
 export const dynamic = 'force-static'
 
 export default async function CatalogPage() {
-  const people = await allAlumni()
+  const people = [...(await allAlumni())].sort(
+    (left, right) =>
+      Number(Boolean(right.portraitColor)) - Number(Boolean(left.portraitColor)) ||
+      Number(Boolean(right.featured)) - Number(Boolean(left.featured)),
+  )
 
   return (
     <CatalogExperience

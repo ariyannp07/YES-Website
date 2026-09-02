@@ -1,0 +1,24 @@
+.page {
+  display: grid;
+  min-height: calc(100svh - var(--nav-height));
+  place-items: center;
+  padding: var(--section-space) var(--gutter);
+  background: var(--bg);
+}
+
+.hero {
+  width: min(100%, 50rem);
+  text-align: center;
+}
+
+.hero :global(.status-pending) {
+  margin-inline: auto;
+}
+
+.hero h1 {
+  margin: 1.75rem 0 0;
+  font-size: var(--text-display);
+  font-weight: 780;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}

@@ -1,0 +1,93 @@
+.page {
+  background: var(--bg);
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(3rem, 8vw, 9rem);
+  align-items: end;
+  padding: clamp(5rem, 10vw, 9rem)
+    max(var(--gutter), calc((100vw - var(--site-width)) / 2 + var(--gutter)));
+  color: var(--white);
+  background: var(--blue);
+}
+
+.header p,
+.header h1 {
+  margin: 0;
+}
+
+.header > div > p {
+  margin-bottom: 1.25rem;
+  color: var(--signal);
+  font-size: var(--text-label);
+  font-weight: 740;
+}
+
+.header h1 {
+  max-width: 12ch;
+  font-size: var(--text-display);
+  font-weight: 780;
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.header > p {
+  max-width: 34rem;
+  color: rgb(255 255 255 / 72%);
+  font-size: var(--text-lead);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.formSection {
+  display: grid;
+  grid-template-columns: minmax(16rem, 0.7fr) minmax(0, 1.3fr);
+  gap: clamp(3rem, 8vw, 9rem);
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: var(--section-space) var(--gutter);
+}
+
+.formSection aside {
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--ink);
+}
+
+.formSection h2 {
+  margin: 0;
+  font-size: var(--text-title);
+  font-weight: 740;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.formSection dl {
+  margin: 2rem 0 0;
+}
+
+.formSection dl > div {
+  padding: 1rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.formSection dt {
+  font-weight: 720;
+}
+
+.formSection dd {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  font-size: var(--text-label);
+  line-height: 1.5;
+}
+
+@media (max-width: 48rem) {
+  .header,
+  .formSection {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+}

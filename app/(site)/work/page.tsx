@@ -32,7 +32,7 @@ export default function WorkPage() {
       ))}
 
       <p className="t-small" style={{ margin: 'clamp(3rem, 10vh, 6rem) 0 0' }}>
-        <Link href="/enter">Enter →</Link>
+        <Link href="/enter">Join YES →</Link>
       </p>
     </div>
   )

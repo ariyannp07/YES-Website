@@ -1,0 +1,139 @@
+.dossier {
+  width: min(100%, 68rem);
+  margin: 0 auto;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: minmax(16rem, 0.75fr) minmax(0, 1.25fr);
+  gap: clamp(2.5rem, 6vw, 6rem);
+  align-items: end;
+}
+
+.portrait {
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--blue-deep);
+}
+
+.portrait img,
+.portrait > div {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.intro > p,
+.intro h1,
+.intro > span {
+  margin: 0;
+}
+
+.intro > p {
+  margin-bottom: 1.25rem;
+  color: var(--blue-bright);
+  font-size: var(--text-label);
+  font-weight: 700;
+}
+
+.intro h1 {
+  font-size: var(--text-display);
+  font-weight: 780;
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.intro > span {
+  display: block;
+  max-width: 34rem;
+  margin-top: 1.5rem;
+  color: var(--muted);
+  font-size: var(--text-lead);
+  line-height: 1.5;
+}
+
+.proof {
+  margin-top: clamp(4rem, 8vw, 7rem);
+  padding: clamp(2rem, 5vw, 4rem);
+  color: var(--white);
+  background: var(--blue);
+}
+
+.proof figure {
+  margin: 0;
+}
+
+.proof img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.proof figcaption,
+.proof span {
+  display: block;
+  margin-top: 0.8rem;
+  color: rgb(255 255 255 / 62%);
+  font-size: var(--text-label);
+}
+
+.proof p {
+  margin: 0;
+  font-size: var(--text-section);
+  font-weight: 760;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.proof a {
+  color: var(--signal);
+  font-size: var(--text-lead);
+  font-weight: 720;
+}
+
+.story {
+  max-width: var(--measure);
+  margin: clamp(4rem, 8vw, 7rem) auto 0;
+  font-size: var(--text-body);
+  line-height: 1.8;
+  text-wrap: pretty;
+}
+
+.story > p {
+  margin: 0;
+}
+
+.story blockquote {
+  margin: 3rem 0 0;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+  color: var(--blue-bright);
+  font-size: var(--text-lead);
+  font-weight: 650;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.links a {
+  font-size: var(--text-label);
+  font-weight: 720;
+}
+
+@media (max-width: 48rem) {
+  .header {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .portrait {
+    max-width: 24rem;
+  }
+}

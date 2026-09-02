@@ -56,7 +56,7 @@ export default async function EntryPage({
       />
 
       <p className="t-small" style={{ margin: '4.5rem 0 0' }}>
-        <Link href="/reservoir">← The Reservoir</Link>
+        <Link href="/#press">← Press</Link>
       </p>
     </article>
   )

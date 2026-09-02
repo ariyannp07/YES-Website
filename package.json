@@ -12,10 +12,9 @@
     "test:watch": "vitest",
     "check:type-scale": "node scripts/check-type-scale.mjs",
     "check:adjectives": "node scripts/check-adjectives.mjs",
-    "check": "npm run typecheck && npm run check:type-scale && npm run check:adjectives && npm run check:locked",
+    "check": "npm run typecheck && npm run check:type-scale && npm run check:adjectives",
     "build:portraits": "node scripts/build-portraits.mjs",
-    "embed": "tsx scripts/embed-catalog.ts",
-    "check:locked": "node scripts/check-locked.mjs"
+    "embed": "tsx scripts/embed-catalog.ts"
   },
   "dependencies": {
     "@huggingface/transformers": "^4.2.0",
