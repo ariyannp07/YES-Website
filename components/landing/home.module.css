@@ -232,13 +232,15 @@
 .primaryStat {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: center;
   gap: clamp(1.25rem, 2vw, 2rem);
   min-height: clamp(13rem, 20vw, 20rem);
   padding: clamp(1.5rem, 3vw, 3rem);
   color: var(--white);
   background: var(--blue-deep);
   border: 1px solid var(--line);
+  text-align: center;
 }
 
 .primaryStat span {
@@ -267,8 +269,9 @@
 
 .secondaryStats > div {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: end;
+  grid-template-columns: auto minmax(0, 18ch);
+  align-items: center;
+  justify-content: center;
   gap: clamp(1.5rem, 3vw, 3rem);
   padding: clamp(1.4rem, 2.5vw, 2.5rem);
 }
@@ -643,8 +646,10 @@
   .secondaryStats > div {
     grid-template-columns: 1fr;
     align-content: space-between;
+    justify-items: center;
     gap: 1.2rem;
     min-height: 9rem;
+    text-align: center;
   }
 
   .secondaryStats > div + div {
