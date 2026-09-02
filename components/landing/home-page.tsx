@@ -23,7 +23,6 @@ export async function HomePage() {
       <section className={styles.launch} aria-labelledby="launch-title">
         <div className={styles.launchInner}>
           <div className={styles.launchStatement} data-landing-copy="">
-            <p>Est. 1999</p>
             <h1 id="launch-title" aria-label="Build the future, don’t just study for it.">
               {LAUNCH_WORDS.map((word, wordIndex) => {
                 const precedingCharacters = LAUNCH_WORDS.slice(0, wordIndex).join('').length
