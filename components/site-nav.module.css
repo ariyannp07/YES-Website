@@ -69,11 +69,14 @@
 }
 
 .name {
+  --wordmark-move-duration: 780ms;
+  --wordmark-fade-duration: 210ms;
+
   display: inline-flex;
   align-items: baseline;
   gap: 0.42em;
   white-space: nowrap;
-  transition: gap 520ms var(--ease-out);
+  transition: gap var(--wordmark-move-duration) var(--ease-out);
 }
 
 .word {
@@ -90,7 +93,9 @@
   overflow: hidden;
   opacity: 1;
   white-space: nowrap;
-  transition: max-width 520ms var(--ease-out), opacity 140ms ease-out;
+  transition:
+    max-width var(--wordmark-move-duration) var(--ease-out),
+    opacity var(--wordmark-fade-duration) ease-out var(--wordmark-move-duration);
   will-change: max-width, opacity;
 }
 
@@ -99,7 +104,7 @@
 }
 
 .word:nth-child(2) .remainder {
-  max-width: 10.15em;
+  max-width: 10.75em;
 }
 
 .word:nth-child(3) .remainder {
@@ -113,6 +118,9 @@
 .condensedName .word .remainder {
   max-width: 0;
   opacity: 0;
+  transition:
+    max-width var(--wordmark-move-duration) var(--ease-out),
+    opacity var(--wordmark-fade-duration) ease-out;
 }
 
 .nav {
