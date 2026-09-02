@@ -3,11 +3,10 @@
   top: 0;
   z-index: var(--z-sticky);
   color: var(--white);
-  background: rgb(2 11 21 / 96%);
+  background-color: rgb(2 11 21 / 96%);
   border-bottom: 1px solid rgb(255 255 255 / 16%);
-  transition: opacity var(--duration-medium) var(--ease-out),
-    transform var(--duration-medium) var(--ease-out),
-    visibility var(--duration-medium) var(--ease-out);
+  transition: background-color var(--duration-medium) var(--ease-out),
+    border-color var(--duration-medium) var(--ease-out);
 }
 
 .homeHeader {
@@ -16,17 +15,15 @@
   left: 0;
 }
 
-.hidden {
-  visibility: hidden;
-  opacity: 0;
+.homeHeader.hidden {
   pointer-events: none;
-  transform: translateY(-100%);
+  background-color: transparent;
+  border-bottom-color: transparent;
 }
 
-.visible {
-  visibility: visible;
-  opacity: 1;
-  transform: translateY(0);
+.homeHeader.hidden .brand {
+  color: rgb(255 255 255 / 78%);
+  pointer-events: auto;
 }
 
 .inner {
@@ -50,6 +47,7 @@
   font-weight: 700;
   letter-spacing: -0.02em;
   text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
 }
 
 .brand svg {
@@ -121,6 +119,19 @@
   display: flex;
   align-items: center;
   gap: clamp(1rem, 2.4vw, 2.25rem);
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-medium) var(--ease-out),
+    visibility var(--duration-fast) var(--ease-out);
+}
+
+.homeHeader.hidden .nav,
+.homeHeader.hidden .join {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-0.35rem);
 }
 
 .nav a {
@@ -168,7 +179,9 @@
   font-weight: 750;
   text-decoration: none;
   transition: background var(--duration-fast) var(--ease-out),
-    transform var(--duration-fast) var(--ease-out);
+    transform var(--duration-fast) var(--ease-out),
+    opacity var(--duration-fast) var(--ease-out),
+    visibility var(--duration-fast) var(--ease-out);
 }
 
 .join:hover {
@@ -181,12 +194,25 @@
     grid-template-columns: 1fr auto auto;
   }
 
+  .homeHeader.hidden .nav,
+  .homeHeader.hidden .join {
+    position: absolute;
+  }
+
   .name {
     display: none;
   }
 
   .shortName {
     display: inline;
+  }
+
+  .homeName {
+    display: inline-flex;
+  }
+
+  .homeShortName {
+    display: none;
   }
 }
 
@@ -205,6 +231,10 @@
     gap: 0.6rem;
   }
 
+  .homeHeader.hidden .nav {
+    position: static;
+  }
+
   .nav a {
     font-size: var(--text-micro);
   }
@@ -217,8 +247,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   .header,
+  .brand,
   .name,
   .remainder,
+  .nav,
   .nav a::after,
   .join {
     transition: none;

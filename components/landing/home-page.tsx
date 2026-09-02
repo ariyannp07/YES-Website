@@ -5,7 +5,6 @@ import { ProfileImage } from '@/components/catalog/profile-image'
 import GlobeCanvas from '@/components/landing/globe/globe-canvas'
 import { allAlumni } from '@/lib/alumni'
 import { allEntries } from '@/lib/reservoir'
-import { SIGMA_PATH } from '@/lib/yes-geometry'
 
 import styles from './home.module.css'
 
@@ -23,13 +22,6 @@ export async function HomePage() {
     <div className={styles.page}>
       <section className={styles.launch} aria-labelledby="launch-title">
         <div className={styles.launchInner}>
-          <Link href="/" className={styles.launchBrand} aria-label="YES home">
-            <svg viewBox="0 0 100 100" aria-hidden="true">
-              <path d={SIGMA_PATH} fill="currentColor" />
-            </svg>
-            <span>Yale Entrepreneurial Society</span>
-          </Link>
-
           <div className={styles.launchStatement} data-landing-copy="">
             <p>Est. 1999</p>
             <h1 id="launch-title" aria-label="Build the future, don’t just study for it.">

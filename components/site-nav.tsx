@@ -29,9 +29,8 @@ export function SiteNav() {
   return (
     <header
       className={`${styles.header} ${isHome ? styles.homeHeader : ''} ${
-        isVisible ? styles.visible : styles.hidden
+        isVisible ? '' : styles.hidden
       }`}
-      aria-hidden={isVisible ? undefined : true}
     >
       <div className={styles.inner}>
         <Link href="/" className={styles.brand} aria-label="YES home">
@@ -39,7 +38,7 @@ export function SiteNav() {
             <path d={SIGMA_PATH} fill="currentColor" />
           </svg>
           <span
-            className={`${styles.name} ${
+            className={`${styles.name} ${isHome ? styles.homeName : ''} ${
               isHome && hasScrolled ? styles.condensedName : ''
             }`}
             aria-label="Yale Entrepreneurial Society"
@@ -57,14 +56,21 @@ export function SiteNav() {
               <span className={styles.remainder}>ociety</span>
             </span>
           </span>
-          <span className={styles.shortName}>YES</span>
+          <span className={`${styles.shortName} ${isHome ? styles.homeShortName : ''}`}>
+            YES
+          </span>
         </Link>
 
-        <nav className={styles.nav} aria-label="Primary navigation">
+        <nav
+          className={styles.nav}
+          aria-label="Primary navigation"
+          aria-hidden={isVisible ? undefined : true}
+        >
           {NAV.filter((item) => !item.hidden).map((item) => (
             <Link
               key={item.href}
               href={item.href}
+              tabIndex={isVisible ? undefined : -1}
               aria-current={isCurrent(item.href) ? 'page' : undefined}
             >
               {item.label}
@@ -72,7 +78,12 @@ export function SiteNav() {
           ))}
         </nav>
 
-        <Link href="/enter" className={styles.join}>
+        <Link
+          href="/enter"
+          className={styles.join}
+          tabIndex={isVisible ? undefined : -1}
+          aria-hidden={isVisible ? undefined : true}
+        >
           Join YES
         </Link>
       </div>
