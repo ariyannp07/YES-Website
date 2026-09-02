@@ -17,7 +17,7 @@
   inset: 0;
   /* The globe is grabbable; the copy below sits above it and is not. */
   cursor: grab;
-  touch-action: none;
+  touch-action: pan-y;
 }
 
 .canvas:active {
@@ -248,7 +248,7 @@
   left: 0;
   margin: -0.75em 0 0 1.15em;
   font-family: var(--font-mono);
-  font-size: var(--text-landing-marker);
+  font-size: var(--text-ui);
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -269,20 +269,13 @@
   transition: opacity 260ms ease;
 }
 
-.eggLabel {
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin: 1.1em 0 0 -3.4em;
-  font-family: var(--font-mono);
-  font-size: var(--text-landing-marker);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  color: color-mix(in srgb, var(--landing-mid) 75%, transparent);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 320ms ease;
+.marker[data-marker-id='new-haven'] {
+  margin: -1.9em 0 0 1.1em;
+}
+
+.marker[data-marker-id='san-francisco'] {
+  margin: 1em 0 0 -8.8em;
+  text-align: right;
 }
 
 /* ————— the descent ————— */

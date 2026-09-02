@@ -117,7 +117,7 @@ export function EnterForm({ connected }: { readonly connected: boolean }) {
     >
       {connected ? null : (
         <p className={`${styles.notice} t-micro`}>
-          [ Not connected — submissions open when the Airtable key is set. ]
+          Submissions are unavailable in this preview because the intake service is not connected.
         </p>
       )}
 
@@ -221,7 +221,7 @@ export function EnterForm({ connected }: { readonly connected: boolean }) {
           checked={values.catalogConsent}
           onChange={(event) => update('catalogConsent', event.target.checked)}
         />
-        <span>List me in the public catalog of Yale builders.</span>
+        <span>List me in the public directory of Yale builders.</span>
       </label>
 
       {/* Honeypot. Off-screen, unlabelled to autofill heuristics, never validated —
@@ -250,7 +250,7 @@ export function EnterForm({ connected }: { readonly connected: boolean }) {
         type="submit"
         disabled={status === 'submitting' || !connected}
       >
-        {status === 'submitting' ? 'Sending…' : 'Enter →'}
+        {status === 'submitting' ? 'Sending…' : 'Join YES →'}
       </button>
     </form>
   )

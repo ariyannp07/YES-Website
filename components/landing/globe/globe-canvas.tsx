@@ -2,168 +2,73 @@
 
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
+import { LineSegments2 } from 'three/addons/lines/LineSegments2.js'
+import { LineMaterial } from 'three/addons/lines/LineMaterial.js'
+import { LineSegmentsGeometry } from 'three/addons/lines/LineSegmentsGeometry.js'
 
 import { buildGlobe, toVector } from '@/lib/landing/globe-model'
-import { buildAsterism, buildClouds, buildStars } from '@/lib/landing/sky'
 import { REVEAL_END, TIMING } from '@/lib/landing/timing'
 
 import styles from './globe.module.css'
 
 /**
- * The front door: a network Earth assembling itself out of the dark.
+ * The front door: a quiet Earth drawn as a single geographic line.
  *
- * Everything is drawn from two buffer geometries — one Points, one LineSegments
- * — with the reveal encoded as a per-vertex `aStart` attribute rather than
- * animated on the CPU. Nothing is added to or removed from the scene while it
- * plays; the GPU simply reads the clock. That is what keeps ~620 nodes and
- * ~830 links smooth on an integrated GPU, and it means the whole sequence is
- * scrubbable by setting one uniform.
- *
- * Sphericality is sold by occlusion, not by a solid Earth: nodes on the far
- * side dim, and a rim-lit haze sits behind them. A textured globe would fight
- * the constellation for attention and read as a stock 3D demo.
+ * A dark core handles occlusion while the coastline stays legible without a
+ * stock map texture. The only points are the two labeled YES homes.
  */
 
 const RADIUS = 1
-/** Nudged out so links sit just above the haze rather than z-fighting it. */
-const LINK_RADIUS = 1.001
-/** Just under the nodes, so city light always sits on top of the outline. */
-const COAST_RADIUS = 0.999
+/** Just above the sphere, so the heavier coast does not z-fight the core. */
+const COAST_RADIUS = 1.001
 
 const COLORS = {
-  deep: new THREE.Color('#0a1a33'),
-  line: new THREE.Color('#33608f'),
-  // Paler and cooler than before. The city field used to sit at nearly the
-  // same visual weight as the markers, so the two homes had nothing to stand
-  // out against; dropping the field back is what makes the gold read.
-  node: new THREE.Color('#9fc4e4'),
-  hub: new THREE.Color('#e6f1ff'),
-  gold: new THREE.Color('#ff9d2e'),
-  coast: new THREE.Color('#6e97c4'),
-  ember: new THREE.Color('#0a1420'),
+  gold: new THREE.Color('#d8bd7c'),
+  coast: new THREE.Color('#789bc0'),
+  node: new THREE.Color('#79a6ce'),
+  hub: new THREE.Color('#e8f4ff'),
 }
 
-const NODE_VERT = /* glsl */ `
+const LIGHT_VERT = /* glsl */ `
   attribute float aStart;
   attribute float aWeight;
   attribute float aSeed;
 
   uniform float uTime;
-  uniform float uFade;
-  uniform float uSize;
-  uniform float uReveal;
-
+  uniform float uScale;
   varying float vAlpha;
   varying float vWeight;
 
   void main() {
     vec4 mv = modelViewMatrix * vec4(position, 1.0);
-
-    // Reveal: this vertex comes online at aStart and eases up over uFade.
-    float born = smoothstep(aStart, aStart + uFade, uTime);
-    born = max(born, uReveal);
-
-    // Occlusion. The globe is a shell, so anything whose outward normal points
-    // away from the camera is on the far side and must recede — this is the
-    // whole reason the field reads as a sphere instead of a cloud of dots.
+    float born = smoothstep(aStart, aStart + 0.16, uTime);
     vec3 nrm = normalize(mat3(modelViewMatrix) * normalize(position));
-    float facing = smoothstep(-0.15, 0.25, nrm.z);
-
-    // Slow breathing, seeded per node so the field never pulses in unison.
-    float shimmer = 0.86 + 0.14 * sin(uTime * 0.9 + aSeed * 6.2831);
+    float facing = smoothstep(-0.08, 0.34, nrm.z);
+    float shimmer = 0.90 + 0.10 * sin(uTime * 0.85 + aSeed * 6.2831);
 
     vWeight = aWeight;
-    // Depth handles the far side now; this only softens the limb so nodes do
-    // not pop at the silhouette edge.
-    vAlpha = born * shimmer * (0.30 + 0.70 * facing);
+    vAlpha = born * facing * shimmer * (0.46 + aWeight * 0.54);
 
     float dist = max(0.001, -mv.z);
-    gl_PointSize = uSize * (0.42 + aWeight * 1.5) * (3.2 / dist);
+    gl_PointSize = uScale * (4.8 + aWeight * 5.6) * (3.2 / dist);
     gl_Position = projectionMatrix * mv;
   }
 `
 
-const NODE_FRAG = /* glsl */ `
+const LIGHT_FRAG = /* glsl */ `
   uniform vec3 uNode;
   uniform vec3 uHub;
-
   varying float vAlpha;
   varying float vWeight;
 
   void main() {
-    // Soft round sprite. A hard disc at this size looks like a pixel, and a
-    // texture would be a network request for something two lines of maths do.
     float d = length(gl_PointCoord - vec2(0.5));
-    float core = smoothstep(0.5, 0.06, d);
-    float halo = smoothstep(0.5, 0.18, d) * 0.55;
-
-    vec3 tint = mix(uNode, uHub, smoothstep(0.4, 1.0, vWeight));
-
-    float alpha = vAlpha * (core + halo);
+    if (d > 0.48) discard;
+    float disc = smoothstep(0.48, 0.12, d);
+    vec3 tint = mix(uNode, uHub, smoothstep(0.42, 1.0, vWeight));
+    float alpha = vAlpha * disc;
     if (alpha < 0.004) discard;
     gl_FragColor = vec4(tint, alpha);
-  }
-`
-
-const LINK_VERT = /* glsl */ `
-  attribute float aStart;
-  attribute float aLong;
-
-  uniform float uTime;
-  uniform float uFade;
-  uniform float uReveal;
-
-  varying float vAlpha;
-  varying float vLong;
-
-  void main() {
-    vec4 mv = modelViewMatrix * vec4(position, 1.0);
-
-    float born = smoothstep(aStart, aStart + uFade, uTime);
-    born = max(born, uReveal);
-
-    vec3 nrm = normalize(mat3(modelViewMatrix) * normalize(position));
-    float facing = smoothstep(-0.1, 0.3, nrm.z);
-
-    vLong = aLong;
-    vAlpha = born * (0.06 + 0.94 * facing);
-    gl_Position = projectionMatrix * mv;
-  }
-`
-
-const LINK_FRAG = /* glsl */ `
-  uniform vec3 uLine;
-
-  varying float vAlpha;
-  varying float vLong;
-
-  void main() {
-    // Intercontinental arcs read a touch brighter — they are the point being
-    // made, and at one pixel wide a colour shift is the only lever available.
-    float base = mix(0.26, 0.42, vLong);
-    float alpha = vAlpha * base;
-    if (alpha < 0.004) discard;
-    gl_FragColor = vec4(uLine, alpha);
-  }
-`
-
-const HAZE_VERT = /* glsl */ `
-  varying vec3 vNormal;
-  void main() {
-    vNormal = normalize(mat3(modelViewMatrix) * normal);
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-  }
-`
-
-const HAZE_FRAG = /* glsl */ `
-  uniform float uOpacity;
-  uniform vec3 uDeep;
-  varying vec3 vNormal;
-  void main() {
-    // Rim light: brightest where the surface turns away, which is what makes a
-    // dark sphere legible as a sphere without lighting a single polygon.
-    float rim = pow(1.0 - abs(vNormal.z), 2.6);
-    gl_FragColor = vec4(uDeep, rim * uOpacity);
   }
 `
 
@@ -185,7 +90,7 @@ export default function GlobeCanvas({
 }: GlobeCanvasProps) {
   const hostRef = useRef<HTMLDivElement>(null)
   // Held in a ref so the scene is built once; re-running the effect on every
-  // render would tear down and rebuild ~5000 points and restart the reveal.
+  // render would tear down and rebuild the coastline.
   const clickRef = useRef(onMarkerClick)
   clickRef.current = onMarkerClick
   /** Last frame's descent value, so the dolly resets exactly once on the way out. */
@@ -218,7 +123,8 @@ export default function GlobeCanvas({
       0.1,
       100,
     )
-    camera.position.set(0, 0, 4.1)
+    let restCameraZ = host.clientWidth < 640 ? 4.1 : 3.78
+    camera.position.set(0, 0, restCameraZ)
 
     const globe = new THREE.Group()
     // Tilt so the northern hemisphere — where most of the network is — sits
@@ -230,115 +136,72 @@ export default function GlobeCanvas({
     // -72.9, San Francisco at -122.4), so both sit about 25 degrees off centre
     // when they ignite — square to the viewer, nowhere near the limb.
     globe.rotation.y = (-(-98 + 90) * Math.PI) / 180
+    const homeOrientation = globe.quaternion.clone()
+    const launchOrientation = homeOrientation
+      .clone()
+      .premultiply(
+        new THREE.Quaternion().setFromAxisAngle(
+          new THREE.Vector3(0, 1, 0),
+          -Math.PI * 0.22,
+        ),
+      )
+    globe.quaternion.copy(reduceMotion ? homeOrientation : launchOrientation)
     scene.add(globe)
 
     const model = buildGlobe()
 
-    // ————— nodes —————
-    const count = model.nodes.length
-    const positions = new Float32Array(count * 3)
-    const starts = new Float32Array(count)
-    const weights = new Float32Array(count)
-    const seeds = new Float32Array(count)
+    const shared = {
+      uTime: { value: 0 },
+    }
 
-    model.nodes.forEach((node, i) => {
-      positions[i * 3] = node.x * RADIUS
-      positions[i * 3 + 1] = node.y * RADIUS
-      positions[i * 3 + 2] = node.z * RADIUS
-      const jitter = ((i * 2654435761) % 1000) / 1000
-      starts[i] =
+    // ————— city lights —————
+    // Real populated-place samples sit just above the geographic line. They
+    // stay small and crisp so the sphere reads as Earth at night, not a field
+    // of decorative particles.
+    const lightPositions = new Float32Array(model.nodes.length * 3)
+    const lightStarts = new Float32Array(model.nodes.length)
+    const lightWeights = new Float32Array(model.nodes.length)
+    const lightSeeds = new Float32Array(model.nodes.length)
+    model.nodes.forEach((node, index) => {
+      lightPositions.set([node.x * 1.007, node.y * 1.007, node.z * 1.007], index * 3)
+      const jitter = ((index * 2654435761) % 1000) / 1000
+      lightStarts[index] =
         TIMING.regions.at +
         node.order * TIMING.regions.stagger +
         jitter * TIMING.regions.jitter
-      weights[i] = node.weight
-      seeds[i] = jitter
+      lightWeights[index] = node.weight
+      lightSeeds[index] = jitter
     })
-    // New Haven is present from the first region, never jittered late.
-    starts[model.origin] = TIMING.regions.at
+    lightStarts[model.origin] = TIMING.regions.at
 
-    const nodeGeo = new THREE.BufferGeometry()
-    nodeGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-    nodeGeo.setAttribute('aStart', new THREE.BufferAttribute(starts, 1))
-    nodeGeo.setAttribute('aWeight', new THREE.BufferAttribute(weights, 1))
-    nodeGeo.setAttribute('aSeed', new THREE.BufferAttribute(seeds, 1))
+    const lightGeo = new THREE.BufferGeometry()
+    lightGeo.setAttribute('position', new THREE.BufferAttribute(lightPositions, 3))
+    lightGeo.setAttribute('aStart', new THREE.BufferAttribute(lightStarts, 1))
+    lightGeo.setAttribute('aWeight', new THREE.BufferAttribute(lightWeights, 1))
+    lightGeo.setAttribute('aSeed', new THREE.BufferAttribute(lightSeeds, 1))
 
-    const shared = {
-      uTime: { value: 0 },
-      uReveal: { value: reduceMotion ? 1 : 0 },
-    }
-
-    const nodeMat = new THREE.ShaderMaterial({
+    const lightMat = new THREE.ShaderMaterial({
       uniforms: {
-        ...shared,
-        uFade: { value: TIMING.regions.nodeFade },
-        uSize: { value: 9 },
+        uTime: shared.uTime,
+        uScale: { value: 1 },
         uNode: { value: COLORS.node },
         uHub: { value: COLORS.hub },
       },
-      vertexShader: NODE_VERT,
-      fragmentShader: NODE_FRAG,
+      vertexShader: LIGHT_VERT,
+      fragmentShader: LIGHT_FRAG,
       transparent: true,
       depthWrite: false,
+      depthTest: true,
       blending: THREE.AdditiveBlending,
     })
-    const nodePoints = new THREE.Points(nodeGeo, nodeMat)
-    // Draw after the core, so the core cannot paint over the front face.
-    nodePoints.renderOrder = 2
-    globe.add(nodePoints)
-
-    // ————— links —————
-    const edges = model.edges
-    const linkPos = new Float32Array(edges.length * 6)
-    const linkStart = new Float32Array(edges.length * 2)
-    const linkLong = new Float32Array(edges.length * 2)
-
-    edges.forEach((edge, i) => {
-      const a = model.nodes[edge.a]
-      const b = model.nodes[edge.b]
-      linkPos.set(
-        [
-          a.x * LINK_RADIUS, a.y * LINK_RADIUS, a.z * LINK_RADIUS,
-          b.x * LINK_RADIUS, b.y * LINK_RADIUS, b.z * LINK_RADIUS,
-        ],
-        i * 6,
-      )
-      const at = edge.long
-        ? TIMING.longEdges.at + (i % 7) * 0.08
-        : TIMING.regions.at + edge.order * TIMING.regions.stagger + TIMING.localEdges.delay
-      linkStart[i * 2] = at
-      linkStart[i * 2 + 1] = at
-      linkLong[i * 2] = edge.long ? 1 : 0
-      linkLong[i * 2 + 1] = edge.long ? 1 : 0
-    })
-
-    const linkGeo = new THREE.BufferGeometry()
-    linkGeo.setAttribute('position', new THREE.BufferAttribute(linkPos, 3))
-    linkGeo.setAttribute('aStart', new THREE.BufferAttribute(linkStart, 1))
-    linkGeo.setAttribute('aLong', new THREE.BufferAttribute(linkLong, 1))
-
-    const linkMat = new THREE.ShaderMaterial({
-      uniforms: {
-        ...shared,
-        uFade: { value: TIMING.localEdges.dur },
-        uLine: { value: COLORS.line },
-      },
-      vertexShader: LINK_VERT,
-      fragmentShader: LINK_FRAG,
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
-    })
-    const linkLines = new THREE.LineSegments(linkGeo, linkMat)
-    linkLines.renderOrder = 2
-    globe.add(linkLines)
+    const lightPoints = new THREE.Points(lightGeo, lightMat)
+    lightPoints.renderOrder = 3
+    globe.add(lightPoints)
 
     // ————— coastlines —————
-    // Drawn under the city light, at very low alpha. This is what gives each
-    // landmass an EDGE: without it the dots described extent but not shape, and
-    // Europe, Asia and Africa read as a single continent.
+    // With no population field, this line carries the entire geography.
     const coastArr = model.coast
     const coastPos = new Float32Array(coastArr.length * 6)
-    const coastStart = new Float32Array(coastArr.length * 2)
     coastArr.forEach((seg, i) => {
       coastPos.set(
         [
@@ -347,79 +210,23 @@ export default function GlobeCanvas({
         ],
         i * 6,
       )
-      // Coast arrives just before its region's cities, so the shape is there
-      // for the lights to land on.
-      const at = TIMING.regions.at + seg.order * TIMING.regions.stagger - 0.15
-      coastStart[i * 2] = at
-      coastStart[i * 2 + 1] = at
     })
 
-    const coastGeo = new THREE.BufferGeometry()
-    coastGeo.setAttribute('position', new THREE.BufferAttribute(coastPos, 3))
-    coastGeo.setAttribute('aStart', new THREE.BufferAttribute(coastStart, 1))
-    coastGeo.setAttribute(
-      'aLong',
-      new THREE.BufferAttribute(new Float32Array(coastArr.length * 2), 1),
-    )
-
-    const coastMat = new THREE.ShaderMaterial({
-      uniforms: {
-        ...shared,
-        uFade: { value: 0.8 },
-        uLine: { value: COLORS.coast },
-      },
-      vertexShader: LINK_VERT,
-      fragmentShader: /* glsl */ `
-        uniform vec3 uLine;
-        varying float vAlpha;
-        varying float vLong;
-        void main() {
-          // Near the floor of visibility, but not below it: a coastline that
-          // reads as a drawn border would make the globe a map rather than a
-          // constellation, while one too faint to see does not separate Europe
-          // from Asia — which was the whole reason for adding it.
-          float alpha = vAlpha * 0.46;
-          if (alpha < 0.004) discard;
-          gl_FragColor = vec4(uLine, alpha);
-        }
-      `,
+    const coastGeo = new LineSegmentsGeometry()
+    coastGeo.setPositions(coastPos)
+    const coastMat = new LineMaterial({
+      color: COLORS.coast.getHex(),
+      linewidth: 2.35,
       transparent: true,
+      opacity: 0,
       depthWrite: false,
-      blending: THREE.AdditiveBlending,
+      worldUnits: false,
     })
-    const coastLines = new THREE.LineSegments(coastGeo, coastMat)
+    const coastLines = new LineSegments2(coastGeo, coastMat)
     coastLines.renderOrder = 2
     globe.add(coastLines)
 
-    // ————— the sphere itself, implied —————
-    const hazeMat = new THREE.ShaderMaterial({
-      uniforms: { uOpacity: { value: 0 }, uDeep: { value: COLORS.deep } },
-      vertexShader: HAZE_VERT,
-      fragmentShader: HAZE_FRAG,
-      transparent: true,
-      depthWrite: false,
-      side: THREE.BackSide,
-      blending: THREE.AdditiveBlending,
-    })
-    const hazeGeo = new THREE.SphereGeometry(RADIUS * 1.08, 48, 48)
-    const haze = new THREE.Mesh(hazeGeo, hazeMat)
-    haze.renderOrder = 0
-    globe.add(haze)
-
-    // The solid body of the planet.
-    //
-    // Two things here are load-bearing, and getting them wrong emptied the
-    // globe completely: it rendered as a thin ring of dots with a black
-    // interior. Three.js sorts transparent objects by distance, and the core
-    // and the point cloud share a centroid — so the draw order was a coin
-    // toss, and whenever the core won it painted over every front-facing node,
-    // leaving only the sliver of rim that overhangs its silhouette.
-    //
-    //   renderOrder  forces the core to draw BEFORE the nodes, always.
-    //   depthWrite   lets it occlude the far side honestly, by depth test
-    //                rather than by the shader's facing term alone.
-    //
-    // Radius sits just inside the node shell so front nodes stay in front.
+    // A nearly invisible core gives the coastline honest front/back occlusion.
     const core = new THREE.Mesh(
       new THREE.SphereGeometry(RADIUS * 0.985, 64, 64),
       new THREE.MeshBasicMaterial({
@@ -433,11 +240,7 @@ export default function GlobeCanvas({
     globe.add(core)
     const coreMat = core.material as THREE.MeshBasicMaterial
 
-    // ————— the ignitions —————
-    // One per home, gold rather than white. White read as a system alert; gold
-    // reads as a hearth, which is the word the labels use. Each is a single
-    // point with an origin — an earlier version pushed a brightness front
-    // through every node and the whole planet appeared to strobe.
+    // ————— the two homes —————
     const marks = TIMING.marks.map((mark) => {
       const [x, y, z] = toVector(mark.lon, mark.lat)
       return { ...mark, world: new THREE.Vector3(x, y, z) }
@@ -448,43 +251,6 @@ export default function GlobeCanvas({
     marks.forEach((mark, i) => {
       markPos.set([mark.world.x * 1.006, mark.world.y * 1.006, mark.world.z * 1.006], i * 3)
       markAt[i] = mark.at
-    })
-
-    // A small disc of night under each marker. Additive blending cannot darken,
-    // so the only way to stop a marker being lost in the city light around it
-    // is to lay down an opaque patch first and put the ember on top.
-    const haloGeo = new THREE.BufferGeometry()
-    const haloMat = new THREE.ShaderMaterial({
-      uniforms: { uTime: shared.uTime, uDeep: { value: COLORS.ember } },
-      vertexShader: /* glsl */ `
-        attribute float aAt;
-        uniform float uTime;
-        varying float vOn;
-        varying float vFacing;
-        void main() {
-          vec4 mv = modelViewMatrix * vec4(position, 1.0);
-          vOn = smoothstep(aAt, aAt + 0.35, uTime);
-          vec3 nrm = normalize(mat3(modelViewMatrix) * normalize(position));
-          vFacing = smoothstep(-0.05, 0.3, nrm.z);
-          gl_PointSize = 34.0 * vOn * vFacing * (3.2 / max(0.001, -mv.z));
-          gl_Position = projectionMatrix * mv;
-        }
-      `,
-      fragmentShader: /* glsl */ `
-        uniform vec3 uDeep;
-        varying float vOn;
-        varying float vFacing;
-        void main() {
-          float d = length(gl_PointCoord - vec2(0.5));
-          float disc = smoothstep(0.5, 0.16, d);
-          float a = disc * vOn * vFacing * 0.92;
-          if (a < 0.004) discard;
-          gl_FragColor = vec4(uDeep, a);
-        }
-      `,
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.NormalBlending,
     })
 
     const flashGeo = new THREE.BufferGeometry()
@@ -514,10 +280,8 @@ export default function GlobeCanvas({
           vec3 nrm = normalize(mat3(modelViewMatrix) * normalize(position));
           vFacing = smoothstep(-0.05, 0.3, nrm.z);
           float dist = max(0.001, -mv.z);
-          float burst = 46.0 + 300.0 * (1.0 - pow(1.0 - t, 3.0));
-          // The ember that stays is deliberately large: this is a place marker
-          // that has to survive being surrounded by city light.
-          gl_PointSize = max(burst * vLife, 22.0 * vRest) * vFacing * (3.2 / dist);
+          float burst = 22.0 + 28.0 * (1.0 - pow(1.0 - t, 3.0));
+          gl_PointSize = max(burst * vLife, 16.0 * vRest) * vFacing * (3.2 / dist);
           gl_Position = projectionMatrix * mv;
         }
       `,
@@ -528,238 +292,23 @@ export default function GlobeCanvas({
         varying float vRest;
         void main() {
           float d = length(gl_PointCoord - vec2(0.5));
-          float core = smoothstep(0.5, 0.0, d);
-          float bloom = pow(core, 0.5);
-          // The burst runs hot toward white at its peak, then settles to gold.
+          if (d > 0.46) discard;
           vec3 tint = mix(uGold, vec3(1.0, 0.97, 0.9), vLife * 0.8);
-          float a = max(vLife * bloom, vRest * pow(core, 1.1)) * vFacing;
+          float a = max(vLife, vRest) * vFacing;
           if (a < 0.004) discard;
           gl_FragColor = vec4(tint, a);
         }
       `,
       transparent: true,
       depthWrite: false,
-      blending: THREE.AdditiveBlending,
+      blending: THREE.NormalBlending,
     })
-    haloGeo.setAttribute('position', new THREE.BufferAttribute(markPos.slice(), 3))
-    haloGeo.setAttribute('aAt', new THREE.BufferAttribute(markAt.slice(), 1))
-    const haloPoint = new THREE.Points(haloGeo, haloMat)
-    haloPoint.renderOrder = 3
-    globe.add(haloPoint)
-
     const flashPoint = new THREE.Points(flashGeo, flashMat)
     flashPoint.renderOrder = 4
     globe.add(flashPoint)
 
-    // ————— sky —————
-    const starData = buildStars()
-    const starPos = new Float32Array(starData.length * 3)
-    const starSize = new Float32Array(starData.length)
-    const starAlpha = new Float32Array(starData.length)
-    const starWarm = new Float32Array(starData.length)
-    starData.forEach((star, i) => {
-      starPos.set([star.x, star.y, star.z], i * 3)
-      starSize[i] = star.size
-      starAlpha[i] = star.alpha
-      starWarm[i] = star.warmth
-    })
-
-    const starGeo = new THREE.BufferGeometry()
-    starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3))
-    starGeo.setAttribute('aSize', new THREE.BufferAttribute(starSize, 1))
-    starGeo.setAttribute('aAlpha', new THREE.BufferAttribute(starAlpha, 1))
-    starGeo.setAttribute('aWarm', new THREE.BufferAttribute(starWarm, 1))
-
-    const starMat = new THREE.ShaderMaterial({
-      uniforms: { uOpacity: { value: 0 }, uScale: { value: 1 } },
-      vertexShader: /* glsl */ `
-        attribute float aSize;
-        attribute float aAlpha;
-        attribute float aWarm;
-        uniform float uScale;
-        varying float vAlpha;
-        varying float vWarm;
-        void main() {
-          vec4 mv = modelViewMatrix * vec4(position, 1.0);
-          vAlpha = aAlpha;
-          vWarm = aWarm;
-          gl_PointSize = aSize * uScale * (110.0 / max(0.001, -mv.z));
-          gl_Position = projectionMatrix * mv;
-        }
-      `,
-      fragmentShader: /* glsl */ `
-        uniform float uOpacity;
-        varying float vAlpha;
-        varying float vWarm;
-        void main() {
-          float d = length(gl_PointCoord - vec2(0.5));
-          float core = smoothstep(0.5, 0.05, d);
-          // Slightly warm on one end, slightly blue on the other. A field of
-          // identical white dots reads as noise rather than as sky.
-          vec3 cool = vec3(0.78, 0.86, 1.0);
-          vec3 warm = vec3(1.0, 0.92, 0.82);
-          float a = core * vAlpha * uOpacity;
-          if (a < 0.004) discard;
-          gl_FragColor = vec4(mix(cool, warm, vWarm * 0.8), a);
-        }
-      `,
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
-    })
-    const starPoints = new THREE.Points(starGeo, starMat)
-    // After the core (renderOrder 1), so stars behind the planet are rejected
-    // by the depth test. Drawing them first meant the core merely painted over
-    // them at 0.92 opacity and ~8% of every occluded star bled through the body.
-    starPoints.renderOrder = 2
-    scene.add(starPoints)
-
-    // Gas: a few enormous, nearly invisible sprites. Enough to stop the
-    // background being flat black, far too faint to read as objects.
-    const cloudData = buildClouds()
-    const cloudPos = new Float32Array(cloudData.length * 3)
-    const cloudSize = new Float32Array(cloudData.length)
-    const cloudAlpha = new Float32Array(cloudData.length)
-    const cloudHue = new Float32Array(cloudData.length)
-    cloudData.forEach((cloud, i) => {
-      cloudPos.set([cloud.x, cloud.y, cloud.z], i * 3)
-      cloudSize[i] = cloud.size
-      cloudAlpha[i] = cloud.alpha
-      cloudHue[i] = cloud.hue
-    })
-    const cloudGeo = new THREE.BufferGeometry()
-    cloudGeo.setAttribute('position', new THREE.BufferAttribute(cloudPos, 3))
-    cloudGeo.setAttribute('aSize', new THREE.BufferAttribute(cloudSize, 1))
-    cloudGeo.setAttribute('aAlpha', new THREE.BufferAttribute(cloudAlpha, 1))
-    cloudGeo.setAttribute('aHue', new THREE.BufferAttribute(cloudHue, 1))
-    const cloudMat = new THREE.ShaderMaterial({
-      uniforms: { uOpacity: { value: 0 } },
-      vertexShader: /* glsl */ `
-        attribute float aSize;
-        attribute float aAlpha;
-        attribute float aHue;
-        varying float vAlpha;
-        varying float vHue;
-        void main() {
-          vec4 mv = modelViewMatrix * vec4(position, 1.0);
-          vAlpha = aAlpha;
-          vHue = aHue;
-          gl_PointSize = aSize * (110.0 / max(0.001, -mv.z));
-          gl_Position = projectionMatrix * mv;
-        }
-      `,
-      fragmentShader: /* glsl */ `
-        uniform float uOpacity;
-        varying float vAlpha;
-        varying float vHue;
-        void main() {
-          float d = length(gl_PointCoord - vec2(0.5));
-          // Wide, soft falloff — a cloud, not a disc.
-          float body = pow(smoothstep(0.5, 0.0, d), 2.4);
-          vec3 violet = vec3(0.42, 0.40, 0.72);
-          vec3 teal = vec3(0.28, 0.48, 0.68);
-          float a = body * vAlpha * uOpacity;
-          if (a < 0.002) discard;
-          gl_FragColor = vec4(mix(teal, violet, vHue), a);
-        }
-      `,
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
-    })
-    const cloudPoints = new THREE.Points(cloudGeo, cloudMat)
-    cloudPoints.renderOrder = 2
-    scene.add(cloudPoints)
-
-    // ————— the easter egg —————
-    // The Plough and Polaris, at their real coordinates, rotated in as one body
-    // so the pointer stars still aim at Polaris. Rendered a touch brighter than
-    // the field so it is findable, never so bright that it announces itself.
-    const asterism = buildAsterism()
-    const egg = [...asterism.stars, asterism.polaris]
-    const eggPos = new Float32Array(egg.length * 3)
-    const eggMag = new Float32Array(egg.length)
-    const eggPole = new Float32Array(egg.length)
-    egg.forEach((star, i) => {
-      eggPos.set([star.x, star.y, star.z], i * 3)
-      eggMag[i] = star.mag
-      // Polaris is boosted beyond its real magnitude. Astronomically it is only
-      // the 48th brightest star and Alioth outshines it — but the whole point
-      // of the egg is the north star, so it is the one that has to read.
-      eggPole[i] = star.name === 'Polaris' ? 1 : 0
-    })
-    const eggGeo = new THREE.BufferGeometry()
-    eggGeo.setAttribute('position', new THREE.BufferAttribute(eggPos, 3))
-    eggGeo.setAttribute('aMag', new THREE.BufferAttribute(eggMag, 1))
-    eggGeo.setAttribute('aPole', new THREE.BufferAttribute(eggPole, 1))
-    const eggMat = new THREE.ShaderMaterial({
-      uniforms: { uOpacity: { value: 0 }, uHover: { value: 0 } },
-      vertexShader: /* glsl */ `
-        attribute float aMag;
-        attribute float aPole;
-        uniform float uHover;
-        varying float vBright;
-        varying float vPole;
-        void main() {
-          vec4 mv = modelViewMatrix * vec4(position, 1.0);
-          // Brighter star = lower magnitude, so invert it.
-          float b = clamp((3.6 - aMag) / 2.0, 0.15, 1.0);
-          vBright = b;
-          vPole = aPole;
-          // These sat at 0.5-1.3 device pixels — the same sub-pixel mistake the
-          // main field had, which is why the asterism was invisible even when
-          // correctly placed. Sized to sit clearly ABOVE the surrounding field
-          // so the shape is findable without being announced.
-          float size = 0.62 + b * 0.85 + aPole * 0.55;
-          gl_PointSize = size * (1.0 + uHover * 0.45) * (110.0 / max(0.001, -mv.z));
-          gl_Position = projectionMatrix * mv;
-        }
-      `,
-      fragmentShader: /* glsl */ `
-        uniform float uOpacity;
-        uniform float uHover;
-        varying float vBright;
-        varying float vPole;
-        void main() {
-          float d = length(gl_PointCoord - vec2(0.5));
-          float core = smoothstep(0.5, 0.05, d);
-          float halo = smoothstep(0.5, 0.2, d) * 0.5 * vPole;
-          float a = (core + halo) * (0.62 + vBright * 0.38) * (1.0 + vPole * 0.35)
-                    * uOpacity * (0.8 + uHover * 0.4);
-          if (a < 0.004) discard;
-          // Polaris runs a touch cooler-white than the rest of the asterism.
-          gl_FragColor = vec4(mix(vec3(0.86, 0.92, 1.0), vec3(1.0), vPole), a);
-        }
-      `,
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
-    })
-    const eggPoints = new THREE.Points(eggGeo, eggMat)
-    eggPoints.renderOrder = 2
-    scene.add(eggPoints)
-
-    // The joining lines appear only on hover — at rest this is just sky.
-    const eggLinePos = new Float32Array(asterism.lines.length * 6)
-    asterism.lines.forEach(([a, b], i) => {
-      const s1 = asterism.stars[a]
-      const s2 = asterism.stars[b]
-      eggLinePos.set([s1.x, s1.y, s1.z, s2.x, s2.y, s2.z], i * 6)
-    })
-    const eggLineGeo = new THREE.BufferGeometry()
-    eggLineGeo.setAttribute('position', new THREE.BufferAttribute(eggLinePos, 3))
-    const eggLineMat = new THREE.LineBasicMaterial({
-      color: 0x9fc2e8,
-      transparent: true,
-      opacity: 0,
-      depthWrite: false,
-    })
-    const eggLines = new THREE.LineSegments(eggLineGeo, eggLineMat)
-    eggLines.renderOrder = 2
-    scene.add(eggLines)
-
     // ————— interaction —————
-    const drag = { active: false, x: 0, y: 0, vx: 0, vy: 0 }
+    const drag = { active: false, returning: false, x: 0, y: 0 }
     const yAxis = new THREE.Vector3(0, 1, 0)
     const xAxis = new THREE.Vector3(1, 0, 0)
 
@@ -775,18 +324,12 @@ export default function GlobeCanvas({
       if (target?.dataset?.clickable === 'true') return
 
       drag.active = true
+      drag.returning = false
       drag.x = event.clientX
       drag.y = event.clientY
       host.setPointerCapture(event.pointerId)
     }
-    const pointer = { x: -9999, y: -9999, inside: false }
-
     const onMove = (event: PointerEvent) => {
-      const box = host.getBoundingClientRect()
-      pointer.x = event.clientX - box.left
-      pointer.y = event.clientY - box.top
-      pointer.inside = true
-
       if (!drag.active) return
       const dx = event.clientX - drag.x
       const dy = event.clientY - drag.y
@@ -796,18 +339,11 @@ export default function GlobeCanvas({
       // turned — rotating on local axes drifts into a roll within a few drags.
       globe.rotateOnWorldAxis(yAxis, dx * 0.005)
       globe.rotateOnWorldAxis(xAxis, dy * 0.005)
-      drag.vx = dx * 0.005
-      drag.vy = dy * 0.005
     }
     const onUp = (event: PointerEvent) => {
       drag.active = false
+      drag.returning = true
       if (host.hasPointerCapture(event.pointerId)) host.releasePointerCapture(event.pointerId)
-    }
-
-    const onLeave = () => {
-      pointer.inside = false
-      pointer.x = -9999
-      pointer.y = -9999
     }
 
     if (!reduceMotion) {
@@ -815,10 +351,7 @@ export default function GlobeCanvas({
       host.addEventListener('pointerup', onUp)
       host.addEventListener('pointercancel', onUp)
     }
-    // Pointer tracking runs even under reduced motion: the easter egg is a
-    // hover affordance, not an animation, and hiding it would be a loss.
     host.addEventListener('pointermove', onMove)
-    host.addEventListener('pointerleave', onLeave)
 
     /**
      * The copy block's box, so a marker label never lands on top of it.
@@ -841,8 +374,11 @@ export default function GlobeCanvas({
       renderer.setSize(w, h)
       camera.aspect = w / h
       camera.updateProjectionMatrix()
+      coastMat.resolution.set(w, h)
+      lightMat.uniforms.uScale.value = w < 640 ? 0.58 : 1
       // Keep the globe filling a similar share of a narrow viewport.
-      camera.position.z = w < 640 ? 5.2 : 4.1
+      restCameraZ = w < 640 ? 4.1 : 3.78
+      camera.position.z = restCameraZ
       camera.updateProjectionMatrix()
       measureCopy()
     }
@@ -895,11 +431,6 @@ export default function GlobeCanvas({
       return { mark, el, shown: -1 }
     })
 
-    const eggEl = document.createElement('span')
-    eggEl.className = styles.eggLabel
-    eggEl.textContent = 'Ursa Major · Polaris'
-    host.appendChild(eggEl)
-
     const projected = new THREE.Vector3()
     const worldPoint = new THREE.Vector3()
 
@@ -942,38 +473,37 @@ export default function GlobeCanvas({
 
       shared.uTime.value = elapsed
 
-      const starsIn = ease(
-        THREE.MathUtils.clamp((elapsed - TIMING.starsIn.at) / TIMING.starsIn.dur, 0, 1),
-      )
-      starMat.uniforms.uOpacity.value = starsIn
-      cloudMat.uniforms.uOpacity.value = starsIn
-      eggMat.uniforms.uOpacity.value = starsIn * 0.9
-
       const globeIn = THREE.MathUtils.clamp(
         (elapsed - TIMING.globeIn.at) / TIMING.globeIn.dur,
         0,
         1,
       )
-      hazeMat.uniforms.uOpacity.value = ease(globeIn) * 0.5
+      coastMat.opacity = ease(globeIn) * 0.92
       coreMat.opacity = ease(globeIn) * 0.94
-      // It writes depth, so while it is still invisible it would cut a
-      // star-free circle out of the sky a second before the planet appears.
+      // It writes depth, so keep it hidden until the reveal begins.
       core.visible = coreMat.opacity > 0.001
 
-      // The globe stops turning once the descent begins.
-      if (!reduceMotion && !drag.active && (dive?.current ?? 0) < 0.002) {
-        // The globe holds still through the reveal. Drifting during it moved
-        // both homes toward the limb before they ignited, and a planet that
-        // stops turning while something happens on it reads as deliberate.
-        // Ambient drift eases in once the sequence has finished.
-        const settled = THREE.MathUtils.clamp((elapsed - REVEAL_END) / 2.5, 0, 1)
-        drag.vx *= 0.94
-        drag.vy *= 0.94
-        // ~6 minutes per revolution. At 0.045 the planet turned once every two
-        // minutes, which swung both homes past the limb — and their labels out
-        // of view — within half a minute of the reveal finishing.
-        globe.rotateOnWorldAxis(yAxis, drag.vx + dt * 0.018 * settled)
-        globe.rotateOnWorldAxis(xAxis, drag.vy)
+      const arrival = reduceMotion
+        ? 1
+        : ease(THREE.MathUtils.clamp((elapsed - 0.02) / 0.42, 0, 1))
+      if (!drag.active && arrival < 1) {
+        globe.quaternion.slerpQuaternions(launchOrientation, homeOrientation, arrival)
+      } else if (!drag.active && !drag.returning && elapsed < 0.54) {
+        globe.quaternion.copy(homeOrientation)
+      }
+
+      if (
+        !reduceMotion &&
+        !drag.active &&
+        drag.returning &&
+        (dive?.current ?? 0) < 0.002
+      ) {
+        const step = 1 - Math.exp(-dt * 4.2)
+        globe.quaternion.slerp(homeOrientation, step)
+        if (globe.quaternion.angleTo(homeOrientation) < 0.001) {
+          globe.quaternion.copy(homeOrientation)
+          drag.returning = false
+        }
       }
 
       // ————— the descent —————
@@ -983,7 +513,7 @@ export default function GlobeCanvas({
       const p = dive?.current ?? 0
       if (p > 0.0005 || divePrev.current > 0.0005) {
         const easeDive = p * p * (3 - 2 * p)
-        camera.position.z = 4.1 - easeDive * 3.02
+        camera.position.z = restCameraZ - easeDive * (restCameraZ - 1.08)
         camera.updateProjectionMatrix()
         if (diveMark) {
           globe.quaternion.slerp(faceTarget, Math.min(1, 0.06 + easeDive * 0.12))
@@ -1045,31 +575,6 @@ export default function GlobeCanvas({
         entry.el.style.opacity = String(alpha)
       }
 
-      // Easter egg: the asterism responds only to a pointer near it.
-      let eggHover = 0
-      if (pointer.inside) {
-        const w = host.clientWidth
-        const h = host.clientHeight
-        let cx = 0
-        let cy = 0
-        let visible = true
-        for (const star of egg) {
-          projected.set(star.x, star.y, star.z).project(camera)
-          if (projected.z > 1) visible = false
-          cx += (projected.x * 0.5 + 0.5) * w
-          cy += (-projected.y * 0.5 + 0.5) * h
-        }
-        cx /= egg.length
-        cy /= egg.length
-        const reach = Math.min(w, h) * 0.17
-        const d = Math.hypot(pointer.x - cx, pointer.y - cy)
-        if (visible && d < reach) eggHover = THREE.MathUtils.clamp(1 - d / reach, 0, 1)
-        eggEl.style.transform = `translate(${cx.toFixed(1)}px, ${cy.toFixed(1)}px)`
-      }
-      eggMat.uniforms.uHover.value += (eggHover - eggMat.uniforms.uHover.value) * 0.12
-      eggLineMat.opacity = eggMat.uniforms.uHover.value * 0.35 * starsIn
-      eggEl.style.opacity = String(eggMat.uniforms.uHover.value * starsIn)
-
       renderer.render(scene, camera)
       if (!reduceMotion) raf = requestAnimationFrame(frame)
     }
@@ -1083,31 +588,15 @@ export default function GlobeCanvas({
       host.removeEventListener('pointermove', onMove)
       host.removeEventListener('pointerup', onUp)
       host.removeEventListener('pointercancel', onUp)
-      host.removeEventListener('pointerleave', onLeave)
       for (const entry of markEls) entry.el.remove()
-      eggEl.remove()
-      cloudGeo.dispose()
-      cloudMat.dispose()
-      eggGeo.dispose()
-      eggMat.dispose()
-      eggLineGeo.dispose()
-      eggLineMat.dispose()
-      nodeGeo.dispose()
-      linkGeo.dispose()
       coastGeo.dispose()
       coastMat.dispose()
+      lightGeo.dispose()
+      lightMat.dispose()
       flashGeo.dispose()
       flashMat.dispose()
-      haloGeo.dispose()
-      haloMat.dispose()
-      starGeo.dispose()
-      nodeMat.dispose()
-      linkMat.dispose()
-      hazeMat.dispose()
-      starMat.dispose()
       core.geometry.dispose()
       coreMat.dispose()
-      hazeGeo.dispose()
       renderer.dispose()
       if (renderer.domElement.parentElement === host) host.removeChild(renderer.domElement)
     }

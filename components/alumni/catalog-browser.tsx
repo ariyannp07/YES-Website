@@ -130,7 +130,7 @@ export function CatalogBrowser({ people }: { readonly people: readonly Alumnus[]
                 ? `${total} by meaning · press Esc to clear`
                 : trimmed
                   ? `${total} of ${people.length} · press Enter to search by meaning`
-                  : `${people.length} builders`}
+                  : `${people.length} YES members and associates`}
         </span>
       </label>
 

@@ -1,0 +1,80 @@
+.root {
+  position: relative;
+}
+
+.trigger,
+.close {
+  padding: 0;
+  color: rgb(255 255 255 / 68%);
+  background: none;
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.trigger {
+  padding-bottom: 0.18rem;
+  border-bottom: 1px solid rgb(255 255 255 / 28%);
+  font-size: var(--text-micro);
+}
+
+.trigger:hover,
+.trigger[aria-expanded='true'] {
+  color: var(--white);
+}
+
+.panel {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 1.2rem);
+  z-index: 70;
+  display: grid;
+  width: min(22rem, calc(100vw - 2 * var(--gutter)));
+  padding: 1.4rem;
+  color: var(--white);
+  background: var(--night-raised);
+  border: 1px solid rgb(255 255 255 / 18%);
+  box-shadow: 0 1.4rem 4rem rgb(0 0 0 / 45%);
+}
+
+.eyebrow {
+  margin-bottom: 2.6rem;
+  color: var(--signal);
+  font-size: var(--text-rank);
+  font-weight: 720;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.panel strong {
+  font-size: var(--text-lead);
+  letter-spacing: -0.025em;
+}
+
+.role {
+  margin: 0.3rem 0 1.5rem;
+  color: var(--muted);
+  font-size: var(--text-label);
+}
+
+.panel a {
+  justify-self: start;
+  color: var(--white);
+  font-size: var(--text-label);
+  text-underline-offset: 0.25rem;
+}
+
+.close {
+  position: absolute;
+  top: 0.85rem;
+  right: 1rem;
+  font-size: var(--text-lead);
+  line-height: 1;
+}
+
+@media (max-width: 52rem) {
+  .panel {
+    right: auto;
+    left: 0;
+  }
+}

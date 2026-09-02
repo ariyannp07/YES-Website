@@ -1,40 +1,45 @@
 import type { Metadata } from 'next'
+import { Archivo, Bodoni_Moda } from 'next/font/google'
 
-import { PaletteToggle } from '@/components/palette-toggle'
-import { paletteToggleEnabled, resolvePalette } from '@/lib/palette'
+import { SiteFooter } from '@/components/site-footer'
+import { SiteNav } from '@/components/site-nav'
 
 import './globals.css'
 
-/*
- * No webfonts.
- *
- * Every type token now resolves to Times New Roman, which is installed rather
- * than downloaded — so Playfair Display, Inter and JetBrains Mono are gone
- * along with their requests. Leaving next/font in place would have shipped
- * three families that nothing references.
- */
+const archivo = Archivo({
+  subsets: ['latin'],
+  variable: '--font-archivo',
+  display: 'swap',
+})
 
-/**
- * Build spec §3: the page title is `YES`. Not
- * "Yale Entrepreneurial Society (YES) | Student Entrepreneurship Hub" —
- * the SEO-stuffed title is part of the old genre.
- */
+const bodoniModa = Bodoni_Moda({
+  subsets: ['latin'],
+  variable: '--font-wsj',
+  display: 'swap',
+})
+
 export const metadata: Metadata = {
   title: { default: 'YES', template: '%s · YES' },
-  description: 'Yale Entrepreneurial Society.',
+  description:
+    'Yale Entrepreneurial Society — a home for people at Yale who choose to build.',
   metadataBase: new URL('https://yesyale.org'),
 }
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const palette = resolvePalette(process.env.NEXT_PUBLIC_PALETTE)
-
   return (
-    <html lang="en" data-palette={palette}>
+    <html
+      lang="en"
+      className={`${archivo.variable} ${bodoniModa.variable}`}
+      data-scroll-behavior="smooth"
+    >
       <body>
-        {children}
-        {paletteToggleEnabled() ? <PaletteToggle initial={palette} /> : null}
+        <div className="site-shell">
+          <SiteNav />
+          <main className="site-main">{children}</main>
+          <SiteFooter />
+        </div>
       </body>
     </html>
   )

@@ -1,43 +1,31 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
 
 import styles from './catalog.module.css'
 
 interface SearchFieldProps {
-  readonly initial?: string
-  readonly variant?: 'hero' | 'top'
+  readonly value: string
+  readonly searching: boolean
+  readonly onChange: (value: string) => void
   readonly onSubmit: (query: string) => void
-  readonly autoFocus?: boolean
-  /** Fired on first focus — the caller uses it to warm the embedding model. */
+  readonly onClear: () => void
   readonly onFirstFocus?: () => void
 }
 
-/**
- * One text field, submitted with Enter. No dropdowns, no filter chips, no
- * advanced panel — the semantic index handles "robotics in east africa" as
- * readily as a name, so a filter UI would only be a worse way to ask.
- */
 export function SearchField({
-  initial = '',
-  variant = 'hero',
+  value,
+  searching,
+  onChange,
   onSubmit,
-  autoFocus = false,
+  onClear,
   onFirstFocus,
 }: SearchFieldProps) {
-  const [value, setValue] = useState(initial)
-  const inputRef = useRef<HTMLInputElement>(null)
   const warmed = useRef(false)
-
-  useEffect(() => {
-    // preventScroll: focusing the field would otherwise scroll it into view,
-    // dragging the site nav off the top of the screen on load.
-    if (autoFocus) inputRef.current?.focus({ preventScroll: true })
-  }, [autoFocus])
 
   return (
     <form
-      className={`${styles.field} ${variant === 'top' ? styles.fieldTop : ''}`}
+      className={styles.field}
       onSubmit={(event) => {
         event.preventDefault()
         const query = value.trim()
@@ -45,24 +33,34 @@ export function SearchField({
       }}
       role="search"
     >
-      <input
-        ref={inputRef}
-        className={styles.input}
-        value={value}
-        onChange={(event) => setValue(event.target.value)}
-        onFocus={() => {
-          if (warmed.current) return
-          warmed.current = true
-          onFirstFocus?.()
-        }}
-        placeholder="What are you looking for?"
-        aria-label="Search the catalog of Yale builders"
-        autoComplete="off"
-        spellCheck={false}
-      />
-      <button type="submit" className={styles.submit}>
-        Search
-      </button>
+      <label htmlFor="builder-search" className={styles.visuallyHidden}>
+        Search people
+      </label>
+      <div className={styles.fieldRow} data-searching={searching ? 'true' : 'false'}>
+        <input
+          id="builder-search"
+          className={styles.input}
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          onFocus={() => {
+            if (warmed.current) return
+            warmed.current = true
+            onFirstFocus?.()
+          }}
+          placeholder="Search people"
+          autoComplete="off"
+          spellCheck={false}
+        />
+        {value ? (
+          <button type="button" className={styles.clear} onClick={onClear}>
+            Clear
+          </button>
+        ) : null}
+        <button type="submit" className={styles.submit} disabled={searching || !value.trim()}>
+          {searching ? 'Searching…' : 'Search'}
+        </button>
+        <span className={styles.searchTrace} aria-hidden="true" />
+      </div>
     </form>
   )
 }

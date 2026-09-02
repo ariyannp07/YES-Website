@@ -1,57 +1,31 @@
+import { ProfileImage } from '@/components/catalog/profile-image'
 import type { Alumnus } from '@/lib/alumni'
 
-/**
- * A dossier (build spec §3).
- *
- * Layout in the document grammar: no card chrome, plain type on the background,
- * display size for the proof and the name, small type for everything else.
- *
- * EDITORIAL RULES, binding on everything rendered here:
- *   · No adjectives describing a person. Accomplishments speak in nouns,
- *     numbers and artifacts. scripts/check-adjectives.mjs enforces this against
- *     the feed at build time rather than leaving it to a copy reviewer.
- *   · One proof object, not a résumé. Curation over completeness.
- *   · Own words are collected from the alum, never ghost-written.
- */
+import styles from './dossier.module.css'
+
 export function Dossier({ person }: { readonly person: Alumnus }) {
   return (
-    <div className="measure">
-      <p className="t-micro" style={{ color: 'var(--muted)', margin: '0 0 1rem' }}>
-        {person.classYear}
-      </p>
+    <div className={styles.dossier}>
+      <header className={styles.header}>
+        <div className={styles.portrait}>
+          <ProfileImage name={person.name} photo={person.portraitColor} />
+        </div>
+        <div className={styles.intro}>
+          <p>{person.classYear}</p>
+          <h1>{person.name}</h1>
+          <span>{person.nowLine}</span>
+        </div>
+      </header>
 
-      <h1 className="t-display" style={{ margin: '0 0 1.5rem' }}>
-        {person.name}
-      </h1>
+      <section className={styles.proof} aria-label="Selected proof">
+        <ProofBlock person={person} />
+      </section>
 
-      <p className="t-small" style={{ margin: '0 0 3.5rem', lineHeight: 1.8 }}>
-        {person.nowLine}
-      </p>
-
-      <ProofBlock person={person} />
-
-      {/* The directory's description of the work. Third person and written
-          about them, which is why it is set as plain prose and NOT folded into
-          `ownWords` — those are quoted, and quoting a third-person paragraph
-          would present it as something the person said. Without this the copy
-          existed only as a three-line clamp on the catalog card and appeared in
-          full nowhere on the site. */}
-      {person.bio ? (
-        <p className="t-small" style={{ margin: '3.5rem 0 0', lineHeight: 1.8 }}>
-          {person.bio}
-        </p>
-      ) : null}
-
-      {person.ownWords ? (
-        <p
-          className="t-small"
-          style={{ margin: '3.5rem 0 0', lineHeight: 1.8 }}
-        >
-          “{person.ownWords}”
-        </p>
-      ) : null}
-
-      <DossierLinks person={person} />
+      <div className={styles.story}>
+        {person.bio ? <p>{person.bio}</p> : null}
+        {person.ownWords ? <blockquote>“{person.ownWords}”</blockquote> : null}
+        <DossierLinks person={person} />
+      </div>
     </div>
   )
 }
@@ -61,49 +35,26 @@ function ProofBlock({ person }: { readonly person: Alumnus }) {
 
   if (proof.kind === 'image') {
     return (
-      <figure style={{ margin: 0 }}>
+      <figure>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={proof.value}
-          alt=""
-          style={{ maxWidth: '100%', height: 'auto', display: 'block' }}
-        />
-        {proof.source ? (
-          <figcaption
-            className="t-micro"
-            style={{ color: 'var(--muted)', marginTop: '0.75rem' }}
-          >
-            {proof.source}
-          </figcaption>
-        ) : null}
+        <img src={proof.value} alt="" />
+        {proof.source ? <figcaption>{proof.source}</figcaption> : null}
       </figure>
     )
   }
 
   if (proof.kind === 'link') {
     return (
-      <p className="t-small" style={{ margin: 0 }}>
-        <a href={proof.value} rel="noreferrer noopener" target="_blank">
-          {proof.source ?? proof.value}
-        </a>
-      </p>
+      <a href={proof.value} rel="noreferrer noopener" target="_blank">
+        {proof.source ?? proof.value} ↗
+      </a>
     )
   }
 
-  // 'number' and 'headline' — the single most concrete artifact, in display type.
   return (
     <div>
-      <p className="t-display" style={{ margin: 0 }}>
-        {proof.value}
-      </p>
-      {proof.source ? (
-        <p
-          className="t-micro"
-          style={{ color: 'var(--muted)', margin: '0.85rem 0 0' }}
-        >
-          {proof.source}
-        </p>
-      ) : null}
+      <p>{proof.value}</p>
+      {proof.source ? <span>{proof.source}</span> : null}
     </div>
   )
 }
@@ -117,15 +68,12 @@ function DossierLinks({ person }: { readonly person: Alumnus }) {
   if (links.length === 0) return null
 
   return (
-    <p className="t-small" style={{ margin: '3.5rem 0 0' }}>
-      {links.map((link, index) => (
-        <span key={link.href}>
-          {index > 0 ? <span style={{ opacity: 0.4 }}> · </span> : null}
-          <a href={link.href} rel="noreferrer noopener" target="_blank">
-            {link.label}
-          </a>
-        </span>
+    <nav className={styles.links} aria-label={`${person.name} links`}>
+      {links.map((link) => (
+        <a key={link.href} href={link.href} rel="noreferrer noopener" target="_blank">
+          {link.label} ↗
+        </a>
       ))}
-    </p>
+    </nav>
   )
 }

@@ -10,19 +10,19 @@
  */
 export const TIMING = {
   /** Stars fade up out of black. */
-  starsIn: { at: 0.15, dur: 1.1 },
+  starsIn: { at: 0.02, dur: 0.22 },
 
   /** The sphere's rim and haze arrive before any node, so nodes land ON something. */
-  globeIn: { at: 0.5, dur: 1.6 },
+  globeIn: { at: 0.03, dur: 0.28 },
 
   /** Regions come online in the order set by REGIONS[].order. */
-  regions: { at: 1.0, stagger: 0.34, nodeFade: 0.55, jitter: 0.28 },
+  regions: { at: 0.08, stagger: 0.045, nodeFade: 0.14, jitter: 0.04 },
 
   /** Local constellation links trail their region slightly. */
-  localEdges: { delay: 0.3, dur: 0.7 },
+  localEdges: { delay: 0.05, dur: 0.16 },
 
   /** Intercontinental arcs, once the continents themselves are legible. */
-  longEdges: { at: 3.3, dur: 1.0 },
+  longEdges: { at: 0.4, dur: 0.2 },
 
   /**
    * The two homes ignite in order — New Haven first, because it is the origin,
@@ -30,21 +30,21 @@ export const TIMING = {
    * gold reads as a hearth, which is the word being illustrated.
    */
   marks: [
-    { id: 'new-haven', label: 'New Haven · Home', lon: -72.928, lat: 41.309, at: 4.1, typeAt: 4.55 },
+    { id: 'new-haven', label: 'New Haven', lon: -72.928, lat: 41.309, at: 0.48, typeAt: 0.52 },
     // Nob Hill, San Francisco.
-    { id: 'san-francisco', label: 'SF · Home', lon: -122.4161, lat: 37.793, at: 5.0, typeAt: 5.45 },
+    { id: 'san-francisco', label: 'San Francisco', lon: -122.4161, lat: 37.793, at: 0.58, typeAt: 0.62 },
   ],
 
   /** Shared shape of an ignition. */
-  flash: { dur: 1.5 },
+  flash: { dur: 0.36 },
 
   /** Marker labels type at the same rate as each other. */
-  marker: { cps: 34 },
+  marker: { cps: 120 },
 
   /** Copy types out in the wake of the ignitions. */
-  title: { at: 5.9, cps: 26 },
-  motto: { at: 7.0, cps: 30 },
-  link: { at: 8.1, dur: 0.9 },
+  title: { at: 0.62, cps: 80 },
+  motto: { at: 0.7, cps: 80 },
+  link: { at: 0.78, dur: 0.15 },
 } as const
 
 /** Seconds until the field is fully online — used to settle into ambient. */
