@@ -21,7 +21,7 @@ import styles from './globe.module.css'
 const RADIUS = 1
 /** Just above the sphere, so the heavier coast does not z-fight the core. */
 const COAST_RADIUS = 1.001
-const ROUTE_POINT_COUNT = 28
+const ROUTE_POINT_COUNT = 18
 
 const COLORS = {
   gold: new THREE.Color('#d8bd7c'),
@@ -84,6 +84,7 @@ const ROUTE_VERT = /* glsl */ `
   uniform float uAnimate;
 
   varying float vAlpha;
+  varying float vPulse;
 
   void main() {
     vec4 mv = modelViewMatrix * vec4(position, 1.0);
@@ -101,10 +102,11 @@ const ROUTE_VERT = /* glsl */ `
     separation = min(separation, 1.0 - separation);
     float pulse = smoothstep(0.14, 0.0, separation) * routeComplete * uAnimate;
 
-    vAlpha = born * facing * (0.72 + pulse * 0.28);
+    vAlpha = born * facing * (0.98 + pulse * 0.02);
+    vPulse = pulse;
 
     float dist = max(0.001, -mv.z);
-    gl_PointSize = uScale * (4.8 + pulse * 3.2) * (3.2 / dist);
+    gl_PointSize = uScale * (10.5 + pulse * 7.5) * (3.2 / dist);
     gl_Position = projectionMatrix * mv;
   }
 `
@@ -112,14 +114,16 @@ const ROUTE_VERT = /* glsl */ `
 const ROUTE_FRAG = /* glsl */ `
   uniform vec3 uGold;
   varying float vAlpha;
+  varying float vPulse;
 
   void main() {
     float d = length(gl_PointCoord - vec2(0.5));
     if (d > 0.5) discard;
-    float disc = 1.0 - smoothstep(0.32, 0.5, d);
+    float disc = 1.0 - smoothstep(0.42, 0.5, d);
     float alpha = vAlpha * disc;
     if (alpha < 0.004) discard;
-    gl_FragColor = vec4(uGold, alpha);
+    vec3 tint = mix(uGold, vec3(1.0, 0.96, 0.82), vPulse * 0.58);
+    gl_FragColor = vec4(tint, alpha);
   }
 `
 
