@@ -166,8 +166,9 @@
   overflow: hidden;
   color: var(--ink);
   background: var(--surface);
-  border: 1px solid var(--line);
+  border: 1px solid transparent;
   outline: 0;
+  transition: border-color var(--duration-fast) var(--ease-out);
 }
 
 .cardMedia {
@@ -306,6 +307,10 @@
   transform: scale(0.31);
 }
 
+.card:is(:hover, :focus, :focus-within) {
+  border-color: var(--signal);
+}
+
 .card:is(:hover, :focus, :focus-within) .cardFront {
   opacity: 0;
   transform: translateY(0.35rem);
@@ -332,7 +337,8 @@
   aspect-ratio: 1;
   overflow: hidden;
   background: var(--blue-deep);
-  border: 1px solid var(--line);
+  border: 1px solid transparent;
+  transition: border-color var(--duration-fast) var(--ease-out);
 }
 
 .uncertainMedia img,
@@ -340,6 +346,10 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.uncertainCard:hover .uncertainMedia {
+  border-color: var(--signal);
 }
 
 .uncertainBody {
@@ -463,9 +473,11 @@
     transition: none;
   }
 
+  .card,
   .cardMedia,
   .cardInfo,
-  .cardFront {
+  .cardFront,
+  .uncertainMedia {
     transition: none;
   }
 }
