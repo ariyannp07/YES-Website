@@ -5,7 +5,7 @@ import type { Alumnus } from '@/lib/alumni'
 import { ProfileImage } from './profile-image'
 import styles from './catalog.module.css'
 
-const MAX_BIO_CHARACTERS = 180
+const MAX_BIO_CHARACTERS = 140
 
 const shortenBio = (bio: string): string => {
   if (bio.length <= MAX_BIO_CHARACTERS) return bio

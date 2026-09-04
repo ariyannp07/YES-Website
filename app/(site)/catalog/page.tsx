@@ -21,17 +21,36 @@ export const metadata: Metadata = {
  */
 export const dynamic = 'force-static'
 
-export default async function CatalogPage() {
-  const people = [...(await allAlumni())].sort(
-    (left, right) => {
-      const statusOrder =
-        Number(left.directoryStatus === 'uncertain') -
-        Number(right.directoryStatus === 'uncertain')
-      if (statusOrder !== 0) return statusOrder
+const BOARD_PRIORITY: Readonly<Record<string, number>> = {
+  'ariyan-patel': 0,
+  'sofia-teifeld': 1,
+  'nicolas-gertler': 2,
+  'kashi-tuteja': 3,
+}
 
-      return Number(Boolean(right.portraitColor)) - Number(Boolean(left.portraitColor))
-    },
-  )
+const STATUS_PRIORITY: Readonly<Record<string, number>> = {
+  board: 0,
+  member: 1,
+  former: 2,
+  uncertain: 3,
+}
+
+export default async function CatalogPage() {
+  const people = [...(await allAlumni())].sort((left, right) => {
+    const statusOrder =
+      (STATUS_PRIORITY[left.directoryStatus ?? 'member'] ?? 2) -
+      (STATUS_PRIORITY[right.directoryStatus ?? 'member'] ?? 2)
+    if (statusOrder !== 0) return statusOrder
+
+    if (left.directoryStatus === 'board' && right.directoryStatus === 'board') {
+      const boardOrder =
+        (BOARD_PRIORITY[left.slug] ?? Number.MAX_SAFE_INTEGER) -
+        (BOARD_PRIORITY[right.slug] ?? Number.MAX_SAFE_INTEGER)
+      if (boardOrder !== 0) return boardOrder
+    }
+
+    return Number(Boolean(right.portraitColor)) - Number(Boolean(left.portraitColor))
+  })
   const storedVectors = embeddings.vectors as Record<string, number[]>
   const publicVectors = Object.fromEntries(
     people.flatMap((person) => {
