@@ -6,6 +6,11 @@ import GlobeCanvas from '@/components/landing/globe/globe-canvas'
 import { allAlumni } from '@/lib/alumni'
 import { orderDirectoryPeople } from '@/lib/catalog-directory'
 import { allEntries } from '@/lib/reservoir'
+import {
+  additionalVcFirms,
+  featuredVcFirms,
+  vcFirmCount,
+} from '@/lib/vc-community'
 
 import styles from './home.module.css'
 
@@ -121,6 +126,42 @@ export async function HomePage() {
             <span>valuation of YES-associated companies</span>
           </div>
         </div>
+      </section>
+
+      <section className={styles.vcSection} aria-labelledby="vc-community-title">
+        <div className={styles.vcHeader}>
+          <h2 id="vc-community-title">YES VC Community</h2>
+          <p>
+            Firms connected to the wider YES network. Inclusion reflects a community
+            relationship—not necessarily an investment or formal partnership.
+          </p>
+        </div>
+
+        <ul className={styles.vcFeatured} aria-label="Selected firms in the YES VC community">
+          {featuredVcFirms.map((firm, index) => (
+            <li key={firm} className={index < 3 ? styles.vcPrimary : undefined}>
+              {firm}
+            </li>
+          ))}
+        </ul>
+
+        <details className={styles.vcDirectory}>
+          <summary>
+            <span className={styles.vcSummaryClosed}>
+              See {additionalVcFirms.length} more firms
+            </span>
+            <span className={styles.vcSummaryOpen}>Close the full list</span>
+            <span className={styles.vcCount}>{vcFirmCount} connected firms</span>
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="m3 6 5 5 5-5" />
+            </svg>
+          </summary>
+          <ul>
+            {additionalVcFirms.map((firm) => (
+              <li key={firm}>{firm}</li>
+            ))}
+          </ul>
+        </details>
       </section>
 
       <section className={styles.choiceWrap}>

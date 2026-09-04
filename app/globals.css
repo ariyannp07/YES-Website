@@ -39,6 +39,8 @@
   --text-impact: clamp(2.05rem, 5.6vw, 5.25rem);
   --text-paper-title: clamp(1.35rem, 2.2vw, 2.05rem);
   --text-paper-claim: clamp(1.15rem, 1.8vw, 1.55rem);
+  --text-vc-feature: clamp(2rem, 4vw, 3.8rem);
+  --text-vc-name: clamp(1.05rem, 1.65vw, 1.5rem);
   --text-display: clamp(2.85rem, 6vw, 5.5rem);
   --text-section: clamp(2.15rem, 4.5vw, 4rem);
   --text-title: clamp(1.55rem, 2.7vw, 2.5rem);
