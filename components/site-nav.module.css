@@ -54,10 +54,7 @@
 }
 
 .brandMark {
-  width: auto;
   height: 2.2rem;
-  flex: 0 0 auto;
-  object-fit: contain;
 }
 
 .shortName {

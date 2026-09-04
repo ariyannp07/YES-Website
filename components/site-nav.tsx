@@ -1,10 +1,10 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
+import { YesLogo } from '@/components/yes-logo'
 import { NAV } from '@/lib/site'
 
 import styles from './site-nav.module.css'
@@ -34,14 +34,7 @@ export function SiteNav() {
     >
       <div className={styles.inner}>
         <Link href="/" className={styles.brand} aria-label="YES home">
-          <Image
-            className={styles.brandMark}
-            src="/brand/yes-logo.png"
-            alt=""
-            width={320}
-            height={410}
-            unoptimized
-          />
+          <YesLogo className={styles.brandMark} />
           <span
             className={`${styles.name} ${isHome ? styles.homeName : ''} ${
               isHome && hasScrolled ? styles.condensedName : ''

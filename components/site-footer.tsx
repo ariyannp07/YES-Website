@@ -1,7 +1,7 @@
-import Image from 'next/image'
 import Link from 'next/link'
 
 import { ContactPopover } from '@/components/contact-popover'
+import { YesLogo } from '@/components/yes-logo'
 
 import styles from './site-footer.module.css'
 
@@ -15,14 +15,7 @@ export function SiteFooter() {
 
       <div className={styles.bar}>
         <Link href="/" className={styles.identity} aria-label="YES home">
-          <Image
-            className={styles.identityMark}
-            src="/brand/yes-logo.png"
-            alt=""
-            width={320}
-            height={410}
-            unoptimized
-          />
+          <YesLogo className={styles.identityMark} />
           <span>Yale Entrepreneurial Society</span>
         </Link>
 

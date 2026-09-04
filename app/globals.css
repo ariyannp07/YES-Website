@@ -25,6 +25,10 @@
   --landing-accent: #d1b97e;
   --landing-gold: #d8bd7c;
 
+  /* The YES mark has two independently themeable color channels. */
+  --yes-logo-bars: var(--landing-mid);
+  --yes-logo-center: #286dc0;
+
   --font-display: var(--font-archivo), Arial, sans-serif;
   --font-body: var(--font-archivo), Arial, sans-serif;
   --font-mono: var(--font-archivo), Arial, sans-serif;

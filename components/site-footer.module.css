@@ -54,10 +54,7 @@
 }
 
 .identityMark {
-  width: auto;
   height: 1.75rem;
-  flex: 0 0 auto;
-  object-fit: contain;
 }
 
 .bar nav {
