@@ -11,7 +11,8 @@ import styles from './home.module.css'
 const WSJ_URL =
   'https://www.wsj.com/tech/ai/forget-wall-street-elite-students-are-spending-their-summers-on-startup-dreams-e7191994'
 
-const LAUNCH_WORDS = ['Build', 'the', 'future,', 'don’t', 'just', 'study', 'for', 'it.']
+const LAUNCH_TITLE = 'The next Yale company is a conversation that hasn’t happened yet.'
+const LAUNCH_WORDS = LAUNCH_TITLE.split(' ')
 
 export async function HomePage() {
   const people = await allAlumni()
@@ -27,7 +28,7 @@ export async function HomePage() {
       <section className={styles.launch} aria-labelledby="launch-title">
         <div className={styles.launchInner}>
           <div className={styles.launchStatement} data-landing-copy="">
-            <h1 id="launch-title" aria-label="Build the future, don’t just study for it.">
+            <h1 id="launch-title" aria-label={LAUNCH_TITLE}>
               {LAUNCH_WORDS.map((word, wordIndex) => {
                 const precedingCharacters = LAUNCH_WORDS.slice(0, wordIndex).join('').length
 
@@ -39,7 +40,7 @@ export async function HomePage() {
                         className={styles.launchCharacter}
                         style={
                           {
-                            '--character-delay': `${70 + (precedingCharacters + characterIndex) * 26}ms`,
+                            '--character-delay': `${70 + (precedingCharacters + characterIndex) * 18}ms`,
                           } as CSSProperties
                         }
                       >
@@ -81,6 +82,14 @@ export async function HomePage() {
       </section>
 
       <section id="proof" className={styles.statsSection} aria-label="YES at a glance">
+        <p className={styles.intro}>
+          YES is Yale’s student-run network for students building companies or exploring
+          entrepreneurship. We connect members with peers, founders, operators, and
+          investors through events, programs, and direct introductions. Members get
+          practical feedback, access to talent and capital, and support from first idea
+          through growth.
+        </p>
+
         <div className={styles.primaryStat}>
           <strong>$17,000,000+</strong>
           <span>Raised in the past year by YES founders</span>
