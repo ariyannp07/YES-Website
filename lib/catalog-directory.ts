@@ -31,16 +31,16 @@ interface DirectoryPerson {
   readonly reviewNote?: string
 }
 
-type DirectoryStatus = 'board' | 'member' | 'former'
+type ConfirmedDirectoryStatus = 'board' | 'member' | 'former'
 
 interface CuratedListing {
   readonly slug: string
   readonly name: string
   readonly sourceName?: string
-  readonly status: DirectoryStatus
+  readonly status: ConfirmedDirectoryStatus
 }
 
-const DIRECTORY_ROLE: Readonly<Record<DirectoryStatus, string>> = {
+const DIRECTORY_ROLE: Readonly<Record<ConfirmedDirectoryStatus, string>> = {
   board: 'Member of Board',
   member: 'Member of YES',
   former: 'Former Board',
@@ -66,7 +66,11 @@ const portraits = portraitManifest.portraits as Record<string, unknown>
 const hasPortrait = (slug: string): boolean =>
   Object.prototype.hasOwnProperty.call(portraits, slug)
 
-const toAlumnus = (person: DirectoryPerson, directoryRole: string): Alumnus => ({
+const toAlumnus = (
+  person: DirectoryPerson,
+  directoryRole: string,
+  directoryStatus: Alumnus['directoryStatus'],
+): Alumnus => ({
   slug: person.slug,
   name: person.name,
   classYear: person.classYear,
@@ -93,6 +97,7 @@ const toAlumnus = (person: DirectoryPerson, directoryRole: string): Alumnus => (
   placeholder: false,
   venture: person.venture,
   directoryRole,
+  directoryStatus,
   bio: person.bio,
   sectors: person.sectors ? [...person.sectors] : undefined,
   searchText: person.searchText,
@@ -112,8 +117,51 @@ const minimalPerson = (listing: CuratedListing): DirectoryPerson => ({
   searchText: '',
 })
 
-export const directoryPeople = (): readonly Alumnus[] =>
-  (curation.people as readonly CuratedListing[]).map((listing) => {
+const confirmedListings = curation.people as readonly CuratedListing[]
+const confirmedSlugs = new Set(confirmedListings.map((listing) => listing.slug))
+const YES_TITLE = /\bYES\b|Yale Entrepreneurial Society/i
+const YES_OFFICER_CLAUSE = /\s*(?:,\s*|and\s+)?(?:co-)?founding officer of YES\b/gi
+
+const externalDirectoryTitle = (title: string): string | undefined => {
+  const externalParts = title
+    .split(';')
+    .map((part) => part.replace(YES_OFFICER_CLAUSE, '').trim())
+    .filter((part) => part && !YES_TITLE.test(part))
+
+  return externalParts.length > 0 ? externalParts.join('; ') : undefined
+}
+
+const toUncertainAlumnus = (
+  person: Pick<DirectoryPerson, 'slug' | 'name' | 'nowLine'>,
+): Alumnus => {
+  const externalTitle = externalDirectoryTitle(person.nowLine)
+  const portrait = hasPortrait(person.slug)
+
+  return {
+    slug: person.slug,
+    name: person.name,
+    classYear: 'Information uncertain',
+    nowLine: externalTitle ?? 'Uncertain',
+    proof: { kind: 'headline', value: 'Uncertain' },
+    ...(portrait
+      ? {
+          portraitColor: `/portraits/generated/${person.slug}-color.webp`,
+          portraitDuotone: `/portraits/generated/${person.slug}-duotone.webp`,
+        }
+      : {}),
+    weight: 1,
+    placeholder: false,
+    directoryRole: 'Uncertain',
+    directoryStatus: 'uncertain',
+    searchText: [person.name, externalTitle, 'uncertain']
+      .filter(Boolean)
+      .join(' ')
+      .toLowerCase(),
+  }
+}
+
+const confirmedPeople = (): readonly Alumnus[] =>
+  confirmedListings.map((listing) => {
     const stored = storedBySlug.get(listing.slug) ?? minimalPerson(listing)
     const directoryRole = DIRECTORY_ROLE[listing.status]
 
@@ -132,5 +180,21 @@ export const directoryPeople = (): readonly Alumnus[] =>
           .toLowerCase(),
       },
       directoryRole,
+      listing.status,
     )
   })
+
+/**
+ * Uncertain entries are intentionally reduced to identity and portrait only.
+ * Their richer stored records stay available for later verification, but are
+ * never serialized into the public page or its search index.
+ */
+const uncertainPeople = (): readonly Alumnus[] =>
+  (directory.people as readonly DirectoryPerson[])
+    .filter((person) => !confirmedSlugs.has(person.slug))
+    .map(toUncertainAlumnus)
+
+export const directoryPeople = (): readonly Alumnus[] => [
+  ...confirmedPeople(),
+  ...uncertainPeople(),
+]

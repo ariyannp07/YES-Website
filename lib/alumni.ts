@@ -53,6 +53,8 @@ export const Alumnus = z.object({
   venture: z.string().optional(),
   /** Owner-curated membership label shown on the top-level People wall. */
   directoryRole: z.string().optional(),
+  /** Whether this profile is confirmed by the owner or awaiting verification. */
+  directoryStatus: z.enum(['board', 'member', 'former', 'uncertain']).optional(),
   bio: z.string().optional(),
   sectors: z.array(z.string()).optional(),
   /** Precomputed lowercase haystack, so search does not rebuild it per keystroke. */
@@ -111,12 +113,16 @@ export const allAlumni = async (): Promise<readonly Alumnus[]> => {
   const { fetchAlumniFeed } = await import('@/lib/airtable/alumni-feed')
   const feed = await fetchAlumniFeed()
 
-  // The git curation is the public allowlist. A consented record may enrich a
-  // listed person, but it cannot introduce somebody outside that allowlist or
-  // replace the owner-curated display name and membership label.
+  // Git curation controls which profiles are confirmed. A consented record may
+  // enrich a confirmed person, but it cannot promote or enrich an uncertain
+  // record, or replace the owner-curated display name and membership label.
   const consented = new Map((feed ?? []).map((person) => [person.slug, person]))
 
   return directory.map((curated) => {
+    // Uncertain records intentionally publish no profile details. Airtable
+    // cannot silently enrich them until the owner moves them into curation.
+    if (curated.directoryStatus === 'uncertain') return curated
+
     const submitted = consented.get(curated.slug)
     if (!submitted) return curated
 
@@ -125,6 +131,7 @@ export const allAlumni = async (): Promise<readonly Alumnus[]> => {
       ...submitted,
       name: curated.name,
       directoryRole: curated.directoryRole,
+      directoryStatus: curated.directoryStatus,
       searchText: [curated.searchText, submitted.searchText].filter(Boolean).join(' '),
     }
   })
@@ -133,4 +140,10 @@ export const allAlumni = async (): Promise<readonly Alumnus[]> => {
 export const alumnusBySlug = async (
   slug: string,
 ): Promise<Alumnus | undefined> =>
-  (await allAlumni()).find((person) => person.slug === slug)
+  (await allAlumni()).find(
+    (person) => person.slug === slug && person.directoryStatus !== 'uncertain',
+  )
+
+/** Only confirmed people receive standalone dossier routes. */
+export const profileAlumni = async (): Promise<readonly Alumnus[]> =>
+  (await allAlumni()).filter((person) => person.directoryStatus !== 'uncertain')

@@ -1,11 +1,11 @@
 {
   "$comment": [
-    "This file is the public People-directory allowlist.",
-    "Every record in builders.json that is not listed here is deprecated by default:",
-    "it remains stored in git but must not be rendered, searched, routed, or published.",
+    "This file distinguishes confirmed People-directory profiles from uncertain records.",
+    "Every record in builders.json that is not listed here is uncertain by default:",
+    "it remains visible by name and portrait, but its unverified details are not published.",
     "The order below is owner-curated. sourceName preserves an older stored spelling"
   ],
-  "unlistedStatus": "deprecated",
+  "unlistedStatus": "uncertain",
   "people": [
     { "slug": "oliver-hime", "name": "Oliver Hime", "status": "former" },
     {

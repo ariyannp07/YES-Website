@@ -15,7 +15,11 @@ const LAUNCH_WORDS = ['Build', 'the', 'future,', 'don’t', 'just', 'study', 'fo
 
 export async function HomePage() {
   const people = await allAlumni()
-  const faces = people.filter((person) => person.portraitColor).slice(0, 9)
+  const faces = people
+    .filter(
+      (person) => person.directoryStatus !== 'uncertain' && person.portraitColor,
+    )
+    .slice(0, 9)
   const press = allEntries().filter((entry) => entry.kind === 'press')
 
   return (

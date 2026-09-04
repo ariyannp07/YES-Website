@@ -23,8 +23,14 @@ export const dynamic = 'force-static'
 
 export default async function CatalogPage() {
   const people = [...(await allAlumni())].sort(
-    (left, right) =>
-      Number(Boolean(right.portraitColor)) - Number(Boolean(left.portraitColor)),
+    (left, right) => {
+      const statusOrder =
+        Number(left.directoryStatus === 'uncertain') -
+        Number(right.directoryStatus === 'uncertain')
+      if (statusOrder !== 0) return statusOrder
+
+      return Number(Boolean(right.portraitColor)) - Number(Boolean(left.portraitColor))
+    },
   )
   const storedVectors = embeddings.vectors as Record<string, number[]>
   const publicVectors = Object.fromEntries(

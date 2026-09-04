@@ -25,17 +25,44 @@ const EXPECTED = [
 ] as const
 
 describe('public People directory', () => {
-  it('contains exactly the owner-curated roster and labels', () => {
-    expect(directoryPeople().map(({ name, directoryRole }) => [name, directoryRole])).toEqual(
-      EXPECTED,
+  it('contains exactly the confirmed owner-curated roster and labels', () => {
+    const confirmed = directoryPeople().filter(
+      (person) => person.directoryStatus !== 'uncertain',
     )
+
+    expect(confirmed.map(({ name, directoryRole }) => [name, directoryRole])).toEqual(EXPECTED)
   })
 
-  it('does not expose deprecated stored records', () => {
-    const publicNames = new Set(directoryPeople().map((person) => person.name))
+  it('publishes uncertain records without their unverified profile details', () => {
+    const people = directoryPeople()
+    const uncertain = people.filter((person) => person.directoryStatus === 'uncertain')
+    const leia = uncertain.find((person) => person.name === 'Leïa Ryan')
 
-    expect(publicNames.size).toBe(19)
-    expect(publicNames.has('Leïa Ryan')).toBe(false)
-    expect(publicNames.has('James Masson')).toBe(false)
+    expect(people).toHaveLength(102)
+    expect(uncertain).toHaveLength(83)
+    expect(leia).toMatchObject({
+      name: 'Leïa Ryan',
+      nowLine: 'Co-founder, Cortex',
+      directoryRole: 'Uncertain',
+      directoryStatus: 'uncertain',
+    })
+    expect(leia).not.toHaveProperty('bio')
+    expect(leia).not.toHaveProperty('venture')
+    expect(leia).not.toHaveProperty('linkedinUrl')
+    expect(leia).not.toHaveProperty('companyUrl')
+    expect(leia).not.toHaveProperty('sectors')
+  })
+
+  it('suppresses YES-associated titles for uncertain records', () => {
+    const uncertain = directoryPeople().filter(
+      (person) => person.directoryStatus === 'uncertain',
+    )
+    const aris = uncertain.find((person) => person.name === 'Ari Strober')
+    const miles = uncertain.find((person) => person.name === 'Miles Lasater')
+
+    expect(aris?.nowLine).toBe('Uncertain')
+    expect(aris?.searchText).not.toMatch(/entrepreneurial society|\byes\b/i)
+    expect(miles?.nowLine).toBe('Entrepreneur / investor; co-founder of Higher One')
+    expect(miles?.searchText).not.toMatch(/\byes\b/i)
   })
 })

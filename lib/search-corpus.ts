@@ -7,7 +7,7 @@ import { directoryPeople } from '@/lib/catalog-directory'
  *
  * WHY THERE IS NO VECTOR STORE. xAI exposes no embeddings endpoint (/v1/embeddings
  * returns 404), so cosine-similarity RAG is not available on this provider. With
- * 107 short records the entire corpus is ~9k tokens, which fits in one request —
+ * 102 short records the entire corpus is ~9k tokens, which fits in one request —
  * so retrieval happens by putting the whole directory in context rather than by
  * pretending to run a vector index. If the directory grows past a few thousand
  * people this stops being true and needs a real index behind it.

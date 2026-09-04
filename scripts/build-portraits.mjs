@@ -29,7 +29,7 @@ const LOCAL_DIR = join(process.cwd(), 'content', 'catalog', 'portraits')
 const OUT_DIR = join(process.cwd(), 'public', 'portraits', 'generated')
 const SIZE = 640
 const QUALITY = 78
-const PUBLIC_SLUGS = new Set(curation.people.map((person) => person.slug))
+const CONFIRMED_SLUGS = new Set(curation.people.map((person) => person.slug))
 
 /** Duotone endpoints: Yale-blue shadow, warm-white highlight. */
 const SHADOW = { r: 0x0d, g: 0x2b, b: 0x56 }
@@ -92,7 +92,7 @@ await mkdir(OUT_DIR, { recursive: true })
 
 // A removed person must stop being web-addressable on the next build. Source
 // portraits stay archived under content/, while generated public derivatives
-// are cleared and rebuilt only for the current allowlist.
+// are cleared and rebuilt only from the stored directory and confirmed feed.
 const staleDerivatives = (await readdir(OUT_DIR)).filter((file) => file.endsWith('.webp'))
 await Promise.all(staleDerivatives.map((file) => unlink(join(OUT_DIR, file))))
 
@@ -106,7 +106,7 @@ await Promise.all(staleDerivatives.map((file) => unlink(join(OUT_DIR, file))))
 let localWritten = 0
 try {
   const files = (await readdir(LOCAL_DIR)).filter(
-    (file) => file.endsWith('.jpg') && PUBLIC_SLUGS.has(file.replace(/\.jpg$/, '')),
+    (file) => file.endsWith('.jpg'),
   )
   for (const file of files) {
     try {
@@ -119,7 +119,7 @@ try {
 } catch {
   // No local portraits yet; the mosaic falls back to monograms.
 }
-console.log(`build:portraits — ${localWritten} pair(s) from the curated directory.`)
+console.log(`build:portraits — ${localWritten} pair(s) from the stored directory.`)
 
 if (!token || !baseId) {
   console.log(
@@ -181,7 +181,7 @@ for (const record of records) {
 
   const slug = slugify(name)
 
-  if (!PUBLIC_SLUGS.has(slug)) {
+  if (!CONFIRMED_SLUGS.has(slug)) {
     skipped += 1
     continue
   }

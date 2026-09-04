@@ -136,8 +136,9 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(2.25rem, 4vw, 4rem) clamp(1rem, 2.2vw, 2rem);
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  grid-auto-flow: dense;
+  gap: clamp(1.5rem, 2.6vw, 2.8rem) clamp(0.65rem, 1.3vw, 1.25rem);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -150,17 +151,34 @@
   transform: translateY(0.4rem);
 }
 
-.card {
-  display: block;
-  color: var(--ink);
-  text-decoration: none;
+.confirmedItem {
+  grid-column: span 2;
 }
 
-.cardMedia {
+.uncertainItem {
+  grid-column: span 1;
+}
+
+.card {
+  position: relative;
   display: block;
   aspect-ratio: 4 / 5;
   overflow: hidden;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  outline: 0;
+}
+
+.cardMedia {
+  position: absolute;
+  z-index: 2;
+  inset: -1px;
+  display: block;
+  overflow: hidden;
   background: var(--blue-deep);
+  transform-origin: top right;
+  transition: transform 440ms var(--ease-out);
 }
 
 .cardMedia img,
@@ -168,42 +186,146 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: filter var(--duration-medium) var(--ease-out),
-    transform var(--duration-medium) var(--ease-out);
 }
 
-.card:hover .cardMedia img {
-  filter: saturate(1.05);
-  transform: scale(1.035);
+.cardInfo {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 1rem;
+  padding: clamp(0.9rem, 1.25vw, 1.2rem);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(0.4rem);
+  transition: opacity 150ms var(--ease-out) 80ms,
+    transform var(--duration-fast) var(--ease-out) 80ms,
+    visibility 0s linear 230ms;
 }
 
-.cardBody {
+.cardHeader {
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
-  padding-top: 1rem;
+  gap: 0.35rem;
+  width: 62%;
 }
 
 .cardName {
-  min-width: 0;
   font-size: var(--text-card-name);
-  font-weight: 730;
-  letter-spacing: -0.025em;
-  line-height: 1.15;
-  transition: color var(--duration-fast) var(--ease-out);
+  font-weight: 760;
+  letter-spacing: -0.035em;
+  line-height: 1;
 }
 
-.card:hover .cardName {
-  color: var(--blue-bright);
+.cardRole,
+.uncertainRole {
+  color: var(--signal);
+  font-size: var(--text-rank);
+  font-weight: 760;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  text-transform: uppercase;
 }
 
-.cardRole {
+.cardTitle {
   overflow: hidden;
   color: var(--muted);
+  font-size: var(--text-ui);
+  line-height: 1.25;
+}
+
+.cardBio {
+  align-self: end;
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: var(--text-ui);
+  line-height: 1.38;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+}
+
+.cardLinks {
+  display: flex;
+  gap: 1rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid var(--line);
+}
+
+.cardLinks a {
+  color: var(--ink);
+  font-size: var(--text-micro);
+  font-weight: 720;
+  text-decoration: none;
+}
+
+.cardLinks a:hover,
+.cardLinks a:focus-visible {
+  color: var(--signal);
+}
+
+.card:is(:hover, :focus, :focus-within) .cardMedia {
+  transform: scale(0.31);
+}
+
+.card:is(:hover, :focus, :focus-within) .cardInfo {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition-delay: 90ms, 90ms, 0s;
+}
+
+.card:focus-visible {
+  box-shadow: 0 0 0 2px var(--signal);
+}
+
+.uncertainCard {
+  display: block;
+  color: var(--ink);
+}
+
+.uncertainMedia {
+  display: block;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--blue-deep);
+  border: 1px solid var(--line);
+}
+
+.uncertainMedia img,
+.uncertainMedia > div {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.uncertainBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+  padding-top: 0.65rem;
+}
+
+.uncertainName {
   font-size: var(--text-card-role);
-  line-height: 1.4;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.uncertainTitle {
+  display: -webkit-box;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: var(--text-micro);
+  line-height: 1.3;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.uncertainRole {
+  color: var(--muted);
+  font-size: var(--text-rank);
 }
 
 .monogram {
@@ -267,7 +389,7 @@
   }
 
   .grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
@@ -300,6 +422,11 @@
   }
 
   .grid {
+    transition: none;
+  }
+
+  .cardMedia,
+  .cardInfo {
     transition: none;
   }
 }

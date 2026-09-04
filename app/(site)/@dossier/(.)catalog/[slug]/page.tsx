@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 
 import { Dossier } from '@/components/alumni/dossier'
 import { DossierModal } from '@/components/alumni/dossier-modal'
-import { allAlumni, alumnusBySlug } from '@/lib/alumni'
+import { alumnusBySlug, profileAlumni } from '@/lib/alumni'
 
 /**
  * Prerendered like the standalone page. Without this the intercepted route is
@@ -13,7 +13,7 @@ import { allAlumni, alumnusBySlug } from '@/lib/alumni'
 export const dynamic = 'force-static'
 
 export async function generateStaticParams() {
-  const people = await allAlumni()
+  const people = await profileAlumni()
   return people.map((person) => ({ slug: person.slug }))
 }
 

@@ -3,7 +3,7 @@
  *
  *   npm run embed
  *
- * Embeds the owner-curated public roster with all-MiniLM-L6-v2 (q8, mean
+ * Embeds the public directory roster with all-MiniLM-L6-v2 (q8, mean
  * pooling, L2 normalized) and writes content/catalog/embeddings.json.
  *
  * Vectors live in their own file rather than inside builders.json so the

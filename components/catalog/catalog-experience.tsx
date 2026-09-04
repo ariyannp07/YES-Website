@@ -30,6 +30,11 @@ export function CatalogExperience({ people, vectors }: CatalogExperienceProps) {
     () => people.map((person) => ({ person, score: 0 })),
     [people],
   )
+  const uncertainCount = useMemo(
+    () => people.filter((person) => person.directoryStatus === 'uncertain').length,
+    [people],
+  )
+  const confirmedCount = people.length - uncertainCount
 
   const liveMatches = useMemo(() => {
     if (!query.trim()) return everyone
@@ -96,7 +101,7 @@ export function CatalogExperience({ people, vectors }: CatalogExperienceProps) {
           <p aria-live="polite">
             {query
               ? `${liveMatches.length} matches for “${query}”`
-              : `${people.length} YES members and associates`}
+              : `${confirmedCount} YES members and associates · ${uncertainCount} uncertain`}
           </p>
         </div>
 

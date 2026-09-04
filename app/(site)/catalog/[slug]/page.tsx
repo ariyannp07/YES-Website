@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { Dossier } from '@/components/alumni/dossier'
-import { allAlumni, alumnusBySlug } from '@/lib/alumni'
+import { alumnusBySlug, profileAlumni } from '@/lib/alumni'
 
 /**
  * Dossier expansion pattern B — the full-page takeover.
@@ -16,7 +16,7 @@ import { allAlumni, alumnusBySlug } from '@/lib/alumni'
 export const dynamic = 'force-static'
 
 export async function generateStaticParams() {
-  const people = await allAlumni()
+  const people = await profileAlumni()
   return people.map((person) => ({ slug: person.slug }))
 }
 
