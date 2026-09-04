@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { directoryPeople } from './catalog-directory'
+import { directoryPeople, orderDirectoryPeople } from './catalog-directory'
 
 const EXPECTED = [
   ['Oliver Hime', 'Former Board'],
@@ -42,6 +42,17 @@ describe('public People directory', () => {
     expect(people.find((person) => person.name === 'Kashi Tuteja')?.nowLine).toBe(
       'Machine Learning Researcher',
     )
+  })
+
+  it('keeps the owner-selected board profiles first in browse order', () => {
+    const people = orderDirectoryPeople(directoryPeople())
+
+    expect(people.slice(0, 4).map((person) => person.slug)).toEqual([
+      'ariyan-patel',
+      'sofia-teifeld',
+      'nicolas-gertler',
+      'kashi-tuteja',
+    ])
   })
 
   it('publishes uncertain records without their unverified profile details', () => {

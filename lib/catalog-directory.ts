@@ -46,6 +46,20 @@ const DIRECTORY_ROLE: Readonly<Record<ConfirmedDirectoryStatus, string>> = {
   former: 'Former Board',
 }
 
+const BOARD_PRIORITY: Readonly<Record<string, number>> = {
+  'ariyan-patel': 0,
+  'sofia-teifeld': 1,
+  'nicolas-gertler': 2,
+  'kashi-tuteja': 3,
+}
+
+const STATUS_PRIORITY: Readonly<Record<string, number>> = {
+  board: 0,
+  member: 1,
+  former: 2,
+  uncertain: 3,
+}
+
 const PROOF_KINDS = new Set(['number', 'headline', 'image', 'link'])
 
 /**
@@ -194,3 +208,23 @@ export const directoryPeople = (): readonly Alumnus[] => [
   ...confirmedPeople(),
   ...uncertainPeople(),
 ]
+
+/** Shared browse order for the full directory and smaller People previews. */
+export const orderDirectoryPeople = (
+  people: readonly Alumnus[],
+): readonly Alumnus[] =>
+  [...people].sort((left, right) => {
+    const statusOrder =
+      (STATUS_PRIORITY[left.directoryStatus ?? 'member'] ?? 2) -
+      (STATUS_PRIORITY[right.directoryStatus ?? 'member'] ?? 2)
+    if (statusOrder !== 0) return statusOrder
+
+    if (left.directoryStatus === 'board' && right.directoryStatus === 'board') {
+      const boardOrder =
+        (BOARD_PRIORITY[left.slug] ?? Number.MAX_SAFE_INTEGER) -
+        (BOARD_PRIORITY[right.slug] ?? Number.MAX_SAFE_INTEGER)
+      if (boardOrder !== 0) return boardOrder
+    }
+
+    return Number(Boolean(right.portraitColor)) - Number(Boolean(left.portraitColor))
+  })

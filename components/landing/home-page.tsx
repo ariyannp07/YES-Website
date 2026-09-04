@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { ProfileImage } from '@/components/catalog/profile-image'
 import GlobeCanvas from '@/components/landing/globe/globe-canvas'
 import { allAlumni } from '@/lib/alumni'
+import { orderDirectoryPeople } from '@/lib/catalog-directory'
 import { allEntries } from '@/lib/reservoir'
 
 import styles from './home.module.css'
@@ -21,7 +22,7 @@ const LAUNCH_TITLE = LAUNCH_LINES.flat().join(' ')
 
 export async function HomePage() {
   const people = await allAlumni()
-  const faces = people
+  const faces = orderDirectoryPeople(people)
     .filter(
       (person) => person.directoryStatus !== 'uncertain' && person.portraitColor,
     )
