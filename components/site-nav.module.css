@@ -53,10 +53,11 @@
   transition: color var(--duration-fast) var(--ease-out);
 }
 
-.brand svg {
-  width: 1.9rem;
-  height: 1.9rem;
-  color: var(--signal);
+.brandMark {
+  width: auto;
+  height: 2.2rem;
+  flex: 0 0 auto;
+  object-fit: contain;
 }
 
 .shortName {

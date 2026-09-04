@@ -1,7 +1,7 @@
+import Image from 'next/image'
 import Link from 'next/link'
 
 import { ContactPopover } from '@/components/contact-popover'
-import { SIGMA_PATH } from '@/lib/yes-geometry'
 
 import styles from './site-footer.module.css'
 
@@ -15,9 +15,13 @@ export function SiteFooter() {
 
       <div className={styles.bar}>
         <Link href="/" className={styles.identity} aria-label="YES home">
-          <svg viewBox="0 0 100 100" aria-hidden="true">
-            <path d={SIGMA_PATH} fill="currentColor" />
-          </svg>
+          <Image
+            className={styles.identityMark}
+            src="/brand/yes-logo.png"
+            alt=""
+            width={391}
+            height={511}
+          />
           <span>Yale Entrepreneurial Society</span>
         </Link>
 

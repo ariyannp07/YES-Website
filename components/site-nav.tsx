@@ -1,11 +1,11 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import { NAV } from '@/lib/site'
-import { SIGMA_PATH } from '@/lib/yes-geometry'
 
 import styles from './site-nav.module.css'
 
@@ -34,9 +34,13 @@ export function SiteNav() {
     >
       <div className={styles.inner}>
         <Link href="/" className={styles.brand} aria-label="YES home">
-          <svg viewBox="0 0 100 100" aria-hidden="true">
-            <path d={SIGMA_PATH} fill="currentColor" />
-          </svg>
+          <Image
+            className={styles.brandMark}
+            src="/brand/yes-logo.png"
+            alt=""
+            width={391}
+            height={511}
+          />
           <span
             className={`${styles.name} ${isHome ? styles.homeName : ''} ${
               isHome && hasScrolled ? styles.condensedName : ''
