@@ -56,6 +56,7 @@
   --text-rank: 0.6875rem;
   --text-chip: 0.6875rem;
   --text-monogram: 3.25rem;
+  --text-globe-marker: clamp(1rem, 1.52vw, 1.21875rem);
   --text-landing-marker: 0.6875rem;
   --text-landing-link: 0.75rem;
   --text-landing-motto: 0.875rem;

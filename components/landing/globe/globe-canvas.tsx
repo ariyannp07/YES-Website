@@ -21,6 +21,7 @@ import styles from './globe.module.css'
 const RADIUS = 1
 /** Just above the sphere, so the heavier coast does not z-fight the core. */
 const COAST_RADIUS = 1.001
+const ROUTE_POINT_COUNT = 28
 
 const COLORS = {
   gold: new THREE.Color('#d8bd7c'),
@@ -71,6 +72,77 @@ const LIGHT_FRAG = /* glsl */ `
     gl_FragColor = vec4(tint, alpha);
   }
 `
+
+const ROUTE_VERT = /* glsl */ `
+  attribute float aPhase;
+
+  uniform float uTime;
+  uniform float uAt;
+  uniform float uDur;
+  uniform float uSpeed;
+  uniform float uScale;
+  uniform float uAnimate;
+
+  varying float vAlpha;
+
+  void main() {
+    vec4 mv = modelViewMatrix * vec4(position, 1.0);
+    vec3 nrm = normalize(mat3(modelViewMatrix) * normalize(position));
+    float facing = smoothstep(-0.04, 0.24, nrm.z);
+
+    // Draw the route from New Haven to San Francisco, one point at a time.
+    float bornAt = uAt + aPhase * uDur;
+    float born = smoothstep(bornAt, bornAt + 0.08, uTime);
+
+    // Once connected, a compact pulse repeatedly travels west along the path.
+    float routeComplete = step(uAt + uDur, uTime);
+    float head = fract(max(0.0, uTime - uAt - uDur) * uSpeed);
+    float separation = abs(aPhase - head);
+    separation = min(separation, 1.0 - separation);
+    float pulse = smoothstep(0.14, 0.0, separation) * routeComplete * uAnimate;
+
+    vAlpha = born * facing * (0.72 + pulse * 0.28);
+
+    float dist = max(0.001, -mv.z);
+    gl_PointSize = uScale * (4.8 + pulse * 3.2) * (3.2 / dist);
+    gl_Position = projectionMatrix * mv;
+  }
+`
+
+const ROUTE_FRAG = /* glsl */ `
+  uniform vec3 uGold;
+  varying float vAlpha;
+
+  void main() {
+    float d = length(gl_PointCoord - vec2(0.5));
+    if (d > 0.5) discard;
+    float disc = 1.0 - smoothstep(0.32, 0.5, d);
+    float alpha = vAlpha * disc;
+    if (alpha < 0.004) discard;
+    gl_FragColor = vec4(uGold, alpha);
+  }
+`
+
+/** Great-circle samples with a shallow lift, so the route visibly clears the Earth. */
+const routeBetween = (
+  from: THREE.Vector3,
+  to: THREE.Vector3,
+): THREE.Vector3[] => {
+  const angle = from.angleTo(to)
+  const sinAngle = Math.sin(angle)
+
+  return Array.from({ length: ROUTE_POINT_COUNT }, (_, index) => {
+    const phase = index / (ROUTE_POINT_COUNT - 1)
+    const point = from
+      .clone()
+      .multiplyScalar(Math.sin((1 - phase) * angle) / sinAngle)
+      .add(to.clone().multiplyScalar(Math.sin(phase * angle) / sinAngle))
+      .normalize()
+    const lift = 1.009 + Math.sin(Math.PI * phase) * 0.038
+
+    return point.multiplyScalar(lift)
+  })
+}
 
 interface GlobeCanvasProps {
   /** Skips the reveal and renders the settled state. */
@@ -246,6 +318,38 @@ export default function GlobeCanvas({
       return { ...mark, world: new THREE.Vector3(x, y, z) }
     })
 
+    // ————— dotted route —————
+    // The positions live in globe-local space, so the connection turns and
+    // returns with the sphere instead of behaving like a screen-space overlay.
+    const routePoints = routeBetween(marks[0].world, marks[1].world)
+    const routePhases = new Float32Array(ROUTE_POINT_COUNT)
+    routePhases.forEach((_, index) => {
+      routePhases[index] = index / (ROUTE_POINT_COUNT - 1)
+    })
+
+    const routeGeo = new THREE.BufferGeometry().setFromPoints(routePoints)
+    routeGeo.setAttribute('aPhase', new THREE.BufferAttribute(routePhases, 1))
+    const routeMat = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: shared.uTime,
+        uAt: { value: TIMING.route.at },
+        uDur: { value: TIMING.route.dur },
+        uSpeed: { value: TIMING.route.speed },
+        uScale: { value: 1 },
+        uAnimate: { value: reduceMotion ? 0 : 1 },
+        uGold: { value: COLORS.gold },
+      },
+      vertexShader: ROUTE_VERT,
+      fragmentShader: ROUTE_FRAG,
+      transparent: true,
+      depthWrite: false,
+      depthTest: true,
+      blending: THREE.NormalBlending,
+    })
+    const route = new THREE.Points(routeGeo, routeMat)
+    route.renderOrder = 4
+    globe.add(route)
+
     const markPos = new Float32Array(marks.length * 3)
     const markAt = new Float32Array(marks.length)
     marks.forEach((mark, i) => {
@@ -280,8 +384,8 @@ export default function GlobeCanvas({
           vec3 nrm = normalize(mat3(modelViewMatrix) * normalize(position));
           vFacing = smoothstep(-0.05, 0.3, nrm.z);
           float dist = max(0.001, -mv.z);
-          float burst = 22.0 + 28.0 * (1.0 - pow(1.0 - t, 3.0));
-          gl_PointSize = max(burst * vLife, 16.0 * vRest) * vFacing * (3.2 / dist);
+          float burst = 33.0 + 42.0 * (1.0 - pow(1.0 - t, 3.0));
+          gl_PointSize = max(burst * vLife, 24.0 * vRest) * vFacing * (3.2 / dist);
           gl_Position = projectionMatrix * mv;
         }
       `,
@@ -304,7 +408,7 @@ export default function GlobeCanvas({
       blending: THREE.NormalBlending,
     })
     const flashPoint = new THREE.Points(flashGeo, flashMat)
-    flashPoint.renderOrder = 4
+    flashPoint.renderOrder = 5
     globe.add(flashPoint)
 
     // ————— interaction —————
@@ -376,6 +480,7 @@ export default function GlobeCanvas({
       camera.updateProjectionMatrix()
       coastMat.resolution.set(w, h)
       lightMat.uniforms.uScale.value = w < 640 ? 0.58 : 1
+      routeMat.uniforms.uScale.value = w < 640 ? 0.78 : 1
       // Keep the globe filling a similar share of a narrow viewport.
       restCameraZ = w < 640 ? 4.1 : 3.78
       camera.position.z = restCameraZ
@@ -595,6 +700,8 @@ export default function GlobeCanvas({
       lightMat.dispose()
       flashGeo.dispose()
       flashMat.dispose()
+      routeGeo.dispose()
+      routeMat.dispose()
       core.geometry.dispose()
       coreMat.dispose()
       renderer.dispose()

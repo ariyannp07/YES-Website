@@ -227,8 +227,7 @@
    Positioned by the canvas each frame from a projected 3D point. The transform
    is written directly, so these must not carry a transition on transform or
    they would lag the globe by a frame at every rotation. */
-/* The label is small type; the hit area is padded well past it so the marker
-   can actually be aimed at. */
+/* The hit area is padded beyond the label so the marker can actually be aimed at. */
 .marker[data-clickable='true'] {
   pointer-events: auto;
   cursor: pointer;
@@ -248,7 +247,7 @@
   left: 0;
   margin: -0.75em 0 0 1.15em;
   font-family: var(--font-mono);
-  font-size: var(--text-ui);
+  font-size: var(--text-globe-marker);
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;

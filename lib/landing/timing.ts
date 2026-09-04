@@ -35,6 +35,9 @@ export const TIMING = {
     { id: 'san-francisco', label: 'San Francisco', lon: -122.4161, lat: 37.793, at: 0.58, typeAt: 0.62 },
   ],
 
+  /** A dotted route draws west once both homes have ignited, then keeps moving. */
+  route: { at: 0.6, dur: 0.24, speed: 0.22 },
+
   /** Shared shape of an ignition. */
   flash: { dur: 0.36 },
 
