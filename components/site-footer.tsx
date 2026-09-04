@@ -19,8 +19,9 @@ export function SiteFooter() {
             className={styles.identityMark}
             src="/brand/yes-logo.png"
             alt=""
-            width={391}
-            height={511}
+            width={320}
+            height={410}
+            unoptimized
           />
           <span>Yale Entrepreneurial Society</span>
         </Link>

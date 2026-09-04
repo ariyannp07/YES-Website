@@ -38,8 +38,9 @@ export function SiteNav() {
             className={styles.brandMark}
             src="/brand/yes-logo.png"
             alt=""
-            width={391}
-            height={511}
+            width={320}
+            height={410}
+            unoptimized
           />
           <span
             className={`${styles.name} ${isHome ? styles.homeName : ''} ${
