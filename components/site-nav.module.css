@@ -21,8 +21,11 @@
   border-bottom-color: transparent;
 }
 
-.homeHeader.hidden .brand {
+.homeHeader .brand {
   color: rgb(255 255 255 / 78%);
+}
+
+.homeHeader.hidden .brand {
   pointer-events: auto;
 }
 
@@ -71,6 +74,7 @@
 .name {
   --wordmark-move-duration: 780ms;
   --wordmark-fade-duration: 210ms;
+  --wordmark-return-fade-duration: 120ms;
 
   display: inline-flex;
   align-items: baseline;
@@ -95,7 +99,8 @@
   white-space: nowrap;
   transition:
     max-width var(--wordmark-move-duration) var(--ease-out),
-    opacity var(--wordmark-fade-duration) ease-out var(--wordmark-move-duration);
+    opacity var(--wordmark-return-fade-duration) ease-out
+      var(--wordmark-move-duration);
   will-change: max-width, opacity;
 }
 
