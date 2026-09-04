@@ -71,11 +71,17 @@
     },
     {
       "matchName": "Sofia Teifeld",
-      "bio": "Sofia Teifeld is a Yale College ’29 founding team member and COO of CHET, an investing-first Mastercard designed for students and young professionals. The card automatically invests 0.7% of every purchase into a user-selected ETF, with merchant-funded rewards of up to 10%. By combining everyday spending, credit building, and automatic investing, CHET makes it easier for young consumers to start building wealth without needing prior investing experience.",
+      "bio": "Sofia Teifeld is a Yale College ’29 founding team member and COO of CHET, an investing-first Mastercard designed for students and young professionals. The card automatically invests 0.7% of every purchase into a user-selected ETF, with merchant-funded rewards of up to 10%. By combining everyday spending, credit building, and automatic investing, CHET makes it easier for young consumers to start building wealth without needing prior investing experience. She is also Co-Director of LAUNCH at the Yale Entrepreneurial Society.",
       "aliases": [
         "CHET"
       ],
-      "extraKeywords": "chet; investing-first mastercard; fintech; etf; credit building; young professionals; merchant-funded rewards"
+      "extraKeywords": "chet; investing-first mastercard; fintech; etf; credit building; young professionals; merchant-funded rewards; launch; co-director of launch; yes launch",
+      "venture": "CHET"
+    },
+    {
+      "matchName": "Yavin Fickel",
+      "bio": "Yavin Fickel is a Yale ’29 CS/economics research and software builder working across computational biology, open data and scientific infrastructure. He is also Co-Director of LAUNCH at the Yale Entrepreneurial Society.",
+      "extraKeywords": "launch; co-director of launch; yes launch"
     }
   ],
   "people": []
