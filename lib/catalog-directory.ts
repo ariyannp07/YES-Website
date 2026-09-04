@@ -53,13 +53,6 @@ const BOARD_PRIORITY: Readonly<Record<string, number>> = {
   'kashi-tuteja': 3,
 }
 
-const STATUS_PRIORITY: Readonly<Record<string, number>> = {
-  board: 0,
-  member: 1,
-  former: 2,
-  uncertain: 3,
-}
-
 const PROOF_KINDS = new Set(['number', 'headline', 'image', 'link'])
 
 /**
@@ -214,17 +207,23 @@ export const orderDirectoryPeople = (
   people: readonly Alumnus[],
 ): readonly Alumnus[] =>
   [...people].sort((left, right) => {
-    const statusOrder =
-      (STATUS_PRIORITY[left.directoryStatus ?? 'member'] ?? 2) -
-      (STATUS_PRIORITY[right.directoryStatus ?? 'member'] ?? 2)
-    if (statusOrder !== 0) return statusOrder
+    const leftIsBoard = left.directoryStatus === 'board'
+    const rightIsBoard = right.directoryStatus === 'board'
 
-    if (left.directoryStatus === 'board' && right.directoryStatus === 'board') {
+    if (leftIsBoard !== rightIsBoard) return leftIsBoard ? -1 : 1
+
+    if (leftIsBoard && rightIsBoard) {
       const boardOrder =
         (BOARD_PRIORITY[left.slug] ?? Number.MAX_SAFE_INTEGER) -
         (BOARD_PRIORITY[right.slug] ?? Number.MAX_SAFE_INTEGER)
       if (boardOrder !== 0) return boardOrder
+
+      return left.name.localeCompare(right.name, 'en', { sensitivity: 'base' })
     }
 
-    return Number(Boolean(right.portraitColor)) - Number(Boolean(left.portraitColor))
+    const leftIsSmall = left.directoryStatus === 'uncertain'
+    const rightIsSmall = right.directoryStatus === 'uncertain'
+    if (leftIsSmall !== rightIsSmall) return leftIsSmall ? 1 : -1
+
+    return left.name.localeCompare(right.name, 'en', { sensitivity: 'base' })
   })

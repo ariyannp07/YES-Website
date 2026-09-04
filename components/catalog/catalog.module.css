@@ -62,8 +62,7 @@
   box-shadow: 0 2px 0 var(--signal);
 }
 
-.clear,
-.submit {
+.clear {
   flex: none;
   border: 0;
   cursor: pointer;
@@ -75,24 +74,6 @@
   padding: 0 0.8rem;
   color: var(--muted);
   background: transparent;
-}
-
-.submit {
-  min-width: 5.5rem;
-  padding: 0 1rem;
-  color: var(--signal);
-  background: transparent;
-  border-left: 1px solid var(--line);
-}
-
-.submit:hover:not(:disabled) {
-  color: var(--white);
-  background: var(--blue);
-}
-
-.submit:disabled {
-  cursor: not-allowed;
-  opacity: 0.48;
 }
 
 .searchTrace {

@@ -55,6 +55,34 @@ describe('public People directory', () => {
     ])
   })
 
+  it('alphabetizes the large and small profile groups separately', () => {
+    const people = orderDirectoryPeople(directoryPeople())
+    const largeNames = people
+      .filter(
+        (person) =>
+          person.directoryStatus !== 'board' &&
+          person.directoryStatus !== 'uncertain',
+      )
+      .map((person) => person.name)
+    const smallNames = people
+      .filter((person) => person.directoryStatus === 'uncertain')
+      .map((person) => person.name)
+
+    expect(largeNames).toEqual(
+      [...largeNames].sort((left, right) =>
+        left.localeCompare(right, 'en', { sensitivity: 'base' }),
+      ),
+    )
+    expect(smallNames).toEqual(
+      [...smallNames].sort((left, right) =>
+        left.localeCompare(right, 'en', { sensitivity: 'base' }),
+      ),
+    )
+    expect(people.findLastIndex((person) => person.directoryStatus !== 'uncertain')).toBeLessThan(
+      people.findIndex((person) => person.directoryStatus === 'uncertain'),
+    )
+  })
+
   it('publishes uncertain records without their unverified profile details', () => {
     const people = directoryPeople()
     const uncertain = people.filter((person) => person.directoryStatus === 'uncertain')

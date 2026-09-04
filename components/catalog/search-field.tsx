@@ -56,9 +56,6 @@ export function SearchField({
             Clear
           </button>
         ) : null}
-        <button type="submit" className={styles.submit} disabled={searching || !value.trim()}>
-          {searching ? 'Searching…' : 'Search'}
-        </button>
         <span className={styles.searchTrace} aria-hidden="true" />
       </div>
     </form>
