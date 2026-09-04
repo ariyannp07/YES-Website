@@ -51,6 +51,8 @@ export const Alumnus = z.object({
   // --- directory-only fields (see lib/catalog-directory.ts) ---------------
   /** The venture itself, where the person is building. */
   venture: z.string().optional(),
+  /** Owner-curated membership label shown on the top-level People wall. */
+  directoryRole: z.string().optional(),
   bio: z.string().optional(),
   sectors: z.array(z.string()).optional(),
   /** Precomputed lowercase haystack, so search does not rebuild it per keystroke. */
@@ -109,13 +111,23 @@ export const allAlumni = async (): Promise<readonly Alumnus[]> => {
   const { fetchAlumniFeed } = await import('@/lib/airtable/alumni-feed')
   const feed = await fetchAlumniFeed()
 
-  // null means the consent-gated view has not been created yet. Either way the
-  // curated directory shows; consented people are merged in ahead of it, and a
-  // consented record wins on slug collision because it is the person's own.
-  const consented = feed ?? []
-  const claimed = new Set(consented.map((person) => person.slug))
+  // The git curation is the public allowlist. A consented record may enrich a
+  // listed person, but it cannot introduce somebody outside that allowlist or
+  // replace the owner-curated display name and membership label.
+  const consented = new Map((feed ?? []).map((person) => [person.slug, person]))
 
-  return [...consented, ...directory.filter((p) => !claimed.has(p.slug))]
+  return directory.map((curated) => {
+    const submitted = consented.get(curated.slug)
+    if (!submitted) return curated
+
+    return {
+      ...curated,
+      ...submitted,
+      name: curated.name,
+      directoryRole: curated.directoryRole,
+      searchText: [curated.searchText, submitted.searchText].filter(Boolean).join(' '),
+    }
+  })
 }
 
 export const alumnusBySlug = async (

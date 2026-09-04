@@ -1,0 +1,40 @@
+{
+  "$comment": [
+    "This file is the public People-directory allowlist.",
+    "Every record in builders.json that is not listed here is deprecated by default:",
+    "it remains stored in git but must not be rendered, searched, routed, or published.",
+    "The order below is owner-curated. sourceName preserves an older stored spelling"
+  ],
+  "unlistedStatus": "deprecated",
+  "people": [
+    { "slug": "oliver-hime", "name": "Oliver Hime", "status": "former" },
+    {
+      "slug": "mateo-teo-sanchez-lopez-negrete",
+      "name": "Mateo Sanchez",
+      "sourceName": "Mateo “Teo” Sanchez Lopez-Negrete",
+      "status": "member"
+    },
+    { "slug": "matei-coldea", "name": "Matei Coldea", "status": "member" },
+    { "slug": "jeremy-rodrigues", "name": "Jeremy Rodrigues", "status": "member" },
+    {
+      "slug": "freeman-irabaruta",
+      "name": "Freeman Iraburata",
+      "sourceName": "Freeman Irabaruta",
+      "status": "member"
+    },
+    { "slug": "cagri-dirik", "name": "Cagri Dirik", "status": "board" },
+    { "slug": "osama-radi", "name": "Osama Radi", "status": "member" },
+    { "slug": "kashi-tuteja", "name": "Kashi Tuteja", "status": "board" },
+    { "slug": "ishir-rao", "name": "Ishir Rao", "status": "member" },
+    { "slug": "soleil-wizman", "name": "Soleil Wizman", "status": "former" },
+    { "slug": "vinesh-kothari", "name": "Vinesh Kothari", "status": "former" },
+    { "slug": "ariyan-patel", "name": "Ariyan Patel", "status": "board" },
+    { "slug": "sofia-teifeld", "name": "Sofia Teifeld", "status": "board" },
+    { "slug": "zain-anwar", "name": "Zain Anwar", "status": "board" },
+    { "slug": "sina-dehghani", "name": "Sina Dehghani", "status": "board" },
+    { "slug": "lucas-santos", "name": "Lucas Santos", "status": "board" },
+    { "slug": "nicolas-gertler", "name": "Nicolas Gertler", "status": "board" },
+    { "slug": "seth-goldin", "name": "Seth Goldin", "status": "former" },
+    { "slug": "amelie-liu", "name": "Amelie Liu", "status": "former" }
+  ]
+}

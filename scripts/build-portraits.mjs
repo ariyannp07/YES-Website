@@ -18,16 +18,18 @@
  *   npm run build:portraits && npm run build
  */
 
-import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
+import { mkdir, readdir, readFile, unlink, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 import sharp from 'sharp'
+import curation from '../content/catalog/curation.json' with { type: 'json' }
 
 const LOCAL_DIR = join(process.cwd(), 'content', 'catalog', 'portraits')
 
 const OUT_DIR = join(process.cwd(), 'public', 'portraits', 'generated')
 const SIZE = 640
 const QUALITY = 78
+const PUBLIC_SLUGS = new Set(curation.people.map((person) => person.slug))
 
 /** Duotone endpoints: Yale-blue shadow, warm-white highlight. */
 const SHADOW = { r: 0x0d, g: 0x2b, b: 0x56 }
@@ -88,6 +90,12 @@ const writePair = async (slug, source) => {
 
 await mkdir(OUT_DIR, { recursive: true })
 
+// A removed person must stop being web-addressable on the next build. Source
+// portraits stay archived under content/, while generated public derivatives
+// are cleared and rebuilt only for the current allowlist.
+const staleDerivatives = (await readdir(OUT_DIR)).filter((file) => file.endsWith('.webp'))
+await Promise.all(staleDerivatives.map((file) => unlink(join(OUT_DIR, file))))
+
 /**
  * Source 1 — the curated directory in git (content/catalog/portraits).
  *
@@ -97,7 +105,9 @@ await mkdir(OUT_DIR, { recursive: true })
  */
 let localWritten = 0
 try {
-  const files = (await readdir(LOCAL_DIR)).filter((f) => f.endsWith('.jpg'))
+  const files = (await readdir(LOCAL_DIR)).filter(
+    (file) => file.endsWith('.jpg') && PUBLIC_SLUGS.has(file.replace(/\.jpg$/, '')),
+  )
   for (const file of files) {
     try {
       await writePair(file.replace(/\.jpg$/, ''), await readFile(join(LOCAL_DIR, file)))
@@ -170,6 +180,11 @@ for (const record of records) {
   }
 
   const slug = slugify(name)
+
+  if (!PUBLIC_SLUGS.has(slug)) {
+    skipped += 1
+    continue
+  }
 
   try {
     const image = await fetch(url)

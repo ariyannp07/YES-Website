@@ -1,6 +1,7 @@
-import directory from '@/content/catalog/builders.json'
-import portraitManifest from '@/content/catalog/portraits.json'
-import type { Alumnus } from '@/lib/alumni'
+import curation from '../content/catalog/curation.json'
+import directory from '../content/catalog/builders.json'
+import portraitManifest from '../content/catalog/portraits.json'
+import type { Alumnus } from './alumni'
 
 /**
  * The owner-curated builder directory.
@@ -30,6 +31,21 @@ interface DirectoryPerson {
   readonly reviewNote?: string
 }
 
+type DirectoryStatus = 'board' | 'member' | 'former'
+
+interface CuratedListing {
+  readonly slug: string
+  readonly name: string
+  readonly sourceName?: string
+  readonly status: DirectoryStatus
+}
+
+const DIRECTORY_ROLE: Readonly<Record<DirectoryStatus, string>> = {
+  board: 'Member of Board',
+  member: 'Member of YES',
+  former: 'Former Board',
+}
+
 const PROOF_KINDS = new Set(['number', 'headline', 'image', 'link'])
 
 /**
@@ -50,7 +66,7 @@ const portraits = portraitManifest.portraits as Record<string, unknown>
 const hasPortrait = (slug: string): boolean =>
   Object.prototype.hasOwnProperty.call(portraits, slug)
 
-const toAlumnus = (person: DirectoryPerson): Alumnus => ({
+const toAlumnus = (person: DirectoryPerson, directoryRole: string): Alumnus => ({
   slug: person.slug,
   name: person.name,
   classYear: person.classYear,
@@ -76,6 +92,7 @@ const toAlumnus = (person: DirectoryPerson): Alumnus => ({
   weight: 1,
   placeholder: false,
   venture: person.venture,
+  directoryRole,
   bio: person.bio,
   sectors: person.sectors ? [...person.sectors] : undefined,
   searchText: person.searchText,
@@ -83,5 +100,37 @@ const toAlumnus = (person: DirectoryPerson): Alumnus => ({
   reviewNote: person.reviewNote,
 })
 
+const storedBySlug = new Map(
+  (directory.people as readonly DirectoryPerson[]).map((person) => [person.slug, person]),
+)
+
+const minimalPerson = (listing: CuratedListing): DirectoryPerson => ({
+  slug: listing.slug,
+  name: listing.name,
+  classYear: 'Yale',
+  nowLine: DIRECTORY_ROLE[listing.status],
+  searchText: '',
+})
+
 export const directoryPeople = (): readonly Alumnus[] =>
-  (directory.people as readonly DirectoryPerson[]).map(toAlumnus)
+  (curation.people as readonly CuratedListing[]).map((listing) => {
+    const stored = storedBySlug.get(listing.slug) ?? minimalPerson(listing)
+    const directoryRole = DIRECTORY_ROLE[listing.status]
+
+    return toAlumnus(
+      {
+        ...stored,
+        name: listing.name,
+        searchText: [
+          listing.name,
+          listing.sourceName,
+          directoryRole,
+          stored.searchText,
+        ]
+          .filter(Boolean)
+          .join(' ')
+          .toLowerCase(),
+      },
+      directoryRole,
+    )
+  })

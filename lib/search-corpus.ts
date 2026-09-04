@@ -29,6 +29,7 @@ export const searchCorpus = (): string => {
         person.slug,
         person.name,
         person.classYear,
+        person.directoryRole,
         person.nowLine,
         (person.sectors ?? []).join('/'),
         (person.bio ?? '').slice(0, BIO_CHARS),

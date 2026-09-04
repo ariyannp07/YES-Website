@@ -24,14 +24,15 @@ export const dynamic = 'force-static'
 export default async function CatalogPage() {
   const people = [...(await allAlumni())].sort(
     (left, right) =>
-      Number(Boolean(right.portraitColor)) - Number(Boolean(left.portraitColor)) ||
-      Number(Boolean(right.featured)) - Number(Boolean(left.featured)),
+      Number(Boolean(right.portraitColor)) - Number(Boolean(left.portraitColor)),
+  )
+  const storedVectors = embeddings.vectors as Record<string, number[]>
+  const publicVectors = Object.fromEntries(
+    people.flatMap((person) => {
+      const vector = storedVectors[person.slug]
+      return vector ? [[person.slug, vector]] : []
+    }),
   )
 
-  return (
-    <CatalogExperience
-      people={people}
-      vectors={embeddings.vectors as Record<string, number[]>}
-    />
-  )
+  return <CatalogExperience people={people} vectors={publicVectors} />
 }

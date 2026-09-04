@@ -1,5 +1,6 @@
 import 'server-only'
 
+import curation from '@/content/catalog/curation.json'
 import {
   airtableConfig,
   asString,
@@ -8,6 +9,14 @@ import {
   type AirtableRecord,
 } from '@/lib/airtable/client'
 import { slugify, uniqueSlug } from '@/lib/slug'
+
+const PUBLIC_NAMES = new Set(
+  curation.people.flatMap((person) =>
+    [person.name, 'sourceName' in person ? person.sourceName : undefined].filter(
+      (name): name is string => Boolean(name),
+    ),
+  ),
+)
 
 /**
  * The public builder catalog (build spec §3, /builders).
@@ -86,4 +95,5 @@ export const fetchCatalogFeed = async (): Promise<readonly Builder[]> => {
   return records
     .map((record) => toBuilder(record, taken))
     .filter((builder): builder is Builder => builder !== null)
+    .filter((builder) => PUBLIC_NAMES.has(builder.name))
 }
