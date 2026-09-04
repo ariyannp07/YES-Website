@@ -5,22 +5,34 @@ import type { Alumnus } from '@/lib/alumni'
 import { ProfileImage } from './profile-image'
 import styles from './catalog.module.css'
 
+const MAX_BIO_CHARACTERS = 180
+
+const shortenBio = (bio: string): string => {
+  if (bio.length <= MAX_BIO_CHARACTERS) return bio
+
+  const clipped = bio.slice(0, MAX_BIO_CHARACTERS + 1)
+  const lastWordBreak = clipped.lastIndexOf(' ')
+  return `${clipped.slice(0, lastWordBreak > 0 ? lastWordBreak : MAX_BIO_CHARACTERS).trim()}…`
+}
+
 export function ProfileCard({ person }: { readonly person: Alumnus }) {
   const uncertain = person.directoryStatus === 'uncertain'
 
   if (uncertain) {
+    const title = person.nowLine === 'Directory listing' ? undefined : person.nowLine
+
     return (
       <li className={styles.uncertainItem}>
-        <article className={styles.uncertainCard} aria-label={`${person.name}, uncertain`}>
+        <article
+          className={styles.uncertainCard}
+          aria-label={[person.name, title].filter(Boolean).join(', ')}
+        >
           <span className={styles.uncertainMedia}>
             <ProfileImage name={person.name} photo={person.portraitColor} />
           </span>
           <span className={styles.uncertainBody}>
             <span className={styles.uncertainName}>{person.name}</span>
-            {person.nowLine !== 'Uncertain' ? (
-              <span className={styles.uncertainTitle}>{person.nowLine}</span>
-            ) : null}
-            <span className={styles.uncertainRole}>Uncertain</span>
+            {title ? <span className={styles.uncertainTitle}>{title}</span> : null}
           </span>
         </article>
       </li>
@@ -45,6 +57,11 @@ export function ProfileCard({ person }: { readonly person: Alumnus }) {
           <ProfileImage name={person.name} photo={person.portraitColor} />
         </span>
 
+        <span className={styles.cardFront} aria-hidden="true">
+          <span className={styles.cardFrontName}>{person.name}</span>
+          <span className={styles.cardFrontTitle}>{membership}</span>
+        </span>
+
         <span className={styles.cardInfo}>
           <span className={styles.cardHeader}>
             <span className={styles.cardRole}>{membership}</span>
@@ -54,7 +71,9 @@ export function ProfileCard({ person }: { readonly person: Alumnus }) {
             ) : null}
           </span>
 
-          {person.bio ? <span className={styles.cardBio}>{person.bio}</span> : null}
+          {person.bio ? (
+            <span className={styles.cardBio}>{shortenBio(person.bio)}</span>
+          ) : null}
 
           {links.length > 0 ? (
             <span className={styles.cardLinks} aria-label={`${person.name} links`}>

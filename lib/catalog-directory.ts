@@ -140,9 +140,9 @@ const toUncertainAlumnus = (
   return {
     slug: person.slug,
     name: person.name,
-    classYear: 'Information uncertain',
-    nowLine: externalTitle ?? 'Uncertain',
-    proof: { kind: 'headline', value: 'Uncertain' },
+    classYear: 'Yale',
+    nowLine: externalTitle ?? 'Directory listing',
+    proof: { kind: 'headline', value: 'Directory listing' },
     ...(portrait
       ? {
           portraitColor: `/portraits/generated/${person.slug}-color.webp`,
@@ -151,12 +151,8 @@ const toUncertainAlumnus = (
       : {}),
     weight: 1,
     placeholder: false,
-    directoryRole: 'Uncertain',
     directoryStatus: 'uncertain',
-    searchText: [person.name, externalTitle, 'uncertain']
-      .filter(Boolean)
-      .join(' ')
-      .toLowerCase(),
+    searchText: [person.name, externalTitle].filter(Boolean).join(' ').toLowerCase(),
   }
 }
 

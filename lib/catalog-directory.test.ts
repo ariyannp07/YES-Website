@@ -43,9 +43,9 @@ describe('public People directory', () => {
     expect(leia).toMatchObject({
       name: 'Leïa Ryan',
       nowLine: 'Co-founder, Cortex',
-      directoryRole: 'Uncertain',
       directoryStatus: 'uncertain',
     })
+    expect(leia).not.toHaveProperty('directoryRole')
     expect(leia).not.toHaveProperty('bio')
     expect(leia).not.toHaveProperty('venture')
     expect(leia).not.toHaveProperty('linkedinUrl')
@@ -60,8 +60,9 @@ describe('public People directory', () => {
     const aris = uncertain.find((person) => person.name === 'Ari Strober')
     const miles = uncertain.find((person) => person.name === 'Miles Lasater')
 
-    expect(aris?.nowLine).toBe('Uncertain')
+    expect(aris?.nowLine).toBe('Directory listing')
     expect(aris?.searchText).not.toMatch(/entrepreneurial society|\byes\b/i)
+    expect(aris?.searchText).not.toMatch(/uncertain/i)
     expect(miles?.nowLine).toBe('Entrepreneur / investor; co-founder of Higher One')
     expect(miles?.searchText).not.toMatch(/\byes\b/i)
   })
