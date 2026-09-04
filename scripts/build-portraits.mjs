@@ -27,8 +27,8 @@ import curation from '../content/catalog/curation.json' with { type: 'json' }
 const LOCAL_DIR = join(process.cwd(), 'content', 'catalog', 'portraits')
 
 const OUT_DIR = join(process.cwd(), 'public', 'portraits', 'generated')
-const SIZE = 640
-const QUALITY = 78
+const SIZE = 800
+const QUALITY = 90
 const CONFIRMED_SLUGS = new Set(curation.people.map((person) => person.slug))
 
 /** Duotone endpoints: Yale-blue shadow, warm-white highlight. */
@@ -56,7 +56,9 @@ const slugify = (value) =>
  * consented Airtable feed or from the curated directory in git.
  */
 const writePair = async (slug, source) => {
-  const base = sharp(source).resize(SIZE, SIZE, { fit: 'cover', position: 'attention' })
+  const base = sharp(source)
+    .resize(SIZE, SIZE, { fit: 'cover', position: 'attention' })
+    .sharpen()
 
   const color = await base.clone().webp({ quality: QUALITY }).toBuffer()
   await writeFile(join(OUT_DIR, `${slug}-color.webp`), color)

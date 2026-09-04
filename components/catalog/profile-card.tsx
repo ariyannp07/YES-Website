@@ -5,14 +5,15 @@ import type { Alumnus } from '@/lib/alumni'
 import { ProfileImage } from './profile-image'
 import styles from './catalog.module.css'
 
-const MAX_BIO_CHARACTERS = 140
+const BIO_LIMIT_WITH_LINKS = 180
+const BIO_LIMIT_WITHOUT_LINKS = 240
 
-const shortenBio = (bio: string): string => {
-  if (bio.length <= MAX_BIO_CHARACTERS) return bio
+const shortenBio = (bio: string, maxCharacters: number): string => {
+  if (bio.length <= maxCharacters) return bio
 
-  const clipped = bio.slice(0, MAX_BIO_CHARACTERS + 1)
+  const clipped = bio.slice(0, maxCharacters + 1)
   const lastWordBreak = clipped.lastIndexOf(' ')
-  return `${clipped.slice(0, lastWordBreak > 0 ? lastWordBreak : MAX_BIO_CHARACTERS).trim()}…`
+  return `${clipped.slice(0, lastWordBreak > 0 ? lastWordBreak : maxCharacters).trim()}…`
 }
 
 export function ProfileCard({ person }: { readonly person: Alumnus }) {
@@ -62,7 +63,11 @@ export function ProfileCard({ person }: { readonly person: Alumnus }) {
           <span className={styles.cardFrontTitle}>{membership}</span>
         </span>
 
-        <span className={styles.cardInfo}>
+        <span
+          className={`${styles.cardInfo} ${
+            links.length === 0 ? styles.cardInfoSpacious : ''
+          }`}
+        >
           <span className={styles.cardHeader}>
             <span className={styles.cardRole}>{membership}</span>
             <span className={styles.cardName}>{person.name}</span>
@@ -72,7 +77,12 @@ export function ProfileCard({ person }: { readonly person: Alumnus }) {
           </span>
 
           {person.bio ? (
-            <span className={styles.cardBio}>{shortenBio(person.bio)}</span>
+            <span className={styles.cardBio}>
+              {shortenBio(
+                person.bio,
+                links.length > 0 ? BIO_LIMIT_WITH_LINKS : BIO_LIMIT_WITHOUT_LINKS,
+              )}
+            </span>
           ) : null}
 
           {links.length > 0 ? (

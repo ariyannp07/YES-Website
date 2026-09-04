@@ -30,7 +30,7 @@
       "name": "Sofia Teifeld",
       "classYear": "Yale College ’29",
       "school": "Yale College",
-      "nowLine": "Co-President, Yale Entrepreneurial Society, Yale Entrepreneurial Society",
+      "nowLine": "Co-President, Yale Entrepreneurial Society",
       "venture": "Yale Entrepreneurial Society",
       "bio": "Sofia Teifeld is a Yale ’29 EP&E student and Co-President of the Yale Entrepreneurial Society.",
       "sectors": [
@@ -43,7 +43,7 @@
         "value": "Yale Entrepreneurial Society",
         "source": "Leads YES and previously developed a magnetic-shielding concept for adjustable hydrocephalus shunts."
       },
-      "searchText": "sofia teifeld co-president, yale entrepreneurial society yale entrepreneurial society yale entrepreneurial society yale college ’29 yale college sofia teifeld is a yale ’29 ep&e student and co-president of the yale entrepreneurial society. entrepreneurship infrastructure; medical technology; research sofia teifeld; yale 2029; yes; yale entrepreneurial society; medtech; community builder",
+      "searchText": "sofia teifeld co-president, yale entrepreneurial society yale college ’29 yale college sofia teifeld is a yale ’29 ep&e student and co-president of the yale entrepreneurial society. entrepreneurship infrastructure; medical technology; research sofia teifeld; yale 2029; yes; yale entrepreneurial society; medtech; community builder",
       "featured": true
     },
     {
@@ -547,7 +547,7 @@
       "name": "Kashi Tuteja",
       "classYear": "Yale College ’29",
       "school": "Yale College",
-      "nowLine": "Co-Director of Special Projects, Yale Entrepreneurial Society, Yale Entrepreneurial Society",
+      "nowLine": "Machine Learning Researcher",
       "venture": "YES Special Projects",
       "bio": "Kashi Tuteja is a Yale ’29 Math/CS technical builder interested in AI, ML, signal processing and applied mathematics.",
       "sectors": [
@@ -562,7 +562,7 @@
         "value": "YES Special Projects",
         "source": "Built a mobile acoustic-physics tool using high-frequency sound sweeps and Fourier analysis; also leads special projects at YES."
       },
-      "searchText": "kashi tuteja co-director of special projects, yale entrepreneurial society yale entrepreneurial society yes special projects yale college ’29 yale college kashi tuteja is a yale ’29 math/cs technical builder interested in ai, ml, signal processing and applied mathematics. artificial intelligence; machine learning; applied mathematics; software; entrepreneurship infrastructure ml; algorithms; linear algebra; fourier analysis; acoustic sensing kashi tuteja; yale 2029; math; computer science; ai; machine learning; signal processing; acoustics; yes",
+      "searchText": "kashi tuteja machine learning researcher yes special projects yale college ’29 yale college kashi tuteja is a yale ’29 math/cs technical builder interested in ai, ml, signal processing and applied mathematics. artificial intelligence; machine learning; applied mathematics; software; entrepreneurship infrastructure ml; algorithms; linear algebra; fourier analysis; acoustic sensing kashi tuteja; yale 2029; math; computer science; ai; machine learning; signal processing; acoustics; yes",
       "featured": true
     },
     {

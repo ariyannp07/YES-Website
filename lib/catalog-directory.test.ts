@@ -33,6 +33,17 @@ describe('public People directory', () => {
     expect(confirmed.map(({ name, directoryRole }) => [name, directoryRole])).toEqual(EXPECTED)
   })
 
+  it('uses the approved first-row profile titles', () => {
+    const people = directoryPeople()
+
+    expect(people.find((person) => person.name === 'Sofia Teifeld')?.nowLine).toBe(
+      'Co-President, Yale Entrepreneurial Society',
+    )
+    expect(people.find((person) => person.name === 'Kashi Tuteja')?.nowLine).toBe(
+      'Machine Learning Researcher',
+    )
+  })
+
   it('publishes uncertain records without their unverified profile details', () => {
     const people = directoryPeople()
     const uncertain = people.filter((person) => person.directoryStatus === 'uncertain')
