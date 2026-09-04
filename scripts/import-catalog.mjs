@@ -152,8 +152,12 @@ for (const row of body) {
     bio: fix.bio ?? get(row, 'Short Bio'),
     sectors: fix.sectors ?? sectors,
     proof,
-    companyUrl: get(row, 'Company Website') || get(row, 'Personal Website') || undefined,
-    linkedinUrl: get(row, 'LinkedIn URL') || undefined,
+    // Corrections win over the CSV here too: the owners often hold a link the
+    // scrape never found, and the CSV itself is never edited. Falls through to
+    // the CSV columns whenever a correction does not supply one.
+    companyUrl:
+      fix.companyUrl ?? (get(row, 'Company Website') || get(row, 'Personal Website') || undefined),
+    linkedinUrl: fix.linkedinUrl ?? (get(row, 'LinkedIn URL') || undefined),
     // Precomputed lowercase haystack — search must not rebuild this per keystroke.
     searchText: [
       name, role, org, venture, get(row, 'Yale Affiliation'), get(row, 'Yale School'),
