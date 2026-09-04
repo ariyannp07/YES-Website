@@ -11,8 +11,13 @@ import styles from './home.module.css'
 const WSJ_URL =
   'https://www.wsj.com/tech/ai/forget-wall-street-elite-students-are-spending-their-summers-on-startup-dreams-e7191994'
 
-const LAUNCH_TITLE = 'The next Yale company is a conversation that hasn’t happened yet.'
-const LAUNCH_WORDS = LAUNCH_TITLE.split(' ')
+const LAUNCH_LINES = [
+  ['The', 'next'],
+  ['Yale', 'company', 'is'],
+  ['a', 'conversation', 'that'],
+  ['hasn’t', 'happened', 'yet.'],
+] as const
+const LAUNCH_TITLE = LAUNCH_LINES.flat().join(' ')
 
 export async function HomePage() {
   const people = await allAlumni()
@@ -29,24 +34,35 @@ export async function HomePage() {
         <div className={styles.launchInner}>
           <div className={styles.launchStatement} data-landing-copy="">
             <h1 id="launch-title" aria-label={LAUNCH_TITLE}>
-              {LAUNCH_WORDS.map((word, wordIndex) => {
-                const precedingCharacters = LAUNCH_WORDS.slice(0, wordIndex).join('').length
+              {LAUNCH_LINES.map((line, lineIndex) => {
+                const precedingLineCharacters = LAUNCH_LINES.slice(0, lineIndex)
+                  .flat()
+                  .join('').length
 
                 return (
-                  <span key={word} className={styles.launchWord} aria-hidden="true">
-                    {Array.from(word).map((character, characterIndex) => (
-                      <span
-                        key={`${character}-${characterIndex}`}
-                        className={styles.launchCharacter}
-                        style={
-                          {
-                            '--character-delay': `${70 + (precedingCharacters + characterIndex) * 18}ms`,
-                          } as CSSProperties
-                        }
-                      >
-                        {character}
-                      </span>
-                    ))}
+                  <span key={line.join('-')} className={styles.launchLine} aria-hidden="true">
+                    {line.map((word, wordIndex) => {
+                      const precedingCharacters =
+                        precedingLineCharacters + line.slice(0, wordIndex).join('').length
+
+                      return (
+                        <span key={word} className={styles.launchWord}>
+                          {Array.from(word).map((character, characterIndex) => (
+                            <span
+                              key={`${character}-${characterIndex}`}
+                              className={styles.launchCharacter}
+                              style={
+                                {
+                                  '--character-delay': `${70 + (precedingCharacters + characterIndex) * 18}ms`,
+                                } as CSSProperties
+                              }
+                            >
+                              {character}
+                            </span>
+                          ))}
+                        </span>
+                      )
+                    })}
                   </span>
                 )
               })}
@@ -156,9 +172,10 @@ export async function HomePage() {
               target="_blank"
               rel="noreferrer noopener"
             >
-              <span>{entry.date}</span>
+              <span className={styles.pressDate}>{entry.date}</span>
               <strong>{entry.title}</strong>
-              <span aria-hidden="true">↗</span>
+              <span className={styles.pressPublication}>{entry.publication}</span>
+              <span className={styles.pressArrow} aria-hidden="true">↗</span>
             </a>
           ))}
         </div>

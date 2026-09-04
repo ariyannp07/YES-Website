@@ -2,6 +2,7 @@
 title: Forget Wall Street. Elite Students Are Spending Their Summers on Startup Dreams.
 date: 2026-07-05
 kind: press
+publication: The Wall Street Journal
 summary: The Wall Street Journal, on students choosing startups over internships — and on the Yale Hacker House in Nob Hill.
 url: https://www.wsj.com/tech/ai/forget-wall-street-elite-students-are-spending-their-summers-on-startup-dreams-e7191994
 approved: false

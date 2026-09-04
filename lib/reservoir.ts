@@ -39,6 +39,8 @@ const Frontmatter = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'date must be YYYY-MM-DD'),
   kind: z.enum(KINDS).default('essay'),
   summary: z.string().min(1).optional(),
+  /** Publication name for press coverage. */
+  publication: z.string().min(1).optional(),
   /** Set for anything hosted elsewhere. No page is generated when present. */
   url: z.string().url().optional(),
   /** Copy ships only after owner sign-off (build spec §8.4). */
@@ -51,6 +53,7 @@ export interface Entry {
   readonly date: string
   readonly kind: Kind
   readonly summary?: string
+  readonly publication?: string
   readonly url?: string
   readonly approved: boolean
   readonly html: string
@@ -110,6 +113,7 @@ const readEntryFile = (fileName: string): Entry => {
     date: parsed.data.date,
     kind: parsed.data.kind,
     summary: parsed.data.summary,
+    publication: parsed.data.publication,
     url: parsed.data.url,
     approved: parsed.data.approved,
     html: marked.parse(body, { async: false }),

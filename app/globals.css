@@ -35,6 +35,7 @@
 
   --text-hero: clamp(3.1rem, 8vw, 6rem);
   --text-launch: clamp(3rem, 5.1vw, 5.15rem);
+  --text-launch-statement: clamp(2.65rem, 3.7vw, 3.75rem);
   --text-impact: clamp(2.05rem, 5.6vw, 5.25rem);
   --text-paper-title: clamp(1.35rem, 2.2vw, 2.05rem);
   --text-paper-claim: clamp(1.15rem, 1.8vw, 1.55rem);

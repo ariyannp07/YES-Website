@@ -51,6 +51,7 @@ approved: true
 | `date` | yes | `YYYY-MM-DD`. Sorts the index; a bad format fails the build. |
 | `kind` | no | `essay`, `talk`, `workshop`, `lesson`, or `press`. Defaults to `essay`. Shown beside the date. |
 | `summary` | no | One line on the index. Leave it out and the index shows the title alone. |
+| `publication` | no | Newspaper or outlet name for a `press` entry. |
 | `url` | no | Set for anything hosted elsewhere. The index links out and no page is built. |
 | `approved` | no | Defaults to `false`, which renders the `DRAFT — AWAITING OWNER APPROVAL` mark. Set `true` after editorial sign-off. |
 
