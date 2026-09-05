@@ -121,41 +121,43 @@ export function EnterForm({ connected }: { readonly connected: boolean }) {
         </p>
       )}
 
-      <label className={styles.field}>
-        <span className={`${styles.label} t-micro`}>Name</span>
-        <input
-          className={styles.input}
-          type="text"
-          name="name"
-          autoComplete="name"
-          value={values.name}
-          onChange={(event) => update('name', event.target.value)}
-          aria-invalid={Boolean(errorFor('name'))}
-        />
-        {errorFor('name') ? (
-          <span className={`${styles.error} t-micro`}>{errorFor('name')}</span>
-        ) : null}
-      </label>
+      <div className={styles.row}>
+        <label className={styles.field}>
+          <span className={`${styles.label} t-micro`}>Name</span>
+          <input
+            className={styles.input}
+            type="text"
+            name="name"
+            autoComplete="name"
+            value={values.name}
+            onChange={(event) => update('name', event.target.value)}
+            aria-invalid={Boolean(errorFor('name'))}
+          />
+          {errorFor('name') ? (
+            <span className={`${styles.error} t-micro`}>{errorFor('name')}</span>
+          ) : null}
+        </label>
 
-      <label className={styles.field}>
-        <span className={`${styles.label} t-micro`}>Email</span>
-        <input
-          className={styles.input}
-          type="email"
-          name="email"
-          autoComplete="email"
-          value={values.email}
-          onChange={(event) => update('email', event.target.value)}
-          aria-invalid={Boolean(errorFor('email'))}
-        />
-        {errorFor('email') ? (
-          <span className={`${styles.error} t-micro`}>{errorFor('email')}</span>
-        ) : null}
-      </label>
+        <label className={styles.field}>
+          <span className={`${styles.label} t-micro`}>Email</span>
+          <input
+            className={styles.input}
+            type="email"
+            name="email"
+            autoComplete="email"
+            value={values.email}
+            onChange={(event) => update('email', event.target.value)}
+            aria-invalid={Boolean(errorFor('email'))}
+          />
+          {errorFor('email') ? (
+            <span className={`${styles.error} t-micro`}>{errorFor('email')}</span>
+          ) : null}
+        </label>
+      </div>
 
       <label className={styles.field}>
         <span className={`${styles.label} t-micro`}>
-          Affiliation — class year, school, or how you know Yale
+          Yale affiliation
         </span>
         <input
           className={styles.input}
@@ -172,12 +174,9 @@ export function EnterForm({ connected }: { readonly connected: boolean }) {
         ) : null}
       </label>
 
-      <fieldset
-        className={styles.field}
-        style={{ border: 0, margin: '0 0 2.75rem', padding: 0 }}
-      >
-        <legend className={`${styles.label} t-micro`} style={{ padding: 0 }}>
-          You are a
+      <fieldset className={`${styles.field} ${styles.fieldset}`}>
+        <legend className={`${styles.label} t-micro`}>
+          How would you like to contribute?
         </legend>
         <div className={styles.choices}>
           {ROLES.map((role) => (
@@ -197,7 +196,7 @@ export function EnterForm({ connected }: { readonly connected: boolean }) {
 
       <label className={styles.field}>
         <span className={`${styles.label} t-micro`}>
-          What have you built, or what do you want to build?
+          What are you building—or how can you help?
         </span>
         <textarea
           className={styles.textarea}
@@ -221,7 +220,7 @@ export function EnterForm({ connected }: { readonly connected: boolean }) {
           checked={values.catalogConsent}
           onChange={(event) => update('catalogConsent', event.target.checked)}
         />
-        <span>List me in the public directory of Yale builders.</span>
+        <span>Include me in the public directory.</span>
       </label>
 
       {/* Honeypot. Off-screen, unlabelled to autofill heuristics, never validated —
@@ -250,7 +249,7 @@ export function EnterForm({ connected }: { readonly connected: boolean }) {
         type="submit"
         disabled={status === 'submitting' || !connected}
       >
-        {status === 'submitting' ? 'Sending…' : 'Join YES →'}
+        {status === 'submitting' ? 'Sending…' : 'Join YES'}
       </button>
     </form>
   )
