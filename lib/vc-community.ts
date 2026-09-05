@@ -30,9 +30,9 @@ export const featuredVcFirms = [
   {
     name: 'Bain Capital Ventures',
     logo: '/vc/bain-capital-ventures.svg',
-    width: 341,
-    height: 86,
-    format: 'wide',
+    width: 1377,
+    height: 496,
+    format: 'compact',
   },
   {
     name: 'Menlo Ventures',

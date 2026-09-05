@@ -9,7 +9,6 @@ import { allEntries } from '@/lib/reservoir'
 import {
   additionalVcFirms,
   featuredVcFirms,
-  vcFirmCount,
 } from '@/lib/vc-community'
 
 import styles from './home.module.css'
@@ -128,9 +127,8 @@ export async function HomePage() {
         </div>
       </section>
 
-      <section className={styles.vcSection} aria-labelledby="vc-community-title">
+      <section id="vc-community" className={styles.vcSection} aria-label="YES VC community">
         <div className={styles.vcHeader}>
-          <h2 id="vc-community-title">YES VC Community</h2>
           <p>Venture firms connected through the YES network.</p>
         </div>
 
@@ -150,11 +148,7 @@ export async function HomePage() {
 
         <details className={styles.vcDirectory}>
           <summary>
-            <span className={styles.vcSummaryClosed}>
-              See {additionalVcFirms.length} more firms
-            </span>
-            <span className={styles.vcSummaryOpen}>Close the full list</span>
-            <span className={styles.vcCount}>{vcFirmCount} connected firms</span>
+            <span>See {additionalVcFirms.length} more</span>
             <svg viewBox="0 0 16 16" aria-hidden="true">
               <path d="m3 6 5 5 5-5" />
             </svg>
