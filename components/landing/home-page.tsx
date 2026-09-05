@@ -131,16 +131,19 @@ export async function HomePage() {
       <section className={styles.vcSection} aria-labelledby="vc-community-title">
         <div className={styles.vcHeader}>
           <h2 id="vc-community-title">YES VC Community</h2>
-          <p>
-            Firms connected to the wider YES network. Inclusion reflects a community
-            relationship—not necessarily an investment or formal partnership.
-          </p>
+          <p>Venture firms connected through the YES network.</p>
         </div>
 
         <ul className={styles.vcFeatured} aria-label="Selected firms in the YES VC community">
-          {featuredVcFirms.map((firm, index) => (
-            <li key={firm} className={index < 3 ? styles.vcPrimary : undefined}>
-              {firm}
+          {featuredVcFirms.map((firm) => (
+            <li key={firm.name} className={styles[`vcLogo_${firm.format}`]}>
+              <img
+                src={firm.logo}
+                alt={firm.name}
+                width={firm.width}
+                height={firm.height}
+                loading="lazy"
+              />
             </li>
           ))}
         </ul>

@@ -8,7 +8,10 @@ import {
 
 describe('VC community roster', () => {
   it('keeps all 35 firms unique', () => {
-    const firms = [...featuredVcFirms, ...additionalVcFirms]
+    const firms = [
+      ...featuredVcFirms.map((firm) => firm.name),
+      ...additionalVcFirms,
+    ]
 
     expect(firms).toHaveLength(35)
     expect(new Set(firms).size).toBe(35)

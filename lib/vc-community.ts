@@ -6,14 +6,62 @@
  * a claim that a firm has invested in YES or a YES-associated company.
  */
 export const featuredVcFirms = [
-  'a16z',
-  'General Catalyst',
-  'Google Ventures',
-  'Bain Capital Ventures',
-  'Menlo Ventures',
-  'Battery Ventures',
-  '8VC',
-  'Floodgate',
+  {
+    name: 'a16z',
+    logo: '/vc/a16z.svg',
+    width: 734,
+    height: 261,
+    format: 'stacked',
+  },
+  {
+    name: 'General Catalyst',
+    logo: '/vc/general-catalyst.svg',
+    width: 312,
+    height: 40,
+    format: 'wide',
+  },
+  {
+    name: 'Google Ventures',
+    logo: '/vc/gv.svg',
+    width: 49,
+    height: 31,
+    format: 'mark',
+  },
+  {
+    name: 'Bain Capital Ventures',
+    logo: '/vc/bain-capital-ventures.svg',
+    width: 341,
+    height: 86,
+    format: 'wide',
+  },
+  {
+    name: 'Menlo Ventures',
+    logo: '/vc/menlo-ventures.svg',
+    width: 102,
+    height: 40,
+    format: 'standard',
+  },
+  {
+    name: 'Battery Ventures',
+    logo: '/vc/battery-ventures.svg',
+    width: 561,
+    height: 149,
+    format: 'standard',
+  },
+  {
+    name: '8VC',
+    logo: '/vc/8vc.svg',
+    width: 73,
+    height: 29,
+    format: 'compact',
+  },
+  {
+    name: 'Floodgate',
+    logo: '/vc/floodgate.svg',
+    width: 152,
+    height: 48,
+    format: 'reversed',
+  },
 ] as const
 
 export const additionalVcFirms = [
