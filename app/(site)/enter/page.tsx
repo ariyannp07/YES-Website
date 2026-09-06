@@ -23,7 +23,7 @@ export default function EnterPage() {
               rel="noreferrer"
               aria-label="Apply to YES as a Yale student (opens in a new tab)"
             >
-              Application Link.
+              Application Link
             </a>
           </h1>
           <a
@@ -33,7 +33,7 @@ export default function EnterPage() {
             rel="noreferrer"
             aria-label="Join the YES mailing list (opens in a new tab)"
           >
-            Mailing List.
+            Mailing List
           </a>
         </div>
       </section>
