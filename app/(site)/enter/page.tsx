@@ -14,16 +14,28 @@ export default function EnterPage() {
   return (
     <div className={styles.page}>
       <section className={styles.studentSection} aria-label="Yale student application">
-        <h1>
+        <div className={styles.studentLinks}>
+          <h1>
+            <a
+              className={styles.applicationLink}
+              href="https://forms.gle/BDVJeKqJbmvhdCCV6"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Apply to YES as a Yale student (opens in a new tab)"
+            >
+              Application Link.
+            </a>
+          </h1>
           <a
-            href="https://forms.gle/BDVJeKqJbmvhdCCV6"
+            className={styles.mailingLink}
+            href="https://forms.gle/ADc3ab1RC14PPgZD9"
             target="_blank"
             rel="noreferrer"
-            aria-label="Apply to YES as a Yale student (opens in a new tab)"
+            aria-label="Join the YES mailing list (opens in a new tab)"
           >
-            Application Link.
+            Mailing List.
           </a>
-        </h1>
+        </div>
       </section>
 
       <section className={styles.associateSection} aria-labelledby="associate-heading">
