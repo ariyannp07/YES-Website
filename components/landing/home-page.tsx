@@ -129,7 +129,7 @@ export async function HomePage() {
 
       <section id="vc-community" className={styles.vcSection} aria-label="YES VC community">
         <div className={styles.vcHeader}>
-          <p>Venture firms connected through the YES network.</p>
+          <p>The YES community is formed by these firms.</p>
         </div>
 
         <ul className={styles.vcFeatured} aria-label="Selected firms in the YES VC community">

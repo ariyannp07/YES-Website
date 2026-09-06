@@ -7,15 +7,19 @@ import {
 } from './vc-community'
 
 describe('VC community roster', () => {
-  it('keeps all 35 firms unique', () => {
+  it('keeps all 38 firms unique', () => {
     const firms = [
       ...featuredVcFirms.map((firm) => firm.name),
       ...additionalVcFirms,
     ]
 
-    expect(firms).toHaveLength(35)
-    expect(new Set(firms).size).toBe(35)
-    expect(vcFirmCount).toBe(35)
+    expect(firms).toHaveLength(38)
+    expect(new Set(firms).size).toBe(38)
+    expect(vcFirmCount).toBe(38)
+    expect(additionalVcFirms).toEqual(
+      expect.arrayContaining(['OpenAI', 'GMI', 'ElevenLabs', 'SpaceXAI']),
+    )
+    expect(additionalVcFirms).not.toContain('INCE Capital')
   })
 
   it('keeps the expanded roster alphabetical', () => {

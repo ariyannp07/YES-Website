@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import {
   CONFIRMATION,
   EnterSubmission,
-  ROLES,
   ROLE_LABELS,
   resolveSource,
   type Role,
@@ -24,14 +23,14 @@ import styles from './enter-form.module.css'
 
 type Status = 'idle' | 'submitting' | 'done' | 'error'
 type FieldErrors = Partial<Record<string, readonly string[]>>
+const ASSOCIATE_ROLES = ['backer', 'helper'] as const satisfies readonly Role[]
 
 const EMPTY = {
   name: '',
   email: '',
   affiliation: '',
-  role: 'builder' as Role,
+  role: 'backer' as Role,
   building: '',
-  catalogConsent: false,
   confirmRef: '',
 }
 
@@ -59,7 +58,7 @@ export function EnterForm({ connected }: { readonly connected: boolean }) {
     setFieldErrors({})
     setMessage('')
 
-    const candidate = { ...values, source }
+    const candidate = { ...values, catalogConsent: false, source }
     const parsed = EnterSubmission.safeParse(candidate)
 
     if (!parsed.success) {
@@ -157,7 +156,7 @@ export function EnterForm({ connected }: { readonly connected: boolean }) {
 
       <label className={styles.field}>
         <span className={`${styles.label} t-micro`}>
-          Yale affiliation
+          Affiliation
         </span>
         <input
           className={styles.input}
@@ -179,7 +178,7 @@ export function EnterForm({ connected }: { readonly connected: boolean }) {
           How would you like to contribute?
         </legend>
         <div className={styles.choices}>
-          {ROLES.map((role) => (
+          {ASSOCIATE_ROLES.map((role) => (
             <label key={role} className={styles.choice}>
               <input
                 type="radio"
@@ -196,7 +195,7 @@ export function EnterForm({ connected }: { readonly connected: boolean }) {
 
       <label className={styles.field}>
         <span className={`${styles.label} t-micro`}>
-          What are you building—or how can you help?
+          What can you offer?
         </span>
         <textarea
           className={styles.textarea}
@@ -211,16 +210,6 @@ export function EnterForm({ connected }: { readonly connected: boolean }) {
             {errorFor('building')}
           </span>
         ) : null}
-      </label>
-
-      <label className={`${styles.field} ${styles.consent}`}>
-        <input
-          type="checkbox"
-          name="catalogConsent"
-          checked={values.catalogConsent}
-          onChange={(event) => update('catalogConsent', event.target.checked)}
-        />
-        <span>Include me in the public directory.</span>
       </label>
 
       {/* Honeypot. Off-screen, unlabelled to autofill heuristics, never validated —
@@ -249,7 +238,7 @@ export function EnterForm({ connected }: { readonly connected: boolean }) {
         type="submit"
         disabled={status === 'submitting' || !connected}
       >
-        {status === 'submitting' ? 'Sending…' : 'Join YES'}
+        {status === 'submitting' ? 'Sending…' : 'Connect with YES'}
       </button>
     </form>
   )
