@@ -4,7 +4,6 @@ import { DraftNotice } from '@/components/draft-notice'
 import GlobeCanvas from '@/components/landing/globe/globe-canvas'
 import {
   HOUSE_APPROVED,
-  HOUSE_CLIPPING,
   HOUSE_DRAFT_LABEL,
   HOUSE_FIGURES,
   HOUSE_PHOTOS,
@@ -43,18 +42,24 @@ export default function HackerHousePage() {
         <GlobeCanvas />
       </div>
 
-      <div className={styles.triptych}>
-        {HOUSE_PHOTOS.map((photo) => (
-          <img
-            key={photo.src}
-            src={photo.src}
-            alt={photo.alt}
-            width={photo.width}
-            height={photo.height}
-            loading="lazy"
-          />
-        ))}
-      </div>
+      <figure className={styles.triptych}>
+        <div className={styles.frames}>
+          {HOUSE_PHOTOS.map((photo) => (
+            <img
+              key={photo.src}
+              src={photo.src}
+              alt={photo.alt}
+              width={photo.width}
+              height={photo.height}
+              loading="lazy"
+            />
+          ))}
+        </div>
+        {/* One credit for the set: all three are the same publication's. */}
+        <figcaption>
+          Photographs: {HOUSE_PHOTOS[0].credit}
+        </figcaption>
+      </figure>
 
       <div className={styles.figures}>
         {HOUSE_FIGURES.map((item) => (
@@ -66,15 +71,7 @@ export default function HackerHousePage() {
       </div>
 
       <div className={styles.clipping}>
-        <img
-          src={HOUSE_CLIPPING.src}
-          alt={HOUSE_CLIPPING.alt}
-          width={HOUSE_CLIPPING.width}
-          height={HOUSE_CLIPPING.height}
-          loading="lazy"
-        />
         <div className={styles.clippingBody}>
-          <p>{HOUSE_CLIPPING.caption}</p>
           <p>
             The Wall Street Journal came to the house and wrote about what elite
             students are doing with their summers now.

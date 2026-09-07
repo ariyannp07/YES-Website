@@ -61,10 +61,21 @@
  * get narrower.
  */
 .triptych {
+  margin: 0 0 clamp(2rem, 4vw, 3rem);
+}
+
+.frames {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: clamp(0.5rem, 1.5vw, 1rem);
-  margin: 0 0 clamp(2rem, 4vw, 3rem);
+}
+
+.triptych figcaption {
+  margin-top: 0.7rem;
+  color: var(--muted);
+  font-size: var(--text-micro);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .triptych img {
@@ -104,23 +115,19 @@
   line-height: 1.65;
 }
 
+/**
+ * The Journal, as a line and a link.
+ *
+ * This block used to lead with a photograph of the printed page. Removed at
+ * owner direction, which also removes the two-column grid it needed.
+ */
 .clipping {
-  display: grid;
-  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
-  gap: clamp(1.5rem, 4vw, 3rem);
-  align-items: start;
+  max-width: 34rem;
   padding-top: clamp(2rem, 4vw, 3rem);
   border-top: 1px solid var(--line);
 }
 
-.clipping img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
 .clippingBody p {
-  max-width: 34rem;
   margin: 0 0 1.25rem;
   color: var(--muted);
   line-height: 1.75;
@@ -137,17 +144,10 @@
 }
 
 @media (max-width: 42rem) {
-  .triptych {
+  .frames {
     gap: 0.4rem;
   }
 
-  .clipping {
-    grid-template-columns: 1fr;
-  }
-
-  .clipping img {
-    max-width: 15rem;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

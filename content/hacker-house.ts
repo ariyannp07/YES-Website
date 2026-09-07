@@ -8,11 +8,9 @@
  * ships as a draft; the same caveat applies here, which is why HOUSE_APPROVED
  * is false.
  *
- * The photographs are the owners' own. The Wall Street Journal's photographs of
- * the house are NOT included: the site renders no third-party image without a
- * recorded grant, the same rule content/marks/approved.json enforces for logos.
- * Swap them in by dropping the files in public/hacker-house and adding rows
- * below WITH a credit — never by replacing these silently.
+ * The photographs are The Wall Street Journal's, used with the owners'
+ * confirmation that they hold the rights, and every one carries a credit. The
+ * originals live in the owners' Drive as IMG_9009, IMG_1148 and IMG_9890.
  */
 
 export interface HouseFigure {
@@ -46,43 +44,43 @@ export interface HousePhoto {
 /**
  * Exactly three, set side by side as verticals with the figures beneath.
  *
- * All three are cropped to 3:4 from landscape originals, so they are tighter
- * than the frames they came from — the cohort shot loses people at both edges.
- * Captions are deliberately absent: three images in a row read as one picture,
- * and a caption under each breaks it back into three.
+ * These are The Wall Street Journal's photographs of the house, used with the
+ * owners' confirmation that they hold the rights. `credit` is not decoration:
+ * the site renders no third-party image without an attribution line, the same
+ * rule content/marks/approved.json enforces for logos.
+ *
+ * All three are 3:2 frames cropped to 3:4, so half the width is gone and the
+ * crop had to be chosen rather than centred — the house sits left of centre
+ * between its neighbours, and the hallway frame is pulled left to hold both the
+ * man in the doorway and the whiteboard. Captions are absent: three images in a
+ * row read as one picture, and a caption apiece breaks it back into three.
  */
 export const HOUSE_PHOTOS: readonly HousePhoto[] = [
   {
-    src: '/hacker-house/cohort.jpg',
-    alt: 'The Hacker House cohort gathered around a table in the backyard.',
-    caption: 'The house, in the backyard on Hyde Street.',
+    src: '/hacker-house/house.jpg',
+    alt: 'The Hacker House on Hyde Street, a Yale flag hung from a second-floor window.',
+    caption: 'The house on Hyde Street.',
     width: 900,
     height: 1200,
+    credit: 'The Wall Street Journal',
   },
   {
-    src: '/hacker-house/night-session.jpg',
-    alt: 'Four people working on laptops around a table at night.',
-    caption: 'Most evenings looked like this.',
+    src: '/hacker-house/table.jpg',
+    alt: 'Founders gathered around a laptop at the dining table.',
+    caption: 'The dining table, which was also the desk.',
     width: 900,
     height: 1200,
+    credit: 'The Wall Street Journal',
   },
   {
     src: '/hacker-house/hallway.jpg',
-    alt: 'Three people talking in the hallway of the house.',
+    alt: 'A whiteboard of architecture notes propped in the hallway beside someone working.',
     caption: 'The hallway did more work than any conference room.',
     width: 900,
     height: 1200,
+    credit: 'The Wall Street Journal',
   },
 ] as const
-
-/** The printed paper, photographed. Sits apart from the house photographs. */
-export const HOUSE_CLIPPING: HousePhoto = {
-  src: '/hacker-house/wsj-print.jpg',
-  alt: 'The Wall Street Journal Personal Journal page carrying the Hacker House story.',
-  caption: 'The Wall Street Journal, Personal Journal, 14 July 2026.',
-  width: 735,
-  height: 1400,
-}
 
 export const HOUSE_APPROVED = false
 export const HOUSE_DRAFT_LABEL = 'DRAFT — AWAITING OWNER APPROVAL'
