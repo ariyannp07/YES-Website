@@ -1,0 +1,103 @@
+/**
+ * The Reservoir index.
+ *
+ * These rows were the landing's `#press` section. The landing was cut to four
+ * beats and the list came here, where it has a page of its own rather than a
+ * scroll position — which is also why NAV's Press entry no longer points at
+ * `/#press`. The row grid is carried over unchanged so the coverage looks the
+ * same as it always has; only its address moved.
+ */
+
+.page {
+  padding: clamp(4rem, 7vw, 6.5rem)
+    max(var(--gutter), calc((100vw - var(--site-width)) / 2 + var(--gutter)));
+}
+
+.heading {
+  margin: 0 0 clamp(0.75rem, 2vw, 1.25rem);
+  color: var(--white);
+  font-size: var(--text-display);
+  font-weight: 760;
+  letter-spacing: -0.07em;
+  line-height: 0.75;
+}
+
+.standfirst {
+  max-width: 34rem;
+  margin: 0 0 clamp(2rem, 4vw, 3.5rem);
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.list {
+  border-top: 1px solid var(--ink);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 9rem minmax(0, 1fr) minmax(10rem, auto) auto;
+  gap: 2rem;
+  align-items: baseline;
+  padding: 1.25rem 0;
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+}
+
+.date {
+  color: var(--muted);
+  font-size: var(--text-label);
+}
+
+.source {
+  justify-self: end;
+  color: var(--white);
+  font-family: 'Times New Roman', Times, 'Liberation Serif', serif;
+  font-size: var(--text-body);
+  font-weight: 700;
+  line-height: 1.1;
+  text-align: right;
+}
+
+.arrow {
+  color: var(--muted);
+}
+
+.row strong {
+  font-size: var(--text-lead);
+  line-height: 1.3;
+}
+
+.row:hover strong {
+  color: var(--blue-bright);
+}
+
+.empty {
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+@media (max-width: 42rem) {
+  .row {
+    grid-template-columns: 5.2rem minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .date {
+    white-space: nowrap;
+  }
+
+  .source {
+    grid-column: 2;
+    justify-self: start;
+    color: var(--muted);
+    font-size: var(--text-label);
+    text-align: left;
+  }
+
+  .arrow {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+  }
+}

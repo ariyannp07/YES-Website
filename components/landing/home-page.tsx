@@ -1,82 +1,96 @@
 import type { CSSProperties } from 'react'
-import Link from 'next/link'
 
-import { ProfileImage } from '@/components/catalog/profile-image'
-import GlobeCanvas from '@/components/landing/globe/globe-canvas'
-import { allAlumni } from '@/lib/alumni'
-import { orderDirectoryPeople } from '@/lib/catalog-directory'
-import { allEntries } from '@/lib/reservoir'
-import {
-  additionalVcFirms,
-  featuredVcFirms,
-} from '@/lib/vc-community'
+import { YES_MESSAGE } from '@/lib/site'
+import { vcFirms } from '@/lib/vc-community'
 
 import styles from './home.module.css'
 
 const WSJ_URL =
   'https://www.wsj.com/tech/ai/forget-wall-street-elite-students-are-spending-their-summers-on-startup-dreams-e7191994'
 
-const LAUNCH_LINES = [
-  ['The', 'next'],
-  ['Yale', 'company', 'is'],
-  ['a', 'conversation', 'that'],
-  ['hasn’t', 'happened', 'yet.'],
-] as const
-const LAUNCH_TITLE = LAUNCH_LINES.flat().join(' ')
+/**
+ * The front door: a statement, a line of firms, one clipping.
+ *
+ * WHAT LEFT AND WHY. The stats block, the Thesis/People cards, the Common Room
+ * teaser and the press list were removed at owner direction. They are reachable
+ * from the header and nowhere else now, which is what makes NAV load-bearing —
+ * see lib/site.ts, and lib/site.test.ts for the check that keeps it honest.
+ *
+ * The globe went to /hacker-house rather than being deleted. It draws exactly
+ * one thing — the route from New Haven to San Francisco — which is the claim
+ * the WSJ story already makes. Keeping both told one story twice on a page
+ * whose whole point is saying one thing once.
+ *
+ * The statement is set at --text-body and unbold. It was display type until the
+ * owners saw it that way and cut it down: at hero size the same words argue,
+ * at body size they simply state, and the page carries them better.
+ *
+ * The row shows the whole roster. It used to show eight marks and hide thirty
+ * names behind a disclosure; both the disclosure and the firms that had no mark
+ * to show are gone, so what renders is the roster entire.
+ *
+ * The reveal is still per character, which is quiet at this size — 12ms rather
+ * than the hero's 18ms, so the whole line lands in about a second.
+ */
+const CHARACTER_STAGGER_MS = 12
+const CHARACTER_LEAD_IN_MS = 70
 
-export async function HomePage() {
-  const people = await allAlumni()
-  const faces = orderDirectoryPeople(people)
-    .filter(
-      (person) => person.directoryStatus !== 'uncertain' && person.portraitColor,
-    )
-    .slice(0, 9)
-  const press = allEntries().filter((entry) => entry.kind === 'press')
+export function HomePage() {
+  const statement = YES_MESSAGE.join(' ')
 
   return (
     <div className={styles.page}>
       <section className={styles.launch} aria-labelledby="launch-title">
         <div className={styles.launchInner}>
           <div className={styles.launchStatement} data-landing-copy="">
-            <h1 id="launch-title" aria-label={LAUNCH_TITLE}>
-              {LAUNCH_LINES.map((line, lineIndex) => {
-                const precedingLineCharacters = LAUNCH_LINES.slice(0, lineIndex)
-                  .flat()
-                  .join('').length
+            <h1 id="launch-title" aria-label={statement}>
+              {YES_MESSAGE.map((sentence, sentenceIndex) => {
+                const precedingCharacters = YES_MESSAGE.slice(0, sentenceIndex)
+                  .join('')
+                  .replace(/\s/g, '').length
+                let seen = 0
 
                 return (
-                  <span key={line.join('-')} className={styles.launchLine} aria-hidden="true">
-                    {line.map((word, wordIndex) => {
-                      const precedingCharacters =
-                        precedingLineCharacters + line.slice(0, wordIndex).join('').length
+                  <span key={sentence} className={styles.launchLine} aria-hidden="true">
+                    {sentence.split(' ').map((word, wordIndex) => (
+                      <span key={`${word}-${wordIndex}`} className={styles.launchWord}>
+                        {Array.from(word).map((character, characterIndex) => {
+                          const delay =
+                            CHARACTER_LEAD_IN_MS +
+                            (precedingCharacters + seen++) * CHARACTER_STAGGER_MS
 
-                      return (
-                        <span key={word} className={styles.launchWord}>
-                          {Array.from(word).map((character, characterIndex) => (
+                          return (
                             <span
                               key={`${character}-${characterIndex}`}
                               className={styles.launchCharacter}
                               style={
-                                {
-                                  '--character-delay': `${70 + (precedingCharacters + characterIndex) * 18}ms`,
-                                } as CSSProperties
+                                { '--character-delay': `${delay}ms` } as CSSProperties
                               }
                             >
                               {character}
                             </span>
-                          ))}
-                        </span>
-                      )
-                    })}
+                          )
+                        })}
+                      </span>
+                    ))}
                   </span>
                 )
               })}
             </h1>
           </div>
 
-          <div className={styles.globePanel}>
-            <GlobeCanvas />
-          </div>
+          <ul className={styles.vcRow} aria-label="Firms in the YES community">
+            {vcFirms.map((firm) => (
+              <li key={firm.name} className={firm.reversed ? styles.reversed : undefined}>
+                <img
+                  src={firm.logo}
+                  alt={firm.name}
+                  width={firm.width}
+                  height={firm.height}
+                />
+              </li>
+            ))}
+          </ul>
 
           <a
             className={styles.storyHook}
@@ -93,130 +107,6 @@ export async function HomePage() {
             </strong>
             <span className={styles.storyAction}>Read the article ↗</span>
           </a>
-        </div>
-
-        <a href="#proof" className={styles.scrollCue} aria-label="Scroll to explore YES">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="m5 9 7 7 7-7" />
-          </svg>
-        </a>
-      </section>
-
-      <section id="proof" className={styles.statsSection} aria-label="YES at a glance">
-        <p className={styles.intro}>
-          YES is Yale’s student-run network for students building companies or exploring
-          entrepreneurship. We connect members with peers, founders, operators, and
-          investors through events, programs, and direct introductions. Members get
-          practical feedback, access to talent and capital, and support from first idea
-          through growth.
-        </p>
-
-        <div className={styles.primaryStat}>
-          <strong>$17,000,000+</strong>
-          <span>Raised in the past year by YES founders</span>
-        </div>
-        <div className={styles.secondaryStats}>
-          <div>
-            <strong>14</strong>
-            <span>teams at the first Yale Hacker House</span>
-          </div>
-          <div>
-            <strong>$200M+</strong>
-            <span>valuation of YES-associated companies</span>
-          </div>
-        </div>
-      </section>
-
-      <section id="vc-community" className={styles.vcSection} aria-label="YES VC community">
-        <div className={styles.vcHeader}>
-          <p>The YES community is formed by these firms.</p>
-        </div>
-
-        <ul className={styles.vcFeatured} aria-label="Selected firms in the YES VC community">
-          {featuredVcFirms.map((firm) => (
-            <li key={firm.name} className={styles[`vcLogo_${firm.format}`]}>
-              <img
-                src={firm.logo}
-                alt={firm.name}
-                width={firm.width}
-                height={firm.height}
-                loading="lazy"
-              />
-            </li>
-          ))}
-        </ul>
-
-        <details className={styles.vcDirectory}>
-          <summary>
-            <span>See {additionalVcFirms.length} more</span>
-            <svg viewBox="0 0 16 16" aria-hidden="true">
-              <path d="m3 6 5 5 5-5" />
-            </svg>
-          </summary>
-          <ul>
-            {additionalVcFirms.map((firm) => (
-              <li key={firm}>{firm}</li>
-            ))}
-          </ul>
-        </details>
-      </section>
-
-      <section className={styles.choiceWrap}>
-        <nav className={styles.choiceSection} aria-label="Explore YES">
-          <a href="/thesis" className={`${styles.choice} ${styles.thesisChoice}`}>
-            <span className={styles.choiceLabel}>Thesis</span>
-            <div className={styles.paperPreview} aria-hidden="true">
-              <span className={styles.paperTitle}>The YES Thesis</span>
-              <span className={styles.paperDivider} />
-              <strong>Creation should be a part of a Yale education.</strong>
-            </div>
-          </a>
-          <Link href="/catalog" className={`${styles.choice} ${styles.peopleChoice}`}>
-            <span className={styles.choiceLabel}>People</span>
-            <div className={styles.faceField} aria-hidden="true">
-              {faces.map((person) => (
-                <ProfileImage
-                  key={person.slug}
-                  name={person.name}
-                  photo={person.portraitColor}
-                  className={styles.choiceFace}
-                />
-              ))}
-            </div>
-          </Link>
-        </nav>
-      </section>
-
-      <section className={styles.commonRoomSection}>
-        <div>
-          <span className="status-pending">Pending</span>
-          <h2>Common Room</h2>
-          <p>
-            A uniquely Yale community of the university’s most ambitious builders and
-            innovators.
-          </p>
-        </div>
-        <Link href="/common-room">Details to come →</Link>
-      </section>
-
-      <section id="press" className={styles.pressSection}>
-        <h2 className={styles.pressHeading}>Press</h2>
-
-        <div className={styles.pressList}>
-          {press.map((entry) => (
-            <a
-              key={entry.slug}
-              href={entry.url}
-              className={styles.pressRow}
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              <span className={styles.pressDate}>{entry.date}</span>
-              <strong>{entry.title}</strong>
-              <span className={styles.pressPublication}>{entry.publication}</span>
-              <span className={styles.pressArrow} aria-hidden="true">↗</span>
-            </a>
-          ))}
         </div>
       </section>
     </div>

@@ -29,6 +29,20 @@ export const FOUNDED_LINE =
  */
 export const LANDING_LINE = 'Build the future, don’t just study for it.'
 
+/**
+ * The landing's only prose, owner-written.
+ *
+ * Set small and unbold at --text-body, on a page that is otherwise a row of
+ * marks and one press clipping. The size is the point: the claim is large and
+ * the setting refuses to raise its voice for it.
+ *
+ * Held as an array because the statement has been one sentence and two, and the
+ * renderer sets it a line at a time either way.
+ */
+export const YES_MESSAGE = [
+  'The community producing the next generation of Yale excellence.',
+] as const
+
 export const CONTACT = {
   ariyan: 'ariyan.patel@yale.edu',
   sofia: 'sst39@yale.edu',
@@ -41,12 +55,26 @@ export interface NavItem {
   readonly hidden?: boolean
 }
 
+/**
+ * The header carries everything the landing no longer does.
+ *
+ * The landing was cut to four beats — mark, statement, the WSJ story, the VC
+ * community — so the sections it used to hold (the stats, the Thesis/People
+ * cards, the Common Room teaser, the press list) now live behind these links
+ * and nowhere else. That makes the header load-bearing: a promoted item with
+ * no route is a dead end, not a soft landing, which is what `site.test.ts`
+ * checks. Press in particular pointed at `/#press` — an anchor into a section
+ * that no longer exists.
+ */
 export const NAV: readonly NavItem[] = [
-  { href: '/thesis', label: 'Thesis' },
-  { href: '/catalog', label: 'People' },
   { href: '/common-room', label: 'Common Room' },
-  { href: '/#press', label: 'Press' },
-  // Unlinked legacy and consent-gated surfaces.
+  { href: '/hacker-house', label: 'Hacker House' },
+  { href: '/reservoir', label: 'Press' },
+  { href: '/thesis', label: 'Thesis' },
+  // Unlinked legacy and consent-gated surfaces. People is hidden at owner
+  // direction — the catalog still builds and /catalog still resolves for anyone
+  // holding the link; it is simply not promoted.
+  { href: '/catalog', label: 'People', hidden: true },
   { href: '/work', label: 'Work', hidden: true },
   { href: '/enter', label: 'Join YES', hidden: true },
   { href: '/builders', label: 'Builders', hidden: true },

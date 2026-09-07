@@ -1,24 +1,97 @@
+/**
+ * /common-room.
+ *
+ * Was a centred "Pending" placeholder. It now carries the owners' line and the
+ * faces behind it, so the page is a header and a grid rather than a hero.
+ */
+
 .page {
-  display: grid;
-  min-height: calc(100svh - var(--nav-height));
-  place-items: center;
-  padding: var(--section-space) var(--gutter);
+  padding: clamp(3rem, 6vw, 5rem)
+    max(var(--gutter), calc((100vw - var(--site-width)) / 2 + var(--gutter)))
+    clamp(4rem, 7vw, 6.5rem);
   background: var(--bg);
 }
 
-.hero {
-  width: min(100%, 50rem);
-  text-align: center;
+.header {
+  max-width: 44rem;
+  margin: 0 0 clamp(2.5rem, 6vw, 4rem);
 }
 
-.hero :global(.status-pending) {
-  margin-inline: auto;
-}
-
-.hero h1 {
-  margin: 1.75rem 0 0;
+.header h1 {
+  margin: 0 0 clamp(0.9rem, 2vw, 1.4rem);
+  color: var(--white);
   font-size: var(--text-display);
-  font-weight: 780;
-  letter-spacing: -0.04em;
-  line-height: 0.95;
+  font-weight: 760;
+  letter-spacing: -0.07em;
+  line-height: 0.75;
+}
+
+.line {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-lead);
+  line-height: 1.5;
+}
+
+/**
+ * Every face the same size. The catalog's mosaic deliberately weights tiles by
+ * gravity; this page does not — these people are the room, not a ranking.
+ */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  gap: clamp(1.5rem, 3.5vw, 2.5rem) clamp(1.25rem, 2.5vw, 2rem);
+  margin: 0;
+  padding: clamp(2rem, 4vw, 3rem) 0 0;
+  border-top: 1px solid var(--line);
+  list-style: none;
+}
+
+.person {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.portrait {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--night-raised);
+  border: 1px solid var(--line);
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.04);
+  transition: filter var(--duration-medium) var(--ease-out);
+}
+
+.person:hover .portrait {
+  filter: grayscale(0) contrast(1);
+}
+
+.name {
+  color: var(--white);
+  font-family: 'Times New Roman', Times, 'Liberation Serif', serif;
+  font-size: var(--text-card-name);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.role {
+  margin-top: 0.3rem;
+  color: var(--muted);
+  font-size: var(--text-card-role);
+  line-height: 1.4;
+}
+
+@media (max-width: 42rem) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portrait {
+    transition: none;
+  }
 }

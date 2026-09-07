@@ -21,7 +21,17 @@ export function SiteNav() {
     return () => window.removeEventListener('scroll', update)
   }, [pathname])
 
-  const isVisible = !isHome || hasScrolled
+  /**
+   * The nav is always reachable, including at the top of the landing.
+   *
+   * It used to stay hidden on home until the first scroll, which worked while
+   * the landing was six scrolling sections deep. The landing is now a single
+   * screen — a statement, the firms, one clipping — and everything else on the
+   * site is reachable ONLY through this header. Gating it behind a scroll that
+   * a tall display never produces made Common Room, Hacker House, People, Press
+   * and Thesis unreachable from the front door.
+   */
+  const isVisible = true
 
   const isCurrent = (href: string) =>
     !href.includes('#') && (pathname === href || pathname.startsWith(`${href}/`))

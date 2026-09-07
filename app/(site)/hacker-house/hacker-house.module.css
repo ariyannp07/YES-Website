@@ -1,0 +1,159 @@
+/**
+ * /hacker-house.
+ *
+ * The globe used to sit on the landing beside the hero. It draws one thing —
+ * the route from New Haven to San Francisco — which is this page's subject, so
+ * it came here where it is the argument rather than the wallpaper. Keyframes
+ * are module-scoped, so `globe-arrive` is redeclared here rather than shared.
+ */
+
+.page {
+  padding: clamp(3rem, 6vw, 5rem)
+    max(var(--gutter), calc((100vw - var(--site-width)) / 2 + var(--gutter)))
+    clamp(4rem, 7vw, 6.5rem);
+}
+
+.heading {
+  margin: 0 0 clamp(0.75rem, 2vw, 1.25rem);
+  color: var(--white);
+  font-size: var(--text-display);
+  font-weight: 760;
+  letter-spacing: -0.07em;
+  line-height: 0.75;
+}
+
+.standfirst {
+  max-width: 36rem;
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-lead);
+  line-height: 1.6;
+}
+
+.globePanel {
+  --globe-launch-x: 0%;
+
+  position: relative;
+  z-index: 1;
+  min-height: min(58svh, 34rem);
+  margin: clamp(1rem, 3vw, 2.5rem) 0 clamp(2rem, 4vw, 3rem);
+  opacity: 0;
+  animation: globe-arrive 500ms var(--ease-out) 20ms forwards;
+}
+
+@keyframes globe-arrive {
+  from {
+    opacity: 0;
+    transform: translateX(var(--globe-launch-x)) scale(0.86);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: clamp(1.5rem, 4vw, 3rem);
+  margin: 0 0 clamp(3rem, 6vw, 4.5rem);
+  padding-top: clamp(1.5rem, 3vw, 2.25rem);
+  border-top: 1px solid var(--line);
+}
+
+.figure strong {
+  display: block;
+  color: var(--white);
+  font-family: 'Times New Roman', Times, 'Liberation Serif', serif;
+  font-size: var(--text-section);
+  font-weight: 760;
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+}
+
+.figure span {
+  display: block;
+  max-width: 30rem;
+  margin-top: 0.65rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.plates {
+  display: grid;
+  gap: clamp(2rem, 5vw, 3.5rem);
+  margin: 0 0 clamp(3rem, 6vw, 4.5rem);
+}
+
+.plate {
+  margin: 0;
+}
+
+.plate img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--night-raised);
+}
+
+.plate figcaption {
+  margin-top: 0.75rem;
+  color: var(--muted);
+  font-size: var(--text-label);
+  line-height: 1.6;
+}
+
+.credit {
+  display: block;
+  color: var(--ink);
+}
+
+.clipping {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: start;
+  padding-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--line);
+}
+
+.clipping img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.clippingBody p {
+  max-width: 34rem;
+  margin: 0 0 1.25rem;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.read {
+  color: var(--white);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+}
+
+.read:hover {
+  color: var(--blue-bright);
+}
+
+@media (max-width: 42rem) {
+  .clipping {
+    grid-template-columns: 1fr;
+  }
+
+  .clipping img {
+    max-width: 15rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .globePanel {
+    opacity: 1;
+    animation: none;
+  }
+}
