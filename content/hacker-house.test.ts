@@ -3,7 +3,7 @@ import { join } from 'node:path'
 
 import { describe, expect, it } from 'vitest'
 
-import { HOUSE_FIGURES, HOUSE_PHOTOS } from './hacker-house'
+import { HOUSE_APPROVED, HOUSE_FIGURES, HOUSE_PHOTOS } from './hacker-house'
 
 describe('Hacker House', () => {
   /** The layout is a triptych: three verticals side by side, figures beneath. */
@@ -21,6 +21,11 @@ describe('Hacker House', () => {
     for (const photo of HOUSE_PHOTOS) {
       expect(existsSync(join(process.cwd(), 'public', photo.src))).toBe(true)
     }
+  })
+
+  /** Signed off by the owners on 2026-09-06; the draft banner is gone. */
+  it('ships approved, so no draft notice renders', () => {
+    expect(HOUSE_APPROVED).toBe(true)
   })
 
   /** They are the Journal's photographs; none may render unattributed. */

@@ -82,5 +82,14 @@ export const HOUSE_PHOTOS: readonly HousePhoto[] = [
   },
 ] as const
 
-export const HOUSE_APPROVED = false
+/**
+ * Owner-approved 2026-09-06, covering the figures and the photographs.
+ *
+ * Build spec §8.4 requires explicit owner sign-off before copy is deployed;
+ * this flag IS that sign-off, which is why it lives in the content file as a
+ * reviewable diff rather than in a deploy setting. Note the figures still come
+ * from content/work.ts, which carries its own WORK_APPROVED = false for the
+ * /work page — approving them here does not approve that page.
+ */
+export const HOUSE_APPROVED = true
 export const HOUSE_DRAFT_LABEL = 'DRAFT — AWAITING OWNER APPROVAL'
