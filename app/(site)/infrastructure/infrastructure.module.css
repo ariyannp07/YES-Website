@@ -1,0 +1,146 @@
+/**
+ * /infrastructure.
+ *
+ * Set on the site's own dark ground rather than the cream of the one-pager it
+ * transcribes: that document is print, and a light page here would be the only
+ * one on a site the owners asked to keep uniformly dark end to end.
+ *
+ * Copy left, photograph right, four times. The rule between rows does the
+ * separating, so the sections need no boxes.
+ */
+
+.page {
+  padding: clamp(3rem, 6vw, 5rem)
+    max(var(--gutter), calc((100vw - var(--site-width)) / 2 + var(--gutter)))
+    clamp(4rem, 7vw, 6.5rem);
+}
+
+.masthead {
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.masthead h1 {
+  margin: 0 0 clamp(0.5rem, 1.5vw, 0.9rem);
+  color: var(--white);
+  font-size: var(--text-display);
+  font-weight: 760;
+  letter-spacing: -0.07em;
+  line-height: 0.75;
+}
+
+.masthead p {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-lead);
+  line-height: 1.5;
+}
+
+.pillar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
+  gap: clamp(1.75rem, 5vw, 4rem);
+  align-items: start;
+  padding: clamp(2rem, 4vw, 3.25rem) 0;
+  border-top: 1px solid var(--line);
+}
+
+.name {
+  margin: 0 0 0.9rem;
+  color: var(--white);
+  font-family: 'Times New Roman', Times, 'Liberation Serif', serif;
+  font-size: var(--text-title);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.name a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.name a:hover {
+  color: var(--blue-bright);
+}
+
+.figure {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.55rem;
+  align-items: baseline;
+  margin: 0 0 1rem;
+}
+
+.figure strong {
+  color: var(--white);
+  font-family: 'Times New Roman', Times, 'Liberation Serif', serif;
+  font-size: var(--text-title);
+  font-weight: 760;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.figure span {
+  color: var(--muted);
+}
+
+.line {
+  max-width: 42ch;
+  margin: 0 0 0.85rem;
+  color: var(--ink);
+  line-height: 1.7;
+}
+
+.more {
+  display: inline-block;
+  margin-top: 0.35rem;
+  color: var(--muted);
+  font-size: var(--text-label);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+}
+
+.more:hover {
+  color: var(--blue-bright);
+}
+
+.plate {
+  margin: 0;
+}
+
+.plate img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--night-raised);
+}
+
+.plate figcaption {
+  margin-top: 0.55rem;
+  color: var(--muted);
+  font-size: var(--text-micro);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.support {
+  max-width: 52rem;
+  margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
+  padding-top: clamp(1.5rem, 3vw, 2rem);
+  color: var(--muted);
+  font-size: var(--text-label);
+  line-height: 1.7;
+  border-top: 1px solid var(--line);
+}
+
+@media (max-width: 54rem) {
+  .pillar {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  /* Photograph first on narrow screens: it establishes the place faster. */
+  .plate {
+    order: -1;
+  }
+}

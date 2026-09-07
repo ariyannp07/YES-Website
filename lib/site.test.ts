@@ -7,6 +7,7 @@ const visible = () => NAV.filter((item) => !item.hidden)
 describe('primary navigation', () => {
   it('promotes exactly the five owner-chosen destinations, in order', () => {
     expect(visible().map((item) => item.label)).toEqual([
+      'Infrastructure',
       'Common Room',
       'Hacker House',
       'Press',

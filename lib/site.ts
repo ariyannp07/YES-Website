@@ -67,6 +67,7 @@ export interface NavItem {
  * that no longer exists.
  */
 export const NAV: readonly NavItem[] = [
+  { href: '/infrastructure', label: 'Infrastructure' },
   { href: '/common-room', label: 'Common Room' },
   { href: '/hacker-house', label: 'Hacker House' },
   { href: '/reservoir', label: 'Press' },
