@@ -40,17 +40,27 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   width: min(100%, 74rem);
   min-height: 100svh;
   margin: 0 auto;
-  padding: clamp(5rem, 12vh, 8rem) var(--gutter) clamp(4rem, 8vh, 6rem);
+  padding: 0 var(--gutter) clamp(4rem, 8vh, 6rem);
   text-align: center;
 }
 
+/**
+ * The statement owns the opening screen by itself.
+ *
+ * 88svh rather than 100: the firms then begin just below the fold and only
+ * their first row edges into view, which is what tells a reader there is more.
+ * At a full 100svh the page looks finished and nobody scrolls; much below 88
+ * and three rows of logos crowd the sentence they are supposed to follow.
+ */
 .launchStatement {
   position: relative;
   z-index: 3;
+  display: grid;
+  place-items: center;
+  min-height: 88svh;
 }
 
 .launchStatement,
@@ -66,6 +76,8 @@
   font-weight: 400;
   letter-spacing: 0;
   line-height: 1.7;
+  /* Without this the line breaks after "Yale", orphaning "excellence." */
+  text-wrap: balance;
 }
 
 .launchLine {
@@ -90,16 +102,6 @@
 
 /* ————— the firms, one line, left to right ————— */
 
-.vcRow {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: clamp(1.25rem, 3.5vw, 3rem);
-  align-items: center;
-  margin: clamp(2.5rem, 6vh, 4.5rem) 0 0;
-  padding: 0;
-  list-style: none;
-}
-
 /**
  * SIZE MARKS BY A DEFINITE HEIGHT, NEVER `height: auto`.
  *
@@ -121,7 +123,7 @@
   align-items: center;
   justify-content: center;
   max-width: 62rem;
-  margin: clamp(2.5rem, 6vh, 4rem) auto 0;
+  margin: 0 auto;
   padding: 0;
   list-style: none;
 }
@@ -266,6 +268,15 @@
 }
 
 @media (max-width: 42rem) {
+  /**
+   * A phone's viewport is shorter and the header eats more of it, so 88svh
+   * puts the first logo row exactly on the fold — no peek, and nothing to
+   * suggest the page continues. Give the statement less of the screen here.
+   */
+  .launchStatement {
+    min-height: 74svh;
+  }
+
   .launchInner {
     padding-top: clamp(5rem, 12vh, 7rem);
   }
