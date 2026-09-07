@@ -65,7 +65,10 @@ export const PILLARS: readonly Pillar[] = [
   {
     slug: 'hacker-house',
     name: 'SF Hacker House',
-    figure: { value: '$17M', label: 'raised' },
+    /* $17M+ — matching content/work.ts and /hacker-house, which the "More"
+       link on this row leads to. The one-pager said $17M; the owners confirmed
+       the plus is right. */
+    figure: { value: '$17M+', label: 'raised' },
     body: [
       'For the 15 most exceptional Yalies going full-time on their ideas.',
       'The expectation is everyone in this cohort raises.',

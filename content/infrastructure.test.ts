@@ -3,6 +3,7 @@ import { join } from 'node:path'
 
 import { describe, expect, it } from 'vitest'
 
+import { HOUSE_FIGURES } from './hacker-house'
 import { HACKER_HOUSE_SUPPORT, PILLARS } from './infrastructure'
 
 describe('the infrastructure pillars', () => {
@@ -23,8 +24,19 @@ describe('the infrastructure pillars', () => {
     expect(figures).toEqual({
       YES: '100',
       'Common Room': '$700M+',
-      'SF Hacker House': '$17M',
+      'SF Hacker House': '$17M+',
     })
+  })
+
+  /**
+   * The row links to /hacker-house, so a reader meets both figures one click
+   * apart. They must be the same string.
+   */
+  it('states the raise exactly as /hacker-house does', () => {
+    const raise = PILLARS.find((p) => p.slug === 'hacker-house')?.figure?.value
+    const houseFigure = HOUSE_FIGURES.find((f) => f.figure.startsWith('$'))
+
+    expect(raise).toBe(houseFigure?.figure)
   })
 
   it('points every photograph at a file that exists', () => {
