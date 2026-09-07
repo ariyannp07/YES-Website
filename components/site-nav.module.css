@@ -49,8 +49,16 @@
   transition: color var(--duration-fast) var(--ease-out);
 }
 
+/**
+ * 1.85rem, down from 2.8rem.
+ *
+ * The mark set the header's height on its own — taller than the wordmark
+ * beside it and taller than the Join button — so the bar read as a masthead on
+ * a page whose whole argument is restraint. It now sits just above the
+ * wordmark's cap height.
+ */
 .brandMark {
-  height: 2.8rem;
+  height: 1.85rem;
 }
 
 .shortName {
@@ -180,11 +188,11 @@
   display: inline-flex;
   align-items: center;
   justify-self: end;
-  padding: 0.72rem 0.9rem;
+  padding: 0.45rem 0.8rem;
   color: var(--night);
   background: var(--signal);
-  font-size: var(--text-label);
-  font-weight: 750;
+  font-size: var(--text-ui);
+  font-weight: 700;
   text-decoration: none;
   transition: background var(--duration-fast) var(--ease-out),
     transform var(--duration-fast) var(--ease-out),
