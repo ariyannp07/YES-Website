@@ -15,6 +15,18 @@ describe('the infrastructure pillars', () => {
     ])
   })
 
+  it('states each tier’s intake', () => {
+    const figures = Object.fromEntries(
+      PILLARS.filter((p) => p.figure).map((p) => [p.name, p.figure!.value]),
+    )
+
+    expect(figures).toEqual({
+      YES: '100',
+      'Common Room': '$700M+',
+      'SF Hacker House': '$17M',
+    })
+  })
+
   it('points every photograph at a file that exists', () => {
     for (const pillar of PILLARS) {
       expect(existsSync(join(process.cwd(), 'public', pillar.image))).toBe(true)
