@@ -45,6 +45,17 @@ describe('primary navigation', () => {
     expect(hackerHouse?.href).toBe('/hacker-house')
   })
 
+  /**
+   * The footer renders this same list. It used to keep its own hand-written
+   * copy, which drifted — a Press link to the deleted /#press anchor and a
+   * People link the header had already stopped promoting.
+   */
+  it('promotes nothing that points outside the site’s own routes', () => {
+    for (const item of visible()) {
+      expect(item.href.startsWith('/')).toBe(true)
+    }
+  })
+
   it('has no duplicate hrefs across the whole structure', () => {
     const hrefs = NAV.map((item) => item.href)
 

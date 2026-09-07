@@ -1,37 +1,15 @@
+/**
+ * No band, no colour change at the foot of the page.
+ *
+ * The footer used to carry a --blue-deep block behind a "What will you build?"
+ * call to action. Both are gone at owner direction: the CTA because it was
+ * removed outright, and the background with it, so the landing is one
+ * uninterrupted dark ground from the statement to the last rule.
+ */
 .footer {
   color: var(--white);
-  background: var(--blue-deep);
-  border-top: 1px solid rgb(255 255 255 / 12%);
-}
-
-.cta {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 2rem;
-  max-width: var(--site-width);
-  margin: 0 auto;
-  padding: clamp(2.75rem, 5vw, 4.5rem) var(--gutter);
-}
-
-.cta p {
-  margin: 0;
-  font-family: 'Times New Roman', Times, 'Liberation Serif', serif;
-  font-size: var(--text-section);
-  font-weight: 700;
-  letter-spacing: -0.055em;
-  line-height: 0.88;
-}
-
-.cta a {
-  display: inline-flex;
-  align-items: center;
-  padding-bottom: 0.35rem;
-  color: var(--signal);
-  border-bottom: 1px solid currentColor;
-  font-size: var(--text-lead);
-  font-weight: 730;
-  text-decoration: none;
+  background: var(--night);
+  border-top: 1px solid var(--line);
 }
 
 .bar {
@@ -42,7 +20,6 @@
   max-width: var(--site-width);
   margin: 0 auto;
   padding: 1.25rem var(--gutter);
-  border-top: 1px solid rgb(255 255 255 / 14%);
 }
 
 .identity {
@@ -76,11 +53,6 @@
 }
 
 @media (max-width: 52rem) {
-  .cta {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
   .bar {
     grid-template-columns: 1fr;
     align-items: start;

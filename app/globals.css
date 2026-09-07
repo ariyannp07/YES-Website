@@ -4,7 +4,16 @@
   --blue: #00356b;
   --blue-deep: #001f3f;
   --blue-bright: #7da8cf;
-  --signal: #d1b97e;
+  /**
+   * The accent, switched from gold (#d1b97e) to the blue family at owner
+   * direction. --blue-bright rather than --blue or --blue-deep because of the
+   * ROLE this token plays: it is a light fill carrying dark text
+   * (.button-primary, .status-pending, the Join YES button all set
+   * `color: var(--night)` on it) as well as a text colour on the near-black
+   * ground. A deep navy fills correctly but leaves black text on near-black,
+   * and reads as almost nothing against --night.
+   */
+  --signal: #7da8cf;
   --night: #02070d;
   --night-raised: #06111e;
   --ink: #f0f3f5;
@@ -22,8 +31,8 @@
   --landing-fg: #f4f7fa;
   --landing-mid: #9eb5c9;
   --landing-dim: #62798e;
-  --landing-accent: #d1b97e;
-  --landing-gold: #d8bd7c;
+  --landing-accent: #7da8cf;
+  --landing-gold: #9ecbf5;
 
   /* The YES mark has two independently themeable color channels. */
   --yes-logo-bars: var(--signal);

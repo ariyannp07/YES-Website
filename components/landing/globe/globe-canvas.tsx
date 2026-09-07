@@ -24,7 +24,12 @@ const COAST_RADIUS = 1.001
 const ROUTE_POINT_COUNT = 18
 
 const COLORS = {
-  gold: new THREE.Color('#d8bd7c'),
+  /**
+   * The route highlight. Named `gold` from when it was; it is blue now, and
+   * deliberately lighter than `coast` and `node` so the New Haven-San Francisco
+   * line still separates from the coastline it is drawn over.
+   */
+  gold: new THREE.Color('#9ecbf5'),
   coast: new THREE.Color('#789bc0'),
   node: new THREE.Color('#79a6ce'),
   hub: new THREE.Color('#e8f4ff'),
