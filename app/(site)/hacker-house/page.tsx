@@ -43,32 +43,25 @@ export default function HackerHousePage() {
         <GlobeCanvas />
       </div>
 
+      <div className={styles.triptych}>
+        {HOUSE_PHOTOS.map((photo) => (
+          <img
+            key={photo.src}
+            src={photo.src}
+            alt={photo.alt}
+            width={photo.width}
+            height={photo.height}
+            loading="lazy"
+          />
+        ))}
+      </div>
+
       <div className={styles.figures}>
         {HOUSE_FIGURES.map((item) => (
           <div key={item.figure} className={styles.figure}>
             <strong>{item.figure}</strong>
             <span>{item.context}</span>
           </div>
-        ))}
-      </div>
-
-      <div className={styles.plates}>
-        {HOUSE_PHOTOS.map((photo) => (
-          <figure key={photo.src} className={styles.plate}>
-            <img
-              src={photo.src}
-              alt={photo.alt}
-              width={photo.width}
-              height={photo.height}
-              loading="lazy"
-            />
-            <figcaption>
-              {photo.caption}
-              {photo.credit ? (
-                <span className={styles.credit}>{photo.credit}</span>
-              ) : null}
-            </figcaption>
-          </figure>
         ))}
       </div>
 

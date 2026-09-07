@@ -43,27 +43,35 @@ export interface HousePhoto {
   readonly credit?: string
 }
 
+/**
+ * Exactly three, set side by side as verticals with the figures beneath.
+ *
+ * All three are cropped to 3:4 from landscape originals, so they are tighter
+ * than the frames they came from — the cohort shot loses people at both edges.
+ * Captions are deliberately absent: three images in a row read as one picture,
+ * and a caption under each breaks it back into three.
+ */
 export const HOUSE_PHOTOS: readonly HousePhoto[] = [
   {
     src: '/hacker-house/cohort.jpg',
     alt: 'The Hacker House cohort gathered around a table in the backyard.',
-    caption: 'The house, most of it, in the backyard on Hyde Street.',
-    width: 1800,
-    height: 1012,
+    caption: 'The house, in the backyard on Hyde Street.',
+    width: 900,
+    height: 1200,
   },
   {
     src: '/hacker-house/night-session.jpg',
     alt: 'Four people working on laptops around a table at night.',
     caption: 'Most evenings looked like this.',
-    width: 1600,
+    width: 900,
     height: 1200,
   },
   {
     src: '/hacker-house/hallway.jpg',
     alt: 'Three people talking in the hallway of the house.',
     caption: 'The hallway did more work than any conference room.',
-    width: 1400,
-    height: 1050,
+    width: 900,
+    height: 1200,
   },
 ] as const
 

@@ -7,8 +7,8 @@
  * duplicated venture suffix trimmed and everything after the first clause
  * dropped — a face grid has room for a title, not a biography.
  *
- * Ishir Rao carries no role: he is in curation.json as a member but has no
- * catalog record to read one from.
+ * Ishir Rao's role is owner-supplied: he is in curation.json as a member but
+ * has no catalog record to read one from.
  *
  * ORDER. The first eight run in the order founders.pdf prints them ("Yale
  * Hacker House - 2026 Cohort"); the rest follow by surname. The PDF lists 15
@@ -126,6 +126,7 @@ export const COMMON_ROOM_PEOPLE: readonly CommonRoomPerson[] = [
   {
     slug: 'ishir-rao',
     name: 'Ishir Rao',
+    role: 'Ex-Valthos, AI for Science',
     portrait: '/common-room/ishir-rao.jpg',
   },
   {
@@ -153,6 +154,18 @@ export const COMMON_ROOM_PEOPLE: readonly CommonRoomPerson[] = [
     portrait: '/common-room/kashi-tuteja.jpg',
   },
 ] as const
+
+/**
+ * Owner-supplied, and the reason the page can make the claim above.
+ *
+ * Not derived from the catalog: no per-company valuation is held anywhere in
+ * this repo, so nothing here can recompute or check it. It is a figure the
+ * owners stand behind, which is why it is written once, here.
+ */
+export const COMMON_ROOM_VALUATION = {
+  figure: '$700M+',
+  context: 'combined valuation of the companies in this room.',
+} as const
 
 /**
  * Owner-written, and the whole argument of the page.

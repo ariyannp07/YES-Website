@@ -3,7 +3,11 @@ import { join } from 'node:path'
 
 import { describe, expect, it } from 'vitest'
 
-import { COMMON_ROOM_LINE, COMMON_ROOM_PEOPLE } from './common-room'
+import {
+  COMMON_ROOM_LINE,
+  COMMON_ROOM_PEOPLE,
+  COMMON_ROOM_VALUATION,
+} from './common-room'
 
 describe('Common Room', () => {
   it('carries every portrait the owners supplied, once each', () => {
@@ -55,6 +59,22 @@ describe('Common Room', () => {
     for (const person of COMMON_ROOM_PEOPLE) {
       if (person.role) expect(person.role.length).toBeLessThanOrEqual(70)
     }
+  })
+
+  /** Owner-supplied; nothing in the repo can recompute or check it. */
+  it('carries the combined valuation', () => {
+    expect(COMMON_ROOM_VALUATION.figure).toBe('$700M+')
+  })
+
+  /** Owner-supplied too: he has no catalog record to read a role from. */
+  it('gives Ishir Rao his role', () => {
+    const ishir = COMMON_ROOM_PEOPLE.find((p) => p.slug === 'ishir-rao')
+
+    expect(ishir?.role).toBe('Ex-Valthos, AI for Science')
+  })
+
+  it('now has a role for everyone', () => {
+    expect(COMMON_ROOM_PEOPLE.filter((p) => !p.role)).toEqual([])
   })
 
   it('states the owners’ line', () => {
