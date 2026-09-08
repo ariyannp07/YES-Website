@@ -1,7 +1,7 @@
 /**
  * Firms with relationships across the wider YES community.
  *
- * The first eight are reputation-led and keep the head of the row; the rest are
+ * The first five are reputation-led and keep the head of the row; the rest are
  * alphabetical so the line stays scannable. Inclusion is not a claim that a
  * firm has invested in YES or a YES-associated company.
  *
@@ -34,28 +34,10 @@ export const vcFirms: readonly VcFirm[] = [
     height: 261,
   },
   {
-    name: 'General Catalyst',
-    logo: '/vc/general-catalyst.svg',
-    width: 312,
-    height: 40,
-  },
-  {
-    name: 'Google Ventures',
-    logo: '/vc/google-ventures.svg',
-    width: 49,
-    height: 31,
-  },
-  {
     name: 'Bain Capital Ventures',
     logo: '/vc/bain-capital-ventures.svg',
     width: 88,
     height: 32,
-  },
-  {
-    name: 'Menlo Ventures',
-    logo: '/vc/menlo-ventures.svg',
-    width: 102,
-    height: 40,
   },
   {
     name: 'Battery Ventures',
@@ -89,12 +71,6 @@ export const vcFirms: readonly VcFirm[] = [
     height: 243,
   },
   {
-    name: 'AIX Ventures',
-    logo: '/vc/aix-ventures.png',
-    width: 1600,
-    height: 282,
-  },
-  {
     name: 'Caffeinated Capital',
     logo: '/vc/caffeinated-capital.svg',
     width: 204,
@@ -113,22 +89,10 @@ export const vcFirms: readonly VcFirm[] = [
     height: 1255,
   },
   {
-    name: 'Dell Technologies Capital',
-    logo: '/vc/dell-technologies-capital.svg',
-    width: 73,
-    height: 29,
-  },
-  {
     name: 'ElevenLabs',
     logo: '/vc/elevenlabs.png',
     width: 3240,
     height: 630,
-  },
-  {
-    name: 'Emergence Capital',
-    logo: '/vc/emergence-capital.svg',
-    width: 140,
-    height: 37,
   },
   {
     name: 'Gigascale Capital',
@@ -159,30 +123,6 @@ export const vcFirms: readonly VcFirm[] = [
     logo: '/vc/long-journey.png',
     width: 1500,
     height: 328,
-  },
-  {
-    name: 'Maverick Capital',
-    logo: '/vc/maverick-capital-white.png',
-    width: 2365,
-    height: 1095,
-  },
-  {
-    name: 'OpenAI',
-    logo: '/vc/openai.png',
-    width: 3240,
-    height: 978,
-  },
-  {
-    name: 'Pantera Capital',
-    logo: '/vc/pantera-capital.png',
-    width: 1201,
-    height: 401,
-  },
-  {
-    name: 'Pear VC',
-    logo: '/vc/pear-vc.png',
-    width: 168,
-    height: 132,
   },
   {
     name: 'Pebblebed VC',

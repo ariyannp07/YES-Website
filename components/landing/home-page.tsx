@@ -29,11 +29,11 @@ const WSJ_URL =
  * names behind a disclosure; both the disclosure and the firms that had no mark
  * to show are gone, so what renders is the roster entire.
  *
- * The reveal is still per character, which is quiet at this size — 12ms rather
- * than the hero's 18ms, so the whole line lands in about a second.
+ * The statement types once over about six seconds, with its full layout
+ * reserved from the start and an instant reveal for reduced motion.
  */
-const CHARACTER_STAGGER_MS = 12
-const CHARACTER_LEAD_IN_MS = 70
+const CHARACTER_STAGGER_MS = 110
+const CHARACTER_LEAD_IN_MS = 350
 
 export function HomePage() {
   const statement = YES_MESSAGE.join(' ')
@@ -79,6 +79,9 @@ export function HomePage() {
             </h1>
           </div>
 
+          <p className={styles.vcCaption}>
+            Our community includes the following firms.
+          </p>
           <ul className={styles.vcRow} aria-label="Firms in the YES community">
             {vcFirms.map((firm) => (
               <li key={firm.name} className={firm.reversed ? styles.reversed : undefined}>

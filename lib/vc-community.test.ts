@@ -9,9 +9,9 @@ const names = () => vcFirms.map((firm) => firm.name)
 
 describe('VC community roster', () => {
   it('is exactly what the landing renders, all unique', () => {
-    expect(vcFirms).toHaveLength(28)
-    expect(new Set(names()).size).toBe(28)
-    expect(vcFirmCount).toBe(28)
+    expect(vcFirms).toHaveLength(18)
+    expect(new Set(names()).size).toBe(18)
+    expect(vcFirmCount).toBe(18)
   })
 
   /**
@@ -21,7 +21,7 @@ describe('VC community roster', () => {
    */
   it('renders the firms that used to be name-only', () => {
     expect(names()).toEqual(
-      expect.arrayContaining(['OpenAI', 'GMI Cloud', 'ElevenLabs', 'SpaceX', 'Deel']),
+      expect.arrayContaining(['GMI Cloud', 'ElevenLabs', 'SpaceX', 'Deel']),
     )
     expect(names()).not.toContain('SpaceXAI')
     expect(names()).not.toContain('GMI')
@@ -30,6 +30,7 @@ describe('VC community roster', () => {
   /** Dropped at owner direction; their files went with them. */
   it('no longer carries the firms that were removed', () => {
     for (const gone of [
+      'Maverick Capital', 'General Catalyst', 'OpenAI', 'Dell Technologies Capital', 'AIX Ventures', 'Emergence Capital', 'Pantera Capital', 'Pear VC', 'Google Ventures', 'Menlo Ventures',
       'INCE Capital', 'Rho', 'Precursor VC', 'Runa Capital', 'Treeo VC',
       'Moxxie Ventures', '645 Ventures', 'Zetta', 'xAI',
       // Solid-shape marks: the row flattens every logo to a white silhouette,
@@ -64,15 +65,15 @@ describe('VC community roster', () => {
     }
   })
 
-  it('leads with the reputation-led eight', () => {
-    expect(names().slice(0, 8)).toEqual([
-      'a16z', 'General Catalyst', 'Google Ventures', 'Bain Capital Ventures',
-      'Menlo Ventures', 'Battery Ventures', '8VC', 'Floodgate',
+  it('leads with the reputation-led five', () => {
+    expect(names().slice(0, 5)).toEqual([
+      'a16z', 'Bain Capital Ventures',
+      'Battery Ventures', '8VC', 'Floodgate',
     ])
   })
 
-  it('keeps everything after the lead eight alphabetical', () => {
-    const rest = names().slice(8)
+  it('keeps everything after the lead five alphabetical', () => {
+    const rest = names().slice(5)
 
     expect(rest).toEqual(
       [...rest].sort((left, right) =>
