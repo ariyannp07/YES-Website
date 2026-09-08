@@ -66,7 +66,7 @@ export const COMMON_ROOM_PEOPLE: readonly CommonRoomPerson[] = [
   {
     slug: 'bruno-bruno',
     name: 'Bruno Bruno',
-    role: 'Founder, Kesho',
+    role: 'Prediction Markets',
     portrait: '/common-room/bruno-bruno.jpg',
   },
   {
