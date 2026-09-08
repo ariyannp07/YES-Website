@@ -95,9 +95,57 @@
 }
 
 .launchCharacter {
+  position: relative;
   display: inline-block;
   opacity: 0;
   animation: title-character-in 1ms linear var(--character-delay) forwards;
+}
+
+.launchPeriod {
+  display: inline-block;
+  transform: scale(1.5);
+  transform-origin: left 75%;
+}
+
+/* Each cursor occupies its character's position until the next keystroke. */
+.launchCharacter::after,
+.launchLine:first-child .launchWord:first-child .launchCharacter:first-child::before {
+  content: '';
+  position: absolute;
+  top: 0.3em;
+  right: -0.12em;
+  width: 1px;
+  height: 1.05em;
+  background: currentColor;
+  visibility: hidden;
+  animation:
+    cursor-window var(--cursor-hold) step-end var(--character-delay),
+    cursor-blink 700ms step-end var(--character-delay) infinite;
+}
+
+.launchLine:first-child .launchWord:first-child .launchCharacter:first-child::before {
+  left: -0.12em;
+  right: auto;
+  animation: cursor-window 350ms step-end;
+}
+
+/* Let the initial cursor show before its first character arrives. */
+.launchLine:first-child .launchWord:first-child .launchCharacter:first-child {
+  opacity: 1;
+}
+
+.launchLine:first-child .launchWord:first-child .launchCharacter:first-child > span {
+  opacity: 0;
+  animation: title-character-in 1ms linear var(--character-delay) forwards;
+}
+
+@keyframes cursor-window {
+  from { visibility: visible; }
+  to { visibility: hidden; }
+}
+
+@keyframes cursor-blink {
+  50% { opacity: 0; }
 }
 
 /* ————— the firms, one line, left to right ————— */
@@ -302,8 +350,15 @@
     animation: none;
   }
 
-  .launchCharacter {
+  .launchCharacter,
+  .launchLine:first-child .launchWord:first-child .launchCharacter:first-child > span {
     opacity: 1;
+    animation: none;
+  }
+
+  .launchCharacter::after,
+  .launchLine:first-child .launchWord:first-child .launchCharacter:first-child::before {
+    display: none;
     animation: none;
   }
 

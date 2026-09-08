@@ -29,14 +29,17 @@ const WSJ_URL =
  * names behind a disclosure; both the disclosure and the firms that had no mark
  * to show are gone, so what renders is the roster entire.
  *
- * The statement types once over about six seconds, with its full layout
- * reserved from the start and an instant reveal for reduced motion.
+ * The statement types in word bursts, pauses before punctuation, and keeps
+ * its layout reserved. Reduced motion reveals the complete line immediately.
  */
-const CHARACTER_STAGGER_MS = 110
+const CHARACTER_BURST_MS = 48
+const WORD_PAUSE_MS = 280
+const PERIOD_PAUSE_MS = 750
 const CHARACTER_LEAD_IN_MS = 350
 
 export function HomePage() {
   const statement = YES_MESSAGE.join(' ')
+  let nextCharacterAt = CHARACTER_LEAD_IN_MS
 
   return (
     <div className={styles.page}>
@@ -44,30 +47,38 @@ export function HomePage() {
         <div className={styles.launchInner}>
           <div className={styles.launchStatement} data-landing-copy="">
             <h1 id="launch-title" aria-label={statement}>
-              {YES_MESSAGE.map((sentence, sentenceIndex) => {
-                const precedingCharacters = YES_MESSAGE.slice(0, sentenceIndex)
-                  .join('')
-                  .replace(/\s/g, '').length
-                let seen = 0
-
+              {YES_MESSAGE.map((sentence) => {
                 return (
                   <span key={sentence} className={styles.launchLine} aria-hidden="true">
                     {sentence.split(' ').map((word, wordIndex) => (
                       <span key={`${word}-${wordIndex}`} className={styles.launchWord}>
                         {Array.from(word).map((character, characterIndex) => {
-                          const delay =
-                            CHARACTER_LEAD_IN_MS +
-                            (precedingCharacters + seen++) * CHARACTER_STAGGER_MS
+                          const delay = nextCharacterAt
+                          const lastInWord = characterIndex === word.length - 1
+                          const lastInSentence = lastInWord && wordIndex === sentence.split(' ').length - 1
+                          const hold = lastInSentence
+                            ? 1400
+                            : word[characterIndex + 1] === '.'
+                              ? PERIOD_PAUSE_MS
+                              : lastInWord
+                                ? WORD_PAUSE_MS + (wordIndex % 3) * 70
+                                : CHARACTER_BURST_MS + (characterIndex % 3) * 12
+                          nextCharacterAt += hold
 
                           return (
                             <span
                               key={`${character}-${characterIndex}`}
                               className={styles.launchCharacter}
                               style={
-                                { '--character-delay': `${delay}ms` } as CSSProperties
+                                {
+                                  '--character-delay': `${delay}ms`,
+                                  '--cursor-hold': `${hold}ms`,
+                                } as CSSProperties
                               }
                             >
-                              {character}
+                              <span className={character === '.' ? styles.launchPeriod : undefined}>
+                                {character}
+                              </span>
                             </span>
                           )
                         })}
