@@ -42,13 +42,13 @@ export const COMMON_ROOM_PEOPLE: readonly CommonRoomPerson[] = [
   {
     slug: 'oliver-hime',
     name: 'Oliver Hime',
-    role: 'Co-founder',
+    role: 'Z Fellow and Robotics Researcher',
     portrait: '/common-room/oliver-hime.jpg',
   },
   {
     slug: 'freeman-irabaruta',
     name: 'Freeman Iraburata',
-    role: 'Co-founder',
+    role: 'Z Fellow and Robotics Researcher',
     portrait: '/common-room/freeman-irabaruta.jpg',
   },
   {
