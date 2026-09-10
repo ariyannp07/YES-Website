@@ -33,7 +33,7 @@ const WSJ_URL =
  * its layout reserved. Reduced motion reveals the complete line immediately.
  */
 const CHARACTER_BURST_MS = 34
-const WORD_PAUSE_MS = 280
+const WORD_PAUSE_MS = 210
 const PERIOD_PAUSE_MS = 750
 const CHARACTER_LEAD_IN_MS = 350
 
@@ -61,7 +61,7 @@ export function HomePage() {
                             : word[characterIndex + 1] === '.'
                               ? PERIOD_PAUSE_MS
                               : lastInWord
-                                ? WORD_PAUSE_MS + (wordIndex % 3) * 70
+                                ? WORD_PAUSE_MS + (wordIndex % 3) * 50
                                 : CHARACTER_BURST_MS + (characterIndex % 3) * 8
                           nextCharacterAt += hold
 
