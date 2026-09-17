@@ -40,7 +40,7 @@ export const LANDING_LINE = 'Build the future, don’t just study for it.'
  * renderer sets it a line at a time either way.
  */
 export const YES_MESSAGE = [
-  'The community producing the next generation of Yale excellence.',
+  'Producing the next generation of Yale excellence.',
 ] as const
 
 export const CONTACT = {
