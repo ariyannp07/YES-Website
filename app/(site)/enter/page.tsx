@@ -18,12 +18,12 @@ export default function EnterPage() {
           <h1>
             <a
               className={styles.applicationLink}
-              href="https://forms.gle/BDVJeKqJbmvhdCCV6"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSeJUO4ldpVeB8v7OkAg30WBdqh-QwHGC9q2RpCbZ2BUDxteuQ/viewform?usp=publish-editor"
               target="_blank"
               rel="noreferrer"
-              aria-label="Apply to YES as a Yale student (opens in a new tab)"
+              aria-label="Apply to YES as a Yale student, rolling applications (opens in a new tab)"
             >
-              Application Link
+              Application Link (Rolling)
             </a>
           </h1>
           <a
