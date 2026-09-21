@@ -11,9 +11,7 @@
   padding: var(--gutter);
 }
 
-.studentLinks h1,
-.associateCopy h2,
-.associateCopy p {
+.studentLinks h1 {
   margin: 0;
 }
 
@@ -55,42 +53,41 @@
   color: var(--white);
 }
 
-.associateSection {
-  background: var(--night-raised);
+.contactSection {
   border-top: 1px solid var(--line);
 }
 
-.associateInner {
+.contacts {
   display: grid;
-  grid-template-columns: minmax(15rem, 0.75fr) minmax(0, 1.25fr);
-  gap: clamp(3rem, 8vw, 8rem);
-  width: min(100%, var(--content-width));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+  width: min(100%, 44rem);
   margin: 0 auto;
-  padding: clamp(6rem, 11vw, 9rem) var(--gutter);
+  padding: 3rem var(--gutter);
+  font-style: normal;
+  text-align: center;
 }
 
-.associateCopy h2 {
+.contacts h2 {
+  margin: 0 0 0.5rem;
   color: var(--white);
-  font-size: var(--text-title);
-  font-weight: 740;
-  letter-spacing: -0.03em;
-  line-height: 1.08;
-  text-wrap: balance;
+  font-size: var(--text-lead);
+  font-weight: 700;
+  line-height: 1.4;
 }
 
-.associateCopy p {
-  max-width: 38ch;
-  margin-top: 1.25rem;
+.contacts a {
   color: var(--muted);
-  font-size: var(--text-small);
-  line-height: 1.65;
-  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}
+
+.contacts a:hover {
+  color: var(--white);
 }
 
 @media (max-width: 48rem) {
-  .associateInner {
+  .contacts {
     grid-template-columns: 1fr;
-    gap: 3rem;
   }
 }
 

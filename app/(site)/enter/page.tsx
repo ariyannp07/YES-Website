@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 
-import { EnterForm } from '@/components/enter/enter-form'
-import { alumniFeedConfigured } from '@/lib/alumni'
+import { CONTACT } from '@/lib/site'
 
 import styles from './enter.module.css'
 
@@ -38,18 +37,17 @@ export default function EnterPage() {
         </div>
       </section>
 
-      <section className={styles.associateSection} aria-labelledby="associate-heading">
-        <div className={styles.associateInner}>
-          <div className={styles.associateCopy}>
-            <h2 id="associate-heading">Get associated with YES.</h2>
-            <p>
-              YES works with alumni, founders, investors, and operators who can support
-              Yale builders. If you can offer capital, introductions, expertise, or time,
-              tell us how you’d like to contribute.
-            </p>
+      <section className={styles.contactSection} aria-label="Contact YES">
+        <address className={styles.contacts}>
+          <div>
+            <h2>Ariyan Patel</h2>
+            <a href={`mailto:${CONTACT.ariyan}`}>{CONTACT.ariyan}</a>
           </div>
-          <EnterForm connected={alumniFeedConfigured()} />
-        </div>
+          <div>
+            <h2>Sofia Teifeld</h2>
+            <a href={`mailto:${CONTACT.sofia}`}>{CONTACT.sofia}</a>
+          </div>
+        </address>
       </section>
     </div>
   )
