@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { YesLogo } from '@/components/yes-logo'
 import { NAV } from '@/lib/site'
@@ -13,6 +13,22 @@ export function SiteNav() {
   const pathname = usePathname()
   const isHome = pathname === '/'
   const [hasScrolled, setHasScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const menuButton = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => setMenuOpen(false), [pathname])
+
+  useEffect(() => {
+    if (!menuOpen) return
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMenuOpen(false)
+        menuButton.current?.focus()
+      }
+    }
+    document.addEventListener('keydown', closeOnEscape)
+    return () => document.removeEventListener('keydown', closeOnEscape)
+  }, [menuOpen])
 
   useEffect(() => {
     const update = () => setHasScrolled(window.scrollY > 32)
@@ -43,7 +59,7 @@ export function SiteNav() {
       }`}
     >
       <div className={styles.inner}>
-        <Link href="/" className={styles.brand} aria-label="YES home">
+        <Link href="/" className={styles.brand} aria-label="YES home" onClick={() => setMenuOpen(false)}>
           <YesLogo className={styles.brandMark} />
           <span
             className={`${styles.name} ${isHome ? styles.homeName : ''} ${
@@ -69,8 +85,20 @@ export function SiteNav() {
           </span>
         </Link>
 
+        <button
+          ref={menuButton}
+          type="button"
+          className={styles.menuToggle}
+          aria-expanded={menuOpen}
+          aria-controls="primary-navigation"
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          {menuOpen ? 'Close' : 'Menu'}
+        </button>
+
         <nav
-          className={styles.nav}
+          id="primary-navigation"
+          className={`${styles.nav} ${menuOpen ? styles.navOpen : ''}`}
           aria-label="Primary navigation"
           aria-hidden={isVisible ? undefined : true}
         >
@@ -80,6 +108,7 @@ export function SiteNav() {
               href={item.href}
               tabIndex={isVisible ? undefined : -1}
               aria-current={isCurrent(item.href) ? 'page' : undefined}
+              onClick={() => setMenuOpen(false)}
             >
               {item.label}
             </Link>
@@ -89,6 +118,7 @@ export function SiteNav() {
         <Link
           href="/enter"
           className={styles.join}
+          onClick={() => setMenuOpen(false)}
           tabIndex={isVisible ? undefined : -1}
           aria-hidden={isVisible ? undefined : true}
         >

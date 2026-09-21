@@ -144,6 +144,11 @@
 }
 
 @media (max-width: 42rem) {
+  .heading {
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+  }
+
   .frames {
     gap: 0.4rem;
   }

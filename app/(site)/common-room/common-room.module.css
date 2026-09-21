@@ -108,6 +108,11 @@
 }
 
 @media (max-width: 42rem) {
+  .header h1 {
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+  }
+
   /** The figure sits between the claim and the faces that back it. */
 .valuation {
   display: flex;

@@ -312,7 +312,9 @@ a:hover {
 
 @media (max-width: 48rem) {
   :root {
-    --nav-height: 7.7rem;
+    --nav-height: 4rem;
+    --text-display: clamp(2rem, 8vw, 2.6rem);
+    --text-section: clamp(1.8rem, 6vw, 2.3rem);
   }
 
   .page-top {

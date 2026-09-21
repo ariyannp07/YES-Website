@@ -134,6 +134,11 @@
 }
 
 @media (max-width: 54rem) {
+  .masthead h1 {
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+  }
+
   .pillar {
     grid-template-columns: 1fr;
     gap: 1.5rem;

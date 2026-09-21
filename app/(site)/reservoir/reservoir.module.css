@@ -78,9 +78,14 @@
 }
 
 @media (max-width: 42rem) {
+  .heading {
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+  }
+
   .row {
-    grid-template-columns: 5.2rem minmax(0, 1fr) auto;
-    gap: 1rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.5rem 1rem;
     align-items: start;
   }
 
@@ -89,7 +94,8 @@
   }
 
   .source {
-    grid-column: 2;
+    grid-column: 1;
+    grid-row: 3;
     justify-self: start;
     color: var(--muted);
     font-size: var(--text-label);
@@ -97,7 +103,12 @@
   }
 
   .arrow {
-    grid-column: 3;
-    grid-row: 1 / span 2;
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .row strong {
+    grid-column: 1 / -1;
+    grid-row: 2;
   }
 }

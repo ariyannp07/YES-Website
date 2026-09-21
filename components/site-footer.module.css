@@ -36,7 +36,9 @@
 
 .bar nav {
   display: flex;
+  flex-wrap: wrap;
   gap: 1.2rem;
+  min-width: 0;
 }
 
 .contact {
