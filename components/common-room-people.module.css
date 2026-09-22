@@ -27,6 +27,11 @@
   background: rgb(0 0 0 / 70%);
 }
 
+/* Focus the modal on open; keep keyboard focus rings on its controls. */
+.dialog:focus {
+  outline: none;
+}
+
 .panel {
   padding: 0 1.5rem 1.5rem;
 }

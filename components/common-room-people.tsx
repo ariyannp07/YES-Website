@@ -17,6 +17,7 @@ export function CommonRoomPeople({ people }: { readonly people: readonly CommonR
     const dialog = dialogRef.current
     const previousOverflow = document.body.style.overflow
     dialog?.showModal()
+    dialog?.focus({ preventScroll: true })
     document.body.style.overflow = 'hidden'
     return () => {
       dialog?.close()
