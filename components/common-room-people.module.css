@@ -8,16 +8,6 @@
   cursor: pointer;
 }
 
-.readBio {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  padding: 0.25rem 0.5rem;
-  color: var(--white);
-  background: rgb(2 7 13 / 85%);
-  font-size: var(--text-micro);
-}
-
 .dialog {
   width: min(28rem, calc(100vw - 2rem));
   height: min(28rem, calc(100vw - 2rem), calc(100dvh - 2rem));

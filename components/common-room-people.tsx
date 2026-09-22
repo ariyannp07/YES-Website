@@ -44,7 +44,6 @@ export function CommonRoomPeople({ people }: { readonly people: readonly CommonR
                 height={560}
                 loading="lazy"
               />
-              <span className={styles.readBio} aria-hidden="true">Read bio ↗</span>
             </button>
             <div>
               <span className={gridStyles.name}>{person.name}</span>
