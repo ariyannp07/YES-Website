@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 import type { CommonRoomPerson } from '@/content/common-room'
-import { COMMON_ROOM_BIOS, HACKER_HOUSE_URL } from '@/content/common-room-bios'
+import { COMMON_ROOM_BIOS, HACKER_HOUSE_BIO_SLUGS, HACKER_HOUSE_URL } from '@/content/common-room-bios'
 
 import gridStyles from '@/app/(site)/common-room/common-room.module.css'
 import styles from './common-room-people.module.css'
@@ -83,7 +83,7 @@ export function CommonRoomPeople({ people }: { readonly people: readonly CommonR
             <p id="common-room-bio-text" className={styles.bio}>
               {COMMON_ROOM_BIOS[selected.slug] ?? selected.role}
             </p>
-            {COMMON_ROOM_BIOS[selected.slug] ? (
+            {HACKER_HOUSE_BIO_SLUGS.includes(selected.slug) ? (
               <a className={styles.source} href={`${HACKER_HOUSE_URL}/#founders`} target="_blank" rel="noreferrer noopener">
                 Yale Hacker House profile ↗
               </a>

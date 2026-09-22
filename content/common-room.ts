@@ -72,7 +72,7 @@ export const COMMON_ROOM_PEOPLE: readonly CommonRoomPerson[] = [
   {
     slug: 'zain-anwar',
     name: 'Zain Anwar',
-    role: 'Founder / investor, Intersect STEM / Maverick Capital',
+    role: 'Co-founder, Cadence / IntersectSTEM; Board Member of YES',
     portrait: '/common-room/zain-anwar.jpg',
   },
   {
@@ -90,7 +90,7 @@ export const COMMON_ROOM_PEOPLE: readonly CommonRoomPerson[] = [
   {
     slug: 'sina-dehghani',
     name: 'Sina Dehghani',
-    role: 'Startup / investing operator, Maverick Capital / o11',
+    role: 'Startup builder; AI in investment firms',
     portrait: '/common-room/sina-dehghani.jpg',
   },
   {
@@ -132,13 +132,13 @@ export const COMMON_ROOM_PEOPLE: readonly CommonRoomPerson[] = [
   {
     slug: 'ari-strober',
     name: 'Ari Strober',
-    role: 'Co-Director of High School Fellows, Yale Entrepreneurial Society',
+    role: 'Policy Tech; Board Member of YES',
     portrait: '/common-room/ari-strober.jpg',
   },
   {
     slug: 'sofia-teifeld',
     name: 'Sofia Teifeld',
-    role: 'Co-President, Yale Entrepreneurial Society',
+    role: 'Founding Team & COO, CHET; Co-President of YES',
     portrait: '/common-room/sofia-teifeld.jpg',
   },
   {

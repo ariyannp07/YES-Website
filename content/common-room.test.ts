@@ -2,7 +2,7 @@ import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 
 import { describe, expect, it } from 'vitest'
-import { COMMON_ROOM_BIOS } from './common-room-bios'
+import { COMMON_ROOM_BIOS, HACKER_HOUSE_BIO_SLUGS } from './common-room-bios'
 
 import {
   COMMON_ROOM_LINE,
@@ -62,12 +62,20 @@ describe('Common Room', () => {
     }
   })
 
-  it('matches every imported biography to a member in the room', () => {
+  it('matches every biography to a member in the room', () => {
     const slugs = COMMON_ROOM_PEOPLE.map((p) => p.slug)
-    expect(Object.keys(COMMON_ROOM_BIOS)).toHaveLength(9)
+    expect(Object.keys(COMMON_ROOM_BIOS)).toHaveLength(13)
     for (const slug of Object.keys(COMMON_ROOM_BIOS)) expect(slugs).toContain(slug)
     expect(COMMON_ROOM_PEOPLE.find((p) => p.slug === 'ariyan-patel')?.portrait)
       .toBe('/common-room/ariyan-patel.webp')
+  })
+
+  it('only attributes imported biographies to Hacker House', () => {
+    for (const slug of HACKER_HOUSE_BIO_SLUGS) expect(COMMON_ROOM_BIOS[slug]).toBeTruthy()
+    for (const slug of ['zain-anwar', 'ari-strober', 'sofia-teifeld', 'sina-dehghani']) {
+      expect(COMMON_ROOM_BIOS[slug]).toBeTruthy()
+      expect(HACKER_HOUSE_BIO_SLUGS).not.toContain(slug)
+    }
   })
 
   it('preserves owner bio corrections when importing outside profiles', () => {
