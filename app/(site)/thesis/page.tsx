@@ -11,8 +11,8 @@ export const metadata: Metadata = {
 
 export default function ThesisPage() {
   return (
-    <article className={styles.page} data-thesis-page="">
-      <div className={styles.paper}>
+    <article className={styles.page}>
+      <div className={styles.content}>
         <header className={styles.header}>
           <h1 className={styles.sectionName}>The YES Thesis</h1>
           <div className={styles.byline}>

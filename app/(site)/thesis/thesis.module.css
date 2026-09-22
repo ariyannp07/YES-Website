@@ -1,51 +1,31 @@
 .page {
-  display: grid;
-  flex: 1 1 0;
-  min-height: 0;
-  height: 100%;
-  place-items: stretch center;
-  padding-inline: var(--gutter);
-  overflow: hidden;
-  background:
-    radial-gradient(circle at 50% 10%, rgb(0 53 107 / 28%), transparent 44%),
-    var(--night);
+  padding: clamp(3rem, 6vw, 5rem)
+    max(var(--gutter), calc((100vw - var(--site-width)) / 2 + var(--gutter)))
+    clamp(4rem, 7vw, 6.5rem);
+  color: var(--ink);
+  background: var(--bg);
 }
 
-.paper {
-  width: min(100%, 52rem);
-  height: 100%;
-  min-height: 0;
-  padding: clamp(2.25rem, 5vw, 4.5rem) clamp(1.5rem, 6vw, 6rem) 5rem;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
-  touch-action: pan-y;
-  color: #171717;
-  background: #f4f0e8;
-  box-shadow: 0 0 5rem rgb(0 0 0 / 45%);
-  scrollbar-color: #a8a196 transparent;
-  scrollbar-width: thin;
-  view-transition-name: thesis-paper;
+.content {
+  max-width: 44rem;
 }
 
 .header {
   padding-bottom: clamp(1.75rem, 3.5vw, 3rem);
-  border-bottom: 1px solid #171717;
+  border-bottom: 1px solid var(--line);
 }
 
 .sectionName {
   margin: 0;
-  font-family: 'Times New Roman', Times, serif;
-  font-size: var(--text-title);
-  font-weight: 700;
-  letter-spacing: -0.035em;
-  line-height: 1;
+  color: var(--white);
+  font-size: var(--text-display);
+  font-weight: 760;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
 }
 
 .byline {
   margin-top: 1.75rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid #a8a196;
 }
 
 .byline p,
@@ -62,13 +42,11 @@
 .byline span {
   display: block;
   margin-top: 0.25rem;
-  color: #625e57;
+  color: var(--muted);
   font-size: var(--text-label);
 }
 
 .body {
-  max-width: 40rem;
-  margin: 0 auto;
   padding-top: clamp(1.75rem, 3.5vw, 3rem);
   font-family: 'Times New Roman', Times, serif;
   font-size: var(--text-body);
@@ -82,27 +60,10 @@
 
 .turn {
   margin: 1.65em 0 !important;
-  color: var(--blue);
+  color: var(--blue-bright);
   font-size: var(--text-thesis-emphasis);
   font-weight: 700;
   letter-spacing: 0;
   line-height: 1.62;
   text-align: left;
-}
-
-@media (max-width: 48rem) {
-  .page {
-    padding-inline: 0;
-  }
-
-  .paper {
-    box-shadow: none;
-  }
-
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .paper {
-    scroll-behavior: auto;
-  }
 }
