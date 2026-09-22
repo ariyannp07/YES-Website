@@ -1,0 +1,75 @@
+.portraitButton {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.readBio {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 0.25rem 0.5rem;
+  color: var(--white);
+  background: rgb(2 7 13 / 85%);
+  font-size: var(--text-micro);
+}
+
+.dialog {
+  width: min(28rem, calc(100vw - 2rem));
+  height: min(28rem, calc(100vw - 2rem), calc(100dvh - 2rem));
+  max-width: none;
+  max-height: calc(100dvh - 2rem);
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  color: var(--ink);
+  background: var(--night-raised);
+  border: 1px solid var(--line);
+  box-shadow: 0 1rem 4rem rgb(0 0 0 / 45%);
+}
+
+.dialog::backdrop {
+  background: rgb(0 0 0 / 70%);
+}
+
+.panel {
+  padding: 0 1.5rem 1.5rem;
+}
+
+.close {
+  position: sticky;
+  top: 0;
+  display: block;
+  min-height: 2.75rem;
+  margin: 0 0 0.75rem auto;
+  padding: 0.5rem 0;
+  color: var(--muted);
+  background: var(--night-raised);
+  border: 0;
+  font-size: var(--text-label);
+  cursor: pointer;
+}
+
+.name {
+  margin: 0 0 1rem;
+  font-size: var(--text-title);
+  font-family: 'Times New Roman', Times, serif;
+  line-height: 1.15;
+}
+
+.bio {
+  margin: 0;
+  font-size: var(--text-body);
+  line-height: 1.65;
+}
+
+.source {
+  display: inline-block;
+  margin-top: 1.25rem;
+  font-size: var(--text-label);
+}

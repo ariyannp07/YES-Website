@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 
 import { DraftNotice } from '@/components/draft-notice'
 import GlobeCanvas from '@/components/landing/globe/globe-canvas'
+import { HACKER_HOUSE_URL } from '@/content/common-room-bios'
 import {
   HOUSE_APPROVED,
   HOUSE_DRAFT_LABEL,
@@ -36,6 +37,11 @@ export default function HackerHousePage() {
       <p className={styles.standfirst}>
         Fourteen Yale teams spent the summer of 2026 in one house in San Francisco,
         building.
+      </p>
+      <p>
+        <a className={styles.read} href={HACKER_HOUSE_URL} target="_blank" rel="noreferrer noopener">
+          Visit Yale Hacker House ↗
+        </a>
       </p>
 
       <div className={styles.globePanel}>

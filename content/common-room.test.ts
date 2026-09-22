@@ -2,6 +2,7 @@ import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 
 import { describe, expect, it } from 'vitest'
+import { COMMON_ROOM_BIOS } from './common-room-bios'
 
 import {
   COMMON_ROOM_LINE,
@@ -11,8 +12,8 @@ import {
 
 describe('Common Room', () => {
   it('carries every portrait the owners supplied, once each', () => {
-    expect(COMMON_ROOM_PEOPLE).toHaveLength(21)
-    expect(new Set(COMMON_ROOM_PEOPLE.map((p) => p.slug)).size).toBe(21)
+    expect(COMMON_ROOM_PEOPLE).toHaveLength(22)
+    expect(new Set(COMMON_ROOM_PEOPLE.map((p) => p.slug)).size).toBe(22)
   })
 
   it('includes James Masson', () => {
@@ -38,7 +39,7 @@ describe('Common Room', () => {
   })
 
   it('orders everyone after the cohort by surname', () => {
-    const tail = COMMON_ROOM_PEOPLE.slice(8).map((p) => p.name.split(' ').at(-1)!)
+    const tail = COMMON_ROOM_PEOPLE.slice(9).map((p) => p.name.split(' ').at(-1)!)
 
     expect(tail).toEqual(
       [...tail].sort((left, right) =>
@@ -50,7 +51,7 @@ describe('Common Room', () => {
   /** A missing file is a broken image on a page that is entirely faces. */
   it('points every portrait at a file that exists', () => {
     for (const person of COMMON_ROOM_PEOPLE) {
-      expect(person.portrait).toBe(`/common-room/${person.slug}.jpg`)
+      expect([`/common-room/${person.slug}.jpg`, `/common-room/${person.slug}.webp`]).toContain(person.portrait)
       expect(existsSync(join(process.cwd(), 'public', person.portrait))).toBe(true)
     }
   })
@@ -59,6 +60,23 @@ describe('Common Room', () => {
     for (const person of COMMON_ROOM_PEOPLE) {
       if (person.role) expect(person.role.length).toBeLessThanOrEqual(70)
     }
+  })
+
+  it('matches every imported biography to a member in the room', () => {
+    const slugs = COMMON_ROOM_PEOPLE.map((p) => p.slug)
+    expect(Object.keys(COMMON_ROOM_BIOS)).toHaveLength(9)
+    for (const slug of Object.keys(COMMON_ROOM_BIOS)) expect(slugs).toContain(slug)
+    expect(COMMON_ROOM_PEOPLE.find((p) => p.slug === 'ariyan-patel')?.portrait)
+      .toBe('/common-room/ariyan-patel.webp')
+  })
+
+  it('preserves owner bio corrections when importing outside profiles', () => {
+    for (const slug of ['oliver-hime', 'freeman-irabaruta']) {
+      expect(COMMON_ROOM_BIOS[slug]).not.toMatch(/UnitZero|Neotix|Daemo|NVIDIA|Bwenge/i)
+      expect(COMMON_ROOM_BIOS[slug]).toContain('Z Fellow')
+    }
+    expect(COMMON_ROOM_BIOS['bruno-bruno']).not.toMatch(/founder|Kesho/i)
+    expect(COMMON_ROOM_BIOS['bruno-bruno']).toContain('prediction markets')
   })
 
   /** Owner-supplied; nothing in the repo can recompute or check it. */

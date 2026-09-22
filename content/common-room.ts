@@ -1,22 +1,10 @@
 /**
  * /common-room — the people.
  *
- * Portraits are the owners' own, supplied as a folder of faces; the names and
- * roles are read off content/catalog/builders.json so a person's line here and
- * in the catalog cannot drift apart. Roles are the catalog's `nowLine` with the
- * duplicated venture suffix trimmed and everything after the first clause
- * dropped — a face grid has room for a title, not a biography.
- *
- * Ishir Rao's role is owner-supplied: he is in curation.json as a member but
- * has no catalog record to read one from.
- *
- * ORDER. The first eight run in the order founders.pdf prints them ("Yale
- * Hacker House - 2026 Cohort"); the rest follow by surname. The PDF lists 15
- * people and only 8 of them have a portrait in the owners' folder, so its order
- * cannot carry the whole page — the seven it names without a face here are Riya
- * Bhargava, Osama Radi, Ariyan Patel, Allah-u-Abha Rodrigues, Hector Miranda
- * Plaza, Joshua Gao and Paul Douglass. Send portraits and they slot into their
- * numbered places.
+ * Portraits, names, and short roles are owner-curated. Longer bios are kept in
+ * common-room-bios.ts, with the Hacker House source and owner exceptions noted.
+ * The original eight cohort portraits retain their order; Ariyan's newly
+ * supplied portrait follows them. The remaining members follow by surname.
  */
 
 export interface CommonRoomPerson {
@@ -74,6 +62,12 @@ export const COMMON_ROOM_PEOPLE: readonly CommonRoomPerson[] = [
     name: 'Murad Abdukholikov',
     role: 'Robotics / embedded-systems builder',
     portrait: '/common-room/murad-abdukholikov.jpg',
+  },
+  {
+    slug: 'ariyan-patel',
+    name: 'Ariyan Patel',
+    role: 'Co-President, Yale Entrepreneurial Society',
+    portrait: '/common-room/ariyan-patel.webp',
   },
   {
     slug: 'zain-anwar',

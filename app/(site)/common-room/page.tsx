@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { CommonRoomPeople } from '@/components/common-room-people'
 
 import {
   COMMON_ROOM_LINE,
@@ -14,9 +15,7 @@ export const metadata: Metadata = {
 }
 
 /**
- * The page dropped its "Pending" badge when the owners supplied the line and
- * the faces. Names and roles come from content/common-room.ts, which reads them
- * off the catalog so the two cannot drift.
+ * Owner-curated faces and roles, with sourced biographies in a compact dialog.
  */
 export default function CommonRoomPage() {
   return (
@@ -31,24 +30,7 @@ export default function CommonRoomPage() {
         <span>{COMMON_ROOM_VALUATION.context}</span>
       </p>
 
-      <ul className={styles.grid}>
-        {COMMON_ROOM_PEOPLE.map((person) => (
-          <li key={person.slug} className={styles.person}>
-            <img
-              className={styles.portrait}
-              src={person.portrait}
-              alt={person.name}
-              width={560}
-              height={560}
-              loading="lazy"
-            />
-            <div>
-              <span className={styles.name}>{person.name}</span>
-              {person.role ? <p className={styles.role}>{person.role}</p> : null}
-            </div>
-          </li>
-        ))}
-      </ul>
+      <CommonRoomPeople people={COMMON_ROOM_PEOPLE} />
     </div>
   )
 }
