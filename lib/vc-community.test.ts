@@ -9,9 +9,9 @@ const names = () => vcFirms.map((firm) => firm.name)
 
 describe('VC community roster', () => {
   it('is exactly what the landing renders, all unique', () => {
-    expect(vcFirms).toHaveLength(18)
-    expect(new Set(names()).size).toBe(18)
-    expect(vcFirmCount).toBe(18)
+    expect(vcFirms).toHaveLength(14)
+    expect(new Set(names()).size).toBe(14)
+    expect(vcFirmCount).toBe(14)
   })
 
   /**
@@ -30,6 +30,7 @@ describe('VC community roster', () => {
   /** Dropped at owner direction; their files went with them. */
   it('no longer carries the firms that were removed', () => {
     for (const gone of [
+      'Afore Capital', 'Bain Capital Ventures', 'Gigascale Capital', 'Human Capital',
       'Maverick Capital', 'General Catalyst', 'OpenAI', 'Dell Technologies Capital', 'AIX Ventures', 'Emergence Capital', 'Pantera Capital', 'Pear VC', 'Google Ventures', 'Menlo Ventures',
       'INCE Capital', 'Rho', 'Precursor VC', 'Runa Capital', 'Treeo VC',
       'Moxxie Ventures', '645 Ventures', 'Zetta', 'xAI',
@@ -65,15 +66,15 @@ describe('VC community roster', () => {
     }
   })
 
-  it('leads with the reputation-led five', () => {
-    expect(names().slice(0, 5)).toEqual([
-      'a16z', 'Bain Capital Ventures',
+  it('leads with the reputation-led four', () => {
+    expect(names().slice(0, 4)).toEqual([
+      'a16z',
       'Battery Ventures', '8VC', 'Floodgate',
     ])
   })
 
-  it('keeps everything after the lead five alphabetical', () => {
-    const rest = names().slice(5)
+  it('keeps everything after the lead four alphabetical', () => {
+    const rest = names().slice(4)
 
     expect(rest).toEqual(
       [...rest].sort((left, right) =>

@@ -1,7 +1,7 @@
 /**
  * Firms with relationships across the wider YES community.
  *
- * The first five are reputation-led and keep the head of the row; the rest are
+ * The first four are reputation-led and keep the head of the row; the rest are
  * alphabetical so the line stays scannable. Inclusion is not a claim that a
  * firm has invested in YES or a YES-associated company.
  *
@@ -34,12 +34,6 @@ export const vcFirms: readonly VcFirm[] = [
     height: 261,
   },
   {
-    name: 'Bain Capital Ventures',
-    logo: '/vc/bain-capital-ventures.svg',
-    width: 88,
-    height: 32,
-  },
-  {
     name: 'Battery Ventures',
     logo: '/vc/battery-ventures.svg',
     width: 561,
@@ -63,12 +57,6 @@ export const vcFirms: readonly VcFirm[] = [
     logo: '/vc/abstract.svg',
     width: 180,
     height: 34,
-  },
-  {
-    name: 'Afore Capital',
-    logo: '/vc/afore-capital.webp',
-    width: 611,
-    height: 243,
   },
   {
     name: 'Caffeinated Capital',
@@ -95,22 +83,10 @@ export const vcFirms: readonly VcFirm[] = [
     height: 630,
   },
   {
-    name: 'Gigascale Capital',
-    logo: '/vc/gigascale-capital.svg',
-    width: 568,
-    height: 176,
-  },
-  {
     name: 'GMI Cloud',
     logo: '/vc/gmi-cloud.png',
     width: 3240,
     height: 913,
-  },
-  {
-    name: 'Human Capital',
-    logo: '/vc/human-capital.svg',
-    width: 32,
-    height: 15,
   },
   {
     name: 'Liquid2 Ventures',
