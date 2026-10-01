@@ -35,9 +35,7 @@ export const PILLARS: readonly Pillar[] = [
   {
     slug: 'yes',
     name: 'YES',
-    /* The membership tier, stated the way the other two state theirs: Common
-       Room takes 15 founders a year, the Hacker House 15 Yalies, this 100. */
-    figure: { value: '100', label: 'members each year' },
+    figure: { value: 'A small cohort', label: 'each year' },
     body: [
       'Member of YES — the undergraduate community for Yalies exploring ambitious ideas, building companies, and doing research.',
     ],
