@@ -1,8 +1,8 @@
 /**
  * /infrastructure — what YES actually gives a builder, in four parts.
  *
- * Owner-written, transcribed from the "Home to Yale's builders" one-pager.
- * Nothing here is inferred or expanded (build spec §8.5).
+ * Based on the owner's "Home to Yale's builders" one-pager, with subsequent
+ * owner-requested copy edits. Program details are not inferred or expanded.
  *
  * WHY THIS IS A PAGE AND NOT FOUR EDITS. Common Room and the SF Hacker House
  * already have pages of their own, so the obvious move was to fold this copy
@@ -40,7 +40,6 @@ export const PILLARS: readonly Pillar[] = [
     figure: { value: '100', label: 'members each year' },
     body: [
       'Member of YES — the undergraduate community for Yalies exploring ambitious ideas, building companies, and doing research.',
-      'Dinners, events, and introductions to founders and firms in our community.',
     ],
     image: '/infrastructure/yes.jpg',
     alt: 'Members talking in the backyard of the Hacker House.',
@@ -52,8 +51,7 @@ export const PILLARS: readonly Pillar[] = [
     name: 'Common Room',
     figure: { value: '$700M+', label: 'total company valuation' },
     body: [
-      'A tap-only, lifetime society selecting 15 high-agency Yale founders each year.',
-      'Private demos, peer feedback, founder and investor dinners, optional build sprints, retreats, and tech treks. Support continues after graduation.',
+      'Common Room brings together 15 Yale founders each year in a tap-only society with lifetime membership. Members exchange ideas through private demos and peer feedback, connect over founder and investor dinners, and take part in build sprints, retreats, and tech treks. That support continues long after graduation.',
     ],
     image: '/infrastructure/common-room.jpg',
     alt: 'Founders gathered around a laptop at the dining table.',
