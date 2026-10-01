@@ -46,10 +46,7 @@ export function CommonRoomPeople({ people }: { readonly people: readonly CommonR
                 loading="lazy"
               />
             </button>
-            <div>
-              <span className={gridStyles.name}>{person.name}</span>
-              {person.role ? <p className={gridStyles.role}>{person.role}</p> : null}
-            </div>
+            <span className={gridStyles.name}>{person.name}</span>
           </li>
         ))}
       </ul>

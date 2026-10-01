@@ -1,8 +1,8 @@
 /**
  * Matched to the public founder profiles at https://www.yalehackerhouse.com/#founders
  * on 2026-09-22. Freeman Irabaruta there is Freeman Iraburata in this roster.
- * Common Room owner edits take precedence: Oliver and Freeman have no company
- * references; Bruno is described through prediction markets, not a founder title.
+ * Oliver and Freeman's UnitZero profiles were refreshed on 2026-09-30 at the
+ * owner's request. Bruno retains the owner-approved prediction markets wording.
  * Older YES co-president claims are omitted in favor of the current roster.
  * Unmatched people retain their owner-approved role until a fuller bio is supplied.
  */
@@ -28,9 +28,9 @@ export const COMMON_ROOM_BIOS: Readonly<Record<string, string>> = {
   'lucas-santos':
     "Lucas Santos is a senior at Yale studying Cognitive Science. He is the Co-Founder of Density Partners, an AI legal services startup. Lucas previously led operations at Mylon, a startup developing AI agents for education, backed by Pear VC. At Yale, he co-authored the school's AI guidelines and conducted research on behavioral addiction at the Yale School of Medicine.",
   'oliver-hime':
-    'Oliver Hime is a junior at Yale studying Statistics & Data Science, a Z Fellow, and a robotics researcher. He previously built a recycled-plastic clothing company backed by Cambridge University and created an online tutoring platform that grew to 10,000 users. His experience also includes software engineering and venture capital.',
+    'Oliver Hime studies Statistics & Data Science as a Yale junior and is a Z Fellow. He co-founded UnitZero and is building a robotic training factory with more than 100 employees and 80 robotic arms. His earlier ventures include a Cambridge University-backed clothing business using recycled plastic and a tutoring platform serving 10,000 users. He also worked in software engineering at Daemo.ai and interned in European venture capital. Oliver co-founded Yale Hacker House.',
   'freeman-irabaruta':
-    'Freeman Iraburata studied Computer Science at Yale and is a Z Fellow and robotics researcher. His experience spans systems engineering, data labeling operations in Rwanda, and a Department of Defense project using drones and edge machine learning for threat neutralization.',
+    'Freeman Iraburata studied Computer Science at Yale and is a Z Fellow. As a co-founder of UnitZero, he is building a robotic training factory with more than 100 employees and 80 robotic arms. Previously, he held a systems internship at NVIDIA and co-founded Bwenge-Lab, a Rwanda-based data-labeling startup. His work also includes a Department of Defense project applying drones and edge machine learning to neutralize threats.',
   'leia-ryan':
     'Leïa Ryan is a junior at Yale studying Molecular Biophysics & Biochemistry. She is the Co-Founder of Cortex, a neurosymbolic AI platform that is building the ontology and reasoning infrastructure for modern biology, which recently raised $600,000 in pre-seed funding led by Long Journey Ventures. She previously worked at Kallyope on migraine asset development and conducts research at the Yale School of Medicine, where she developed multi-omic cell maps for drug-response prediction. She also built E(3)-equivariant graph neural networks for 3D chromatin reconstruction from Hi-C data.',
   'james-masson':
