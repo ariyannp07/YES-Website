@@ -51,7 +51,7 @@ export const PILLARS: readonly Pillar[] = [
     name: 'Common Room',
     figure: { value: '$700M+', label: 'total company valuation' },
     body: [
-      'Common Room brings together 15 Yale founders each year in a tap-only society with lifetime membership. Members exchange ideas through private demos and peer feedback, connect over founder and investor dinners, and take part in build sprints, retreats, and tech treks. That support continues long after graduation.',
+      "Common Room is a tap-only, lifetime society of Yale's most exceptional founders and operators. Each year, we tap 15 Yalies into this tight-knit community. We are the first call for support/advice, co-founder introductions (through our partners on the East and West Coast), and fundraising rounds.",
     ],
     image: '/infrastructure/common-room.jpg',
     alt: 'Founders gathered around a laptop at the dining table.',
