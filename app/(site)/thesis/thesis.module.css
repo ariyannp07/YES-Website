@@ -24,28 +24,6 @@
   line-height: 1.05;
 }
 
-.byline {
-  margin-top: 1.75rem;
-}
-
-.byline p,
-.byline span {
-  margin: 0;
-  font-family: 'Times New Roman', Times, serif;
-}
-
-.byline p {
-  font-size: var(--text-body);
-  font-weight: 700;
-}
-
-.byline span {
-  display: block;
-  margin-top: 0.25rem;
-  color: var(--muted);
-  font-size: var(--text-label);
-}
-
 .body {
   padding-top: clamp(1.75rem, 3.5vw, 3rem);
   font-family: 'Times New Roman', Times, serif;

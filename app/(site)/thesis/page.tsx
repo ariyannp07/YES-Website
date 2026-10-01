@@ -15,10 +15,6 @@ export default function ThesisPage() {
       <div className={styles.content}>
         <header className={styles.header}>
           <h1 className={styles.sectionName}>The YES Thesis</h1>
-          <div className={styles.byline}>
-            <p>Ariyan Patel and Sofia Teifeld</p>
-            <span>Co-presidents, Yale Entrepreneurial Society</span>
-          </div>
         </header>
 
         <div className={styles.body}>
