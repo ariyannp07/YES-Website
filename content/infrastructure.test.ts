@@ -9,20 +9,19 @@ import { HACKER_HOUSE_SUPPORT, PILLARS } from './infrastructure'
 describe('the infrastructure pillars', () => {
   it('carries the owners’ four, in their order', () => {
     expect(PILLARS.map((p) => p.name)).toEqual([
-      'YES',
+      'YES Membership',
       'Common Room',
       'SF Hacker House',
       'New Haven House',
     ])
   })
 
-  it('states each tier’s intake', () => {
+  it('states the company valuation and fundraising figures', () => {
     const figures = Object.fromEntries(
       PILLARS.filter((p) => p.figure).map((p) => [p.name, p.figure!.value]),
     )
 
     expect(figures).toEqual({
-      YES: 'A small cohort',
       'Common Room': '$700M+',
       'SF Hacker House': '$17M+',
     })

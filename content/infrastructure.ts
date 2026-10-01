@@ -34,10 +34,9 @@ export const INFRASTRUCTURE_LEAD = 'Home to Yale’s builders'
 export const PILLARS: readonly Pillar[] = [
   {
     slug: 'yes',
-    name: 'YES',
-    figure: { value: 'A small cohort', label: 'each year' },
+    name: 'YES Membership',
     body: [
-      'Member of YES — the undergraduate community for Yalies exploring ambitious ideas, building companies, and doing research.',
+      'A small cohort of Yalies exploring ambitious ideas, building companies, and doing research.',
     ],
     image: '/infrastructure/yes.jpg',
     alt: 'Members talking in the backyard of the Hacker House.',
