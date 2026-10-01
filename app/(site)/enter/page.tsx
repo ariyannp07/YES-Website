@@ -1,7 +1,5 @@
 import type { Metadata } from 'next'
 
-import { CONTACT } from '@/lib/site'
-
 import styles from './enter.module.css'
 
 export const metadata: Metadata = {
@@ -39,14 +37,7 @@ export default function EnterPage() {
 
       <section className={styles.contactSection} aria-label="Contact YES">
         <address className={styles.contacts}>
-          <div>
-            <h2>Ariyan Patel</h2>
-            <a href={`mailto:${CONTACT.ariyan}`}>{CONTACT.ariyan}</a>
-          </div>
-          <div>
-            <h2>Sofia Teifeld</h2>
-            <a href={`mailto:${CONTACT.sofia}`}>{CONTACT.sofia}</a>
-          </div>
+          <a href="mailto:yes@yale.edu">yes@yale.edu</a>
         </address>
       </section>
     </div>
