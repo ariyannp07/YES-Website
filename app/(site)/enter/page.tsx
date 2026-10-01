@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import styles from './enter.module.css'
 
 export const metadata: Metadata = {
-  title: 'Join YES',
+  title: 'Apply',
   description: 'Apply to join YES or connect with Yale builders.',
 }
 

@@ -8,7 +8,7 @@
    * The accent, switched from gold (#d1b97e) to the blue family at owner
    * direction. --blue-bright rather than --blue or --blue-deep because of the
    * ROLE this token plays: it is a light fill carrying dark text
-   * (.button-primary, .status-pending, the Join YES button all set
+   * (.button-primary, .status-pending, the Apply button all set
    * `color: var(--night)` on it) as well as a text colour on the near-black
    * ground. A deep navy fills correctly but leaves black text on near-black,
    * and reads as almost nothing against --night.

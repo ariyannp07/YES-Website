@@ -122,7 +122,7 @@ export function SiteNav() {
           tabIndex={isVisible ? undefined : -1}
           aria-hidden={isVisible ? undefined : true}
         >
-          Join YES
+          Apply
         </Link>
       </div>
     </header>

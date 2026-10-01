@@ -77,7 +77,7 @@ export const NAV: readonly NavItem[] = [
   // holding the link; it is simply not promoted.
   { href: '/catalog', label: 'People', hidden: true },
   { href: '/work', label: 'Work', hidden: true },
-  { href: '/enter', label: 'Join YES', hidden: true },
+  { href: '/enter', label: 'Apply', hidden: true },
   { href: '/builders', label: 'Builders', hidden: true },
 ] as const
 
