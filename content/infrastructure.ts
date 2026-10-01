@@ -80,8 +80,7 @@ export const PILLARS: readonly Pillar[] = [
     slug: 'new-haven',
     name: 'New Haven House',
     body: [
-      'A year-round workspace and the academic-year hub for Yale builders.',
-      'Build sessions, workshops, small dinners, internal demos, and office hours. Find collaborators and future co-founders, get peer advice, and work together.',
+      'The common room for YES members to find each other, seek advice/resources, and pursue excellence in their work.',
     ],
     image: '/infrastructure/new-haven.jpg',
     alt: 'The New Haven house, a red Victorian, under snow.',
