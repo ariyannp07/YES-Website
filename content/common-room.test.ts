@@ -11,9 +11,9 @@ import {
 } from './common-room'
 
 describe('Common Room', () => {
-  it('carries every portrait the owners supplied, once each', () => {
-    expect(COMMON_ROOM_PEOPLE).toHaveLength(22)
-    expect(new Set(COMMON_ROOM_PEOPLE.map((p) => p.slug)).size).toBe(22)
+  it('carries the current owner-approved roster, once each', () => {
+    expect(COMMON_ROOM_PEOPLE).toHaveLength(21)
+    expect(new Set(COMMON_ROOM_PEOPLE.map((p) => p.slug)).size).toBe(21)
   })
 
   it('includes James Masson', () => {

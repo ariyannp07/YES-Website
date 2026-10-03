@@ -94,12 +94,6 @@ export const COMMON_ROOM_PEOPLE: readonly CommonRoomPerson[] = [
     portrait: '/common-room/sina-dehghani.jpg',
   },
   {
-    slug: 'teo-dimov',
-    name: 'Teo Dimov',
-    role: 'Co-founder / ecosystem builder, Launch / prior startup',
-    portrait: '/common-room/teo-dimov.jpg',
-  },
-  {
     slug: 'dylan-gleicher',
     name: 'Dylan Gleicher',
     role: 'Co-founder, Prepared / Axon',
