@@ -12,6 +12,18 @@ import type { NextConfig } from 'next'
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.yesyale.org' }],
+        destination: 'https://yesyale.org/:path*',
+        permanent: true,
+      },
+      // Google still links this retired page; the community firms are now here.
+      { source: '/partners', destination: '/', permanent: true },
+    ]
+  },
 
   // Portraits are processed to duotone at build time by scripts/build-portraits.mjs
   // and served as static files, so the runtime image optimizer is not needed.

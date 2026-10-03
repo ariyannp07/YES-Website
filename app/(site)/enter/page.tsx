@@ -1,11 +1,11 @@
-import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 
 import styles from './enter.module.css'
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata('/enter', {
   title: 'Apply',
   description: 'Apply to join YES or connect with Yale builders.',
-}
+})
 
 export default function EnterPage() {
   return (

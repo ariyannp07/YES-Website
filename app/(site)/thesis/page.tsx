@@ -1,13 +1,13 @@
-import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 
 import { MANIFESTO } from '@/content/manifesto'
 
 import styles from './thesis.module.css'
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata('/thesis', {
   title: 'The YES Thesis',
   description: 'What the Yale Entrepreneurial Society believes—and why Yale must build.',
-}
+})
 
 export default function ThesisPage() {
   return (

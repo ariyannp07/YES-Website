@@ -1,14 +1,14 @@
-import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 import Link from 'next/link'
 
 import { KIND_LABELS, allEntries } from '@/lib/reservoir'
 
 import styles from './reservoir.module.css'
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata('/reservoir', {
   title: 'Press',
   description: 'Coverage of the Yale Entrepreneurial Society and the people in it.',
-}
+})
 
 /**
  * The Reservoir index — and the header's Press destination.

@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 import Link from 'next/link'
 
 import {
@@ -9,11 +9,11 @@ import {
 
 import styles from './infrastructure.module.css'
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata('/infrastructure', {
   title: 'Infrastructure',
   description:
     'What the Yale Entrepreneurial Society gives a builder: a community, a society, a summer in San Francisco, and a room in New Haven.',
-}
+})
 
 /**
  * The four parts, in the owners' order, alternating text and photograph.

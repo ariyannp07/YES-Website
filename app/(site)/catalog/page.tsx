@@ -1,13 +1,13 @@
-import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 
 import { CatalogExperience } from '@/components/catalog/catalog-experience'
 import embeddings from '@/content/catalog/embeddings.json'
 import { allAlumni } from '@/lib/alumni'
 import { orderDirectoryPeople } from '@/lib/catalog-directory'
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata('/catalog', {
   title: 'People',
-}
+})
 
 /**
  * The People directory.

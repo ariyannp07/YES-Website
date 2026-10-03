@@ -5,7 +5,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/api/', '/builders'],
+      // Crawlers must reach /builders to see its noindex directive.
+      disallow: ['/api/'],
     },
     sitemap: 'https://yesyale.org/sitemap.xml',
     host: 'https://yesyale.org',

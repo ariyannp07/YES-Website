@@ -3,13 +3,10 @@ import { Archivo, Bodoni_Moda } from 'next/font/google'
 
 import { SiteFooter } from '@/components/site-footer'
 import { SiteNav } from '@/components/site-nav'
+import { SITE_DESCRIPTION, SITE_URL } from '@/lib/seo'
+import { SITE_NAME } from '@/lib/site'
 
 import './globals.css'
-
-const SITE_URL = 'https://yesyale.org'
-const SITE_NAME = 'Yale Entrepreneurial Society'
-const SITE_DESCRIPTION =
-  'Yale Entrepreneurial Society. The next Yale company is a conversation that hasn’t happened yet. Explore The YES Thesis, People, and Press.'
 
 const SEARCH_IDENTITY = {
   '@context': 'https://schema.org',
@@ -20,6 +17,10 @@ const SEARCH_IDENTITY = {
       name: SITE_NAME,
       alternateName: 'YES',
       url: SITE_URL,
+      description: SITE_DESCRIPTION,
+      email: 'yes@yale.edu',
+      foundingDate: '1999',
+      sameAs: ['https://ventures.yale.edu/node/2215'],
       logo: {
         '@type': 'ImageObject',
         url: `${SITE_URL}/icon.png`,
@@ -52,22 +53,20 @@ const bodoniModa = Bodoni_Moda({
 })
 
 export const metadata: Metadata = {
-  title: { default: 'YES', template: '%s · YES' },
+  title: { default: `${SITE_NAME} (YES)`, template: '%s · YES' },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
   metadataBase: new URL(SITE_URL),
-  alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: '/',
     siteName: SITE_NAME,
-    title: 'YES',
+    title: `${SITE_NAME} (YES)`,
     description: SITE_DESCRIPTION,
   },
   twitter: {
     card: 'summary',
-    title: 'YES',
+    title: `${SITE_NAME} (YES)`,
     description: SITE_DESCRIPTION,
   },
   robots: { index: true, follow: true },

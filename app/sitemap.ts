@@ -1,13 +1,26 @@
 import type { MetadataRoute } from 'next'
 
-const SITE_URL = 'https://yesyale.org'
+import { profileAlumni } from '@/lib/alumni'
+import { allEntries } from '@/lib/reservoir'
+import { SITE_URL } from '@/lib/seo'
+import { NAV } from '@/lib/site'
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const people = await profileAlumni()
+  const paths = new Set([
+    '/',
+    ...NAV.filter((item) => !item.hidden).map((item) => item.href),
+    '/catalog',
+    '/enter',
+  ])
+
   return [
-    { url: `${SITE_URL}/`, changeFrequency: 'monthly', priority: 1 },
-    { url: `${SITE_URL}/thesis`, changeFrequency: 'yearly', priority: 0.8 },
-    { url: `${SITE_URL}/catalog`, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${SITE_URL}/common-room`, changeFrequency: 'monthly', priority: 0.5 },
-    { url: `${SITE_URL}/enter`, changeFrequency: 'yearly', priority: 0.6 },
+    ...Array.from(paths, (path) => ({ url: new URL(path, SITE_URL).href })),
+    ...people
+      .filter((person) => !person.placeholder)
+      .map((person) => ({ url: `${SITE_URL}/catalog/${person.slug}` })),
+    ...allEntries()
+      .filter((entry) => entry.approved && !entry.url)
+      .map((entry) => ({ url: `${SITE_URL}/reservoir/${entry.slug}` })),
   ]
 }

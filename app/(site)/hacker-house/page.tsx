@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 
 import { DraftNotice } from '@/components/draft-notice'
 import GlobeCanvas from '@/components/landing/globe/globe-canvas'
@@ -12,11 +12,11 @@ import {
 
 import styles from './hacker-house.module.css'
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata('/hacker-house', {
   title: 'Hacker House',
   description:
     'The first Yale Hacker House: fourteen teams, one summer in San Francisco.',
-}
+})
 
 const WSJ_URL =
   'https://www.wsj.com/tech/ai/forget-wall-street-elite-students-are-spending-their-summers-on-startup-dreams-e7191994'

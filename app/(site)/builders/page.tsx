@@ -1,12 +1,13 @@
-import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 
 import { fetchCatalogFeed, type Builder } from '@/lib/airtable/catalog-feed'
 import { alumniFeedConfigured } from '@/lib/alumni'
 import { BUILDERS_MIN_ENTRIES } from '@/lib/site'
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata('/builders', {
   title: 'Builders',
-}
+  robots: { index: false, follow: true },
+})
 
 /**
  * The public builder catalog (build spec §3).

@@ -1,12 +1,12 @@
-import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 import Link from 'next/link'
 
 import { DraftNotice } from '@/components/draft-notice'
 import { PROOF, WORK_APPROVED, WORK_DRAFT_LABEL } from '@/content/work'
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata('/work', {
   title: 'Work',
-}
+})
 
 /**
  * The proof, and nothing else.

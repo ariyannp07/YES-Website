@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
+import { pageMetadata } from '@/lib/seo'
+
 import { Dossier } from '@/components/alumni/dossier'
 import { alumnusBySlug, profileAlumni } from '@/lib/alumni'
 
@@ -28,12 +30,14 @@ export async function generateMetadata({
   const { slug } = await params
   const person = await alumnusBySlug(slug)
 
-  if (!person || person.placeholder) return { title: 'People' }
+  if (!person || person.placeholder) {
+    return { title: 'People', robots: { index: false, follow: true } }
+  }
 
-  return {
+  return pageMetadata(`/catalog/${person.slug}`, {
     title: person.name,
     description: person.nowLine,
-  }
+  })
 }
 
 export default async function AlumnusPage({

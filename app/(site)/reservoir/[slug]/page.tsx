@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
+import { pageMetadata } from '@/lib/seo'
+
 import { DraftNotice } from '@/components/draft-notice'
 import { KIND_LABELS, allEntries, entryBySlug } from '@/lib/reservoir'
 
@@ -22,7 +24,13 @@ export async function generateMetadata({
   const { slug } = await params
   const entry = entryBySlug(slug)
 
-  return entry ? { title: entry.title } : {}
+  if (!entry) return { robots: { index: false, follow: true } }
+
+  return pageMetadata(`/reservoir/${entry.slug}`, {
+    title: entry.title,
+    description: entry.summary,
+    robots: { index: entry.approved, follow: true },
+  })
 }
 
 export default async function EntryPage({
@@ -56,7 +64,7 @@ export default async function EntryPage({
       />
 
       <p className="t-small" style={{ margin: '4.5rem 0 0' }}>
-        <Link href="/#press">← Press</Link>
+        <Link href="/reservoir">← Press</Link>
       </p>
     </article>
   )

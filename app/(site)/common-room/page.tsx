@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 import { CommonRoomPeople } from '@/components/common-room-people'
 
 import {
@@ -9,10 +9,10 @@ import {
 
 import styles from './common-room.module.css'
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata('/common-room', {
   title: 'Common Room',
   description: COMMON_ROOM_LINE,
-}
+})
 
 /**
  * Owner-curated faces and roles, with sourced biographies in a compact dialog.
