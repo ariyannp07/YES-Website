@@ -3,6 +3,7 @@
 :root {
   --blue: #00356b;
   --blue-deep: #001f3f;
+  --blue-mark: #286dc0;
   --blue-bright: #7da8cf;
   /**
    * The accent, switched from gold (#d1b97e) to the blue family at owner

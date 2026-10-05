@@ -59,6 +59,9 @@
  * wordmark's cap height.
  */
 .brandMark {
+  --yes-logo-bars: var(--blue-mark);
+  --yes-logo-center: var(--blue-mark);
+
   height: 1.85rem;
 }
 
