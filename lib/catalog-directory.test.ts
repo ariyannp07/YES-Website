@@ -11,7 +11,6 @@ const EXPECTED = [
   ['Cagri Dirik', 'Member of Board'],
   ['Osama Radi', 'Member of YES'],
   ['Kashi Tuteja', 'Member of Board'],
-  ['Ishir Rao', 'Member of YES'],
   ['Soleil Wizman', 'Former Board'],
   ['Vinesh Kothari', 'Former Board'],
   ['Ariyan Patel', 'Member of Board'],
@@ -88,7 +87,7 @@ describe('public People directory', () => {
     const uncertain = people.filter((person) => person.directoryStatus === 'uncertain')
     const leia = uncertain.find((person) => person.name === 'Leïa Ryan')
 
-    expect(people).toHaveLength(102)
+    expect(people).toHaveLength(101)
     expect(uncertain).toHaveLength(83)
     expect(leia).toMatchObject({
       name: 'Leïa Ryan',

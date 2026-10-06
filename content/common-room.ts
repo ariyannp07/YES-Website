@@ -112,12 +112,6 @@ export const COMMON_ROOM_PEOPLE: readonly CommonRoomPerson[] = [
     portrait: '/common-room/amelie-liu.jpg',
   },
   {
-    slug: 'ishir-rao',
-    name: 'Ishir Rao',
-    role: 'Ex-Valthos, AI for Science',
-    portrait: '/common-room/ishir-rao.jpg',
-  },
-  {
     slug: 'neal-soni',
     name: 'Neal Soni',
     role: 'Co-founder, Prepared / Axon',

@@ -12,8 +12,8 @@ import {
 
 describe('Common Room', () => {
   it('carries the current owner-approved roster, once each', () => {
-    expect(COMMON_ROOM_PEOPLE).toHaveLength(21)
-    expect(new Set(COMMON_ROOM_PEOPLE.map((p) => p.slug)).size).toBe(21)
+    expect(COMMON_ROOM_PEOPLE).toHaveLength(20)
+    expect(new Set(COMMON_ROOM_PEOPLE.map((p) => p.slug)).size).toBe(20)
   })
 
   it('includes James Masson', () => {
@@ -90,13 +90,6 @@ describe('Common Room', () => {
   /** Owner-supplied; nothing in the repo can recompute or check it. */
   it('carries the combined valuation', () => {
     expect(COMMON_ROOM_VALUATION.figure).toBe('$700M+')
-  })
-
-  /** Owner-supplied too: he has no catalog record to read a role from. */
-  it('gives Ishir Rao his role', () => {
-    const ishir = COMMON_ROOM_PEOPLE.find((p) => p.slug === 'ishir-rao')
-
-    expect(ishir?.role).toBe('Ex-Valthos, AI for Science')
   })
 
   it('now has a role for everyone', () => {
