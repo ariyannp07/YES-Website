@@ -16,7 +16,7 @@ export const HACKER_HOUSE_BIO_SLUGS: readonly string[] = [
 export const COMMON_ROOM_BIOS: Readonly<Record<string, string>> = {
   // Supplied directly by the YES team; these are not Hacker House profiles.
   'seth-goldin':
-    'Student builder; former founding CTO at Context. Founder of Hillhouse Fellows.',
+    'Student builder; former founding CTO at Context. Co-founder of Hillhouse Fellows.',
   'zain-anwar':
     "Zain Anwar is a Yale sophomore studying molecular biology and economics, where he chairs the YCC Tech Division and spent this past summer as a Summer Analyst at Maverick Capital's AI compute fund. Outside of class he co-founded Cadence, an AI speech-monitoring platform for Alzheimer's that won the Yale Healthcare Hackathon, and IntersectSTEM, a nonprofit that has brought STEM programming to more than 250 refugee and international students. Board Member of YES.",
   'ari-strober':
