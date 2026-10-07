@@ -10,7 +10,7 @@ describe('primary navigation', () => {
       'Infrastructure',
       'Common Room',
       'Hacker House',
-      'Writing',
+      'Thesis & Press',
     ])
   })
 
@@ -26,8 +26,8 @@ describe('primary navigation', () => {
     }
   })
 
-  it('combines press and thesis under Writing', () => {
-    const writing = visible().find((item) => item.label === 'Writing')
+  it('combines press and thesis under one heading', () => {
+    const writing = visible().find((item) => item.label === 'Thesis & Press')
 
     expect(writing?.href).toBe('/writing')
   })

@@ -63,13 +63,13 @@ export interface NavItem {
  * cards, the Common Room teaser, the press list) now live behind these links
  * and nowhere else. That makes the header load-bearing: a promoted item with
  * no route is a dead end, not a soft landing, which is what `site.test.ts`
- * checks. Writing combines the YES thesis and press coverage on one page.
+ * checks. The combined page carries the YES thesis and press coverage on one page.
  */
 export const NAV: readonly NavItem[] = [
   { href: '/infrastructure', label: 'Infrastructure' },
   { href: '/common-room', label: 'Common Room' },
   { href: '/hacker-house', label: 'Hacker House' },
-  { href: '/writing', label: 'Writing' },
+  { href: '/writing', label: 'Thesis & Press' },
   // Unlinked legacy and consent-gated surfaces. People is hidden at owner
   // direction — the catalog still builds and /catalog still resolves for anyone
   // holding the link; it is simply not promoted.
@@ -84,5 +84,5 @@ export const BUILDERS_MIN_ENTRIES = 15
 
 /** Minimal fallback links consumed by archived landing prototypes. */
 export const LANDING_LINKS: readonly NavItem[] = [
-  { href: '/writing', label: 'Writing' },
+  { href: '/writing', label: 'Thesis & Press' },
 ] as const

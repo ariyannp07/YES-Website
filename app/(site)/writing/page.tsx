@@ -8,7 +8,7 @@ import styles from './writing.module.css'
 import pressStyles from '../reservoir/reservoir.module.css'
 
 export const metadata = pageMetadata('/writing', {
-  title: 'Writing',
+  title: 'Thesis & Press',
   description: 'The YES thesis and press coverage of the Yale Entrepreneurial Society and its builders.',
 })
 
@@ -18,8 +18,8 @@ export default function WritingPage() {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <h1 className={styles.heading}>Writing</h1>
-        <nav className={styles.sections} aria-label="Writing sections">
+        <h1 className={styles.heading}>Thesis &amp; Press</h1>
+        <nav className={styles.sections} aria-label="Thesis and press sections">
           <a href="#thesis">The YES Thesis</a>
           <a href="#press">Press</a>
         </nav>
