@@ -64,7 +64,7 @@ describe('Common Room', () => {
 
   it('matches every biography to a member in the room', () => {
     const slugs = COMMON_ROOM_PEOPLE.map((p) => p.slug)
-    expect(Object.keys(COMMON_ROOM_BIOS)).toHaveLength(13)
+    expect(Object.keys(COMMON_ROOM_BIOS)).toHaveLength(14)
     for (const slug of Object.keys(COMMON_ROOM_BIOS)) expect(slugs).toContain(slug)
     expect(COMMON_ROOM_PEOPLE.find((p) => p.slug === 'ariyan-patel')?.portrait)
       .toBe('/common-room/ariyan-patel.webp')
