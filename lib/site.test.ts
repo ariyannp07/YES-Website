@@ -5,13 +5,12 @@ import { NAV, YES_MESSAGE } from './site'
 const visible = () => NAV.filter((item) => !item.hidden)
 
 describe('primary navigation', () => {
-  it('promotes exactly the five owner-chosen destinations, in order', () => {
+  it('promotes exactly the four owner-chosen destinations, in order', () => {
     expect(visible().map((item) => item.label)).toEqual([
       'Infrastructure',
       'Common Room',
       'Hacker House',
-      'Press',
-      'Thesis',
+      'Writing',
     ])
   })
 
@@ -27,10 +26,10 @@ describe('primary navigation', () => {
     }
   })
 
-  it('sends Press to the Reservoir index rather than the old anchor', () => {
-    const press = visible().find((item) => item.label === 'Press')
+  it('combines press and thesis under Writing', () => {
+    const writing = visible().find((item) => item.label === 'Writing')
 
-    expect(press?.href).toBe('/reservoir')
+    expect(writing?.href).toBe('/writing')
   })
 
   it('keeps People reachable but unpromoted', () => {

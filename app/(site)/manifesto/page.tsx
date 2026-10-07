@@ -1,5 +1,5 @@
 import { permanentRedirect } from 'next/navigation'
 
-export default function ManifestoRedirect() {
-  permanentRedirect('/thesis')
+export default function LegacyPage() {
+  permanentRedirect('/writing#thesis')
 }

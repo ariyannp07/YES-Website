@@ -1,42 +1,5 @@
-import { pageMetadata } from '@/lib/seo'
+import { permanentRedirect } from 'next/navigation'
 
-import { MANIFESTO } from '@/content/manifesto'
-
-import styles from './thesis.module.css'
-
-export const metadata = pageMetadata('/thesis', {
-  title: 'The YES Thesis',
-  description: 'What the Yale Entrepreneurial Society believes—and why Yale must build.',
-})
-
-export default function ThesisPage() {
-  return (
-    <article className={styles.page}>
-      <div className={styles.content}>
-        <header className={styles.header}>
-          <h1 className={styles.sectionName}>The YES Thesis</h1>
-        </header>
-
-        <div className={styles.body}>
-          {MANIFESTO.blocks.map((block, index) => {
-            if (block.kind === 'turn') {
-              return (
-                <p key={index} className={styles.turn}>
-                  {block.text}
-                </p>
-              )
-            }
-
-            if (block.kind === 'stack') {
-              return block.lines.map((line, lineIndex) => (
-                <p key={`${index}-${lineIndex}`}>{line}</p>
-              ))
-            }
-
-            return <p key={index}>{block.text}</p>
-          })}
-        </div>
-      </div>
-    </article>
-  )
+export default function LegacyPage() {
+  permanentRedirect('/writing#thesis')
 }

@@ -6,8 +6,9 @@
   background: var(--bg);
 }
 
-.content {
+.thesis {
   max-width: 44rem;
+  padding-top: clamp(2rem, 4vw, 3rem);
 }
 
 .header {
@@ -15,7 +16,7 @@
   border-bottom: 1px solid var(--line);
 }
 
-.sectionName {
+.heading {
   margin: 0;
   color: var(--white);
   font-size: var(--text-display);
@@ -44,4 +45,39 @@
   letter-spacing: 0;
   line-height: 1.62;
   text-align: left;
+}
+
+.sections {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.75rem;
+  margin-top: 1.5rem;
+  font-size: var(--text-small);
+}
+
+.sections a {
+  color: var(--muted);
+  text-underline-offset: 0.25em;
+}
+
+.sections a:hover {
+  color: var(--blue-bright);
+}
+
+.sectionHeading {
+  margin: 0 0 1rem;
+  color: var(--white);
+  font-size: var(--text-title);
+  font-weight: 760;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.thesis,
+.press {
+  scroll-margin-top: 7rem;
+}
+
+.press {
+  margin-top: clamp(3rem, 6vw, 5rem);
 }
