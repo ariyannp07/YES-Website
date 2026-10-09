@@ -157,7 +157,7 @@ function openEvent(event, trigger) {
 function eventButton(event, compact = false, day = "") {
   const button = node(
     "button",
-    `${compact ? "month-event" : "event-row"}${event.featured ? " featured" : ""}`,
+    compact ? "month-event" : "event-row",
   );
   button.type = "button";
   button.setAttribute(

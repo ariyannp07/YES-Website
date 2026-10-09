@@ -2,7 +2,7 @@
 
 The calendar is **available only to signed-in people on the whitelist**. Google Sheets is still the event CMS. By default a private `Access` tab in the same Sheet holds the whitelist, so **Airtable is not required**. An Airtable-backed whitelist is also supported using the website's existing integration.
 
-The frontend retains the custom agenda, month grid, filters, featured events, and event details. Authentication adds one dependency, `jose`, for signed sessions and Google ID-token verification. Serving this calendar now requires the existing Next.js server; copying it to a static host would not provide authentication.
+The frontend retains the custom agenda, month grid, filters, and event details. Authentication adds one dependency, `jose`, for signed sessions and Google ID-token verification. Serving this calendar now requires the existing Next.js server; copying it to a static host would not provide authentication.
 
 ## Architecture and access rules
 
@@ -61,7 +61,7 @@ You can import `sample-events.csv` as a template. Delete its fictional events or
 - Statuses: Idea, Planning, Tentative, Confirmed, Published, Completed, Cancelled. Only exact **Published** is shown to members.
 - Visibility: Board Only, YES, Common Room, Public. Board Only and blank/unknown values are always excluded.
 - `owner` and `notes` are internal. Descriptions and locations are visible to all approved members.
-- `featured`: TRUE or a checked checkbox. `id`: a stable unique event ID is recommended.
+- `featured`: retained for Sheet compatibility; it does not apply automatic highlighting in either view. `id`: a stable unique event ID is recommended.
 - `rsvp_url`: paste the full HTTPS Luma event URL (`https://lu.ma/...` or `https://luma.com/...`). The event dialog shows a **Luma** button beside Add to Calendar and the invite icon. Links to other registration providers retain an **RSVP** label. Leave blank to hide the button. Links open in a new tab; Sheet edits appear on refresh without redeployment.
 - `image_url`: optional direct HTTPS image URL. Images are fetched from their host; use member-safe images. Image and Luma URLs have their own access rules and are not made private by this website's whitelist.
 
