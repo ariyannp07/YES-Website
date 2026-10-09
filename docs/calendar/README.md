@@ -17,6 +17,14 @@ The whitelist gates the **entire** calendar. A row marked `Public` is still only
 
 No access lookup is cached. A failed lookup denies access; a failed refresh clears displayed event data. The page refreshes every five minutes while visible and when returning to the tab. Removing a member cannot retract information they have already seen or copied; it prevents further authorized requests. An idle visible page can show previously loaded content until its next refresh. Protected responses use `private, no-store` and are excluded from search indexing.
 
+### Loading performance
+
+After verifying the signed session, the HTML route loads access and events concurrently and embeds an escaped JSON snapshot scoped to that member or guest. The browser renders this snapshot without a second API/access round trip. Later refreshes still use the authenticated API.
+
+Published event data (never whitelist decisions or guest grants) is held in server memory for at most 30 seconds after a successful fetch. Concurrent requests share the in-flight fetch. Expired data and failed fetches are never served as fallback. Sheet edits can take up to 30 seconds to reach a new request; whitelist revocation still applies on every request. The cache is per server instance and is lost on restarts or deployments.
+
+One second after the main site's navigation mounts, it sends a same-origin POST to `/api/calendar/warm`. Anonymous visitors trigger no Google requests. Signed-in sessions warm the server event cache; the response contains no event data. This is best-effort because a later navigation may reach another server instance. It writes no browser storage and never replaces access verification. No Apps Script redeployment is needed. HTML responses expose aggregate backend duration through `Server-Timing: calendar` for diagnostics, without identifying the user.
+
 ## Files
 
 ```text

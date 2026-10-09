@@ -19,6 +19,18 @@ export function SiteNav() {
   useEffect(() => setMenuOpen(false), [pathname])
 
   useEffect(() => {
+    // Best-effort server warm-up after the site's initial render. Calendar
+    // navigation still verifies access; no private data is saved in the browser.
+    const timer = window.setTimeout(() => {
+      void fetch('/api/calendar/warm', {
+        method: 'POST', credentials: 'same-origin', cache: 'no-store',
+        signal: AbortSignal.timeout(20_000),
+      }).catch(() => {})
+    }, 1000)
+    return () => window.clearTimeout(timer)
+  }, [])
+
+  useEffect(() => {
     if (!menuOpen) return
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {

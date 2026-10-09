@@ -189,6 +189,9 @@ export async function loadEvents(url, signal) {
   if (!response.ok)
     throw new Error(`Calendar request failed (${response.status}).`);
   const payload = await response.json();
+  return parseEvents(payload);
+}
+export function parseEvents(payload) {
   if (payload.error) throw new Error(String(payload.error));
   if (!payload.timezone)
     throw new Error("Calendar API is missing its timezone.");

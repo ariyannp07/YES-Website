@@ -8,6 +8,7 @@ import {
   formatTime,
   isUpcoming,
   loadEvents,
+  parseEvents,
   monthCells,
   occursOn,
   timeRange,
@@ -52,6 +53,8 @@ const state = {
 let openEventData = null;
 let eventLinkOpened = false;
 const $ = (id) => document.getElementById(id);
+let initialData = $("calendar-bootstrap")?.textContent;
+$("calendar-bootstrap")?.remove();
 const now = () => zonedNow(state.timezone);
 state.month ||= now().date.slice(0, 7);
 const node = (tag, className, text) => {
@@ -359,7 +362,10 @@ async function refresh() {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), CONFIG.REQUEST_TIMEOUT_MS);
   try {
-    const result = await loadEvents(CONFIG.API_URL, controller.signal);
+    const bootstrap = initialData;
+    initialData = null;
+    const result = bootstrap ? parseEvents(JSON.parse(bootstrap))
+      : await loadEvents(CONFIG.API_URL, controller.signal);
     state.events = result.events;
     state.timezone = result.timezone;
     state.canInvite = result.canInvite;

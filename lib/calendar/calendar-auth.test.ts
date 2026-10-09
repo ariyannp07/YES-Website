@@ -33,12 +33,14 @@ import { POST as createInvite } from "../../app/api/calendar/invites/route";
 import { GET as invitePage } from "../../app/calendar/invite/route";
 import { invitationToken, readInvitationToken } from "./invitations";
 import { POST as logout } from "../../app/api/calendar/auth/logout/route";
+import { POST as warm } from "../../app/api/calendar/warm/route";
 
 const secret = "test-session-secret-with-at-least-32-characters";
 let privateKey: CryptoKey;
 let googleToken = "";
 let allowed = true;
 let guestIds: string[] = [];
+let backendVersion = 0;
 const sample = {
   timezone: "America/New_York",
   events: [
@@ -108,7 +110,7 @@ beforeEach(() => {
   vi.stubEnv("CALENDAR_SESSION_SECRET", secret);
   vi.stubEnv(
     "CALENDAR_BACKEND_SECRET",
-    "test-backend-secret-at-least-32-characters",
+    `test-backend-secret-at-least-32-characters-${++backendVersion}`,
   );
   vi.stubEnv(
     "CALENDAR_APPS_SCRIPT_URL",
@@ -192,6 +194,60 @@ describe("signed sessions and verified Google identities", () => {
 });
 
 describe("page and event authorization", () => {
+  it("starts access and events together, then embeds only safe data after authorization", async () => {
+    let releaseAccess!: () => void;
+    const gate = new Promise<void>(resolve => { releaseAccess = resolve; });
+    const originalFetch = fetch;
+    vi.stubGlobal("fetch", vi.fn(async (input: string, options?: RequestInit) => {
+      const body = JSON.parse(String(options?.body));
+      if (body.action === "access") await gate;
+      if (body.action === "events") return Response.json({ ...sample, events: [
+        { ...sample.events[0], description: '</script><script>alert("unsafe")</script>&' },
+      ] });
+      return originalFetch(input, options);
+    }));
+    const pending = page(request("/calendar/index.html", await session()));
+    await vi.waitFor(() => expect(vi.mocked(fetch).mock.calls.map(call =>
+      JSON.parse(String(call[1]?.body)).action)).toEqual(expect.arrayContaining(["access", "events"])));
+    releaseAccess();
+    const response = await pending;
+    const html = await response.text();
+    expect(html).toContain('id="calendar-bootstrap"');
+    expect(html).not.toContain('</script><script>alert');
+    expect(html).not.toMatch(/PRIVATE OWNER|PRIVATE NOTES|Secret plan|Board meeting/);
+    const json = html.match(/id="calendar-bootstrap" type="application\/json">(.*?)<\/script>/s)![1];
+    expect(JSON.parse(json).events[0].description).toBe('</script><script>alert("unsafe")</script>&');
+    expect(vi.mocked(fetch).mock.calls.filter(call => JSON.parse(String(call[1]?.body)).action === "access")).toHaveLength(1);
+    expect(response.headers.get("Server-Timing")).toMatch(/^calendar;dur=\d+$/);
+  });
+  it("warms events without disclosing data and still checks revocation on a cache hit", async () => {
+    const options = { method: "POST", headers: { Origin: "http://localhost:3000" } };
+    expect((await warm(request("/api/calendar/warm", undefined, options))).status).toBe(204);
+    expect(fetch).not.toHaveBeenCalled();
+    const token = await session();
+    expect((await warm(request("/api/calendar/warm", token, { ...options, headers: { Origin: "https://attacker.example" } }))).status).toBe(403);
+    expect(fetch).not.toHaveBeenCalled();
+    const response = await warm(request("/api/calendar/warm", token, options));
+    expect(response.status).toBe(204);
+    expect(await response.text()).toBe("");
+    expect(response.headers.get("Cache-Control")).toContain("no-store");
+    allowed = false;
+    const denied = await page(request("/calendar/index.html", token));
+    expect(denied.status).toBe(303);
+    expect(denied.headers.get("Location")).toContain("error=denied");
+    expect(await denied.text()).not.toContain("Member dinner");
+    expect(vi.mocked(fetch).mock.calls.filter(call => JSON.parse(String(call[1]?.body)).action === "events")).toHaveLength(1);
+    expect(vi.mocked(fetch).mock.calls.filter(call => JSON.parse(String(call[1]?.body)).action === "access")).toHaveLength(2);
+  });
+  it("does not expose a warmed member snapshot to a guest", async () => {
+    await page(request("/calendar/index.html", await session()));
+    allowed = false; guestIds = ["some-other-event"];
+    const response = await page(request("/calendar/index.html", await session("guest@gmail.com")));
+    const html = await response.text();
+    expect(response.status).toBe(200);
+    expect(html).toContain('"events":[]');
+    expect(html).not.toContain("Member dinner");
+  });
   it("rejects anonymous direct HTML and API requests without calling any upstream", async () => {
     const response = await events(request("/api/calendar/events"));
     expect(response.status).toBe(401);
