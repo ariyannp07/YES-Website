@@ -20,6 +20,15 @@ const CONFIG = {
   REFRESH_MS: 5 * 60 * 1000,
   REQUEST_TIMEOUT_MS: 20000,
 };
+// Programmatic dialog focus must remain visible for keyboard users, without
+// drawing a selection ring after a pointer opens or dismisses a dialog.
+document.addEventListener("pointerdown", () => {
+  document.documentElement.dataset.inputModality = "pointer";
+}, true);
+document.addEventListener("keydown", (event) => {
+  if (!event.metaKey && !event.ctrlKey && !event.altKey)
+    document.documentElement.dataset.inputModality = "keyboard";
+}, true);
 const params = new URLSearchParams(location.search);
 const state = {
   events: [],
@@ -121,7 +130,7 @@ function openEvent(event, trigger) {
   openEventData = JSON.stringify(event);
   dialog.showModal();
   dialog.scrollTop = 0;
-  $("close-dialog").focus();
+  $("close-dialog").focus({ preventScroll: true });
   dialog.onclose = () => {
     openEventData = null;
     hideEventPopovers();
@@ -132,7 +141,7 @@ function openEvent(event, trigger) {
         button.getAttribute("aria-label") ===
         trigger.getAttribute("aria-label"),
     );
-    (trigger.isConnected ? trigger : replacement || $("events")).focus();
+    (trigger.isConnected ? trigger : replacement || $("events")).focus({ preventScroll: true });
   };
 }
 function eventButton(event, compact = false, day = "") {

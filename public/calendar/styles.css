@@ -24,6 +24,8 @@ button { cursor: pointer; color: inherit; }
 button:disabled { cursor: default; opacity: .5; }
 a { color: inherit; }
 button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+/* Retain focus and its keyboard affordance; suppress only pointer focus rings. */
+:root[data-input-modality="pointer"] :is(button, a, [tabindex]):focus-visible { outline: none; }
 [hidden] { display: none !important; }
 h1, h2, h3, p { margin: 0; }
 h1 { font-size: 24px; line-height: 1.25; font-weight: 600; letter-spacing: -.6px; }
