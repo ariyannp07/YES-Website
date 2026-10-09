@@ -55,7 +55,6 @@ h2, h3 { font-size: 14px; font-weight: 500; }
 .filter-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; padding-bottom: 16px; }
 #filters { display: flex; flex-wrap: wrap; gap: 4px; }
 #filters button { border: 0; border-radius: 999px; background: transparent; color: var(--muted); padding: 7px 12px; font-size: 12px; white-space: nowrap; }
-#filters .jobs-filter { margin-left: 8px; border: 1px solid var(--line); }
 #filters button:hover { background: var(--wash); color: var(--ink); }
 #filters button[aria-pressed="true"] { background: #253547; color: #e1ebf4; }
 .filter-summary { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-left: auto; }

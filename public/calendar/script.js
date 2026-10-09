@@ -80,7 +80,7 @@ function renderFilters() {
   const activeType = document.activeElement?.dataset.type;
   $("filters").replaceChildren(
     ...types.map((type) => {
-      const button = node("button", type === JOB_POSTINGS ? "jobs-filter" : "", type);
+      const button = node("button", "", type);
       button.type = "button";
       button.dataset.type = type;
       button.setAttribute("aria-pressed", String(type === state.type));
