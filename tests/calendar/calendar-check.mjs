@@ -137,6 +137,19 @@ test("both layers exclude all private or nonpublished rows; query parameters can
     3,
   );
 });
+test("jobs require explicit selection and survive the existing Sheet projection", () => {
+  const rows = [base, ...["Job Posting", " job postings "].map((event_type, i) => ({
+    ...base, id: `job-${i}`, event_name: `Company — Role ${i}`, event_type,
+    start_date: "2026-01-01", start_time: "", end_time: "",
+    rsvp_url: "https://example.com/apply", owner: "PRIVATE",
+  }))];
+  const events = data.normalizeEvents(JSON.parse(apiContext(rows).doGet().text).events);
+  assert.deepEqual(data.selectFeed(events).map(event => event.id), ["one"]);
+  assert.deepEqual(data.selectFeed(events, "Builder Night").map(event => event.id), ["one"]);
+  assert.deepEqual(data.selectFeed(events, data.JOB_POSTINGS).map(event => event.id).sort(), ["job-0", "job-1"]);
+  assert.equal(data.selectFeed(events, data.JOB_POSTINGS)[0].rsvp_url, "https://example.com/apply");
+  assert.ok(!JSON.stringify(events).includes("PRIVATE"));
+});
 test("public projection contains no private fields or metadata", () => {
   const result = apiContext([
     {

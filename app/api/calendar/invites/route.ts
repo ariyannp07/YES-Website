@@ -1,7 +1,7 @@
 import { randomBytes } from "node:crypto";
 import type { NextRequest } from "next/server";
 import { calendarAccess } from "@/lib/calendar/access";
-import { calendarBackend, CalendarBackendError } from "@/lib/calendar/backend";
+import { calendarBackend, CalendarBackendError, projectEvents, isJobPosting } from "@/lib/calendar/backend";
 import { authConfig, PRIVATE_HEADERS } from "@/lib/calendar/config";
 import { invitationToken } from "@/lib/calendar/invitations";
 
@@ -24,6 +24,10 @@ export async function POST(request: NextRequest) {
     try { body = JSON.parse(raw); } catch { return respond({ error: "invalid_event" }, 400); }
     if (typeof body?.eventId !== "string" || !body.eventId.trim() || body.eventId.length > 200)
       return respond({ error: "invalid_event" }, 400);
+    const events = projectEvents(await calendarBackend("events")).events;
+    const matching = events.filter(event => event.id === body.eventId);
+    if (matching.length !== 1 || isJobPosting(matching[0]))
+      return respond({ error: "event_unavailable" }, 409);
     const result = await calendarBackend("invite_create", {
       email: access.email, eventId: body.eventId, id: randomBytes(16).toString("hex"),
     });

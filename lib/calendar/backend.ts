@@ -127,3 +127,7 @@ export async function guestEventIds(email: string): Promise<string[]> {
     throw error;
   }
 }
+
+export function isJobPosting(event: Record<string, unknown>) {
+  return /^job postings?$/i.test(String(event.event_type || "").trim());
+}

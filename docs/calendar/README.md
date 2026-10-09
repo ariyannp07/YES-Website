@@ -49,7 +49,7 @@ id	event_name	event_type	start_date	start_time	end_date	end_time	location	status
 You can import `sample-events.csv` as a template. Delete its fictional events or change them to Idea before launch. Set **File → Settings → Time zone** to Eastern Time / New York.
 
 - `event_name` and a valid `start_date` are required for publication. Blank names are skipped.
-- Types: Builder Night, Social, Dinner, Speaker, Workshop, Trip, Common Room, Partner Event, Office Hours, Other. Filters follow the actual dataset.
+- Types: Builder Night, Social, Dinner, Speaker, Workshop, Trip, Common Room, Partner Event, Office Hours, Job Posting, Other. Job Postings is an explicit opt-in filter; All and event-type filters exclude jobs.
 - Statuses: Idea, Planning, Tentative, Confirmed, Published, Completed, Cancelled. Only exact **Published** is shown to members.
 - Visibility: Board Only, YES, Common Room, Public. Board Only and blank/unknown values are always excluded.
 - `owner` and `notes` are internal. Descriptions and locations are visible to all approved members.
@@ -205,3 +205,25 @@ During rollout an older backend keeps existing member access working, but cannot
 ### Additional verification
 
 The Node checks cover single-guest claiming, idempotent retries, private/expired events, revoked grants/inviters, export timezones and DST, all-day dates, Unicode folding and calendar injection. The website tests cover guest event filtering, forged links, same-origin invitation creation, guest invitation denial, and invitation OAuth state binding. After deployment, test one enabled member and two distinct guest accounts: the first guest should see only the invited event; the second should be denied when using the same link.
+
+
+## Job postings — instructions for the opportunities agent
+
+Use the existing private **Events** tab; do not create a public Sheet or change access permissions. Add **Job Posting** to the existing `event_type` data-validation dropdown, preserving its other choices. The updated `Code.gs` setup helper includes this option for new Sheets; the existing deployed event reader already accepts it, so importing jobs needs no Apps Script redeployment.
+
+Each opportunity is a row with the existing headers:
+
+- `id`: stable unique ID, e.g. `job-company-role-2026`. Deduplicate by employer, role and application URL.
+- `event_name`: `Company — Role`.
+- `event_type`: exactly `Job Posting` (the website also accepts `Job Postings`).
+- `start_date`: date the posting was added, in `YYYY-MM-DD`. This is **not** the application deadline. Leave `start_time`, `end_time`, and `end_date` blank.
+- `location`: city, Remote, or Hybrid, as stated by the employer.
+- `description`: concise role summary, role type, eligibility, verified compensation if provided, and application deadline if stated. For rolling applications, say so only when the source confirms it. Do not invent missing details.
+- `rsvp_url`: the direct HTTPS application or official job listing URL; shown as **Apply**.
+- `status`: use `Planning` while collecting or verifying; set `Published` only for approved, current opportunities. Set `Completed` or `Cancelled` when closed.
+- `visibility`: `YES` (still requires calendar sign-in and whitelist access).
+- `featured`: `FALSE` unless specifically requested. `image_url` is optional; `owner` and `notes` remain internal. Record source URL and date checked in `notes`.
+
+Published jobs appear newest first **only** after selecting **Job Postings**, including when the current calendar month differs from the posting date. They never appear in All, other event filters, or the month grid, and do not count toward event totals. The application link replaces event actions; jobs have no Add to Calendar or plus-one controls. The website API rejects invitation creation for jobs and excludes them from guest event access.
+
+Jobs remain listed until their status changes; the posted date does not expire them. Check availability regularly and unpublish closed opportunities. The existing event API and Sheet schema carry job rows without new columns. To share the jobs view directly, use `https://yesyale.org/calendar?type=Job%20Postings`; this still requires an approved account.

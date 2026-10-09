@@ -55,6 +55,7 @@ h2, h3 { font-size: 14px; font-weight: 500; }
 .filter-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; padding-bottom: 16px; }
 #filters { display: flex; flex-wrap: wrap; gap: 4px; }
 #filters button { border: 0; border-radius: 999px; background: transparent; color: var(--muted); padding: 7px 12px; font-size: 12px; white-space: nowrap; }
+#filters .jobs-filter { margin-left: 8px; border: 1px solid var(--line); }
 #filters button:hover { background: var(--wash); color: var(--ink); }
 #filters button[aria-pressed="true"] { background: #253547; color: #e1ebf4; }
 .filter-summary { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-left: auto; }
@@ -62,6 +63,7 @@ h2, h3 { font-size: 14px; font-weight: 500; }
 .month-label { color: var(--muted); font-size: 12px; font-weight: 500; padding: 8px 12px; }
 .agenda-group + .agenda-group { margin-top: 18px; }
 .event-row { position: relative; display: grid; grid-template-columns: 48px minmax(0, 1fr) 20px; gap: 14px; align-items: center; width: 100%; min-height: 78px; padding: 12px; border: 1px solid transparent; border-bottom-color: var(--line); border-radius: var(--radius-control); background: transparent; text-align: left; }
+.event-row.job-row { grid-template-columns: minmax(0, 1fr) 20px; }
 .event-row:hover { background: var(--wash); }
 .event-row.featured { background: #111d2a; }
 .event-row.featured:hover { background: #182838; }

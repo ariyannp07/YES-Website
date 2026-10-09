@@ -432,6 +432,28 @@ it("uses host-only Secure cookies for the production sign-in flow", async () => 
 
 
 describe("event-scoped plus-ones", () => {
+  it("allows member job listings but denies job invitations and stale guest grants", async () => {
+    const originalFetch = fetch;
+    vi.stubGlobal("fetch", vi.fn(async (input: string, options?: RequestInit) => {
+      const body = JSON.parse(String(options?.body));
+      if (body.action === "events") return Response.json({ ...sample, events: [
+        { ...sample.events[0], event_type: " job postings ", rsvp_url: "https://example.com/apply" },
+      ] });
+      return originalFetch(input, options);
+    }));
+    const token = await session();
+    const member = await events(request("/api/calendar/events", token));
+    expect((await member.json()).events).toHaveLength(1);
+    const invite = await createInvite(request("/api/calendar/invites", token, {
+      method: "POST", headers: { Origin: "http://localhost:3000" },
+      body: JSON.stringify({ eventId: "one" }),
+    }));
+    expect(invite.status).toBe(409);
+    expect(vi.mocked(fetch).mock.calls.some(call => JSON.parse(String(call[1]?.body)).action === "invite_create")).toBe(false);
+    allowed = false; guestIds = ["one"];
+    const guest = await events(request("/api/calendar/events", token));
+    expect((await guest.json()).events).toEqual([]);
+  });
   it("only returns invited events to guests, and revocation takes effect on the next request", async () => {
     allowed = false;
     guestIds = ["one"];

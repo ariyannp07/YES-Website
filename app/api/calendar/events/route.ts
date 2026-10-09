@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { calendarAccess } from "@/lib/calendar/access";
-import { calendarBackend, projectEvents } from "@/lib/calendar/backend";
+import { calendarBackend, projectEvents, isJobPosting } from "@/lib/calendar/backend";
 import { PRIVATE_HEADERS } from "@/lib/calendar/config";
 
 export const runtime = "nodejs";
@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
   try {
     const payload = projectEvents(await calendarBackend("events"));
     if (access.role === "guest") payload.events = payload.events.filter(event =>
-      access.eventIds.includes(String(event.id)) &&
+      !isJobPosting(event) && access.eventIds.includes(String(event.id)) &&
       payload.events.filter(other => other.id === event.id).length === 1,
     );
     return Response.json({ ...payload, canInvite: access.role === "member" &&

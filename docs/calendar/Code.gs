@@ -273,6 +273,7 @@ function configureEventSheet() {
     "Common Room",
     "Partner Event",
     "Office Hours",
+    "Job Posting",
     "Other",
   ]);
   dropdown("status", [
@@ -345,6 +346,7 @@ function activeInviteEvents_(spreadsheet) {
   const today = Utilities.formatDate(now, timezone, "yyyy-MM-dd");
   const time = Utilities.formatDate(now, timezone, "HH:mm");
   return selectPublished_(entries).map(function (entry) {
+    if (/^job postings?$/i.test(text_(entry.row.event_type))) return null;
     const id = text_(entry.row.id);
     // Ambiguous or missing IDs must never grant access to a different event.
     if (!id || id.length > 200 || entries.filter(function (e) { return text_(e.row.id) === id; }).length !== 1) return null;

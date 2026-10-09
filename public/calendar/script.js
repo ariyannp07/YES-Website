@@ -1,4 +1,7 @@
 import {
+  JOB_POSTINGS,
+  isJobPosting,
+  selectFeed,
   addDays,
   dateRange,
   formatDate,
@@ -70,13 +73,14 @@ function writeURL() {
 function renderFilters() {
   const types = [
     "All",
-    ...new Set(state.events.map((event) => event.event_type).sort()),
+    ...new Set(state.events.filter(event => !isJobPosting(event)).map((event) => event.event_type).sort()),
+    JOB_POSTINGS,
   ];
   if (!types.includes(state.type)) types.push(state.type);
   const activeType = document.activeElement?.dataset.type;
   $("filters").replaceChildren(
     ...types.map((type) => {
-      const button = node("button", "", type);
+      const button = node("button", type === JOB_POSTINGS ? "jobs-filter" : "", type);
       button.type = "button";
       button.dataset.type = type;
       button.setAttribute("aria-pressed", String(type === state.type));
@@ -109,14 +113,17 @@ function openEvent(event, trigger) {
   title.id = "detail-title";
   fragments.push(title);
   const facts = node("dl", "detail-facts");
-  [
+  (isJobPosting(event) ? [
+    ["Location", event.location || "See posting"],
+    ["Posted", formatDate(event.start_date, { year: "numeric" })],
+  ] : [
     ["When", dateRange(event)],
     [
       "Time",
       `${timeRange(event)}${event.start_time ? ` ${timezoneLabel()}` : ""}`,
     ],
     ["Where", event.location || "Location to be announced"],
-  ].forEach(([label, value]) => {
+  ]).forEach(([label, value]) => {
     const row = node("div");
     row.append(node("dt", "", label), node("dd", "", value));
     facts.append(row);
@@ -152,7 +159,8 @@ function eventButton(event, compact = false, day = "") {
   button.type = "button";
   button.setAttribute(
     "aria-label",
-    `${event.event_name}, ${dateRange(event)}, ${timeRange(event)}${event.start_time ? ` ${timezoneLabel()}` : ""}. View details`,
+    isJobPosting(event) ? `${event.event_name}. View job posting`
+      : `${event.event_name}, ${dateRange(event)}, ${timeRange(event)}${event.start_time ? ` ${timezoneLabel()}` : ""}. View details`,
   );
   button.addEventListener("click", () => openEvent(event, button));
   if (compact) {
@@ -194,16 +202,15 @@ function eventButton(event, compact = false, day = "") {
   const meta = node(
     "span",
     "event-meta",
-    `${event.start_time ? `${formatTime(event.start_time)} ${timezoneLabel()}` : "All day"}${event.end_date !== event.start_date ? ` · Through ${formatDate(event.end_date, { month: "short" })}` : ""} · ${event.location || "Location to be announced"}`,
+    isJobPosting(event) ? `${event.location || "See posting"} · Posted ${formatDate(event.start_date)}`
+      : `${event.start_time ? `${formatTime(event.start_time)} ${timezoneLabel()}` : "All day"}${event.end_date !== event.start_date ? ` · Through ${formatDate(event.end_date, { month: "short" })}` : ""} · ${event.location || "Location to be announced"}`,
   );
   text.append(meta);
   const arrow = node("span", "event-arrow");
   arrow.append(actionIcon("forward"));
-  button.append(
-    date,
-    text,
-    arrow,
-  );
+  if (isJobPosting(event)) button.classList.add("job-row");
+  else button.append(date);
+  button.append(text, arrow);
   return button;
 }
 function renderAgenda(events) {
@@ -234,6 +241,11 @@ function renderAgenda(events) {
     (count, entries) => count + entries.length,
     0,
   );
+}
+function renderJobs(events) {
+  const entries = [...events].sort((a, b) => b.start_date.localeCompare(a.start_date) || a.event_name.localeCompare(b.event_name));
+  $("calendar-content").append(...entries.map(event => eventButton(event)));
+  return entries.length;
 }
 function renderMonth(events) {
   $("month-title").textContent = formatDate(`${state.month}-01`, {
@@ -301,7 +313,9 @@ function timezoneLabel() {
     : state.timezone.replaceAll("_", " ");
 }
 function render() {
+  const jobs = state.type === JOB_POSTINGS;
   renderFilters();
+  document.querySelector(".view-switch").hidden = jobs;
   document
     .querySelectorAll("[data-view]")
     .forEach((button) =>
@@ -310,8 +324,8 @@ function render() {
         String(button.dataset.view === state.view),
       ),
     );
-  $("month-navigation").hidden = !state.loaded || state.view !== "month";
-  document.querySelector(".filter-bar").hidden = !state.loaded || !state.events.length;
+  $("month-navigation").hidden = !state.loaded || jobs || state.view !== "month";
+  document.querySelector(".filter-bar").hidden = !state.loaded;
   if (!state.loaded) {
     $("status").dataset.state = state.error ? "error" : "loading";
     $("status").textContent = state.error || "Loading events…";
@@ -320,16 +334,14 @@ function render() {
     return;
   }
   $("calendar-context").textContent =
-    state.view === "agenda" ? "Upcoming events" : "Monthly calendar";
+    jobs ? JOB_POSTINGS : state.view === "agenda" ? "Upcoming events" : "Monthly calendar";
   $("calendar-content").replaceChildren();
-  const selected = state.events.filter(
-    (event) => state.type === "All" || event.event_type === state.type,
-  );
+  const selected = selectFeed(state.events, state.type);
   const count =
-    state.view === "agenda" ? renderAgenda(selected) : renderMonth(selected);
-  $("event-count").textContent = `${count} ${count === 1 ? "event" : "events"}`;
+    jobs ? renderJobs(selected) : state.view === "agenda" ? renderAgenda(selected) : renderMonth(selected);
+  $("event-count").textContent = `${count} ${jobs ? (count === 1 ? "posting" : "postings") : (count === 1 ? "event" : "events")}`;
   $("status").dataset.state = "empty";
-  $("status").textContent = !count && state.view === "agenda"
+  $("status").textContent = !count && jobs ? "No job postings yet." : !count && state.view === "agenda"
     ? "No upcoming events."
     : "";
   $("retry").hidden = true;
@@ -363,7 +375,7 @@ async function refresh() {
     if (linkedEvent && !eventLinkOpened) {
       eventLinkOpened = true;
       const event = state.events.find(event => event.id === linkedEvent);
-      if (event) openEvent(event, $("events"));
+      if (event && (!isJobPosting(event) || state.type === JOB_POSTINGS)) openEvent(event, $("events"));
     }
   } catch (error) {
     console.error("[YES calendar] Unable to load events:", error);
@@ -601,7 +613,7 @@ function eventActionBar(event) {
   const bar = node("div", "event-action-bar");
   if (event.rsvp_url) {
     const host = new URL(event.rsvp_url).hostname;
-    const label = /(^|\.)(lu\.ma|luma\.com)$/.test(host) ? "Luma" : "RSVP";
+    const label = isJobPosting(event) ? "Apply" : /(^|\.)(lu\.ma|luma\.com)$/.test(host) ? "Luma" : "RSVP";
     const luma = node("a", "luma-action", label === "Luma" ? "RSVP on Luma" : label);
     luma.href = event.rsvp_url;
     luma.target = "_blank";
@@ -610,6 +622,7 @@ function eventActionBar(event) {
     luma.append(actionIcon("external"));
     bar.append(luma);
   }
+  if (isJobPosting(event)) return bar;
   const calendar = node("button", "calendar-trigger");
   calendar.type = "button";
   calendar.setAttribute("aria-label", "Add to Calendar");

@@ -1,3 +1,13 @@
+export const JOB_POSTINGS = "Job Postings";
+export function isJobPosting(event) {
+  return /^job postings?$/i.test(String(event?.event_type || "").trim());
+}
+export function selectFeed(events, type = "All") {
+  return events.filter(event => type === JOB_POSTINGS
+    ? isJobPosting(event)
+    : !isJobPosting(event) && (type === "All" || event.event_type === type));
+}
+
 // Civil dates stay in the event's timezone, regardless of the visitor's timezone.
 export const PUBLIC_VISIBILITIES = ["Public", "YES", "Common Room"];
 export function validDate(value) {
