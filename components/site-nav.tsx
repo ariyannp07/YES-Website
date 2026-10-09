@@ -102,7 +102,11 @@ export function SiteNav() {
           aria-label="Primary navigation"
           aria-hidden={isVisible ? undefined : true}
         >
-          {NAV.filter((item) => !item.hidden).map((item) => (
+          {NAV.filter((item) => !item.hidden).map((item) => item.documentNavigation ? (
+            <a key={item.href} href={item.href} onClick={() => setMenuOpen(false)}>
+              {item.label}
+            </a>
+          ) : (
             <Link
               key={item.href}
               href={item.href}

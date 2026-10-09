@@ -22,7 +22,9 @@ export function SiteFooter() {
           * after the header stopped doing so.
           */}
         <nav aria-label="Footer navigation">
-          {NAV.filter((item) => !item.hidden).map((item) => (
+          {NAV.filter((item) => !item.hidden).map((item) => item.documentNavigation ? (
+            <a key={item.href} href={item.href}>{item.label}</a>
+          ) : (
             <Link key={item.href} href={item.href}>
               {item.label}
             </Link>

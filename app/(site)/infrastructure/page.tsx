@@ -50,6 +50,12 @@ export default function InfrastructurePage() {
               </p>
             ))}
 
+            {pillar.slug === 'yes' ? (
+              <a className={styles.calendarLink} href="/calendar">
+                Open calendar <span aria-hidden="true">↗</span>
+              </a>
+            ) : null}
+
             {pillar.href ? (
               <Link className={styles.more} href={pillar.href}>
                 More ↗

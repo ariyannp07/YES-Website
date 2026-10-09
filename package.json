@@ -2,7 +2,7 @@
   "name": "yes-website",
   "version": "0.1.0",
   "private": true,
-  "description": "Yale Entrepreneurial Society — yesyale.org",
+  "description": "Yale Entrepreneurial Society \u2014 yesyale.org",
   "scripts": {
     "dev": "next dev",
     "build": "npm run build:portraits && next build",
@@ -14,12 +14,14 @@
     "check:adjectives": "node scripts/check-adjectives.mjs",
     "check": "npm run typecheck && npm run check:type-scale && npm run check:adjectives",
     "build:portraits": "node scripts/build-portraits.mjs",
-    "embed": "tsx scripts/embed-catalog.ts"
+    "embed": "tsx scripts/embed-catalog.ts",
+    "test:calendar": "node --test tests/calendar/*-check.mjs"
   },
   "dependencies": {
     "@huggingface/transformers": "^4.2.0",
     "clsx": "^2.1.1",
     "gsap": "^3.15.0",
+    "jose": "^6.2.12",
     "marked": "^18.0.9",
     "next": "^16.3.1",
     "react": "^19.2.8",

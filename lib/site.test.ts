@@ -5,12 +5,13 @@ import { NAV, YES_MESSAGE } from './site'
 const visible = () => NAV.filter((item) => !item.hidden)
 
 describe('primary navigation', () => {
-  it('promotes exactly the four owner-chosen destinations, in order', () => {
+  it('promotes the owner-chosen destinations and member calendar, in order', () => {
     expect(visible().map((item) => item.label)).toEqual([
       'Infrastructure',
       'Common Room',
       'Hacker House',
       'Thesis & Press',
+      'Calendar',
     ])
   })
 

@@ -48,6 +48,7 @@ keeping the experience visually coherent.
 | Route | Purpose |
 | --- | --- |
 | `/` | 3D globe launch, WSJ hook, people preview, and complete Press section |
+| `/calendar/index.html` | Whitelist-protected Sheets-backed calendar with Google sign-in |
 | `/thesis` | The YES Thesis and invitation to build |
 | `/common-room` | Pending program status and the open path into YES |
 | `/catalog` | Portrait-first builder directory and dossier browser |
@@ -199,3 +200,13 @@ pre-deploy review checklist.
 This repository is an active implementation. The preview is deployed, but copy
 approval, public-record review, integration configuration, and release checks remain
 editorial responsibilities rather than assumptions made by the code.
+
+## Social calendar
+
+The calendar at `/calendar/index.html` requires Google sign-in and an enabled email
+on the access list. The private Google Sheet remains the event CMS and, by default,
+holds an `Access` tab for the whitelist. Airtable can optionally hold that whitelist.
+Both the HTML route and event API verify access on every request; the Apps Script
+backend also requires a server-held secret. There is no public demo or static-host
+bypass. See [Calendar setup and board operations](docs/calendar/README.md) for the
+Google OAuth, whitelist, backend, and same-origin iframe setup.
