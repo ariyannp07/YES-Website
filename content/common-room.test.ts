@@ -7,13 +7,12 @@ import { COMMON_ROOM_BIOS, HACKER_HOUSE_BIO_SLUGS } from './common-room-bios'
 import {
   COMMON_ROOM_LINE,
   COMMON_ROOM_PEOPLE,
-  COMMON_ROOM_VALUATION,
 } from './common-room'
 
 describe('Common Room', () => {
   it('carries the current owner-approved roster, once each', () => {
-    expect(COMMON_ROOM_PEOPLE).toHaveLength(20)
-    expect(new Set(COMMON_ROOM_PEOPLE.map((p) => p.slug)).size).toBe(20)
+    expect(COMMON_ROOM_PEOPLE).toHaveLength(19)
+    expect(new Set(COMMON_ROOM_PEOPLE.map((p) => p.slug)).size).toBe(19)
   })
 
   it('includes James Masson', () => {
@@ -51,7 +50,7 @@ describe('Common Room', () => {
   /** A missing file is a broken image on a page that is entirely faces. */
   it('points every portrait at a file that exists', () => {
     for (const person of COMMON_ROOM_PEOPLE) {
-      expect([`/common-room/${person.slug}.jpg`, `/common-room/${person.slug}.webp`]).toContain(person.portrait)
+      expect([`/common-room/${person.slug}.jpg`, `/common-room/${person.slug}.webp`, `/common-room/${person.slug}.png`]).toContain(person.portrait)
       expect(existsSync(join(process.cwd(), 'public', person.portrait))).toBe(true)
     }
   })
@@ -64,7 +63,7 @@ describe('Common Room', () => {
 
   it('matches every biography to a member in the room', () => {
     const slugs = COMMON_ROOM_PEOPLE.map((p) => p.slug)
-    expect(Object.keys(COMMON_ROOM_BIOS)).toHaveLength(14)
+    expect(Object.keys(COMMON_ROOM_BIOS)).toHaveLength(16)
     for (const slug of Object.keys(COMMON_ROOM_BIOS)) expect(slugs).toContain(slug)
     expect(COMMON_ROOM_PEOPLE.find((p) => p.slug === 'ariyan-patel')?.portrait)
       .toBe('/common-room/ariyan-patel.webp')
@@ -85,11 +84,6 @@ describe('Common Room', () => {
     }
     expect(COMMON_ROOM_BIOS['bruno-bruno']).not.toMatch(/founder|Kesho/i)
     expect(COMMON_ROOM_BIOS['bruno-bruno']).toContain('prediction markets')
-  })
-
-  /** Owner-supplied; nothing in the repo can recompute or check it. */
-  it('carries the combined valuation', () => {
-    expect(COMMON_ROOM_VALUATION.figure).toBe('$700M+')
   })
 
   it('now has a role for everyone', () => {

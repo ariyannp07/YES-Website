@@ -22,7 +22,6 @@ describe('the infrastructure pillars', () => {
     )
 
     expect(figures).toEqual({
-      'Common Room': '$700M+',
       'SF Hacker House': '$17M+',
     })
   })

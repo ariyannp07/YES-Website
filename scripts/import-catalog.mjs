@@ -27,6 +27,9 @@ const OUT = new URL('../content/catalog/builders.json', import.meta.url)
  * portrait pack. This supersedes the earlier eight-name list; 'Rhea' appeared
  * there but is in neither the pack nor the directory, and is not in this 25.
  */
+// Owner-requested removals must survive future imports of the historical CSV.
+const REMOVED_PEOPLE = new Set(['Michael Chime', 'Dylan Gleicher', 'Neal Soni'])
+
 const FEATURED = [
   // Ariyan and Sofia are the co-presidents and sit together at the head of the
   // wall, at their direction. The rest keep FEATURED_25.txt's order.
@@ -113,7 +116,7 @@ const EXCLUDED_SCHOOLS = new Set(['Yale School of Management'])
 
 for (const row of body) {
   const name = get(row, 'Full Name')
-  if (!name) continue
+  if (!name || REMOVED_PEOPLE.has(name)) continue
 
   if (EXCLUDED_SCHOOLS.has(get(row, 'Yale School'))) {
     excluded.push(name)

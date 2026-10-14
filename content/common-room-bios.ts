@@ -11,9 +11,19 @@ export const HACKER_HOUSE_URL = 'https://www.yalehackerhouse.com'
 export const HACKER_HOUSE_BIO_SLUGS: readonly string[] = [
   'nicolas-gertler', 'lucas-santos', 'oliver-hime', 'freeman-irabaruta',
   'leia-ryan', 'james-masson', 'bruno-bruno', 'murad-abdukholikov', 'ariyan-patel',
+  'joshua-gao', 'paul-douglass',
 ]
 
 export const COMMON_ROOM_BIOS: Readonly<Record<string, string>> = {
+  // Researched 2026-10-14: Yale Hacker House founder profiles, plus
+  // https://www.linkedin.com/in/joshuagao7 and https://joshua-gao.com/
+  // https://www.linkedin.com/in/pdouglass2026
+  // https://www.linkedin.com/posts/pdouglass2026_i-built-their-entire-yc-company-in-a-day-activity-7452460534932713472-hmzB
+  // Instagram could not be reliably retrieved; no facts depend on it.
+  'joshua-gao':
+    'Joshua Gao studied Mechanical Engineering and Economics at Yale and co-founded Vault Kinetics. He led research at Yale Engineering that helped develop the company’s sensing technology, which combines force sensors, biomechanics, and AI to measure athletic performance. His work grew from an engineering-class project into tools for coaches and athletes. He has participated in the Tsai CITY Summer Fellowship and MassChallenge.',
+  'paul-douglass':
+    'Paul Douglass studied History at Yale and is a co-founder of Vault Kinetics, where he helps bring force-sensing technology and performance analytics to athletes and coaches. A competitive collegiate powerlifter, he also builds software for the company, including tools that automate lead generation and organize sales data. At Yale, he organized a student-led fundraiser that raised more than $60,000.',
   // Supplied directly by the YES team; these are not Hacker House profiles.
   'seth-goldin':
     'Student builder; former founding CTO at Context. Co-founder of Hillhouse Fellows.',

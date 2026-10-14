@@ -87,8 +87,8 @@ describe('public People directory', () => {
     const uncertain = people.filter((person) => person.directoryStatus === 'uncertain')
     const leia = uncertain.find((person) => person.name === 'Leïa Ryan')
 
-    expect(people).toHaveLength(101)
-    expect(uncertain).toHaveLength(83)
+    expect(people).toHaveLength(98)
+    expect(uncertain).toHaveLength(80)
     expect(leia).toMatchObject({
       name: 'Leïa Ryan',
       nowLine: 'Co-founder, Cortex',

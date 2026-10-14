@@ -82,22 +82,22 @@ export const COMMON_ROOM_PEOPLE: readonly CommonRoomPerson[] = [
     portrait: '/common-room/jimmy-carter.jpg',
   },
   {
-    slug: 'michael-chime',
-    name: 'Michael Chime',
-    role: 'Co-founder & CEO, Prepared / Axon',
-    portrait: '/common-room/michael-chime.jpg',
-  },
-  {
     slug: 'sina-dehghani',
     name: 'Sina Dehghani',
     role: 'Startup builder; AI in investment firms',
     portrait: '/common-room/sina-dehghani.jpg',
   },
   {
-    slug: 'dylan-gleicher',
-    name: 'Dylan Gleicher',
-    role: 'Co-founder, Prepared / Axon',
-    portrait: '/common-room/dylan-gleicher.jpg',
+    slug: 'paul-douglass',
+    name: 'Paul Douglass',
+    role: 'Co-founder, Vault Kinetics',
+    portrait: '/common-room/paul-douglass.png',
+  },
+  {
+    slug: 'joshua-gao',
+    name: 'Joshua Gao',
+    role: 'Co-founder, Vault Kinetics',
+    portrait: '/common-room/joshua-gao.png',
   },
   {
     slug: 'seth-goldin',
@@ -110,12 +110,6 @@ export const COMMON_ROOM_PEOPLE: readonly CommonRoomPerson[] = [
     name: 'Amelie Liu',
     role: 'Director, INSPIRE Speaker Series at Yale Entrepreneurial Society',
     portrait: '/common-room/amelie-liu.jpg',
-  },
-  {
-    slug: 'neal-soni',
-    name: 'Neal Soni',
-    role: 'Co-founder, Prepared / Axon',
-    portrait: '/common-room/neal-soni.jpg',
   },
   {
     slug: 'ari-strober',
@@ -136,18 +130,6 @@ export const COMMON_ROOM_PEOPLE: readonly CommonRoomPerson[] = [
     portrait: '/common-room/kashi-tuteja.jpg',
   },
 ] as const
-
-/**
- * Owner-supplied, and the reason the page can make the claim above.
- *
- * Not derived from the catalog: no per-company valuation is held anywhere in
- * this repo, so nothing here can recompute or check it. It is a figure the
- * owners stand behind, which is why it is written once, here.
- */
-export const COMMON_ROOM_VALUATION = {
-  figure: '$700M+',
-  context: 'combined valuation of the companies in this room.',
-} as const
 
 /**
  * Owner-written, and the whole argument of the page.
