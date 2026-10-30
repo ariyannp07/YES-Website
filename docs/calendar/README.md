@@ -240,7 +240,7 @@ Jobs remain listed until their status changes; the posted date does not expire t
 
 The member entry point is now `/opportunities`. `/calendar` and `/calendar/index.html` redirect there with existing event, month, view and job filter parameters intact. Event and network profile links survive sign-in and an unauthorized-account retry; return destinations are restricted to the Opportunities route. The Google OAuth callback URL, session cookies, Events, Invitations and Access workflows are unchanged. Members see Calendar and Our Network; event-only guests do not gain network access. `/api/opportunities/network` checks current membership on every request, and Apps Script independently checks the supplied member email.
 
-The shared Opportunities interface uses cream surfaces, near-black text, Yale blue accents and serif headings. Job Postings remains an explicit opt-in Calendar filter. Introduction inquiries say **Bring this up at Office Hours**. No point people or email inquiry links are displayed.
+The shared Opportunities interface uses the original dark navy surfaces, pale text, restrained blue accents and serif headings. Logo tiles remain white. Job Postings remains an explicit opt-in Calendar filter. Introduction inquiries say **Bring this up at Office Hours**. No point people or email inquiry links are displayed.
 
 ### Board maintenance
 
