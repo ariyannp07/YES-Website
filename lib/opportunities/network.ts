@@ -39,22 +39,27 @@ export function projectNetwork(input: unknown) {
   const aliases = new Map<string, string>();
   const domains = new Map<string, Record<string, string>>();
   const companies: Record<string, string>[] = [];
-  records(raw.startups).filter(r => text(r.name) && safeURL(r.website) && safeURL(r.source_url)).forEach(r => {
+  records(raw.startups).filter(r => text(r.name) && (!text(r.website) || safeURL(r.website)) && safeURL(r.source_url)).forEach(r => {
     const row = fields(r, ["id", "name", "description", "sector", "location", "stage", "website", "careers_url", "logo_url", "source_url", "verified_on"]);
-    const domain = new URL(row.website).hostname.toLowerCase().replace(/^www\./, "");
-    const existing = domains.get(domain);
+    // Official portfolio records may not publish a company website. Keep those
+    // records distinct until a maintainer supplies a verified canonical URL.
+    const domain = row.website ? new URL(row.website).hostname.toLowerCase().replace(/^www\./, "") : "";
+    const existing = domain ? domains.get(domain) : undefined;
     if (existing) { aliases.set(row.id, existing.id); return; }
-    domains.set(domain, row); aliases.set(row.id, row.id); companies.push(row);
+    if (domain) domains.set(domain, row);
+    aliases.set(row.id, row.id); companies.push(row);
   });
   const seen = new Set<string>();
+  const firmIds = new Set(firms.map(f => f.id));
   const connections = records(raw.connections).map(r => fields(r, ["id", "firm_id", "startup_id", "type", "relationship", "source_url", "verified_on"]))
     .map<Record<string, string>>(r => ({ ...r, startup_id: aliases.get(r.startup_id) || "" }))
     .filter(r => {
       if (!r.startup_id || !r.source_url) return false;
-      if (r.type === "Portfolio" ? !firms.some(f => f.id === r.firm_id) : r.type !== "Direct" || !!r.firm_id) return false;
+      if (["Portfolio", "Program"].includes(r.type) ? !firmIds.has(r.firm_id) : r.type !== "Direct" || !!r.firm_id) return false;
       const key = `${r.startup_id}:${r.type}:${r.firm_id}`;
       if (seen.has(key)) return false; seen.add(key); return true;
     });
-  const startups = companies.filter(c => connections.some(r => r.startup_id === c.id));
+  const connectedIds = new Set(connections.map(c => c.startup_id));
+  const startups = companies.filter(c => connectedIds.has(c.id));
   return { firms, startups, connections };
 }

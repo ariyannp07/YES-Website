@@ -34,13 +34,14 @@
 .network-connection { color:var(--accent); font-size:12px; margin-top:4px; }
 .network-arrow { color:var(--muted); font-size:16px; }
 .network-footnote { color:var(--muted); font-size:12px; line-height:1.6; margin:22px 0 6px; max-width:650px; }
+.network-more { display:block; margin:18px auto 0; padding:9px 14px; border:1px solid var(--line); border-radius:8px; background:transparent; color:var(--accent); font-size:13px; }
 #network-dialog { width:min(600px,calc(100% - 32px)); }
 #network-detail > .network-logo { margin:0 0 16px; }
 #network-detail-title { font:400 30px/1.2 Georgia,serif; letter-spacing:-.6px; margin:0 0 12px; }
 .network-detail-description { color:#bdc9d6; line-height:1.65; margin-bottom:16px; white-space:pre-wrap; }
 .network-links { display:flex; gap:16px; flex-wrap:wrap; margin:16px 0 22px; color:var(--accent); }
 .network-links a { text-decoration:none; border-bottom:1px solid #b9ccdc40; }
-.network-path { padding:18px; border:1px solid var(--line); background:var(--wash); border-radius:12px; }
+.network-path { padding:0; border:0; background:transparent; }
 .network-path h3,.network-portfolio h3 { font-weight:600; margin:0 0 10px; }
 .network-path p { font-size:13px; line-height:1.65; }
 .network-path .office-hours { margin-top:14px; font-weight:600; color:var(--accent); }
@@ -59,7 +60,7 @@
  .network-kind { width:100%; }.network-kind button { flex:1; min-height:40px; }
  .network-filters { align-items:stretch; gap:8px; }.network-filters label { display:block; flex:1; min-width:0; }.network-filters select { display:block; width:100%; max-width:100%; min-height:44px; }
  .network-list { grid-template-columns:1fr; }.network-card,.network-card:nth-child(even) { padding:18px 0; border-left:0; }.network-card { gap:12px; }
- #network-dialog { width:calc(100% - 24px); }.network-path { padding:14px; }
+ #network-dialog { width:calc(100% - 24px); }
 }
 
 :root[data-network-access="false"] #network-tab { display:none; }

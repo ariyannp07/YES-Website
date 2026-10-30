@@ -5,6 +5,12 @@ const firm = { id:'vc', name:'VC', status:'Published', source_url:'https://vc.ex
 const company = { id:'one', name:'One', website:'https://one.example/', source_url:'https://one.example/', status:'Published', notes:'PRIVATE', point_person_email:'private@example.com' };
 const connection = { id:'vc-one', firm_id:'vc', startup_id:'one', type:'Portfolio', source_url:'https://vc.example/portfolio', status:'Published', notes:'PRIVATE' };
 describe('member network projection', () => {
+ it('keeps sourced companies with unpublished websites distinct, but rejects unsafe website values', () => {
+  const startups = [company, {...company,id:'unknown-a',website:''}, {...company,id:'unknown-b',website:''}, {...company,id:'unsafe',website:'javascript:alert(1)'}];
+  const data = projectNetwork({firms:[firm],startups,connections:startups.map(c=>({...connection,id:`vc-${c.id}`,startup_id:c.id}))});
+  expect(data.startups.map(c=>c.id)).toEqual(['one','unknown-a','unknown-b']);
+  expect(data.connections).toHaveLength(3);
+ });
  it('merges the same company across investors and strips internal fields', () => {
   const data=projectNetwork({firms:[firm,{...firm,id:'other'}],startups:[company,{...company,id:'alias',website:'https://www.one.example/jobs'}],connections:[connection,{...connection,id:'other-one',firm_id:'other',startup_id:'alias'}]});
   expect(data.startups).toHaveLength(1); expect(data.connections).toHaveLength(2);
@@ -18,6 +24,11 @@ describe('member network projection', () => {
  it('requires evidence for direct relationships and never promotes portfolio links to direct', () => {
   const data=projectNetwork({firms:[firm],startups:[company],connections:[connection,{...connection,id:'direct',firm_id:'',type:'Direct'}]});
   expect(data.connections.map(c=>c.type)).toEqual(['Portfolio','Direct']);
+ });
+ it('keeps program affiliations distinct from investments and requires a published firm', () => {
+  const data = projectNetwork({firms:[firm],startups:[company],connections:[{...connection,type:'Program'},{...connection,id:'dangling',firm_id:'missing',type:'Program'}]});
+  expect(data.connections).toHaveLength(1);
+  expect(data.connections[0].type).toBe('Program');
  });
  it('rejects dangerous URLs and malformed payloads', () => {
   for(const value of ['javascript:alert(1)','data:text/html,bad','https://name:pass@example.com','//evil.com']) expect(safeURL(value)).toBe('');

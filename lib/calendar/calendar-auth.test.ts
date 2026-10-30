@@ -230,6 +230,23 @@ describe("page and event authorization", () => {
     vi.stubGlobal('fetch',vi.fn(async()=>{throw new Error('offline')}));
     expect((await network(request('/api/opportunities/network',token))).status).toBe(503);
   });
+  it("streams a large private roster without losing records or Unicode across chunks", async () => {
+    const count = 6000;
+    const roster = {
+      firms: [{id:'vc',name:'VC',status:'Published',source_url:'https://vc.example',relationship_source:'internal: Board record'}],
+      startups: Array.from({length:count},(_,i)=>({id:`company-${i}`,name:`Café ${i}`,description:'é'.repeat(800),website:`https://company-${i}.example`,source_url:'https://vc.example/portfolio',status:'Published',notes:'PRIVATE'})),
+      connections: Array.from({length:count},(_,i)=>({id:`connection-${i}`,firm_id:'vc',startup_id:`company-${i}`,type:'Portfolio',source_url:'https://vc.example/portfolio',status:'Published'})),
+    };
+    const originalFetch=fetch;
+    vi.stubGlobal('fetch',vi.fn(async(input:string,options?:RequestInit)=>JSON.parse(String(options?.body)).action==='network' ? Response.json(roster) : originalFetch(input,options)));
+    const response = await network(request('/api/opportunities/network',await session()));
+    expect(response.headers.get('Cache-Control')).toContain('no-store');
+    const data = await response.json();
+    expect(data.startups).toHaveLength(count);
+    expect(data.connections).toHaveLength(count);
+    expect(data.startups.at(-1).description).toBe('é'.repeat(800));
+    expect(JSON.stringify(data)).not.toMatch(/PRIVATE|Board record/);
+  });
 
   it("starts access and events together, then embeds only safe data after authorization", async () => {
     let releaseAccess!: () => void;

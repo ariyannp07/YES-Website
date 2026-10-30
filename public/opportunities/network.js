@@ -1,7 +1,7 @@
 import { selectNetwork } from './data.js';
 const $ = id => document.getElementById(id);
 const make = (tag, className = '', text = '') => { const n = document.createElement(tag); n.className = className; n.textContent = text; return n; };
-const state = { data: null, loading: false, error: '', kind: 'startups', query: '', sector: '', location: '' };
+const state = { data: null, loading: false, error: '', kind: 'startups', query: '', sector: '', location: '', limit: 48 };
 let active = false, controller, priorFocus;
 const member = document.documentElement.dataset.networkAccess === 'true';
 function route() {
@@ -75,7 +75,9 @@ function options(id, values, label, selected) {
   if (selected && !values.includes(selected)) { const option = make('option', '', selected); option.value = selected; select.append(option); }
   select.value = selected;
 }
-function render() {
+function render(reset = true) {
+  if (reset) state.limit = 48;
+  $('network-more').hidden = true;
   document.querySelectorAll('[data-kind]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.kind === state.kind)));
   $('network-list').setAttribute('aria-busy', String(state.loading));
   $('network-reset').hidden = !state.query && !state.sector && !state.location;
@@ -88,7 +90,9 @@ function render() {
   const rows = selectNetwork(state.data, state);
   $('network-count').textContent = `${rows.length} ${state.kind === 'firms' ? rows.length === 1 ? 'firm' : 'firms' : rows.length === 1 ? 'company' : 'companies'}`;
   $('network-status').textContent = rows.length ? '' : state.query || state.sector || state.location ? 'No matches. Try another search or clear your filters.' : 'The network is being added. Check back soon.';
-  $('network-list').append(...rows.map(item => profileButton(item, state.kind)));
+  $('network-list').append(...rows.slice(0, state.limit).map(item => profileButton(item, state.kind)));
+  $('network-more').hidden = rows.length <= state.limit;
+  $('network-more').textContent = `Show more · ${Math.min(state.limit, rows.length)} of ${rows.length}`;
 }
 async function load() {
   if (state.loading || !member) return;
@@ -132,7 +136,7 @@ function openProfile(item, kind, push = false, trigger) {
     const connections = state.data.connections.filter(c => c.startup_id === item.id);
     for (const connection of connections) {
       const row = make('div', 'network-path-row');
-      row.append(make('span', 'network-path-label', connection.type === 'Direct' ? 'Direct YES relationship' : 'Potential introduction through investor'));
+      row.append(make('span', 'network-path-label', connection.type === 'Direct' ? 'Direct YES relationship' : connection.type === 'Program' ? 'Program alumni connection' : 'Potential introduction through investor'));
       const firm = state.data.firms.find(f => f.id === connection.firm_id);
       if (firm) row.append(profileButton(firm, 'firms', true));
       if (connection.relationship) row.append(make('p', '', connection.relationship));
@@ -144,10 +148,20 @@ function openProfile(item, kind, push = false, trigger) {
   if (kind === 'firms') path.append(make('p', 'network-meta', 'An investor connection does not guarantee an introduction.'));
   detail.append(path);
   if (kind === 'firms') {
-    const ids = state.data.connections.filter(c => c.firm_id === item.id).map(c => c.startup_id);
-    const companies = state.data.startups.filter(c => ids.includes(c.id));
-    const portfolio = make('section', 'network-portfolio'); portfolio.append(make('h3', '', 'Portfolio companies'));
-    portfolio.append(...companies.map(c => profileButton(c, 'startups', true)));
+    const connections = state.data.connections.filter(c => c.firm_id === item.id);
+    const ids = new Set(connections.map(c => c.startup_id));
+    const companies = state.data.startups.filter(c => ids.has(c.id)).sort((a, b) => a.name.localeCompare(b.name));
+    const alumni = connections.length && connections.every(c => c.type === 'Program');
+    const portfolio = make('section', 'network-portfolio'); portfolio.append(make('h3', '', alumni ? 'Alumni companies' : 'Portfolio companies'));
+    let shown = 0;
+    const more = make('button', 'network-more', 'Show more companies'); more.type = 'button';
+    const appendCompanies = () => {
+      const next = companies.slice(shown, shown + 24);
+      more.before(...next.map(c => profileButton(c, 'startups', true))); shown += next.length;
+      more.hidden = shown >= companies.length;
+      more.textContent = `Show more companies · ${shown} of ${companies.length}`;
+    };
+    if (companies.length) { portfolio.append(more); appendCompanies(); more.addEventListener('click', appendCompanies); }
     if (!companies.length) portfolio.append(make('p', 'network-meta', 'Portfolio companies have not yet been verified for this directory.'));
     detail.append(portfolio);
   }
@@ -176,6 +190,10 @@ for (const [id, key] of [['sector-filter', 'sector'], ['location-filter', 'locat
 for (const button of document.querySelectorAll('[data-kind]')) button.addEventListener('click', () => { state.kind = button.dataset.kind; updateURL(); render(); });
 $('network-reset').addEventListener('click', () => { state.query = state.sector = state.location = ''; $('network-search').value = ''; updateURL(); render(); });
 $('network-retry').addEventListener('click', load);
+$('network-more').addEventListener('click', () => {
+  const firstNew = state.limit; state.limit += 48; render(false);
+  $('network-list').children[firstNew]?.focus({ preventScroll: true });
+});
 window.addEventListener('popstate', route);
 document.addEventListener('visibilitychange', () => { if (!document.hidden && active) load(); });
 setInterval(() => { if (!document.hidden && active) load(); }, 300000);

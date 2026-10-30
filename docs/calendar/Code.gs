@@ -472,7 +472,7 @@ function configureNetworkSheets() {
     sheet.setFrozenRows(1);
     sheet.setColumnWidths(1,headers.length,180);
     sheet.getRange(2,headers.indexOf('status')+1,sheet.getMaxRows()-1,1).setDataValidation(SpreadsheetApp.newDataValidation().requireValueInList(['Draft','Published','Archived'],true).setAllowInvalid(false).build());
-    if (name === 'Connections') sheet.getRange(2,4,sheet.getMaxRows()-1,1).setDataValidation(SpreadsheetApp.newDataValidation().requireValueInList(['Portfolio','Direct'],true).setAllowInvalid(false).build());
+    if (name === 'Connections') sheet.getRange(2,4,sheet.getMaxRows()-1,1).setDataValidation(SpreadsheetApp.newDataValidation().requireValueInList(['Portfolio','Program','Direct'],true).setAllowInvalid(false).build());
     sheet.getRange(2,headers.indexOf('verified_on')+1,sheet.getMaxRows()-1,1).setNumberFormat('yyyy-mm-dd');
   });
 }

@@ -12,7 +12,19 @@ export async function GET(request: NextRequest) {
   });
   try {
     // Read publication status afresh; never fall back to a public/static roster.
-    return Response.json(projectNetwork(await calendarBackend("network", access.email)), { headers: PRIVATE_HEADERS });
+    const data = projectNetwork(await calendarBackend("network", access.email));
+    const bytes = new TextEncoder().encode(JSON.stringify(data));
+    let offset = 0;
+    // Stream larger rosters without the hosting platform's buffered-response cap.
+    // Authentication and publication checks finish before any bytes are emitted.
+    const body = new ReadableStream<Uint8Array>({
+      pull(controller) {
+        if (offset >= bytes.length) { controller.close(); return; }
+        controller.enqueue(bytes.subarray(offset, offset + 65536));
+        offset += 65536;
+      },
+    });
+    return new Response(body, { headers: { ...PRIVATE_HEADERS, "Content-Type": "application/json; charset=utf-8" } });
   } catch {
     return Response.json({ error: "network_unavailable" }, { status: 503, headers: PRIVATE_HEADERS });
   }
