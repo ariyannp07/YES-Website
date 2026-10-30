@@ -9,7 +9,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const people = await profileAlumni()
   const paths = new Set([
     '/',
-    ...NAV.filter((item) => !item.hidden).map((item) => item.href),
+    // Member content is discoverable from navigation, not search indexes.
+    ...NAV.filter((item) => !item.hidden && item.href !== '/opportunities').map((item) => item.href),
     '/catalog',
     '/enter',
   ])

@@ -20,6 +20,7 @@ export async function calendarSnapshot(request: NextRequest) {
   ) : snapshot.events;
   return { access, payload: {
     timezone: snapshot.timezone, events,
+    canBrowseNetwork: access.role === "member",
     canInvite: access.role === "member" && (process.env.CALENDAR_WHITELIST_PROVIDER || "sheet") === "sheet",
   } };
 }

@@ -9,6 +9,7 @@ import {
 import { OAUTH_SECONDS, signToken } from "@/lib/calendar/tokens";
 
 import { readInvitationToken } from "@/lib/calendar/invitations";
+import { opportunitiesReturnPath } from "@/lib/opportunities/routes";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -42,7 +43,7 @@ export async function GET(request?: NextRequest) {
     response.cookies.set(
       cookieName("oauth"),
       await signToken(
-        { state, nonce, verifier, ...(inviteId ? { inviteId } : {}) },
+        { state, nonce, verifier, returnTo: opportunitiesReturnPath(request?.nextUrl.searchParams.get("returnTo")), ...(inviteId ? { inviteId } : {}) },
         config.secret,
         "oauth",
         OAUTH_SECONDS,
@@ -61,7 +62,7 @@ export async function GET(request?: NextRequest) {
       status: 303,
       headers: {
         ...PRIVATE_HEADERS,
-        Location: "/calendar/sign-in?error=unavailable",
+        Location: "/opportunities/sign-in?error=unavailable",
       },
     });
   }

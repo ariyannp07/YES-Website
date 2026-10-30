@@ -72,7 +72,7 @@ export const NAV: readonly NavItem[] = [
   { href: '/common-room', label: 'Common Room' },
   { href: '/hacker-house', label: 'Hacker House' },
   { href: '/writing', label: 'Thesis & Press' },
-  { href: '/calendar', label: 'Calendar', documentNavigation: true },
+  { href: '/opportunities', label: 'Opportunities', documentNavigation: true },
   // Unlinked legacy and consent-gated surfaces. People is hidden at owner
   // direction — the catalog still builds and /catalog still resolves for anyone
   // holding the link; it is simply not promoted.

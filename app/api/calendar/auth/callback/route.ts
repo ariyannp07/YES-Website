@@ -9,6 +9,7 @@ import {
 } from "@/lib/calendar/tokens";
 import { isWhitelisted, guestEventIds, calendarBackend, CalendarBackendError } from "@/lib/calendar/backend";
 import { invitationToken } from "@/lib/calendar/invitations";
+import { opportunitiesReturnPath } from "@/lib/opportunities/routes";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -20,9 +21,10 @@ const googleKeys = createRemoteJWKSet(
 export async function GET(request: NextRequest) {
   let response = new NextResponse(null, {
     status: 303,
-    headers: { ...PRIVATE_HEADERS, Location: "/calendar/sign-in?error=signin" },
+    headers: { ...PRIVATE_HEADERS, Location: "/opportunities/sign-in?error=signin" },
   });
   let inviteId: string | undefined;
+  let returnTo = "/opportunities";
   let signedIn = false;
   let secure = process.env.NODE_ENV === "production";
   try {
@@ -33,6 +35,7 @@ export async function GET(request: NextRequest) {
       config.secret,
       "oauth",
     );
+    returnTo = opportunitiesReturnPath(transaction?.returnTo);
     if (typeof transaction?.inviteId === "string" && /^[a-f0-9]{32}$/.test(transaction.inviteId))
       inviteId = transaction.inviteId;
     const code = request.nextUrl.searchParams.get("code");
@@ -78,12 +81,12 @@ export async function GET(request: NextRequest) {
       eventId = claim.eventId;
     }
     if (!identity || (!(await isWhitelisted(identity.email)) && !(await guestEventIds(identity.email)).length)) {
-      response.headers.set("Location", "/calendar/sign-in?error=denied");
+      response.headers.set("Location", "/opportunities/sign-in?error=denied");
       return response;
     }
     response = new NextResponse(null, {
       status: 303,
-      headers: { ...PRIVATE_HEADERS, Location: `/calendar/index.html${eventId ? `?event=${encodeURIComponent(eventId)}` : ""}` },
+      headers: { ...PRIVATE_HEADERS, Location: eventId ? `/opportunities?event=${encodeURIComponent(eventId)}` : returnTo },
     });
     response.cookies.set(
       cookieName("session"),
@@ -100,7 +103,7 @@ export async function GET(request: NextRequest) {
     return response;
   } catch (error) {
     console.error("[YES calendar] Sign-in could not be completed.");
-    response.headers.set("Location", `/calendar/sign-in?error=${error instanceof CalendarBackendError &&
+    response.headers.set("Location", `/opportunities/sign-in?error=${error instanceof CalendarBackendError &&
       ["invite_unavailable", "invite_claimed", "self_invite", "event_unavailable"].includes(error.code) ? "denied" : "unavailable"}`);
     return response;
   } finally {
@@ -115,6 +118,11 @@ export async function GET(request: NextRequest) {
     if (!signedIn && inviteId) {
       const error = new URL(response.headers.get("Location")!, "https://local.invalid").searchParams.get("error") || "signin";
       response.headers.set("Location", `/calendar/invite?token=${encodeURIComponent(invitationToken(inviteId))}&error=${error}`);
+    }
+    if (!signedIn && !inviteId && returnTo !== "/opportunities") {
+      const target = new URL(response.headers.get("Location")!, "https://return.invalid");
+      target.searchParams.set("returnTo", returnTo);
+      response.headers.set("Location", target.pathname + target.search);
     }
     if (!signedIn)
       response.cookies.set(cookieName("session"), "", {

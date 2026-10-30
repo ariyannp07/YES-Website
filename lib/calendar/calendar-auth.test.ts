@@ -26,13 +26,16 @@ import { signToken, readToken, googleIdentity } from "./tokens";
 import { isWhitelisted, projectEvents } from "./backend";
 import { calendarAccess } from "./access";
 import { GET as events } from "../../app/api/calendar/events/route";
-import { GET as page } from "../../app/calendar/index.html/route";
+import { GET as page } from "../../app/opportunities/route";
 import { GET as start } from "../../app/api/calendar/auth/start/route";
 import { GET as callback } from "../../app/api/calendar/auth/callback/route";
 import { POST as createInvite } from "../../app/api/calendar/invites/route";
 import { GET as invitePage } from "../../app/calendar/invite/route";
 import { invitationToken, readInvitationToken } from "./invitations";
 import { POST as logout } from "../../app/api/calendar/auth/logout/route";
+import { GET as network } from "../../app/api/opportunities/network/route";
+import { GET as legacyCalendar } from "../../app/calendar/index.html/route";
+import { GET as signInPage } from "../../app/opportunities/sign-in/route";
 import { POST as warm } from "../../app/api/calendar/warm/route";
 
 const secret = "test-session-secret-with-at-least-32-characters";
@@ -194,6 +197,40 @@ describe("signed sessions and verified Google identities", () => {
 });
 
 describe("page and event authorization", () => {
+  it("preserves legacy calendar links and query parameters", async () => {
+    const response = await legacyCalendar(request('/calendar/index.html?view=month&month=2026-11&type=Job+Postings&event=one'));
+    const target = new URL(response.headers.get('Location')!);
+    expect(target.pathname).toBe('/opportunities');
+    expect(target.searchParams.get('view')).toBe('month');
+    expect(target.searchParams.get('type')).toBe('Job Postings');
+    expect(target.searchParams.get('event')).toBe('one');
+  });
+  it("denies the network to anonymous users, forged sessions, guests and revoked members", async () => {
+    expect((await network(request('/api/opportunities/network'))).status).toBe(401);
+    expect((await network(request('/api/opportunities/network','fake'))).status).toBe(401);
+    expect(fetch).not.toHaveBeenCalled();
+    allowed = false; guestIds = ['one']; const token = await session();
+    expect((await network(request('/api/opportunities/network',token))).status).toBe(403);
+    const html = await page(request('/opportunities?section=network',token));
+    expect(html.status).toBe(303); expect(html.headers.get('Location')).toBe('http://localhost:3000/opportunities');
+    guestIds = [];
+    expect((await network(request('/api/opportunities/network',token))).status).toBe(403);
+    expect(vi.mocked(fetch).mock.calls.some(call=>JSON.parse(String(call[1]?.body)).action==='network')).toBe(false);
+  });
+  it("serves network data only after checking membership and fails closed on backend errors", async () => {
+    const originalFetch=fetch;
+    vi.stubGlobal('fetch',vi.fn(async(input:string,options?:RequestInit)=>{
+      const body=JSON.parse(String(options?.body));
+      if(body.action==='network') return Response.json({firms:[],startups:[],connections:[]});
+      return originalFetch(input,options);
+    }));
+    const token=await session(); const response=await network(request('/api/opportunities/network',token));
+    expect(response.status).toBe(200);expect(response.headers.get('Cache-Control')).toContain('no-store');
+    expect(await response.json()).toEqual({firms:[],startups:[],connections:[]});
+    vi.stubGlobal('fetch',vi.fn(async()=>{throw new Error('offline')}));
+    expect((await network(request('/api/opportunities/network',token))).status).toBe(503);
+  });
+
   it("starts access and events together, then embeds only safe data after authorization", async () => {
     let releaseAccess!: () => void;
     const gate = new Promise<void>(resolve => { releaseAccess = resolve; });
@@ -206,7 +243,7 @@ describe("page and event authorization", () => {
       ] });
       return originalFetch(input, options);
     }));
-    const pending = page(request("/calendar/index.html", await session()));
+    const pending = page(request("/opportunities", await session()));
     await vi.waitFor(() => expect(vi.mocked(fetch).mock.calls.map(call =>
       JSON.parse(String(call[1]?.body)).action)).toEqual(expect.arrayContaining(["access", "events"])));
     releaseAccess();
@@ -232,7 +269,7 @@ describe("page and event authorization", () => {
     expect(await response.text()).toBe("");
     expect(response.headers.get("Cache-Control")).toContain("no-store");
     allowed = false;
-    const denied = await page(request("/calendar/index.html", token));
+    const denied = await page(request("/opportunities", token));
     expect(denied.status).toBe(303);
     expect(denied.headers.get("Location")).toContain("error=denied");
     expect(await denied.text()).not.toContain("Member dinner");
@@ -240,9 +277,9 @@ describe("page and event authorization", () => {
     expect(vi.mocked(fetch).mock.calls.filter(call => JSON.parse(String(call[1]?.body)).action === "access")).toHaveLength(2);
   });
   it("does not expose a warmed member snapshot to a guest", async () => {
-    await page(request("/calendar/index.html", await session()));
+    await page(request("/opportunities", await session()));
     allowed = false; guestIds = ["some-other-event"];
-    const response = await page(request("/calendar/index.html", await session("guest@gmail.com")));
+    const response = await page(request("/opportunities", await session("guest@gmail.com")));
     const html = await response.text();
     expect(response.status).toBe(200);
     expect(html).toContain('"events":[]');
@@ -252,9 +289,9 @@ describe("page and event authorization", () => {
     const response = await events(request("/api/calendar/events"));
     expect(response.status).toBe(401);
     expect(response.headers.get("Cache-Control")).toContain("no-store");
-    const html = await page(request("/calendar/index.html"));
+    const html = await page(request("/opportunities"));
     expect(html.status).toBe(303);
-    expect(html.headers.get("Location")).toContain("/calendar/sign-in");
+    expect(html.headers.get("Location")).toContain("/opportunities/sign-in");
     expect(fetch).not.toHaveBeenCalled();
   });
   it("checks the whitelist anew so an existing session loses access after revocation", async () => {
@@ -267,7 +304,7 @@ describe("page and event authorization", () => {
       403,
     );
     expect(
-      (await page(request("/calendar/index.html", token))).headers.get(
+      (await page(request("/opportunities", token))).headers.get(
         "Location",
       ),
     ).toContain("error=denied");
@@ -283,7 +320,7 @@ describe("page and event authorization", () => {
     );
     expect(response.headers.get("Vary")).toBe("Cookie");
     expect(response.headers.get("Cache-Control")).toContain("no-store");
-    const html = await page(request("/calendar/index.html", await session()));
+    const html = await page(request("/opportunities", await session()));
     expect(html.status).toBe(200);
     expect(html.headers.get("Content-Security-Policy")).toContain(
       "frame-ancestors 'self'",
@@ -303,7 +340,7 @@ describe("page and event authorization", () => {
     );
     vi.stubEnv("CALENDAR_SESSION_SECRET", "");
     expect(
-      await calendarAccess(request("/calendar/index.html", token)),
+      await calendarAccess(request("/opportunities", token)),
     ).toEqual({ allowed: false, status: 503 });
   });
   it("never accepts a claimed email from URL parameters or an invalid session", async () => {
@@ -389,6 +426,25 @@ function callbackRequest(cookie: string, state: unknown) {
 }
 
 describe("Google code flow and logout", () => {
+  it("keeps a network profile through sign-in and a denied-account retry", async () => {
+    const destination = '/opportunities?section=network&company=notion';
+    const redirect = await page(request(destination));
+    const signInURL = new URL(redirect.headers.get('Location')!);
+    expect(signInURL.searchParams.get('returnTo')).toBe(destination);
+    const html = await (await signInPage(new NextRequest(signInURL))).text();
+    expect(html).toContain(`/api/calendar/auth/start?returnTo=${encodeURIComponent(destination)}`);
+    const started = await start(request(`/api/calendar/auth/start?returnTo=${encodeURIComponent(destination)}`));
+    const cookie = started.cookies.get('yes_calendar_oauth')!.value;
+    const payload = (await readToken(cookie, secret, 'oauth'))!;
+    await issueGoogleToken(payload.nonce);
+    allowed = false;
+    const denied = await callback(callbackRequest(cookie, payload.state));
+    const retry = new URL(denied.headers.get('Location')!, 'http://localhost:3000');
+    expect(retry.searchParams.get('returnTo')).toBe(destination);
+    expect(retry.searchParams.get('error')).toBe('denied');
+    allowed = true;
+    expect((await callback(callbackRequest(cookie, payload.state))).headers.get('Location')).toBe(destination);
+  });
   it("starts with state, nonce, PKCE, and an HTTP-only short-lived transaction cookie", async () => {
     const { response, payload } = await transaction();
     const url = new URL(response.headers.get("Location")!);
@@ -403,7 +459,7 @@ describe("Google code flow and logout", () => {
     const { cookie, payload } = await transaction();
     await issueGoogleToken(payload.nonce);
     const response = await callback(callbackRequest(cookie, payload.state));
-    expect(response.headers.get("Location")).toBe("/calendar/index.html");
+    expect(response.headers.get("Location")).toBe("/opportunities");
     const token = response.cookies.get("yes_calendar_session")?.value;
     expect((await readToken(token, secret, "session"))?.email).toBe(
       "member@yale.edu",
@@ -448,7 +504,7 @@ describe("Google code flow and logout", () => {
       .setExpirationTime("5m")
       .sign(privateKey);
     const response = await callback(callbackRequest(cookie, payload.state));
-    expect(response.headers.get("Location")).not.toBe("/calendar/index.html");
+    expect(response.headers.get("Location")).not.toBe("/opportunities");
     expect(response.cookies.get("yes_calendar_session")?.value).toBe("");
   });
   it("requires same-origin POST for logout and clears both cookies", async () => {
@@ -559,7 +615,7 @@ describe("event-scoped plus-ones", () => {
     await issueGoogleToken(payload.nonce, { email: "guest@gmail.com" });
     allowed = false; guestIds = ["one"];
     const done = await callback(callbackRequest(cookie, payload.state));
-    expect(done.headers.get("Location")).toBe("/calendar/index.html?event=one");
+    expect(done.headers.get("Location")).toBe("/opportunities?event=one");
     expect((await readToken(done.cookies.get("yes_calendar_session")?.value, secret, "session"))?.email).toBe("guest@gmail.com");
     const claims = vi.mocked(fetch).mock.calls.map(([, init]) => String(init?.body)).filter(body => body.includes('invite_claim'));
     expect(claims).toHaveLength(1);

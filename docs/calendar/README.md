@@ -235,3 +235,33 @@ Each opportunity is a row with the existing headers:
 Published jobs appear newest first **only** after selecting **Job Postings**, including when the current calendar month differs from the posting date. They never appear in All, other event filters, or the month grid, and do not count toward event totals. The application link replaces event actions; jobs have no Add to Calendar or plus-one controls. The website API rejects invitation creation for jobs and excludes them from guest event access.
 
 Jobs remain listed until their status changes; the posted date does not expire them. Check availability regularly and unpublish closed opportunities. The existing event API and Sheet schema carry job rows without new columns. To share the jobs view directly, use `https://yesyale.org/calendar?type=Job%20Postings`; this still requires an approved account.
+
+## Opportunities and Our Network
+
+The member entry point is now `/opportunities`. `/calendar` and `/calendar/index.html` redirect there with existing event, month, view and job filter parameters intact. Event and network profile links survive sign-in and an unauthorized-account retry; return destinations are restricted to the Opportunities route. The Google OAuth callback URL, session cookies, Events, Invitations and Access workflows are unchanged. Members see Calendar and Our Network; event-only guests do not gain network access. `/api/opportunities/network` checks current membership on every request, and Apps Script independently checks the supplied member email.
+
+The shared Opportunities interface uses cream surfaces, near-black text, Yale blue accents and serif headings. Job Postings remains an explicit opt-in Calendar filter. Introduction inquiries say **Bring this up at Office Hours**. No point people or email inquiry links are displayed.
+
+### Board maintenance
+
+Three tabs in the existing private YES Master Calendar hold the directory:
+
+- **Firms**: stable `id`, `name`, `description`, `focus`, `location`, `website`, `logo_url`, `relationship`, `relationship_source`, `source_url`, `verified_on`, `status`, `notes`.
+- **Startups**: stable `id`, `name`, `description`, `sector`, `location`, `stage`, `website`, `careers_url`, `logo_url`, `source_url`, `verified_on`, `status`, `notes`.
+- **Connections**: stable `id`, `firm_id`, `startup_id`, `type`, `relationship`, `source_url`, `verified_on`, `status`, `notes`.
+
+Use `Draft`, `Published` or `Archived`; only exact `Published` is visible. Keep IDs stable and unique. Portfolio connections join a firm ID to a startup ID. A `Direct` connection has a blank firm ID and must cite a verified YES record establishing a direct startup relationship. Portfolio inclusion alone never establishes one. To connect a startup to another firm, add a connection row, not a second startup. The website also deduplicates accidental duplicate company websites by hostname; use one canonical row to avoid conflicting descriptions. Ambiguous duplicate IDs are excluded.
+
+Use official HTTPS URLs and record the verification date as `YYYY-MM-DD`. The website shows source links and verification dates. `notes` stays internal. Missing stages, locations and careers links are explicitly shown as not yet listed. Do not infer a current stage from an investor's historical entry round. Firm relationship records and company/portfolio sources are required for publication. A company with no published, valid connection is not displayed. Unpublishing a firm removes its portfolio paths; a company can remain visible through another published firm or direct relationship.
+
+The initial research in `../opportunities/seed-network.json` contains two relationships verified against the YES Infrastructure record and six companies checked against official company/portfolio sites on October 30, 2026. It is a curated starting set, not a complete portfolio census. The seed is an import/reference artifact only; the application never falls back to it when the backend is unavailable. Existing firm logos are reused; missing company logos use typographic initials. Review links and facts periodically and archive stale records.
+
+### Apps Script upgrade
+
+Replace the existing project's `Code.gs` with this directory's updated file, preserving Script Properties and the deployment's existing access settings. The new `network` action is protected by the existing backend secret and approved-member check. `configureNetworkSheets()` creates only missing tabs and does not rewrite existing tabs. If the tabs have already been added by the connected tool, no setup function needs to run. Use **Deploy → Manage deployments → Edit → New version → Deploy** to update the existing deployment URL. No new OAuth scopes or public sharing are needed. Verify `network`, `events`, `access`, guest access and invitations against the deployed endpoint before publishing the website update.
+
+### Verification
+
+The test suites cover network membership/guest/anonymous denial, revocation, publication and field filtering, duplicate companies and multiple investors, direct versus investor connections, unsafe URLs, official-source requirements, normalized search and combined filters, old URL redirects, and all existing calendar/auth/invitation/export checks. Browser QA additionally checks company-to-firm navigation, both Calendar views, Job Postings, responsive layouts and empty/error states.
+
+The existing Apps Script deployment was updated to version 4 on October 30, 2026. Live checks returned the two firms, six startups and six connections for an approved member, rejected public and unapproved network requests, and retained all 18 published event/job rows. The private Sheet's new tabs were populated and verified in place; there is no additional backend setup required for this release.

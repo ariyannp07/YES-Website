@@ -378,7 +378,7 @@ async function refresh() {
       $("event-dialog").close();
     render();
     const linkedEvent = params.get("event");
-    if (linkedEvent && !eventLinkOpened) {
+    if (linkedEvent && !eventLinkOpened && params.get("section") !== "network") {
       eventLinkOpened = true;
       const event = state.events.find(event => event.id === linkedEvent);
       if (event && (!isJobPosting(event) || state.type === JOB_POSTINGS)) openEvent(event, $("events"));
@@ -393,7 +393,7 @@ async function refresh() {
     if ($("event-dialog").open) $("event-dialog").close();
     $("event-detail").replaceChildren();
     if (error.name === "CalendarAccessError") {
-      location.replace("/calendar/sign-in");
+      location.replace("/opportunities/sign-in");
       return;
     }
     state.error = "The calendar is temporarily unavailable. Please try again.";
@@ -531,7 +531,7 @@ function plusOneActions(event) {
         credentials: "same-origin", cache: "no-store",
         body: JSON.stringify({ eventId: event.id }), signal: AbortSignal.timeout(20000),
       });
-      if ([401, 403].includes(response.status)) { location.replace("/calendar/sign-in"); return; }
+      if ([401, 403].includes(response.status)) { location.replace("/opportunities/sign-in"); return; }
       const result = await response.json();
       if (!response.ok) {
         status.textContent = result.error === "event_unavailable" ? "This event is no longer accepting invitations."

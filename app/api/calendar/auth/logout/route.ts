@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
     return new NextResponse("Forbidden", { status: 403, headers: PRIVATE_HEADERS });
   const response = new NextResponse(null, {
     status: 303,
-    headers: { ...PRIVATE_HEADERS, Location: "/calendar/sign-in" },
+    headers: { ...PRIVATE_HEADERS, Location: "/opportunities/sign-in" },
   });
   for (const kind of ["session", "oauth"] as const)
     response.cookies.set(cookieName(kind), "", {

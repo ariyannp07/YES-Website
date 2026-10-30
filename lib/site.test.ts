@@ -11,7 +11,7 @@ describe('primary navigation', () => {
       'Common Room',
       'Hacker House',
       'Thesis & Press',
-      'Calendar',
+      'Opportunities',
     ])
   })
 

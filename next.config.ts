@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   outputFileTracingIncludes: {
-    '/calendar/index.html': ['./content/calendar/index.html'],
+    '/opportunities': ['./content/calendar/index.html'],
   },
   async redirects() {
     return [

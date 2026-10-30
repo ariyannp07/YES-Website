@@ -6,7 +6,7 @@ export class CalendarBackendError extends Error {
   constructor(public code: string) { super("Calendar backend rejected the request."); }
 }
 export async function calendarBackend(
-  action: "access" | "events" | "guest_access" | "invite_create" | "invite_claim",
+  action: "access" | "events" | "guest_access" | "invite_create" | "invite_claim" | "network",
   input?: string | Record<string, string>,
 ) {
   const config = backendConfig();

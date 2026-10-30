@@ -46,6 +46,7 @@ function doPost(request) {
   ) {
     return json_({ error: "unauthorized" });
   }
+  if (body.action === "network") return networkResponse_(body.email);
   if (body.action === "access") return accessResponse_(body.email);
   if (["invite_create", "invite_claim", "guest_access"].indexOf(body.action) !== -1)
     return invitationResponse_(body);
@@ -426,4 +427,52 @@ function invitationResponse_(body) {
       try { SpreadsheetApp.flush(); } finally { lock.releaseLock(); }
     }
   }
+}
+
+// Opportunities directory. The existing Events, Access and Invitations tabs
+// remain unchanged. Only exact Published rows are sent to the website.
+const NETWORK_TABLES = {
+  Firms: ['id','name','description','focus','location','website','logo_url','relationship','relationship_source','source_url','verified_on','status','notes'],
+  Startups: ['id','name','description','sector','location','stage','website','careers_url','logo_url','source_url','verified_on','status','notes'],
+  Connections: ['id','firm_id','startup_id','type','relationship','source_url','verified_on','status','notes']
+};
+function networkResponse_(email) {
+  try {
+    const spreadsheet = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID'));
+    if (enabledMembers_(spreadsheet).indexOf(inviteEmail_(email)) === -1) return json_({error:'access_required'});
+    const result = {};
+    Object.keys(NETWORK_TABLES).forEach(function(name) {
+      const sheet = spreadsheet.getSheetByName(name);
+      if (!sheet) throw new Error('Missing network tab');
+      const values = sheet.getDataRange().getValues();
+      const headers = values[0].map(text_);
+      NETWORK_TABLES[name].forEach(function(key) {
+        if (headers.indexOf(key) < 0 || headers.indexOf(key) !== headers.lastIndexOf(key)) throw new Error('Invalid network headers');
+      });
+      result[name.toLowerCase()] = values.slice(1).filter(function(row) { return row[headers.indexOf('status')] === 'Published'; }).map(function(row) {
+        const item = {};
+        NETWORK_TABLES[name].filter(function(key) { return key !== 'notes'; }).forEach(function(key) {
+          const value = row[headers.indexOf(key)];
+          item[key] = key === 'verified_on' && value instanceof Date ? Utilities.formatDate(value, 'America/New_York', 'yyyy-MM-dd') : text_(value);
+        });
+        return item;
+      });
+    });
+    return json_(result);
+  } catch (_) { return json_({error:'network_unavailable'}); }
+}
+function configureNetworkSheets() {
+  const spreadsheet = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID'));
+  Object.keys(NETWORK_TABLES).forEach(function(name) {
+    const headers = NETWORK_TABLES[name];
+    let sheet = spreadsheet.getSheetByName(name);
+    if (sheet) return; // Never overwrite existing board data or formatting.
+    sheet = spreadsheet.insertSheet(name);
+    sheet.getRange(1,1,1,headers.length).setValues([headers]).setFontWeight('bold').setBackground('#173e65').setFontColor('#ffffff');
+    sheet.setFrozenRows(1);
+    sheet.setColumnWidths(1,headers.length,180);
+    sheet.getRange(2,headers.indexOf('status')+1,sheet.getMaxRows()-1,1).setDataValidation(SpreadsheetApp.newDataValidation().requireValueInList(['Draft','Published','Archived'],true).setAllowInvalid(false).build());
+    if (name === 'Connections') sheet.getRange(2,4,sheet.getMaxRows()-1,1).setDataValidation(SpreadsheetApp.newDataValidation().requireValueInList(['Portfolio','Direct'],true).setAllowInvalid(false).build());
+    sheet.getRange(2,headers.indexOf('verified_on')+1,sheet.getMaxRows()-1,1).setNumberFormat('yyyy-mm-dd');
+  });
 }

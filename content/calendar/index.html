@@ -5,14 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Yale Entrepreneurial Society member events."
+      content="Events and connections for Yale Entrepreneurial Society members."
     />
     <meta name="robots" content="noindex,nofollow" />
-    <meta name="theme-color" content="#090f17" />
-    <title>Calendar — Yale Entrepreneurial Society</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <meta name="theme-color" content="#f7f5ef" />
+    <title>Opportunities — Yale Entrepreneurial Society</title>
+    <link rel="stylesheet" href="/calendar/styles.css" />
+    <link rel="stylesheet" href="/opportunities/styles.css" />
     <!-- CALENDAR_BOOTSTRAP -->
-    <script type="module" src="./script.js"></script>
+    <script type="module" src="/calendar/script.js"></script>
+    <script type="module" src="/opportunities/network.js"></script>
   </head>
   <body>
     <a class="skip-link" href="#events">Skip to events</a>
@@ -30,6 +32,12 @@
         </form>
       </header>
       <main>
+        <div class="opportunities-heading"><h1 id="opportunities-title">Opportunities</h1><span class="eyebrow">For YES members</span></div>
+        <nav class="opportunities-tabs" aria-label="Opportunities sections">
+          <a href="/opportunities" id="calendar-tab" aria-current="page">Calendar</a>
+          <a href="/opportunities?section=network" id="network-tab">Our Network</a>
+        </nav>
+        <div id="calendar-panel">
         <section
           id="events"
           class="events-section"
@@ -38,7 +46,7 @@
         >
           <div class="section-bar">
             <div class="section-heading">
-              <h1 id="page-title">Calendar</h1>
+              <h2 id="page-title">Calendar</h2>
             </div>
             <div class="view-switch" role="group" aria-label="Calendar view">
               <button type="button" data-view="agenda" aria-pressed="true">
@@ -87,11 +95,24 @@
             </p></noscript
           >
         </section>
+        </div>
+        <section id="network-panel" tabindex="-1" aria-labelledby="network-heading" hidden>
+          <div class="network-heading"><div><h2 id="network-heading">Our Network</h2><p>Explore companies through the YES network.</p></div><span id="network-count" class="eyebrow" role="status"></span></div>
+          <div class="network-tools">
+            <label class="network-search"><span class="visually-hidden">Search companies or firms</span><input id="network-search" type="search" placeholder="Search companies or firms" autocomplete="off" /></label>
+            <div class="network-kind" role="group" aria-label="Browse network"><button type="button" data-kind="startups" aria-pressed="true">Companies</button><button type="button" data-kind="firms" aria-pressed="false">Firms</button></div>
+          </div>
+          <div class="network-filters"><label for="sector-filter"><span>Sector</span><select id="sector-filter" aria-label="Sector"><option value="">All sectors</option></select></label><label for="location-filter"><span>Location</span><select id="location-filter" aria-label="Location"><option value="">All locations</option></select></label><button id="network-reset" type="button" hidden>Clear filters</button></div>
+          <p id="network-status" class="status" role="status" aria-live="polite"></p><button id="network-retry" type="button" class="retry" hidden>Try again</button>
+          <div id="network-list" class="network-list" aria-busy="false"></div>
+          <p class="network-footnote">Interested in a company? Bring it up at Office Hours. An investor connection is a potential introduction, not a confirmed one.</p>
+        </section>
       </main>
       <footer>
         <span>Yale Entrepreneurial Society</span>
       </footer>
     </div>
+    <dialog id="network-dialog" aria-labelledby="network-detail-title"><div class="dialog-top"><span class="eyebrow" id="network-detail-kind"></span><button type="button" id="close-network" aria-label="Close network details"><span aria-hidden="true">×</span></button></div><div id="network-detail"></div></dialog>
     <dialog id="event-dialog" aria-labelledby="detail-title">
       <div class="dialog-top">
         <span class="eyebrow">Event details</span

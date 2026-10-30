@@ -1,0 +1,62 @@
+.opportunities-heading { display:flex; align-items:baseline; justify-content:space-between; gap:16px; padding:26px 0 20px; }
+.opportunities-heading h1 { font-weight:400; letter-spacing:-1px; }
+.opportunities-tabs { display:flex; gap:24px; border-bottom:1px solid var(--line); }
+.opportunities-tabs a { padding:10px 0 12px; text-decoration:none; color:var(--muted); border-bottom:2px solid transparent; font-weight:500; }
+.opportunities-tabs a[aria-current] { color:var(--accent); border-color:var(--accent); }
+.section-heading h2 { font:400 24px/1.25 Georgia,serif; letter-spacing:-.5px; }
+.network-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:24px 0 20px; }
+.network-heading h2 { font:400 26px/1.25 Georgia,serif; }
+.network-heading p { color:var(--muted); font-size:13px; margin-top:6px; }
+.network-tools { display:flex; gap:12px; align-items:center; }
+.network-search { flex:1; }
+.network-search input { width:100%; min-height:44px; border:1px solid var(--line); background:var(--surface); color:var(--ink); border-radius:10px; padding:10px 14px; outline-offset:2px; }
+.network-kind { display:flex; padding:4px; background:var(--wash); border-radius:12px; }
+.network-kind button { min-height:36px; border:0; border-radius:8px; padding:7px 14px; background:transparent; color:var(--muted); font-size:13px; }
+.network-kind button[aria-pressed=true] { background:var(--surface); color:var(--accent); box-shadow:0 1px 3px #0000000d; }
+.network-filters { display:flex; flex-wrap:wrap; align-items:center; gap:12px 20px; padding:14px 0 18px; }
+.network-filters label { display:flex; align-items:center; gap:8px; color:var(--muted); font-size:12px; }
+.network-filters select { color:var(--ink); background:var(--background); border:0; border-bottom:1px solid var(--line); padding:8px 24px 8px 4px; border-radius:0; max-width:220px; font-size:13px; min-height:40px; }
+#network-reset { border:0; padding:8px; background:transparent; color:var(--accent); font-size:12px; }
+.network-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); border-top:1px solid var(--line); }
+.network-card { display:flex; gap:16px; align-items:flex-start; background:transparent; border:0; border-bottom:1px solid var(--line); padding:22px 16px 22px 0; text-align:left; border-radius:0; min-width:0; }
+.network-card:nth-child(even) { padding-left:20px; border-left:1px solid var(--line); }
+.network-card:hover { background:var(--wash); }
+.network-logo { flex:0 0 48px; width:48px; height:48px; position:relative; display:grid; place-items:center; border:1px solid var(--line); border-radius:12px; background:var(--surface); font:400 20px Georgia,serif; color:var(--accent); overflow:hidden; }
+.network-logo img { position:absolute; inset:0; width:100%; height:100%; padding:8px; object-fit:contain; background:transparent; filter:grayscale(1); }
+.network-logo img[src^="/vc/"] { filter:brightness(0) opacity(.8); }
+.network-card-body { display:flex; flex-direction:column; gap:7px; min-width:0; flex:1; }
+.network-card strong { font-weight:550; font-size:15px; }
+.network-description { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; color:#50565c; font-size:13px; line-height:1.55; }
+.network-meta { font-size:12px; color:var(--muted); line-height:1.6; }
+.network-connection { color:var(--accent); font-size:12px; margin-top:4px; }
+.network-arrow { color:var(--muted); font-size:16px; }
+.network-footnote { color:var(--muted); font-size:12px; line-height:1.6; margin:22px 0 6px; max-width:650px; }
+#network-dialog { width:min(600px,calc(100% - 32px)); }
+#network-detail > .network-logo { margin:0 0 16px; }
+#network-detail-title { font:400 30px/1.2 Georgia,serif; letter-spacing:-.6px; margin:0 0 12px; }
+.network-detail-description { color:#50565c; line-height:1.65; margin-bottom:16px; white-space:pre-wrap; }
+.network-links { display:flex; gap:16px; flex-wrap:wrap; margin:16px 0 22px; color:var(--accent); }
+.network-links a { text-decoration:none; border-bottom:1px solid #173e6540; }
+.network-path { padding:18px; border:1px solid #173e6518; background:#edf0f0; border-radius:12px; }
+.network-path h3,.network-portfolio h3 { font-weight:600; margin:0 0 10px; }
+.network-path p { font-size:13px; line-height:1.65; }
+.network-path .office-hours { margin-top:14px; font-weight:600; color:var(--accent); }
+.network-path-label { color:var(--muted); font-size:12px; }
+.network-path-row + .network-path-row { border-top:1px solid var(--line); padding-top:14px; margin-top:14px; }
+.connection-link { display:flex; align-items:center; justify-content:space-between; gap:12px; text-align:left; width:100%; border:0; border-bottom:1px solid var(--line); background:transparent; padding:12px 0; }
+.connection-link:hover { color:var(--accent); }
+.connection-link strong { font-weight:500; }
+.network-portfolio { margin-top:24px; }
+.network-sources { display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-top:22px; }
+.source-link { display:inline-block; font-size:12px; color:var(--muted); text-decoration:underline; text-underline-offset:3px; margin-top:6px; }
+@media(max-width:640px) {
+ .opportunities-heading { padding:22px 0 12px; }.opportunities-heading h1 { font-size:30px; }.opportunities-heading .eyebrow { display:none; }
+ .network-heading { align-items:flex-start; }.network-heading h2 { font-size:24px; }
+ .network-tools { flex-wrap:wrap; }.network-search { flex-basis:100%; }.network-search input { font-size:16px; }
+ .network-kind { width:100%; }.network-kind button { flex:1; min-height:40px; }
+ .network-filters { align-items:stretch; gap:8px; }.network-filters label { display:block; flex:1; min-width:0; }.network-filters select { display:block; width:100%; max-width:100%; min-height:44px; }
+ .network-list { grid-template-columns:1fr; }.network-card,.network-card:nth-child(even) { padding:18px 0; border-left:0; }.network-card { gap:12px; }
+ #network-dialog { width:calc(100% - 24px); }.network-path { padding:14px; }
+}
+
+:root[data-network-access="false"] #network-tab { display:none; }
