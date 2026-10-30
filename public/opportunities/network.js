@@ -167,7 +167,9 @@ function openProfile(item, kind, push = false, trigger) {
   }
   const sources = make('div', 'network-sources'); const source = external('Official source', item.source_url, 'source-link'); if (source) sources.append(source);
   sources.append(make('span', 'network-meta', item.verified_on ? `Checked ${item.verified_on}` : 'Verification date not listed')); detail.append(sources);
-  if (!$('network-dialog').open) $('network-dialog').showModal(); $('close-network').focus({ preventScroll: true });
+  if (!$('network-dialog').open) $('network-dialog').showModal();
+  $('network-dialog').scrollTop = 0;
+  $('close-network').focus({ preventScroll: true });
 }
 function linkedProfile() {
   const q = new URLSearchParams(location.search); const kind = q.has('firm') ? 'firms' : 'startups'; const id = q.get('firm') || q.get('company');
