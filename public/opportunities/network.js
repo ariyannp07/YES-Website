@@ -62,7 +62,7 @@ function profileButton(item, kind, compact = false) {
       body.append(make('span', 'network-connection', paths.some(c => c.type === 'Direct') ? 'Direct YES relationship' : `Via ${names.join(' · ')}`));
     } else {
       const count = new Set(state.data.connections.filter(c => c.firm_id === item.id).map(c => c.startup_id)).size;
-      body.append(make('span', 'network-connection', `${count} ${count === 1 ? 'company' : 'companies'} listed`));
+      body.append(make('span', 'network-connection', count ? `${count} ${count === 1 ? 'company' : 'companies'} listed` : 'Portfolio not yet listed'));
     }
   }
   button.append(body, make('span', 'network-arrow', '↗'));
@@ -120,13 +120,14 @@ function openProfile(item, kind, push = false, trigger) {
   if (kind !== 'firms') detailFact(facts, 'Stage', item.stage);
   detail.append(facts);
   const links = make('div', 'network-links');
-  const website = external('Website', item.website); if (website) links.append(website);
+  const website = external('Website', item.website); if (website) links.append(website); else links.append(make('span', 'network-meta', 'Website not yet listed'));
   if (kind === 'startups') { const careers = external('Careers', item.careers_url); if (careers) links.append(careers); else links.append(make('span', 'network-meta', 'Careers link not yet listed')); }
   detail.append(links);
   const path = make('section', 'network-path'); path.append(make('h3', '', 'The YES connection'));
   if (kind === 'firms') {
     path.append(make('p', '', item.relationship || 'Relationship details not yet listed.'));
     const source = external('YES relationship record', item.relationship_source, 'source-link'); if (source) path.append(source);
+    else if (item.relationship_verification === 'YES records') path.append(make('span', 'network-meta', 'Verified in YES records.'));
   } else {
     const connections = state.data.connections.filter(c => c.startup_id === item.id);
     for (const connection of connections) {
@@ -147,7 +148,7 @@ function openProfile(item, kind, push = false, trigger) {
     const companies = state.data.startups.filter(c => ids.includes(c.id));
     const portfolio = make('section', 'network-portfolio'); portfolio.append(make('h3', '', 'Portfolio companies'));
     portfolio.append(...companies.map(c => profileButton(c, 'startups', true)));
-    if (!companies.length) portfolio.append(make('p', 'network-meta', 'Portfolio companies are being added.'));
+    if (!companies.length) portfolio.append(make('p', 'network-meta', 'Portfolio companies have not yet been verified for this directory.'));
     detail.append(portfolio);
   }
   const sources = make('div', 'network-sources'); const source = external('Official source', item.source_url, 'source-link'); if (source) sources.append(source);

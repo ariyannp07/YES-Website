@@ -25,4 +25,22 @@ describe('member network projection', () => {
   expect(safeURL('/private/file.svg',true)).toBe('');
   expect(()=>projectNetwork({firms:[]})).toThrow();
  });
+ it('accepts documented internal relationships without exposing private evidence', () => {
+  for (const source of ['internal: Private board research document', 'https://mail.google.com/mail/u/0/#inbox/PRIVATE', 'https://notes.granola.ai/p/PRIVATE', 'https://docs.google.com/document/d/PRIVATE/edit']) {
+   const data = projectNetwork({ firms: [{...firm, relationship_source: source}], startups: [company], connections: [connection] });
+   expect(data.firms).toHaveLength(1);
+   expect(data.firms[0].relationship_source).toBe('');
+   expect(data.firms[0].relationship_verification).toBe('YES records');
+   expect(data.startups).toHaveLength(1);
+   expect(JSON.stringify(data)).not.toMatch(/PRIVATE|Private board|internal:|mail.google|granola|docs.google/);
+  }
+ });
+ it('still requires a meaningful relationship record and an official source', () => {
+  for (const source of ['', 'internal:  ', 'unverified', 'javascript:alert(1)']) {
+   expect(projectNetwork({firms:[{...firm, relationship_source:source}],startups:[],connections:[]}).firms).toEqual([]);
+  }
+  expect(projectNetwork({firms:[{...firm, relationship_source:'internal: Board record',source_url:''}],startups:[],connections:[]}).firms).toEqual([]);
+  const result = projectNetwork({firms:[firm],startups:[],connections:[]});
+  expect(result.firms[0].relationship_source).toBe(firm.relationship_source);
+ });
 });
