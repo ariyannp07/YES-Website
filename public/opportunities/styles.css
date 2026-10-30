@@ -24,6 +24,8 @@
 .network-logo { flex:0 0 48px; width:48px; height:48px; position:relative; display:grid; place-items:center; border:1px solid var(--line); border-radius:12px; background:var(--surface); font:400 20px Georgia,serif; color:var(--accent); overflow:hidden; }
 .network-logo img { position:absolute; inset:0; width:100%; height:100%; padding:8px; object-fit:contain; background:transparent; filter:grayscale(1); }
 .network-logo img[src^="/vc/"] { filter:brightness(0) opacity(.8); }
+/* These official portfolio wordmarks include generous canvas padding. */
+.network-logo img[src*="/5e3c3ead7fe7b733e200f811/"] { padding:0; transform:scale(1.8); }
 .network-card-body { display:flex; flex-direction:column; gap:7px; min-width:0; flex:1; }
 .network-card strong { font-weight:550; font-size:15px; }
 .network-description { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; color:#50565c; font-size:13px; line-height:1.55; }
