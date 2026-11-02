@@ -42,13 +42,13 @@ export async function GET(request: NextRequest) {
         : error === "signin"
           ? "Sign-in failed. Please try again."
           : "Sign in with your approved Google account.";
-  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Member opportunities — YES</title><link rel="stylesheet" href="/calendar/styles.css"></head><body><div class="calendar-shell"><header class="masthead"><a class="wordmark" aria-label="YES home" href="/" target="_top"><span class="yes-logo" aria-hidden="true"><span class="yes-logo-bars"></span><span class="yes-logo-center"></span></span></a><span class="masthead-note">Member opportunities</span></header><main class="login-panel"><h1>Opportunities</h1><p class="login-message${denied ? " login-error" : ""}" role="${denied ? "alert" : "status"}">${message}</p>${ready ? '<a class="rsvp-link" href="' + signInURL + '" target="_top">Continue with Google <span aria-hidden="true">↗</span></a>' : ""}<p class="detail-audience">For access, contact the YES board.</p></main></div></body></html>`;
+  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Member opportunities — YES</title><link rel="stylesheet" href="/calendar/styles.css"><script type="module" src="/opportunities/clear-cache.js"></script></head><body><div class="calendar-shell"><header class="masthead"><a class="wordmark" aria-label="YES home" href="/" target="_top"><span class="yes-logo" aria-hidden="true"><span class="yes-logo-bars"></span><span class="yes-logo-center"></span></span></a><span class="masthead-note">Member opportunities</span></header><main class="login-panel"><h1>Opportunities</h1><p class="login-message${denied ? " login-error" : ""}" role="${denied ? "alert" : "status"}">${message}</p>${ready ? '<a class="rsvp-link" href="' + signInURL + '" target="_top">Continue with Google <span aria-hidden="true">↗</span></a>' : ""}<p class="detail-audience">For access, contact the YES board.</p></main></div></body></html>`;
   return new Response(html, {
     headers: {
       ...PRIVATE_HEADERS,
       "Content-Type": "text/html; charset=utf-8",
       "Content-Security-Policy":
-        "default-src 'self'; script-src 'none'; style-src 'self'; base-uri 'none'; frame-ancestors 'self'",
+        "default-src 'self'; script-src 'self'; style-src 'self'; base-uri 'none'; frame-ancestors 'self'",
       "X-Frame-Options": "SAMEORIGIN",
     },
   });

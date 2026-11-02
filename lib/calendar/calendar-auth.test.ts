@@ -34,6 +34,7 @@ import { GET as invitePage } from "../../app/calendar/invite/route";
 import { invitationToken, readInvitationToken } from "./invitations";
 import { POST as logout } from "../../app/api/calendar/auth/logout/route";
 import { GET as network } from "../../app/api/opportunities/network/route";
+import { GET as networkAccess } from "../../app/api/opportunities/network/access/route";
 import { GET as legacyCalendar } from "../../app/calendar/index.html/route";
 import { GET as signInPage } from "../../app/opportunities/sign-in/route";
 import { POST as warm } from "../../app/api/calendar/warm/route";
@@ -226,6 +227,11 @@ describe("page and event authorization", () => {
     }));
     const token=await session(); const response=await network(request('/api/opportunities/network',token));
     expect(response.status).toBe(200);expect(response.headers.get('Cache-Control')).toContain('no-store');
+    const gate = await networkAccess(request('/api/opportunities/network/access', token));
+    const { key } = await gate.json();
+    expect(key).toMatch(/^[a-f0-9]{64}$/);
+    expect(response.headers.get('X-YES-Network-Key')).toBe(key);
+    expect(await (await page(request('/opportunities', token))).text()).toContain(`data-network-key="${key}"`);
     expect(await response.json()).toEqual({firms:[],startups:[],connections:[]});
     vi.stubGlobal('fetch',vi.fn(async()=>{throw new Error('offline')}));
     expect((await network(request('/api/opportunities/network',token))).status).toBe(503);
@@ -246,6 +252,25 @@ describe("page and event authorization", () => {
     expect(data.connections).toHaveLength(count);
     expect(data.startups.at(-1).description).toBe('é'.repeat(800));
     expect(JSON.stringify(data)).not.toMatch(/PRIVATE|Board record/);
+  });
+  it("issues browser cache keys only to current members and separates sign-ins", async () => {
+    expect((await networkAccess(request('/api/opportunities/network/access'))).status).toBe(204);
+    expect((await networkAccess(request('/api/opportunities/network/access', 'fake'))).status).toBe(204);
+    expect(fetch).not.toHaveBeenCalled();
+    const token = await session();
+    const result = await networkAccess(request('/api/opportunities/network/access', token));
+    expect(result.headers.get('Cache-Control')).toContain('no-store');
+    const key = (await result.json()).key;
+    const other = await networkAccess(request('/api/opportunities/network/access', await session('other@yale.edu')));
+    expect((await other.json()).key).not.toBe(key);
+    allowed = false; guestIds = ['one'];
+    expect((await networkAccess(request('/api/opportunities/network/access', token))).status).toBe(204);
+    expect(await (await page(request('/opportunities', token))).text()).toContain('data-network-key=""');
+    guestIds = [];
+    expect((await networkAccess(request('/api/opportunities/network/access', token))).status).toBe(204);
+    expect(vi.mocked(fetch).mock.calls.some(call => JSON.parse(String(call[1]?.body)).action === 'network')).toBe(false);
+    vi.stubGlobal('fetch', vi.fn(async () => { throw new Error('offline'); }));
+    expect((await networkAccess(request('/api/opportunities/network/access', token))).status).toBe(503);
   });
 
   it("starts access and events together, then embeds only safe data after authorization", async () => {

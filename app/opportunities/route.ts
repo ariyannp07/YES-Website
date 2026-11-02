@@ -4,6 +4,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { calendarSnapshot, bootstrapJSON } from "@/lib/calendar/snapshot";
 import { PRIVATE_HEADERS } from "@/lib/calendar/config";
 import { opportunitiesReturnPath } from "@/lib/opportunities/routes";
+import { networkBrowserKey } from "@/lib/opportunities/browser-session";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -35,7 +36,8 @@ export async function GET(request: NextRequest) {
     "utf8",
   );
   const initialData = `<script id="calendar-bootstrap" type="application/json">${bootstrapJSON(payload || { error: "calendar_unavailable" })}</script>`;
-  return new Response(html.replace("<!-- CALENDAR_BOOTSTRAP -->", initialData).replace('<html lang="en">', `<html lang="en" data-network-access="${access.role === "member"}">`), {
+  const networkKey = access.role === "member" ? networkBrowserKey(request) : "";
+  return new Response(html.replace("<!-- CALENDAR_BOOTSTRAP -->", initialData).replace('<html lang="en">', `<html lang="en" data-network-access="${access.role === "member"}" data-network-key="${networkKey}">`), {
     headers: {
       ...PRIVATE_HEADERS,
       "Content-Type": "text/html; charset=utf-8",

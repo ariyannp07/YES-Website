@@ -1,8 +1,10 @@
 import { selectNetwork } from './data.js';
+import { loadNetwork, clearNetworkCache } from './network-cache.js';
 const $ = id => document.getElementById(id);
 const make = (tag, className = '', text = '') => { const n = document.createElement(tag); n.className = className; n.textContent = text; return n; };
 const state = { data: null, loading: false, error: '', kind: 'startups', query: '', sector: '', location: '', limit: 48 };
-let active = false, controller, priorFocus;
+let active = false, priorFocus, loadedAt = 0;
+let bootstrapKey = document.documentElement.dataset.networkKey;
 const member = document.documentElement.dataset.networkAccess === 'true';
 function route() {
   const q = new URLSearchParams(location.search);
@@ -17,7 +19,7 @@ function route() {
   state.query = q.get('q') || ''; state.sector = q.get('sector') || ''; state.location = q.get('location') || '';
   $('network-search').value = state.query;
   if (!active) { if ($('network-dialog').open) $('network-dialog').close(); return; }
-  if (!state.data && !state.loading) load(); else { render(); linkedProfile(); }
+  if ((!state.data || Date.now() - loadedAt >= 120000) && !state.loading) load(); else { render(); linkedProfile(); }
 }
 function updateURL(push = false) {
   const url = new URL(location.href); url.searchParams.set('section', 'network');
@@ -96,19 +98,15 @@ function render(reset = true) {
 }
 async function load() {
   if (state.loading || !member) return;
-  state.loading = true; state.error = ''; render(); controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 20000);
+  state.loading = true; state.error = ''; render();
+  const key = bootstrapKey; bootstrapKey = undefined;
   try {
-    const response = await fetch('/api/opportunities/network', { credentials: 'same-origin', cache: 'no-store', signal: controller.signal });
-    if ([401, 403].includes(response.status)) { state.data = null; render(); location.replace('/opportunities/sign-in?error=denied'); return; }
-    if (!response.ok) throw new Error('unavailable');
-    const data = await response.json();
-    if (![data.firms, data.startups, data.connections].every(Array.isArray)) throw new Error('invalid');
-    state.data = data;
-  } catch {
+    state.data = await loadNetwork(key); loadedAt = Date.now();
+  } catch (error) {
     state.data = null; state.error = 'The network is temporarily unavailable. Please try again.';
     if ($('network-dialog').open) $('network-dialog').close(); $('network-detail').replaceChildren();
-  } finally { clearTimeout(timer); state.loading = false; render(); if (state.data) linkedProfile(); }
+    if (error.status === 403 && active) location.replace('/opportunities/sign-in?error=denied');
+  } finally { state.loading = false; render(); if (state.data && active) linkedProfile(); }
 }
 function detailFact(list, name, value) { const row = make('div'); row.append(make('dt', '', name), make('dd', '', value || 'Not yet listed')); list.append(row); }
 function openProfile(item, kind, push = false, trigger) {
@@ -200,3 +198,11 @@ window.addEventListener('popstate', route);
 document.addEventListener('visibilitychange', () => { if (!document.hidden && active) load(); });
 setInterval(() => { if (!document.hidden && active) load(); }, 300000);
 route();
+// Loading the Calendar pane also prepares Our Network before the tab is opened.
+if (member && !active) load();
+const logoutForm = document.querySelector('form[action="/api/calendar/auth/logout"]');
+logoutForm?.addEventListener('submit', event => {
+  event.preventDefault();
+  state.data = null;
+  clearNetworkCache().finally(() => logoutForm.submit());
+});

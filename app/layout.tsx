@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Archivo, Bodoni_Moda } from 'next/font/google'
+import Script from 'next/script'
 
 import { SiteFooter } from '@/components/site-footer'
 import { SiteNav } from '@/components/site-nav'
@@ -88,6 +89,7 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <Script src="/opportunities/preload.js" type="module" strategy="afterInteractive" />
         <div className="site-shell">
           <SiteNav />
           <main className="site-main">{children}</main>
